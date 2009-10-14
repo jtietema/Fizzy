@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<pages>
+    <page uid="93629a2bbd38a5ad5d4293a1649f233d" isHomepage="false">
+        <title>Voidwalkers</title>
+        <slug>void</slug>
+        <body><![CDATA[<p>Voidwalkers is een klein webdevelopment bedrijf uit Utrecht. Gedreven door onze passie voor programmeren en goede software, bouwen wij software met Open Source technieken zoals PHP, Python en MySql.</p>
+
+<p>Wij richten ons op de technische implementatie van onder andere websites en webservices en bieden ondersteuning aan bedrijven die daarvoor zelf de kennis en/of de resources niet in huis hebben.</p>
+
+<p>Kunnen wij je helpen bij een technische uitdaging? Neem dan contact met ons op.</p>]]></body>
+        <template>page.phtml</template>
+        <layout>layout.voidwalkers.phtml</layout>
+    </page>
+    <page uid="60d1bc3f12830b85982e98c754109a26" isHomepage="true">
+        <title>fizzy</title>
+        <slug>fizzy</slug>
+        <body><![CDATA[<p>fizzy is a small lightweight content management system build on top of limonade. It allows you to deploy the cms, log in and add pages without creating html files.]]></body>
+        <template>page.phtml</template>
+        <layout>layout.fizzy.phtml</layout>
+    </page>
+</pages>

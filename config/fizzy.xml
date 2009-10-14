@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<fizzy version="0.4">
+    <application>
+        <title>Fizzy</title>
+        <env>development</env>
+        <adminSwitch>admin</adminSwitch>
+        <storageBackend>XML</storageBackend>
+    </application>
+</fizzy>
