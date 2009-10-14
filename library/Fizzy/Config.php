@@ -18,7 +18,7 @@ class Fizzy_Config {
      * Configuration settings.
      * @var array
      */
-    protected $_configuration = null;
+    protected $_configuration = array();
 
     /** **/
 
@@ -27,7 +27,6 @@ class Fizzy_Config {
      */
     public function __construct()
     {
-        $this->_application = array('application', 'routes');
     }
 
     /**
@@ -49,25 +48,18 @@ class Fizzy_Config {
     }
 
     /**
-     * Loads application configuration.
+     * Loads configuration from a SimpleXMLElement.
      * @param SimpleXMLElement $config
      */
-    public function loadApplication(SimpleXMLElement $config)
+    public function loadConfiguration(SimpleXMLElement $config)
     {
-        if(!isset($config->application)) {
-            require_once 'Fizzy/Exception.php';
-            throw new Fizzy_Exception('No application configuration provided.');
-        }
-        // Get the section containing the application configuration
-        $applicationSection = $config->application;
-
-        // Parse the children
+        // Parse the config element
         $dataArray = array();
-        foreach($applicationSection->children() as $sectionName => $sectionData) {
+        foreach($config->children() as $sectionName => $sectionData) {
             $dataArray[$sectionName] = $this->_elementToArray($sectionData);
         }
 
-        $this->_configuration['application'] = $dataArray;
+        $this->_configuration = array_merge($this->_configuration, $dataArray);
     }
 
     /**

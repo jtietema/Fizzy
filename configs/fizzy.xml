@@ -4,10 +4,13 @@
         <title>Fizzy</title>
         <env>development</env>
         <adminSwitch>admin</adminSwitch>
-        <storageBackend>XML</storageBackend>
         <defaultController>default</defaultController>
         <defaultAction>default</defaultAction>
     </application>
+    <storage>
+        <driver>SQLite</driver>
+        <dsn>sqlite:/path/to/sqlite/database.sq3</dsn>
+    </storage>
     <paths>
         <controller></controller>
         <library></library>
