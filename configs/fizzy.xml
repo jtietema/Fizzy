@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<fizzy version="0.4">
+    <application>
+        <title>Fizzy</title>
+        <env>development</env>
+        <adminSwitch>admin</adminSwitch>
+        <defaultController>default</defaultController>
+        <defaultAction>default</defaultAction>
+    </application>
+    <storage>
+        <driver>SQLite</driver>
+        <dsn>sqlite:/path/to/sqlite/database.sq3</dsn>
+    </storage>
+    <paths>
+        <controller></controller>
+        <library></library>
+        <public></public>
+        <views></views>
+    </paths>
+</fizzy>

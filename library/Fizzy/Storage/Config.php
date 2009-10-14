@@ -14,7 +14,7 @@ class Fizzy_Storage_Config
     protected $_username = 'test';
     protected $_password = 'test';
 
-    protected $_filename = 'config/test.db';
+    protected $_filename = 'configs/test.db';
 
     public function __construct()
     {
