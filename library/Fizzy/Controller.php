@@ -22,7 +22,7 @@ class Fizzy_Controller
      * @var Fizzy_Request
      */
     protected $_request = null;
-    
+
     /** **/
     
     /**

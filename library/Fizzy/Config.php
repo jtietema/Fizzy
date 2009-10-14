@@ -12,8 +12,15 @@
  *
  * @author Mattijs Hoitink <mattijs@voidwalkers.nl>
  */
-class Fizzy_Config {
-    
+class Fizzy_Config
+{
+
+    /**
+     * Fizzy_Config instance.
+     * @var Fizzy_Config
+     */
+    protected static $_instance = null;
+
     /**
      * Configuration settings.
      * @var array
@@ -23,10 +30,23 @@ class Fizzy_Config {
     /** **/
 
     /**
-     * Default constructor.
+     * Fizzy_Config is a singleton, use Fizzy_Config::getInstance() to obtain
+     * an instance.
      */
-    public function __construct()
+    protected function __construct()
+    {}
+
+    /**
+     * Returns the active Fizzy_Config instance.
+     * @return Fizzy_Config
+     */
+    public static function getInstance()
     {
+        if(null === self::$_instance) {
+            self::$_instance = new self();
+        }
+
+        return self::$_instance;
     }
 
     /**
