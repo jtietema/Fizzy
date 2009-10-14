@@ -5,5 +5,13 @@
         <env>development</env>
         <adminSwitch>admin</adminSwitch>
         <storageBackend>XML</storageBackend>
+        <defaultController>default</defaultController>
+        <defaultAction>default</defaultAction>
     </application>
+    <paths>
+        <controller></controller>
+        <library></library>
+        <public></public>
+        <views></views>
+    </paths>
 </fizzy>
