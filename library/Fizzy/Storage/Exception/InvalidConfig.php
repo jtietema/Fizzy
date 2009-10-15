@@ -5,7 +5,7 @@
  *
  * @author jeroen
  */
-class Fizzy_Storage_Exception_InvalidConfig extends Exception
+class Fizzy_Storage_Exception_InvalidConfig extends Fizzy_Exception
 {
     //put your code here
 }
