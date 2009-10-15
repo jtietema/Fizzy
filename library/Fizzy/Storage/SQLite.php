@@ -9,14 +9,10 @@ require_once 'Fizzy/Storage/Exception/SQLiteError.php';
  */
 class Fizzy_Storage_SQLite implements Fizzy_Storage_Interface
 {
-    protected $_config = null;
-
     protected $_pdo = null;
 
-    public function __construct(Fizzy_Storage_Config $config)
+    public function __construct($dsn)
     {
-        $this->_config = $config;
-        $dsn = 'sqlite:' . $config->getFilename();
         $this->_pdo = new PDO($dsn);
     }
 
@@ -49,7 +45,7 @@ class Fizzy_Storage_SQLite implements Fizzy_Storage_Interface
                 throw new Fizzy_Storage_Exception_SQLiteError(implode(' | ', $this->_pdo->errorInfo()));
             }
 
-            $stmt->bindValue(':id', $model->getId());
+            $stmt->bindValue(':id', $model->getId(), PDO::PARAM_INT);
         }
         else
         {
@@ -88,14 +84,14 @@ class Fizzy_Storage_SQLite implements Fizzy_Storage_Interface
     {
         $type = $model->getType();
         $stmt = $this->_pdo->prepare("DELETE FROM $type WHERE id = :id");
-        $stmt->bindValue(':id', $model->getId());
+        $stmt->bindValue(':id', $model->getId(), PDO::PARAM_INT);
         $stmt->execute();
     }
 
     public function fetchOne($type, $uid)
     {
         $stmt = $this->_pdo->prepare("SELECT * FROM $type WHERE id = :id");
-        $stmt->bindValue(':id', $uid);
+        $stmt->bindValue(':id', $uid, PDO::PARAM_INT);
         $stmt->execute();
 
         return $stmt->fetch(PDO::FETCH_ASSOC);
