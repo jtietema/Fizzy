@@ -19,7 +19,7 @@ require_once 'Fizzy/FrontController.php';
 
 $config = Fizzy_Config::getInstance()
           ->loadConfiguration(simplexml_load_file(CONFIG_DIR .'/fizzy.xml'))
-          ->loadRoutes(simplexml_load_file(CONFIG_DIR .'/routes.xml'));
+          ->loadConfiguration(simplexml_load_file(CONFIG_DIR .'/routes.xml'));
 
 $frontController = new Fizzy_FrontController($config);
 $frontController->dispatch();

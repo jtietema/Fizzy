@@ -126,14 +126,19 @@ class Fizzy_Config
                 else {
                     $value = (string) $childValue;
                 }
-
+                
+                // account for attributes
                 if(count($childValue->attributes()) > 0) {
-                    $valueArray = array('value' => $value);
+                    $attributesArray = array();
                     foreach($childValue->attributes() as $attributeKey => $attributeValue) {
-                        $valueArray[$attributeKey] = (string) $attributeValue;
+                        $attributesArray[$attributeKey] = (string) $attributeValue;
                     }
-                    $value = $valueArray;
+                    if(!is_array($value)) {
+                        $value = array('value' => $value);
+                    }
+                    $value = array_merge($value, $attributesArray);
                 }
+                
                 $data[$childKey] = $value;
             }
         }
