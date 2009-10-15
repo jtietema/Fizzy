@@ -95,22 +95,23 @@ class Fizzy_FrontController
         $controller = $request->getController();
         $action = $request->getAction();
 
-        // Dispatch the action
-        
         // Check if controller exists
         $controllerClass = ucfirst($controller) . 'Controller';
         $actionMethod = $action . 'Action';
 
-        $controllerFile = CONTROLLER_PATH . '/' . $controllerClass . '.php';
-        if(!is_file($controllerFile)) {
-            require_once 'Fizzy/Exception.php';
-            throw new Fizzy_Exception("Controller file for controller {$controllerClass} not found.");
-        }
+        $controllerFileName = $controllerClass . '.php';
+        $controllerFilePath = CONTROLLER_PATH . DIRECTORY_SEPARATOR . $controllerFileName;
+        if(!in_array($controllerFilePath, get_included_files())) {
+            if(!is_file($controllerFilePath)) {
+                require_once 'Fizzy/Exception.php';
+                throw new Fizzy_Exception("Controller file for controller {$controllerClass} not found.");
+            }
 
-        include_once $controllerFile;
-        if(!class_exists($controllerClass)) {
-            require_once 'Fizzy/Exception.php';
-            throw new Fizzy_Exception("Controller class {$controllerClass} not found.");
+            include_once $controllerFilePath;
+            if(!class_exists($controllerClass)) {
+                require_once 'Fizzy/Exception.php';
+                throw new Fizzy_Exception("Controller class {$controllerClass} not found.");
+            }
         }
 
         $controllerInstance = new $controllerClass($request);

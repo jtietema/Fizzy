@@ -151,8 +151,6 @@ class Fizzy_Router
             }
         }
 
-        // If no matches were found, try a default route
-
         // No route found
         require_once 'Fizzy/Exception.php';
         throw new Fizzy_Exception('No route found.');

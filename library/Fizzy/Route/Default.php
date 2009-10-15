@@ -29,8 +29,8 @@ class Fizzy_Route_Default extends Fizzy_Route_Abstract
      */
     public function match(Fizzy_Request $request)
     {
-        $pathInfo = $request->getPathInfo();
-        $pathParts = preg_split('/\//', $pathInfo, -1, PREG_SPLIT_NO_EMPTY);
+        $path = $request->getPath();
+        $pathParts = preg_split('/\//', $path, -1, PREG_SPLIT_NO_EMPTY);
         
         // Get the controller and action from the path parts
         $controller = array_shift($pathParts);

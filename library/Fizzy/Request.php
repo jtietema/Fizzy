@@ -2,7 +2,7 @@
 /**
  * Class Fizzy_Request
  * 
- * * @copyright Copyright (c) 2009 Voidwalkers (http://www.voidwalkers.nl)
+ * @copyright Copyright (c) 2009 Voidwalkers (http://www.voidwalkers.nl)
  * @license http://opensource.org/licenses/mit-license.php The MIT License
  * @package Fizzy
  */
@@ -25,14 +25,36 @@ class Fizzy_Request
      * @var string
      */
     protected $_method = '';
-    
+
+    /**
+     * The complete requested URI.
+     * @var string
+     */
     protected $_requestUri = '';
-    
+
+    /**
+     * The server name.
+     * @var string
+     */
+    protected $_serverName = '';
+
+    /**
+     * The requested path within the application.
+     * @var string
+     */
+    protected $_path = '';
+
+    /**
+     * The query string passed in the request.
+     * @var string
+     */
     protected $_queryString = '';
-    
-    protected $_pathInfo = '';
-    
-    protected $_baseURL = '';
+
+    /**
+     * The base URL for the request.
+     * @var string
+     */
+    protected $_baseUrl = '';
     
     /**
      * The request controller.
@@ -62,11 +84,11 @@ class Fizzy_Request
         $this->_protocol = $_SERVER['SERVER_PROTOCOL'];
         $this->_method = $_SERVER['REQUEST_METHOD'];
         $this->_requestUri = $_SERVER['REQUEST_URI'];
+        $this->_serverName = $_SERVER['SERVER_NAME'];
+        $this->_path = (isset($_SERVER['PATH_INFO']) ? $_SERVER['PATH_INFO'] : '/');
         $this->_queryString = $_SERVER['QUERY_STRING'];
-        $this->_pathInfo = (isset($_SERVER['PATH_INFO']) ? $_SERVER['PATH_INFO'] : '/');
         
-        //$this->_parseParameters();
-        // Get parameters
+        // Parse query string parameters
         $parameters = array();
         $pairs = preg_split('/&/', $this->_queryString, -1, PREG_SPLIT_NO_EMPTY);
         foreach($pairs as $pair) {
@@ -96,16 +118,64 @@ class Fizzy_Request
     }
 
     /**
-     * Returns the path info.
+     * Returns the complete requested URI.
      * @return string
      */
-    public function getPathInfo()
+    public function getRequestUri()
     {
-        return $this->_pathInfo;
+        return $this->_requestUri;
     }
 
     /**
-     * Returns all request parameters.
+     * Returns the server name.
+     * @return string
+     */
+    public function getServerName()
+    {
+        return $this->_serverName;
+    }
+
+    /**
+     * Returns the path info.
+     * @return string
+     */
+    public function getPath()
+    {
+        return $this->_path;
+    }
+
+    /**
+     * Returns the query string from the request.
+     * @return string
+     */
+    public function getQueryString()
+    {
+        return $this->_queryString;
+    }
+
+    /**
+     * Sets the base URL for the request.
+     * @param string $baseUrl
+     * @return Fizzy_Request
+     */
+    public function setBaseUrl($baseUrl) {
+        $this->_baseUrl = $baseUrl;
+
+        return $this;
+    }
+
+    /**
+     * Returns the base URL for the request.
+     * @return string
+     */
+    public function getBaseUrl()
+    {
+        return $this->_baseUrl;
+    }
+
+    /**
+     * Returns all request parameters as key => value pairs. This contains the
+     * parameters from the query string and parameters injected by routes.
      * @return array
      */
     public function getParameters()
@@ -195,35 +265,4 @@ class Fizzy_Request
         return $this;
     }
     
-    /**
-     * Parses the parameters from the path info and query string.
-     */
-    protected function _parseParameters()
-    {
-        /*$pathInfo = $this->_pathInfo;
-        $pathParts = preg_split('/\//', $pathInfo, -1, PREG_SPLIT_NO_EMPTY);*/
-
-        /*$controller = array_shift($pathParts);
-        $action = array_shift($pathParts);
-        
-        if(empty($controller)) {
-            $controller = 'default';
-        }
-        $this->_controller = $controller;
-        if(empty($action)) {
-            $action = 'default';
-        }
-        $this->_action = $action;
-        */
-        // Parse query string
-        $parameters = array();
-        $pairs = preg_split('/&/', $this->_queryString, -1, PREG_SPLIT_NO_EMPTY);
-        foreach($pairs as $pair) {
-            list($key, $value) = preg_split('/=/', $pair, -1, PREG_SPLIT_NO_EMPTY);
-            $parameters[$key] = (!is_null($value) ? $value : '');
-        }
-        
-        $this->_parameters = $parameters;
-    }
-
 }

@@ -5,6 +5,11 @@
         <controller>pages</controller>
         <action>list</action>
     </pages>
+    <pages_all type="static">
+        <rule>pages/all</rule>
+        <controller>pages</controller>
+        <action>list</action>
+    </pages_all>
     <page_by_id type="regex">
         <rule>/pages/:id</rule>
         <controller>pages</controller>

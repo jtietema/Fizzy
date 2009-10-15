@@ -25,7 +25,7 @@ class Fizzy_Route_Static extends Fizzy_Route_Abstract
      */
     public function match(Fizzy_Request $request)
     {
-        $pathInfo = $request->getPathInfo();
+        $path = $request->getPath();
         $rule = $this->getRule();
 
         // Make sure the rule starts with a /
@@ -33,7 +33,7 @@ class Fizzy_Route_Static extends Fizzy_Route_Abstract
             $rule = '/' . $rule;
         }
 
-        if($pathInfo === $rule) {
+        if($path === $rule) {
             $request->setController($this->getController());
             $request->setAction($this->getAction());
             
