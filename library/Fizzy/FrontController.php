@@ -2,8 +2,8 @@
 /**
  * Class Fizzy_FrontController
  *
- * @copyright Voidwalkers (http://www.voidwalkers.nl)
- * @license New BSD
+ * @copyright Copyright (c) 2009 Voidwalkers (http://www.voidwalkers.nl)
+ * @license http://opensource.org/licenses/mit-license.php The MIT License
  * @package Fizzy
  */
 
@@ -47,10 +47,6 @@ class Fizzy_FrontController
     public function __construct(Fizzy_Config $config = null)
     {
         $this->_config = $config;
-
-        // Create default request and router
-        $this->_request = new Fizzy_Request();
-        $this->_router = new Fizzy_Router();
     }
     
     /**
@@ -86,10 +82,21 @@ class Fizzy_FrontController
      */
     public function dispatch()
     {
+        if(null === $this->_request) { $this->_request = new Fizzy_Request(); }
         $request = $this->_request;
+
+        if(null === $this->_router) { $this->_router = new Fizzy_Router($this->_config->getConfiguration('routes')); }
+        $router = $this->_router;
+
+        // Find a route and inject the route parameters into the request object
+        $router->route($request);
+        
+        // Get the controller and action
         $controller = $request->getController();
         $action = $request->getAction();
 
+        // Dispatch the action
+        
         // Check if controller exists
         $controllerClass = ucfirst($controller) . 'Controller';
         $actionMethod = $action . 'Action';

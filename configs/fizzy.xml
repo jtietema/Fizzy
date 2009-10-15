@@ -4,9 +4,11 @@
         <title>Fizzy</title>
         <env>development</env>
         <adminSwitch>admin</adminSwitch>
+    </application>
+    <router>
         <defaultController>default</defaultController>
         <defaultAction>default</defaultAction>
-    </application>
+    </router>
     <storage>
         <driver>SQLite</driver>
         <dsn>sqlite:/path/to/sqlite/database.sq3</dsn>
@@ -14,7 +16,8 @@
     <paths>
         <controller></controller>
         <library></library>
+        <model></model>
         <public></public>
-        <views></views>
+        <view></view>
     </paths>
 </fizzy>
