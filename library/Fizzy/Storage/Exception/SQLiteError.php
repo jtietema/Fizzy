@@ -1,5 +1,7 @@
 <?php
 
+require_once 'Fizzy/Exception.php';
+
 /**
  * Description of SQLiteError
  *
