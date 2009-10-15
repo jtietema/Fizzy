@@ -80,6 +80,34 @@ class Fizzy_Config
         }
 
         $this->_configuration = array_merge($this->_configuration, $dataArray);
+        return $this;
+    }
+
+    /**
+     * Loads routes configuration from a SimpleXMLElement.
+     * @param SimpleXMLElement $config
+     */
+    public function loadRoutes(SimpleXMLElement $config)
+    {
+        $routes = array();
+        foreach($config as $routeName => $routeData) {
+            $route = array();
+            foreach($routeData->children() as $childName => $childData) {
+                $route[$childName] = (string) $childData;
+            }
+            foreach($routeData->attributes() as $attrName => $attrData) {
+                $route[$attrName] = (string) $attrData;
+            }
+            $routes[$routeName] = $route;
+        }
+
+        // Merge routes with previously loaded routes
+        if(array_key_exists('routes', $this->_configuration)) {
+            $routes = array_merge($this->_configuration['routes'], $routes);
+        }
+
+        $this->_configuration['routes'] = $routes;
+        return $this;
     }
 
     /**

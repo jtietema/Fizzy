@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<routes>
+    <pages type="static">
+        <rule>pages</rule>
+        <controller>pages</controller>
+        <action>list</action>
+    </pages>
+    <pages_all type="static">
+        <rule>pages/all</rule>
+        <controller>pages</controller>
+        <action>list</action>
+    </pages_all>
+    <page_by_id type="regex">
+        <rule>/pages/:id</rule>
+        <controller>pages</controller>
+        <action>show</action>
+    </page_by_id>
+</routes>
