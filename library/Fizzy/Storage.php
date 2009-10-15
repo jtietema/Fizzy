@@ -1,5 +1,4 @@
 <?php
-require_once 'Fizzy/Storage/Config.php';
 require_once 'Fizzy/Storage/SQLite.php';
 require_once 'Fizzy/Storage/XML.php';
 require_once 'Fizzy/Storage/Exception/InvalidConfig.php';
@@ -13,6 +12,10 @@ require_once 'Fizzy/Storage/Exception/InvalidConfig.php';
  */
 class Fizzy_Storage
 {
+
+    const SQLite = 'sqlite';
+    const XML = 'xml';
+    
     /**
      * The config object.
      * @var Fizzy_Storage_Config
@@ -29,22 +32,40 @@ class Fizzy_Storage
      * The constructor.
      * Loads the config and instanciates the driver.
      */
-    public function __construct()
+    public function __construct($dsn)
     {
-        $config = $this->_config = new Fizzy_Storage_Config();
-
-        if ($config->getDriver() === Fizzy_Storage_Config::SQLite)
+        if ($this->_getDriver($dsn) === self::SQLite)
         {
-            $this->_driver = new Fizzy_Storage_SQLite($config);
+            $this->_driver = new Fizzy_Storage_SQLite($dsn);
         }
-        elseif ($config->getDriver() === Fizzy_Storage_Config::XML)
+        elseif ($this->_getDriver($dsn) === self::XML)
         {
-            $this->_driver = new Fizzy_Storage_XML($config);
+            $this->_driver = new Fizzy_Storage_XML($dsn);
         } 
-        else
-        {
-            throw new Fizzy_Storage_Exception_InvalidConfig("Invalid storage driver.");
-        }
+    }
+
+    /**
+     * Parses the dsn and returns the driver to be used.
+     * 
+     * @param string $dsn
+     * @return string
+     */
+    protected function _getDriver($dsn)
+    {
+       $pieces = explode(':', $dsn);
+       
+       if (strtolower($pieces[0]) === self::SQLite)
+       {
+           return self::SQLite;
+       }
+       elseif (strtolower($pieces[0]) === self::XML)
+       {
+           return self::XML;
+       }
+       else
+       {
+           throw new Fizzy_Storage_Exception_InvalidConfig("Unsupported driver:" . $pieces[0]);
+       }
     }
 
     /**
@@ -78,7 +99,7 @@ class Fizzy_Storage
     public function fetchOne($type, $uid)
     {
         $array = $this->_driver->fetchOne($type, $uid);
-
+        
         $class = $this->_buildClassname($type);
         $model = new $class();
         $model->populate($array);

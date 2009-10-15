@@ -8,7 +8,7 @@
 interface Fizzy_Storage_Interface
 {
     
-    public function __construct(Fizzy_Storage_Config $config);
+    public function __construct($dsn);
 
     public function persist(Fizzy_Model $model);
 

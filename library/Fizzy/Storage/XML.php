@@ -9,7 +9,7 @@ require_once 'Fizzy/Storage/Interface.php';
  */
 class Fizzy_Storage_XML implements Fizzy_Storage_Interface
 {
-    public function __construct(Fizzy_Storage_Config $config)
+    public function __construct($dsn)
     {
 
     }
