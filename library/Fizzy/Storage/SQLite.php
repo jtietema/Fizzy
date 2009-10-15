@@ -94,7 +94,12 @@ class Fizzy_Storage_SQLite implements Fizzy_Storage_Interface
         $stmt->bindValue(':id', $uid, PDO::PARAM_INT);
         $stmt->execute();
 
-        return $stmt->fetch(PDO::FETCH_ASSOC);
+        $array = $stmt->fetch(PDO::FETCH_ASSOC);
+
+        // check if there are results, if not return 
+        if (empty($array))
+            return null;
+        return $array;
     }
 
     /**
