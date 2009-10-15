@@ -21,6 +21,13 @@ class PagesController extends Fizzy_Controller
     public function showAction()
     {
         echo "This is PagesController::showAction()";
+
+        var_dump($this->_getParams());
+    }
+
+    public function listAction()
+    {
+        echo "This is PagesController::listAction()";
     }
 
 }

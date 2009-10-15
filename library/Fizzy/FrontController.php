@@ -2,8 +2,8 @@
 /**
  * Class Fizzy_FrontController
  *
- * @copyright Voidwalkers (http://www.voidwalkers.nl)
- * @license New BSD
+ * @copyright Copyright (c) 2009 Voidwalkers (http://www.voidwalkers.nl)
+ * @license http://opensource.org/licenses/mit-license.php The MIT License
  * @package Fizzy
  */
 
@@ -47,10 +47,6 @@ class Fizzy_FrontController
     public function __construct(Fizzy_Config $config = null)
     {
         $this->_config = $config;
-
-        // Create default request and router
-        $this->_request = new Fizzy_Request();
-        $this->_router = new Fizzy_Router();
     }
     
     /**
@@ -86,7 +82,16 @@ class Fizzy_FrontController
      */
     public function dispatch()
     {
+        if(null === $this->_request) { $this->_request = new Fizzy_Request(); }
         $request = $this->_request;
+
+        if(null === $this->_router) { $this->_router = new Fizzy_Router($this->_config->getConfiguration('routes')); }
+        $router = $this->_router;
+
+        // Find a route and inject the route parameters into the request object
+        $router->route($request);
+        
+        // Get the controller and action
         $controller = $request->getController();
         $action = $request->getAction();
 
@@ -94,16 +99,19 @@ class Fizzy_FrontController
         $controllerClass = ucfirst($controller) . 'Controller';
         $actionMethod = $action . 'Action';
 
-        $controllerFile = CONTROLLER_PATH . '/' . $controllerClass . '.php';
-        if(!is_file($controllerFile)) {
-            require_once 'Fizzy/Exception.php';
-            throw new Fizzy_Exception("Controller file for controller {$controllerClass} not found.");
-        }
+        $controllerFileName = $controllerClass . '.php';
+        $controllerFilePath = CONTROLLER_PATH . DIRECTORY_SEPARATOR . $controllerFileName;
+        if(!in_array($controllerFilePath, get_included_files())) {
+            if(!is_file($controllerFilePath)) {
+                require_once 'Fizzy/Exception.php';
+                throw new Fizzy_Exception("Controller file for controller {$controllerClass} not found.");
+            }
 
-        include_once $controllerFile;
-        if(!class_exists($controllerClass)) {
-            require_once 'Fizzy/Exception.php';
-            throw new Fizzy_Exception("Controller class {$controllerClass} not found.");
+            include_once $controllerFilePath;
+            if(!class_exists($controllerClass)) {
+                require_once 'Fizzy/Exception.php';
+                throw new Fizzy_Exception("Controller class {$controllerClass} not found.");
+            }
         }
 
         $controllerInstance = new $controllerClass($request);
