@@ -15,19 +15,42 @@ class PagesController extends Fizzy_Controller
 
     public function defaultAction()
     {
-        echo "This is PagesController::defaultAction()";
+        echo "<p>This is PagesController::defaultAction().</p>";
+        
+        echo "<p>Parameters:<br />";
+        echo "<pre>";
+        print_r($this->_getParams());
+        echo "</pre></p>";
     }
 
     public function showAction()
     {
-        echo "This is PagesController::showAction()";
+        echo "<p>This is PagesController::showAction().</p>";
 
-        var_dump($this->_getParams());
+        echo "<p>Parameters:<br />";
+        echo "<pre>";
+        print_r($this->_getParams());
+        echo "</pre></p>";
     }
 
     public function listAction()
     {
-        echo "This is PagesController::listAction()";
+        echo "<p>This is PagesController::listAction().</p>";
+
+        echo "<p>Parameters:<br />";
+        echo "<pre>";
+        print_r($this->_getParams());
+        echo "</pre></p>";
+    }
+
+    public function slugAction()
+    {
+        echo "<p>This is PagesController::slugAction().</p>";
+        
+        echo "<p>Parameters:<br />";
+        echo "<pre>";
+        print_r($this->_getParams());
+        echo "</pre></p>";
     }
 
 }

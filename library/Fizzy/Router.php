@@ -1,20 +1,33 @@
 <?php
 /**
  * Class Fizzy_Router
- * 
- * * @copyright Copyright (c) 2009 Voidwalkers (http://www.voidwalkers.nl)
- * @license http://opensource.org/licenses/mit-license.php The MIT License
  * @package Fizzy
+ *
+ * LICENSE
+ *
+ * This source file is subject to the new BSD license that is bundled
+ * with this package in the file LICENSE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://www.voidwalkers.nl/license/new-bsd
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to license@voidwalkers.nl so we can send you a copy immediately.
+ * 
+ * @copyright Copyright (c) 2009 Voidwalkers (http://www.voidwalkers.nl)
+ * @license http://www.voidwalkers.nl/license/new-bsd The New BSD License
  */
 
-/** Fizzy_Route_Static **/
-require_once 'Fizzy/Route/Static.php';
+/** Fizzy_Route_Default **/
+require_once 'Fizzy/Route/Default.php';
 
 /** Fizzy_Route_Regex **/
 require_once 'Fizzy/Route/Regex.php';
 
-/** Fizzy_Route_Default **/
-require_once 'Fizzy/Route/Default.php';
+/** Fizzy_Route_Simple **/
+require_once 'Fizzy/Route/Simple.php';
+
+/** Fizzy_Route_Static **/
+require_once 'Fizzy/Route/Static.php';
 
 /**
  * Router class for Fizzy MVC framework.
