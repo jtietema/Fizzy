@@ -15,12 +15,11 @@ class DefaultController extends Fizzy_Controller
 
     public function defaultAction()
     {
-        echo "This is DefaultController::defaultAction()";
+        $this->getView()->title = "Default";
     }
 
     public function anotherAction()
     {
-        echo "This is DefaultController::anotherAction()";
     }
     
 }

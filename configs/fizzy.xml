@@ -14,10 +14,12 @@
         <dsn>sqlite:/path/to/sqlite/database.sq3</dsn>
     </storage>
     <paths>
-        <controller></controller>
-        <library></library>
-        <model></model>
-        <public></public>
-        <view></view>
+        <base>/home/mattijs/development/voidwalkers/fizzy</base>
+        <controller>controllers</controller>
+        <library>library</library>
+        <model>models</model>
+        <public>public</public>
+        <view>view/scripts</view>
+        <layout>view/layouts</layout>
     </paths>
 </fizzy>

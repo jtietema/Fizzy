@@ -23,6 +23,12 @@ class Fizzy_Controller
      */
     protected $_request = null;
 
+    /**
+     * View object.
+     * @var Fizzy_View
+     */
+    protected $_view = null;
+
     /** **/
     
     /**
@@ -35,6 +41,27 @@ class Fizzy_Controller
         $this->_init();
     }
     
+    /**
+     * Sets the view object to use for rendering.
+     * @param Fizzy_View $view 
+     * @return Fizzy_Controller
+     */
+    public function setView(Fizzy_View $view)
+    {
+        $this->_view = $view;
+
+        return $this;
+    }
+
+    /**
+     * Returns the view object.
+     * @return Fizzy_View
+     */
+    public function getView()
+    {
+        return $this->_view;
+    }
+
     /**
      * Allows subclasses to extend the initialization of the controller class.
      */

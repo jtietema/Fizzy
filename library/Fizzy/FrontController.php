@@ -21,6 +21,8 @@
 require_once 'Fizzy/Request.php';
 /** Fizzy_Router */
 require_once 'Fizzy/Router.php';
+/** Fizzy_View */
+require_once 'Fizzy/View.php';
 
 /**
  * FrontController class for Fizzy. Dispatches the request to the correct 
@@ -92,6 +94,8 @@ class Fizzy_FrontController
      */
     public function dispatch()
     {
+        $config = $this->_config;
+        
         if(null === $this->_request) { $this->_request = new Fizzy_Request(); }
         $request = $this->_request;
 
@@ -124,17 +128,36 @@ class Fizzy_FrontController
 
         $reflectionClass = new ReflectionClass($controllerClass);
         $controllerInstance = $reflectionClass->newInstance($request);
+        
+        // Create a new view object for the controller
+        $paths = $config->getConfiguration('paths');
+        $view = new Fizzy_View();
+        $view->setbasePath($paths['base'])
+             ->setScriptPath($paths['view'])
+             ->setLayoutPath($paths['layout']);
+        $controllerInstance->setView($view);
 
         // retrieve the action
         $action = $request->getAction();
         $actionMethod = $action . 'Action';
-        
+
+        // set default view script based on controller and action names
+        $viewScript = strtolower($controller) . DIRECTORY_SEPARATOR . strtolower($action) . '.phtml';
+        $view->setScript($viewScript);
+
+        // check if the action method exists
         if(!$reflectionClass->hasMethod($actionMethod)) {
             require_once 'Fizzy/Exception.php';
             throw new Fizzy_Exception("Action method {$actionMethod} in Controller {$controllerClass} not found.");
         }
 
+        // call the action method
         $controllerInstance->$actionMethod();
+
+        // Output the view
+        if(!$view->isRendered()) {
+            $view->render();
+        }
     }
     
 }
