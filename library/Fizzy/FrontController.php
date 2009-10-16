@@ -133,7 +133,8 @@ class Fizzy_FrontController
         $view = new Fizzy_View();
         $view->setbasePath($paths['base'])
              ->setScriptPath($paths['view'])
-             ->setLayoutPath($paths['layout']);
+             ->setLayoutPath($paths['layout'])
+             ->setLayout('default.phtml');
         $controllerInstance->setView($view);
 
         // retrieve the action
@@ -153,8 +154,24 @@ class Fizzy_FrontController
         // call the action method
         $controllerInstance->$actionMethod();
 
-        // Send the rendered output
-        echo $view->render();
+        // Get the output from the action view
+        $viewOuput = $view->render();
+
+        $layout = $view->getLayout();
+        if(empty($layout)) {
+            // No layout specified, send the view output as a response
+            echo $viewOuput;
+        }
+        else {
+            $layout = new Fizzy_View();
+            $layout->setBasePath($view->getBasePath())
+               ->setScriptPath($view->getLayoutPath())
+               ->setScript($view->getLayout());
+
+            $layout->assign('content', $viewOuput);
+            echo $layout->render();
+        }
+
     }
     
 }

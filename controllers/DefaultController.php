@@ -20,6 +20,9 @@ class DefaultController extends Fizzy_Controller
 
     public function anotherAction()
     {
+        $this->getView()->title = "Default";
+        $this->getView()->setScript('default/default.phtml');
+        $this->getView()->setLayout('fizzy.phtml');
     }
     
 }
