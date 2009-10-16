@@ -193,21 +193,19 @@ class Fizzy_View
 
     /**
      * Renders the view script and outputs the result.
-     * @param string $script
-     * @param string $layout
+     * @return string
      */
-    public function render($script = null, $layout = null) {
-
-        if(null !== $script) { $this->setScript($script); }
-        unset($script);
-
-        if(null !== $layout) { $this->setLayout($layout); }
-        unset($layout);
+    public function render() {
 
         $viewScript = $this->_script($this->getScript());
-        $this->_rendered = true;
         
+        ob_start();
         include $viewScript;
+        $output = ob_get_clean();
+
+        $this->_rendered = true;
+
+        return $output;
     }
 
     /**

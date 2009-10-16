@@ -110,7 +110,6 @@ class Fizzy_FrontController
 
         // Check if controller exists
         $controllerClass = ucfirst($controller) . 'Controller';
-        
 
         $controllerFileName = $controllerClass . '.php';
         $controllerFilePath = CONTROLLER_PATH . DIRECTORY_SEPARATOR . $controllerFileName;
@@ -154,10 +153,8 @@ class Fizzy_FrontController
         // call the action method
         $controllerInstance->$actionMethod();
 
-        // Output the view
-        if(!$view->isRendered()) {
-            $view->render();
-        }
+        // Send the rendered output
+        echo $view->render();
     }
     
 }
