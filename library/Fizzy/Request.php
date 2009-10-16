@@ -14,6 +14,13 @@
  */
 class Fizzy_Request
 {
+
+    const METHOD_GET    = 'GET';
+    const METHOD_POST   = 'POST';
+    const METHOD_DELETE = 'DELETE';
+    const METHOD_PUT    = 'PUT';
+    const METHOD_HEAD   = 'HEAD';
+
     /**
      * The protocol used.
      @var string
@@ -82,7 +89,7 @@ class Fizzy_Request
     public function __construct()
     {
         $this->_protocol = $_SERVER['SERVER_PROTOCOL'];
-        $this->_method = $_SERVER['REQUEST_METHOD'];
+        $this->_method = strtoupper($_SERVER['REQUEST_METHOD']);
         $this->_requestUri = $_SERVER['REQUEST_URI'];
         $this->_serverName = $_SERVER['SERVER_NAME'];
         $this->_path = (isset($_SERVER['PATH_INFO']) ? $_SERVER['PATH_INFO'] : '/');

@@ -103,11 +103,10 @@ class Fizzy_FrontController
         
         // Get the controller and action
         $controller = $request->getController();
-        $action = $request->getAction();
 
         // Check if controller exists
         $controllerClass = ucfirst($controller) . 'Controller';
-        $actionMethod = $action . 'Action';
+        
 
         $controllerFileName = $controllerClass . '.php';
         $controllerFilePath = CONTROLLER_PATH . DIRECTORY_SEPARATOR . $controllerFileName;
@@ -124,12 +123,17 @@ class Fizzy_FrontController
         }
 
         $reflectionClass = new ReflectionClass($controllerClass);
+        $controllerInstance = $reflectionClass->newInstance($request);
+
+        // retrieve the action
+        $action = $request->getAction();
+        $actionMethod = $action . 'Action';
+        
         if(!$reflectionClass->hasMethod($actionMethod)) {
             require_once 'Fizzy/Exception.php';
             throw new Fizzy_Exception("Action method {$actionMethod} in Controller {$controllerClass} not found.");
         }
 
-        $controllerInstance = $reflectionClass->newInstance($request);
         $controllerInstance->$actionMethod();
     }
     
