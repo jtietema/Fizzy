@@ -95,11 +95,15 @@ class Fizzy_Storage
      * 
      * @param string $type
      * @param mixed $uid
+     * @return Fizzy_Model|null
      */
     public function fetchOne($type, $uid)
     {
         $array = $this->_driver->fetchOne($type, $uid);
-        
+
+        if ($array === null)
+            return null;
+
         $class = $this->_buildClassname($type);
         $model = new $class();
         $model->populate($array);
@@ -110,6 +114,7 @@ class Fizzy_Storage
      * Fetch all entities from a specific type (e.g. pages, users).
      * 
      * @param string $type
+     * @return array
      */
     public function fetchAll($type)
     {
