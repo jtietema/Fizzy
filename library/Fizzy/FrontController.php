@@ -14,7 +14,7 @@
  * to license@voidwalkers.nl so we can send you a copy immediately.
  * 
  * @copyright Copyright (c) 2009 Voidwalkers (http://www.voidwalkers.nl)
- * @license http://opensource.org/licenses/mit-license.php The MIT License
+ * @license http://www.voidwalkers.nl/license/new-bsd The New BSD License
  */
 
 /** Fizzy_Request */
