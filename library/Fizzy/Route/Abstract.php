@@ -80,6 +80,18 @@ abstract class Fizzy_Route_Abstract implements Fizzy_Route_Interface
     }
 
     /**
+     * Sets the route rule.
+     * @param string $rule
+     * @return Fizzy_Route_Abstract
+     */
+    public function setRule($rule)
+    {
+        $this->_rule = $rule;
+
+        return $this;
+    }
+
+    /**
      * Returns the rule for this route.
      * @return string
      */
@@ -89,12 +101,36 @@ abstract class Fizzy_Route_Abstract implements Fizzy_Route_Interface
     }
 
     /**
+     * Sets the controller to route to.
+     * @param string $controller
+     * @return Fizzy_Route_Abstract
+     */
+    public function setController($controller)
+    {
+        $this->_controller = $controller;
+
+        return $this;
+    }
+
+    /**
      * Returns the controller this route routes to.
      * @return string
      */
     public function getController()
     {
         return $this->_controller;
+    }
+
+    /**
+     * Sets the action to route to.
+     * @param string $action
+     * @return Fizzy_Route_Abstract 
+     */
+    public function setAction($action)
+    {
+        $this->_action = $action;
+
+        return $this;
     }
 
     /**

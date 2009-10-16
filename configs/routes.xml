@@ -12,9 +12,18 @@
             <action>list</action>
         </pages_all>
         <page_by_id type="regex">
-            <rule>/pages/:id</rule>
+            <rule>pages/(\d+)/(\+d)</rule>
             <controller>pages</controller>
             <action>show</action>
+            <parameters>
+                <param>id</param>
+                <param>user</param>
+            </parameters>
         </page_by_id>
+        <page_by_slug type="simple">
+            <rule>pages/:id/something/:mode</rule>
+            <controller>pages</controller>
+            <action>show</action>
+        </page_by_slug>
     </routes>
 </fizzy>
