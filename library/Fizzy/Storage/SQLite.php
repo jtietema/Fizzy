@@ -24,7 +24,7 @@ require_once 'Fizzy/Storage/Interface.php';
 /**
  * Storage backend to SQLite
  *
- * @author jeroen
+ * @author Jeroen Tietema <jeroen@voidwalkers.nl>
  */
 class Fizzy_Storage_SQLite implements Fizzy_Storage_Interface
 {
