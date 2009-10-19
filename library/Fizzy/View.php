@@ -61,6 +61,12 @@ class Fizzy_View
      */
     private $_rendered = false;
 
+    /**
+     * If the view is enabled and should be rendered.
+     * @var boolean
+     */
+    private $_enabled = true;
+
     /** **/
 
     /**
@@ -175,6 +181,31 @@ class Fizzy_View
     public function isRendered()
     {
         return $this->_rendered;
+    }
+
+    /**
+     * Disables the view for rendering.
+     */
+    public function disable()
+    {
+        $this->_enabled = false;
+    }
+
+    /**
+     * Enables the view for rendering.
+     */
+    public function enable()
+    {
+        $this->_enabled = true;
+    }
+
+    /**
+     * Returns if the view is enabled.
+     * @return boolean
+     */
+    public function isEnabled()
+    {
+        return $this->_enabled;
     }
 
     /**

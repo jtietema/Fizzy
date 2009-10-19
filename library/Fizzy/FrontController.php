@@ -161,24 +161,27 @@ class Fizzy_FrontController
         // Call the after method
         $controllerInstance->after();
 
-        // Get the output from the action view
-        $viewOuput = $view->render();
+        // Check if the view should be rendered
+        if($view->isEnabled()) {
 
-        $layout = $view->getLayout();
-        if(empty($layout)) {
-            // No layout specified, send the view output as a response
-            echo $viewOuput;
+            // Get the output from the action view
+            $viewOuput = $view->render();
+
+            $layout = $view->getLayout();
+            if(empty($layout)) {
+                // No layout specified, send the view output as a response
+                echo $viewOuput;
+            }
+            else {
+                $layout = new Fizzy_View();
+                $layout->setBasePath($view->getBasePath())
+                   ->setScriptPath($view->getLayoutPath())
+                   ->setScript($view->getLayout());
+
+                $layout->assign('content', $viewOuput);
+                echo $layout->render();
+            }
         }
-        else {
-            $layout = new Fizzy_View();
-            $layout->setBasePath($view->getBasePath())
-               ->setScriptPath($view->getLayoutPath())
-               ->setScript($view->getLayout());
-
-            $layout->assign('content', $viewOuput);
-            echo $layout->render();
-        }
-
     }
     
 }
