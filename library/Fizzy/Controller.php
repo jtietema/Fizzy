@@ -79,6 +79,20 @@ class Fizzy_Controller
     {}
     
     /**
+     * Method is called before the request action is called on the controller 
+     * class.
+     */
+    public function before()
+    {}
+
+    /**
+     * Method is called after the request action is called on the controller
+     * class.
+     */
+    public function after()
+    {}
+
+    /**
      * Returns all parameters passed to the controller.
      * @return array
      */

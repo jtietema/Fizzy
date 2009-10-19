@@ -95,8 +95,12 @@ class Fizzy_FrontController
     public function dispatch()
     {
         $config = $this->_config;
+        $paths = $config->getConfiguration('paths');
+        $application = $config->getConfiguration('application');
         
-        if(null === $this->_request) { $this->_request = new Fizzy_Request(); }
+        if(null === $this->_request) {
+            $this->_request = new Fizzy_Request();
+        }
         $request = $this->_request;
 
         if(null === $this->_router) { $this->_router = new Fizzy_Router($this->_config->getConfiguration('routes')); }
@@ -129,7 +133,6 @@ class Fizzy_FrontController
         $controllerInstance = $reflectionClass->newInstance($request);
         
         // Create a new view object for the controller
-        $paths = $config->getConfiguration('paths');
         $view = new Fizzy_View();
         $view->setbasePath($paths['base'])
              ->setScriptPath($paths['view'])
@@ -151,8 +154,12 @@ class Fizzy_FrontController
             throw new Fizzy_Exception("Action method {$actionMethod} in Controller {$controllerClass} not found.");
         }
 
+        // Call the before method
+        $controllerInstance->before();
         // call the action method
         $controllerInstance->$actionMethod();
+        // Call the after method
+        $controllerInstance->after();
 
         // Get the output from the action view
         $viewOuput = $view->render();
