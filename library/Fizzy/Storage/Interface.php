@@ -17,4 +17,6 @@ interface Fizzy_Storage_Interface
     public function fetchOne($type, $uid);
 
     public function fetchAll($type);
+
+    public function fetchColumn($type, $column, $value);
 }

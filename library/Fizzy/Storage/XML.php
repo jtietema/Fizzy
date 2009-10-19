@@ -128,6 +128,21 @@ class Fizzy_Storage_XML implements Fizzy_Storage_Interface
         
     }
 
+    public function fetchColumn($type, $column, $value)
+    {
+        $domDocument = $this->_initXML($type);
+        
+        $element = $domDocument->getElementByXpath("//*[$column='$value']");
+
+        $simpleXMLElement = simplexml_import_dom($element);
+
+        $array = $this->_elementToArray($simpleXMLElement);
+
+        $array['id'] = $array['uid'];
+        unset($array['uid']);
+        return $array;
+    }
+
     public function fetchAll($type)
     {
         $xml = $this->_initXML($type);

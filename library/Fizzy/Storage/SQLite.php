@@ -117,6 +117,11 @@ class Fizzy_Storage_SQLite implements Fizzy_Storage_Interface
         return $stmt->fetchAll();
     }
 
+    public function fetchColumn($type, $column, $value)
+    {
+        
+    }
+
     /**
      * Adds a colon to the given string
      *

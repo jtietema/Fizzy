@@ -45,13 +45,18 @@ class Fizzy_Storage_XML_Document extends DOMDocument
 
     public function getElementByUid($id)
     {
+        return $this->getElementByXpath("//*[@uid='$id']");
+    }
+
+    public function getElementByXpath($query)
+    {
         // select the node with the correct id
         $xpath = new DOMXPath($this);
-        $results = $xpath->query("//*[@uid='$id']");
+        $results = $xpath->query($query);
         // set the element for futher use
         if ($results->length === 0)
             return null;
-        
+
         $element = $results->item(0);
         return $element;
     }

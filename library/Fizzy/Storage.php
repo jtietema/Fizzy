@@ -104,10 +104,7 @@ class Fizzy_Storage
         if ($array === null)
             return null;
 
-        $class = $this->_buildClassname($type);
-        $model = new $class();
-        $model->populate($array);
-        return $model;
+        return $this->_buildModel($type, $array);
     }
 
     /**
@@ -124,17 +121,40 @@ class Fizzy_Storage
 
         foreach ($results as $array)
         {
-            $class = $this->_buildClassname($type);
-            $model = new $class();
-            $model->populate($array);
-            $models[] = $model;
+            $models[] = $this->_buildModel($type, $array);
         }
 
         return $models;
     }
 
+    /**
+     * Used to select a row by a Value in a specific column
+     * 
+     * @param string $type
+     * @param string $column
+     * @param mixed $value
+     * @return Fizzy_Model|null
+     */
+    public function fetchColumn($type, $column, $value)
+    {
+        $array = $this->_driver->fetchColumn($type, $column, $value);
+
+        if ($array === null)
+            return null;
+
+        return $this->_buildModel($type, $array);
+    }
+
+    protected function _buildModel($type, $array)
+    {
+        $class = $this->_buildClassname($type);
+        $model = new $class();
+        $model->populate($array);
+        return $model;
+    }
+
     protected function _buildClassname($type)
     {
-        return ucfirst($type) . 'Model';
+        return ucfirst($type);
     }
 }

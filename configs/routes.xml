@@ -25,5 +25,10 @@
             <controller>pages</controller>
             <action>show</action>
         </page_by_slug>
+        <admin_pages type="static">
+            <rule>admin/pages</rule>
+            <controller>AdminPages</controller>
+            <action>default</action>
+        </admin_pages>
     </routes>
 </fizzy>

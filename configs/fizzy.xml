@@ -10,11 +10,10 @@
         <defaultAction>default</defaultAction>
     </router>
     <storage>
-        <driver>SQLite</driver>
-        <dsn>sqlite:/path/to/sqlite/database.sq3</dsn>
+        <dsn>xml:../data/</dsn>
     </storage>
     <paths>
-        <base>/home/mattijs/development/voidwalkers/fizzy</base>
+        <base>/var/www/fizzy.auth</base>
         <controller>controllers</controller>
         <library>library</library>
         <model>models</model>

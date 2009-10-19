@@ -12,8 +12,9 @@ define('CONFIG_DIR', APPLICATION_PATH . '/configs');
 define('LIBRARY_PATH', APPLICATION_PATH . '/library');
 define('CONTROLLER_PATH', APPLICATION_PATH . '/controllers');
 define('VIEWS_PATH', APPLICATION_PATH . '/views');
+define('MODELS_PATH', APPLICATION_PATH . '/models');
 
-set_include_path(LIBRARY_PATH . PATH_SEPARATOR . get_include_path());
+set_include_path(LIBRARY_PATH . PATH_SEPARATOR . MODELS_PATH . PATH_SEPARATOR . get_include_path());
 require_once 'Fizzy/Config.php';
 require_once 'Fizzy/FrontController.php';
 
