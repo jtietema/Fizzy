@@ -139,6 +139,9 @@ class Fizzy_Storage_XML implements Fizzy_Storage_Interface
 
         $element = $domDocument->getElementByUid($uid);
 
+        if ($element === null)
+            return null;
+
         $simpleXMLElement = simplexml_import_dom($element);
 
         $array = $this->_elementToArray($simpleXMLElement);
