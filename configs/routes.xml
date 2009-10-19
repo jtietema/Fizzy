@@ -25,5 +25,10 @@
             <controller>pages</controller>
             <action>show</action>
         </page_by_slug>
+        <homepage type="static">
+            <rule>/</rule>
+            <controller>pages</controller>
+            <action>homepage</action>
+        </homepage>
     </routes>
 </fizzy>

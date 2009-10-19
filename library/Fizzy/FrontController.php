@@ -118,9 +118,9 @@ class Fizzy_FrontController
         $controller = $request->getController();
 
         // Check if controller exists
-        $controllerClass = ucfirst($controller) . 'Controller';
+        $controllerClass = $controller . 'Controller';
 
-        $controllerFileName = $controllerClass . '.php';
+        $controllerFileName = ucfirst($controllerClass) . '.php';
         $controllerFilePath = CONTROLLER_PATH . DIRECTORY_SEPARATOR . $controllerFileName;
 
         if(!is_file($controllerFilePath)) {
@@ -147,8 +147,9 @@ class Fizzy_FrontController
 
         // retrieve the action
         $action = $request->getAction();
-        $actionMethod = $action . 'Action';
-
+        $actionName = strtolower(substr($action, 0, 1)) . substr($action, 1, strlen($action));
+        $actionMethod = $actionName . 'Action';
+        
         // set default view script based on controller and action names
         $viewScript = strtolower($controller) . DIRECTORY_SEPARATOR . strtolower($action) . '.phtml';
         $view->setScript($viewScript);

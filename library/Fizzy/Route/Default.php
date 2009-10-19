@@ -54,14 +54,17 @@ class Fizzy_Route_Default extends Fizzy_Route_Abstract
             $action = $this->_router->getDefaultAction();
         }
 
+        $controllerName = $this->_camelCase($controller);
+        $actionName = $this->_camelCase($action);
+
         // Convert the rest of the parts to parameter pairs
         $parameters = array();
         while(count($pathParts) > 0) {
             $parameters[array_shift($pathParts)] = array_shift($pathParts);
         }
 
-        $request->setController($controller);
-        $request->setAction($action);
+        $request->setController($controllerName);
+        $request->setAction($actionName);
         $request->addParameters($parameters);
 
         return true;

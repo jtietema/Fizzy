@@ -44,8 +44,8 @@ class Fizzy_Route_Static extends Fizzy_Route_Abstract
         }
 
         if($path === $rule) {
-            $request->setController($this->getController());
-            $request->setAction($this->getAction());
+            $request->setController($this->_camelCase($this->getController()));
+            $request->setAction($this->_camelCase($this->getAction()));
             
             return true;
         }

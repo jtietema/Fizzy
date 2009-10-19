@@ -152,4 +152,21 @@ abstract class Fizzy_Route_Abstract implements Fizzy_Route_Interface
         return $this->_action;
     }
 
+    /**
+     * Changes a string value to camel case, by changing the first letter and
+     * each letter after an underscore to upper case.
+     * @param string $value
+     * @return string
+     */
+    protected function _camelCase($value)
+    {
+        $camels = preg_split('/_/', $value, -1, PREG_SPLIT_NO_EMPTY);
+        $case = '';
+        foreach($camels as $camel) {
+            $case .= ucfirst($camel);
+        }
+
+        return $case;
+    }
+
 }
