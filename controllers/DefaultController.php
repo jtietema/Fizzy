@@ -24,5 +24,5 @@ class DefaultController extends Fizzy_Controller
         $this->getView()->setScript('default/default.phtml');
         $this->getView()->setLayout('fizzy.phtml');
     }
-    
+
 }

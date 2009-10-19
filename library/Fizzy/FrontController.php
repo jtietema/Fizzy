@@ -100,10 +100,15 @@ class Fizzy_FrontController
         
         if(null === $this->_request) {
             $this->_request = new Fizzy_Request();
+            if(isset($application['baseUrl'])) {
+                $this->_request->setBaseUrl($application['baseUrl']);
+            }
         }
         $request = $this->_request;
-
-        if(null === $this->_router) { $this->_router = new Fizzy_Router($this->_config->getConfiguration('routes')); }
+        
+        if(null === $this->_router) {
+            $this->_router = new Fizzy_Router($this->_config->getConfiguration('routes'));
+        }
         $router = $this->_router;
 
         // Find a route and inject the route parameters into the request object

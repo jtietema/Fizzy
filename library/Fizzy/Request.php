@@ -104,7 +104,9 @@ class Fizzy_Request
         $this->_serverName = $_SERVER['SERVER_NAME'];
         $this->_path = (isset($_SERVER['PATH_INFO']) ? $_SERVER['PATH_INFO'] : '/');
         $this->_queryString = $_SERVER['QUERY_STRING'];
-        
+        // Get the baseUrl from the script name, and strip the trailing slash
+        $this->setBaseUrl(dirname($_SERVER['SCRIPT_NAME']));
+
         // Parse query string parameters
         $parameters = array();
         $pairs = preg_split('/&/', $this->_queryString, -1, PREG_SPLIT_NO_EMPTY);
@@ -175,9 +177,16 @@ class Fizzy_Request
      * @param string $baseUrl
      * @return Fizzy_Request
      */
-    public function setBaseUrl($baseUrl) {
-        $this->_baseUrl = $baseUrl;
+    public function setBaseUrl($baseUrl)
+    {
+        // Add leading slash
+        if(0 !== strpos($baseUrl, '/')) {
+            $baseUrl = '/' . $baseUrl;
+        }
+        // Strip trailing slash
+        $baseUrl = rtrim($baseUrl, '/');
 
+        $this->_baseUrl = $baseUrl;
         return $this;
     }
 
