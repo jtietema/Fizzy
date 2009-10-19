@@ -21,6 +21,9 @@
 /** Fizzy_Storage_Interface */
 require_once 'Fizzy/Storage/Interface.php';
 
+/** Fizzy_Storage_Model */
+require_once 'Fizzy/Storage/Model.php';
+
 /** Fizzy_Storage_XML_Document */
 require_once 'Fizzy/Storage/XML/Document.php';
 
@@ -63,7 +66,7 @@ class Fizzy_Storage_XML implements Fizzy_Storage_Interface
         $this->_xmlDocuments = array();
     }
 
-    public function persist(Fizzy_Model $model)
+    public function persist(Fizzy_Storage_Model $model)
     {
         $type = $model->getType();
         
@@ -116,7 +119,7 @@ class Fizzy_Storage_XML implements Fizzy_Storage_Interface
         return $model;
     }
 
-    public function remove(Fizzy_Model $model)
+    public function remove(Fizzy_Storage_Model $model)
     {
         $type = $model->getType();
 
@@ -139,8 +142,9 @@ class Fizzy_Storage_XML implements Fizzy_Storage_Interface
 
         $element = $domDocument->getElementByUid($uid);
 
-        if ($element === null)
+        if ($element === null) {
             return null;
+        }
 
         $simpleXMLElement = simplexml_import_dom($element);
 
@@ -157,6 +161,9 @@ class Fizzy_Storage_XML implements Fizzy_Storage_Interface
         $domDocument = $this->_initXML($type);
         
         $element = $domDocument->getElementByXpath("//*[$column='$value']");
+        if ($element === null) {
+            return null;
+        }
 
         $simpleXMLElement = simplexml_import_dom($element);
 
@@ -230,7 +237,7 @@ class Fizzy_Storage_XML implements Fizzy_Storage_Interface
         return $this->_xmlDocuments[$type];
     }
 
-    protected function _createXML($filename, Fizzy_Model $model)
+    protected function _createXML($filename, Fizzy_Storage_Model $model)
     {
         // create the root
         $domDocument = new Fizzy_Storage_XML_Document();

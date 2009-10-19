@@ -32,13 +32,14 @@ require_once 'Fizzy/Storage/XML.php';
  */
 class Fizzy_Storage
 {
-
-    const SQLite = 'sqlite';
+    /** Constants for drivers */
+    const MYSQL = 'mysql';
+    const SQLITE = 'sqlite';
     const XML = 'xml';
     
     /**
-     * The config object.
-     * @var Fizzy_Storage_Config
+     * The storage configuration.
+     * @var array
      */
     protected $_config = null;
 
@@ -48,18 +49,26 @@ class Fizzy_Storage
      */
     protected $_driver = null;
 
+    /** **/
+    
     /**
-     * The constructor.
-     * Loads the config and instanciates the driver.
+     * Constructor. Loads the configuration and instanciates the driver.
+     * @param array $config
      */
-    public function __construct($dsn)
+    public function __construct(array $config)
     {
-        if ($this->_getDriver($dsn) === self::SQLite)
-        {
+        $this->_config = $config;
+
+        if(!isset($this->_config['dsn'])) {
+            require_once 'Fizzy/Storage/Exception/InvalidConfig.php';
+            throw new Fizzy_Storage_Exception_InvalidConfig('No DSN specified in storage configuration.');
+        }
+
+        $dsn = strtolower($this->_config['dsn']);
+        if ($this->_getDriver($dsn) === self::SQLITE) {
             $this->_driver = new Fizzy_Storage_SQLite($dsn);
         }
-        elseif ($this->_getDriver($dsn) === self::XML)
-        {
+        elseif ($this->_getDriver($dsn) === self::XML) {
             $this->_driver = new Fizzy_Storage_XML($dsn);
         } 
     }
@@ -74,16 +83,13 @@ class Fizzy_Storage
     {
        $pieces = explode(':', $dsn);
        
-       if (strtolower($pieces[0]) === self::SQLite)
-       {
-           return self::SQLite;
+       if (strtolower($pieces[0]) === self::SQLITE) {
+           return self::SQLITE;
        }
-       elseif (strtolower($pieces[0]) === self::XML)
-       {
+       elseif (strtolower($pieces[0]) === self::XML) {
            return self::XML;
        }
-       else
-       {
+       else {
            require_once 'Fizzy/Storage/Exception/InvalidConfig.php';
            throw new Fizzy_Storage_Exception_InvalidConfig("Unsupported driver:" . $pieces[0]);
        }
@@ -93,10 +99,10 @@ class Fizzy_Storage
      * Persist the given model (add or save).
      * Returns the persisted model (with added id).
      * 
-     * @param Fizzy_Model $model
-     * @return Fizzy_Model
+     * @param Fizzy_Storage_Model $model
+     * @return Fizzy_Storage_Model
      */
-    public function persist(Fizzy_Model $model)
+    public function persist(Fizzy_Storage_Model $model)
     {
         return $this->_driver->persist($model);
     }
@@ -104,9 +110,9 @@ class Fizzy_Storage
     /**
      * Remove the given model from persistence.
      *
-     * @param Fizzy_Model $model
+     * @param Fizzy_Storage_Model $model
      */
-    public function remove(Fizzy_Model $model)
+    public function remove(Fizzy_Storage_Model $model)
     {
         return $this->_driver->remove($model);
     }
@@ -116,14 +122,15 @@ class Fizzy_Storage
      * 
      * @param string $type
      * @param mixed $uid
-     * @return Fizzy_Model|null
+     * @return Fizzy_Storage_Model|null
      */
     public function fetchOne($type, $uid)
     {
         $array = $this->_driver->fetchOne($type, $uid);
 
-        if ($array === null)
+        if ($array === null) {
             return null;
+        }
 
         return $this->_buildModel($type, $array);
     }
@@ -139,9 +146,7 @@ class Fizzy_Storage
         $results = $this->_driver->fetchAll($type);
 
         $models = array();
-
-        foreach ($results as $array)
-        {
+        foreach ($results as $array) {
             $models[] = $this->_buildModel($type, $array);
         }
 
@@ -154,23 +159,30 @@ class Fizzy_Storage
      * @param string $type
      * @param string $column
      * @param mixed $value
-     * @return Fizzy_Model|null
+     * @return Fizzy_Storage_Model|null
      */
     public function fetchColumn($type, $column, $value)
     {
         $array = $this->_driver->fetchColumn($type, $column, $value);
 
-        if ($array === null)
+        if ($array === null) {
             return null;
+        }
 
         return $this->_buildModel($type, $array);
     }
 
-    protected function _buildModel($type, $array)
+    /**
+     * Builds a model for the given type and fills it with the data array.
+     * @param string $type
+     * @param array $data
+     * @return Fizzy_Storage_Model
+     */
+    protected function _buildModel($type, $data)
     {
         $class = $this->_buildClassname($type);
-        $model = new $class();
-        $model->populate($array);
+        $model = new $class($data);
+        
         return $model;
     }
 

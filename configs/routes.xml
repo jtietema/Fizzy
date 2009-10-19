@@ -3,17 +3,17 @@
     <routes>
         <pages type="static">
             <rule>pages</rule>
-            <controller>pages</controller>
+            <controller>page</controller>
             <action>list</action>
         </pages>
         <pages_all type="static">
             <rule>pages/all</rule>
-            <controller>pages</controller>
+            <controller>page</controller>
             <action>list</action>
         </pages_all>
         <page_by_id type="regex">
             <rule>pages/(\d+)/(\+d)</rule>
-            <controller>pages</controller>
+            <controller>page</controller>
             <action>show</action>
             <parameters>
                 <param>id</param>
@@ -21,8 +21,8 @@
             </parameters>
         </page_by_id>
         <page_by_slug type="simple">
-            <rule>pages/:id/something/:mode</rule>
-            <controller>pages</controller>
+            <rule>page/:slug</rule>
+            <controller>page</controller>
             <action>show</action>
         </page_by_slug>
         <admin_pages type="static">
@@ -32,7 +32,7 @@
         </admin_pages>
         <homepage type="static">
             <rule>/</rule>
-            <controller>pages</controller>
+            <controller>page</controller>
             <action>homepage</action>
         </homepage>
     </routes>

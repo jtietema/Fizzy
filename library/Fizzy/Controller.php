@@ -50,7 +50,16 @@ class Fizzy_Controller
         $this->_request = $request;
         $this->_init();
     }
-    
+
+    /**
+     * Returns the request for this controller.
+     * @return Fizzy_Request
+     */
+    public function getRequest()
+    {
+        return $this->_request;
+    }
+
     /**
      * Sets the view object to use for rendering.
      * @param Fizzy_View $view 
@@ -98,7 +107,7 @@ class Fizzy_Controller
      */
     protected function _getParams()
     {
-        return $this->_request->getParameters();
+        return $this->getRequest()->getParameters();
     }
     
     /**
@@ -108,6 +117,11 @@ class Fizzy_Controller
      */
     protected function _getParam($key)
     {
-        
+        $parameters = $this->getRequest()->getParameters();
+        if(!array_key_exists($key, $parameters)) {
+            return null;
+        }
+
+        return $parameters[$key];
     }
 }

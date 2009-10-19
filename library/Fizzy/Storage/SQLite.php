@@ -21,6 +21,9 @@
 /** Fizzy_Storage_Interface */
 require_once 'Fizzy/Storage/Interface.php';
 
+/** Fizzy_Storage_Model */
+require_once 'Fizzy/Storage/Model.php';
+
 /**
  * Storage backend to SQLite
  *
@@ -35,7 +38,7 @@ class Fizzy_Storage_SQLite implements Fizzy_Storage_Interface
         $this->_pdo = new PDO($dsn);
     }
 
-    public function persist(Fizzy_Model $model)
+    public function persist(Fizzy_Storage_Model $model)
     {
         $type = $model->getType();
         $fields = $model->toArray();
@@ -101,7 +104,7 @@ class Fizzy_Storage_SQLite implements Fizzy_Storage_Interface
         return $model;
     }
 
-    public function remove(Fizzy_Model $model)
+    public function remove(Fizzy_Storage_Model $model)
     {
         $type = $model->getType();
         $stmt = $this->_pdo->prepare("DELETE FROM $type WHERE id = :id");
@@ -166,9 +169,9 @@ class Fizzy_Storage_SQLite implements Fizzy_Storage_Interface
     /**
      * Creates a table for the given model
      * 
-     * @param Fizzy_Model $model
+     * @param Fizzy_Storage_Model $model
      */
-    protected function _createTable(Fizzy_Model $model)
+    protected function _createTable(Fizzy_Storage_Model $model)
     {
         $type = $model->getType();
         $columns = implode( ',', array_keys( $model->toArray() ) );

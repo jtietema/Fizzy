@@ -2,6 +2,7 @@
 /**
  * Class SecureController
  * @package Fizzy
+ * @subpackage Controller
  *
  * LICENSE
  *
@@ -16,9 +17,14 @@
  * @copyright Copyright (c) 2009 Voidwalkers (http://www.voidwalkers.nl)
  * @license http://www.voidwalkers.nl/license/new-bsd The New BSD License
  */
- 
+
+/** Fizzy_Controller */
 require_once 'Fizzy/Controller.php';
+
+/** Fizzy_Storage */
 require_once 'Fizzy/Storage.php';
+
+/** User */
 require_once 'User.php';
 
 /**
@@ -49,7 +55,7 @@ class SecureController extends Fizzy_Controller
             // perform login
             $config = Fizzy_Config::getInstance();
             $storageOptions = $config->getConfiguration('storage');
-            $storage = new Fizzy_Storage($storageOptions['dsn']);
+            $storage = new Fizzy_Storage($storageOptions);
 
             $model = $storage->fetchColumn('user', 'username', $_POST['username']);
             if ($model !== null && $model->getPassword() === md5($_POST['password']))

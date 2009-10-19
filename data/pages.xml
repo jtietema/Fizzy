@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<pages>
+    <page uid="1">
+        <title><![CDATA[Voidwalkers - Welkom]]></title>
+        <slug>voidwalkers</slug>
+        <body><![CDATA[This is the body encapsulated in CDATA]]></body>
+    </page>
+</pages>
