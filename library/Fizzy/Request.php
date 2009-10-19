@@ -290,5 +290,14 @@ class Fizzy_Request
 
         return $this;
     }
+
+    /**
+     * Checks if the request was a POST request.
+     * @return boolean
+     */
+    public function isPost()
+    {
+        return ((boolean) isset($_POST) && !empty($_POST));
+    }
     
 }
