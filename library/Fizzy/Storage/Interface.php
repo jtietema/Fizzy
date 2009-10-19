@@ -28,13 +28,46 @@ interface Fizzy_Storage_Interface
     
     public function __construct($dsn);
 
+    /**
+     * Persist the given model (add or save).
+     * Returns the persisted model (with added id).
+     *
+     * @param Fizzy_Model $model
+     * @return Fizzy_Model
+     */
     public function persist(Fizzy_Model $model);
 
+    /**
+     * Remove the given model from persistence.
+     *
+     * @param Fizzy_Model $model
+     */
     public function remove(Fizzy_Model $model);
 
+    /**
+     * Fetch one item of $type with $uid.
+     *
+     * @param string $type
+     * @param mixed $uid
+     * @return Fizzy_Model|null
+     */
     public function fetchOne($type, $uid);
 
+    /**
+     * Fetch all entities from a specific type (e.g. pages, users).
+     *
+     * @param string $type
+     * @return array
+     */
     public function fetchAll($type);
 
+    /**
+     * Used to select a row by a Value in a specific column
+     *
+     * @param string $type
+     * @param string $column
+     * @param mixed $value
+     * @return Fizzy_Model|null
+     */
     public function fetchColumn($type, $column, $value);
 }

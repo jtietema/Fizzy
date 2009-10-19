@@ -63,6 +63,9 @@ class Fizzy_Storage_XML implements Fizzy_Storage_Interface
         $this->_xmlDocuments = array();
     }
 
+    /**
+     * @see Fizzy_Interface
+     */
     public function persist(Fizzy_Model $model)
     {
         $type = $model->getType();
@@ -116,6 +119,9 @@ class Fizzy_Storage_XML implements Fizzy_Storage_Interface
         return $model;
     }
 
+    /**
+     * @see Fizzy_Interface
+     */
     public function remove(Fizzy_Model $model)
     {
         $type = $model->getType();
@@ -133,6 +139,9 @@ class Fizzy_Storage_XML implements Fizzy_Storage_Interface
         return true;
     }
 
+    /**
+     * @see Fizzy_Interface
+     */
     public function fetchOne($type, $uid)
     {
         $domDocument = $this->_initXML($type);
@@ -152,6 +161,9 @@ class Fizzy_Storage_XML implements Fizzy_Storage_Interface
         
     }
 
+    /**
+     * @see Fizzy_Interface
+     */
     public function fetchColumn($type, $column, $value)
     {
         $domDocument = $this->_initXML($type);
@@ -167,6 +179,9 @@ class Fizzy_Storage_XML implements Fizzy_Storage_Interface
         return $array;
     }
 
+    /**
+     * @see Fizzy_Interface
+     */
     public function fetchAll($type)
     {
         $xml = $this->_initXML($type);
