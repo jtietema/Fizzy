@@ -140,7 +140,16 @@ class Fizzy_Storage_SQLite implements Fizzy_Storage_Interface
 
     public function fetchColumn($type, $column, $value)
     {
-        
+        $stmt = $this->_pdo->prepare("SELECT * FROM $type WHERE $column = :value");
+        $stmt->bindValue(':value', $value);
+        $stmt->execute();
+
+        $array = $stmt->fetch(PDO::FETCH_ASSOC);
+
+        // check if there are results, if not return
+        if (empty($array))
+            return null;
+        return $array;
     }
 
     /**
