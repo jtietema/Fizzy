@@ -14,7 +14,7 @@
  * to license@voidwalkers.nl so we can send you a copy immediately.
  * 
  * @copyright Copyright (c) 2009 Voidwalkers (http://www.voidwalkers.nl)
- * @license http://opensource.org/licenses/mit-license.php The MIT License
+ * @license http://www.voidwalkers.nl/license/new-bsd The New BSD License
  */
 
 /** Fizzy_Request */
@@ -95,11 +95,20 @@ class Fizzy_FrontController
     public function dispatch()
     {
         $config = $this->_config;
+        $paths = $config->getConfiguration('paths');
+        $application = $config->getConfiguration('application');
         
-        if(null === $this->_request) { $this->_request = new Fizzy_Request(); }
+        if(null === $this->_request) {
+            $this->_request = new Fizzy_Request();
+            if(isset($application['baseUrl'])) {
+                $this->_request->setBaseUrl($application['baseUrl']);
+            }
+        }
         $request = $this->_request;
-
-        if(null === $this->_router) { $this->_router = new Fizzy_Router($this->_config->getConfiguration('routes')); }
+        
+        if(null === $this->_router) {
+            $this->_router = new Fizzy_Router($this->_config->getConfiguration('routes'));
+        }
         $router = $this->_router;
 
         // Find a route and inject the route parameters into the request object
@@ -109,9 +118,9 @@ class Fizzy_FrontController
         $controller = $request->getController();
 
         // Check if controller exists
-        $controllerClass = ucfirst($controller) . 'Controller';
+        $controllerClass = $controller . 'Controller';
 
-        $controllerFileName = $controllerClass . '.php';
+        $controllerFileName = ucfirst($controllerClass) . '.php';
         $controllerFilePath = CONTROLLER_PATH . DIRECTORY_SEPARATOR . $controllerFileName;
 
         if(!is_file($controllerFilePath)) {
@@ -129,17 +138,18 @@ class Fizzy_FrontController
         $controllerInstance = $reflectionClass->newInstance($request);
         
         // Create a new view object for the controller
-        $paths = $config->getConfiguration('paths');
         $view = new Fizzy_View();
         $view->setbasePath($paths['base'])
              ->setScriptPath($paths['view'])
-             ->setLayoutPath($paths['layout']);
+             ->setLayoutPath($paths['layout'])
+             ->setLayout('default.phtml');
         $controllerInstance->setView($view);
 
         // retrieve the action
         $action = $request->getAction();
-        $actionMethod = $action . 'Action';
-
+        $actionName = strtolower(substr($action, 0, 1)) . substr($action, 1, strlen($action));
+        $actionMethod = $actionName . 'Action';
+        
         // set default view script based on controller and action names
         $viewScript = strtolower($controller) . DIRECTORY_SEPARATOR . strtolower($action) . '.phtml';
         $view->setScript($viewScript);
@@ -150,11 +160,34 @@ class Fizzy_FrontController
             throw new Fizzy_Exception("Action method {$actionMethod} in Controller {$controllerClass} not found.");
         }
 
+        // Call the before method
+        $controllerInstance->before();
         // call the action method
         $controllerInstance->$actionMethod();
+        // Call the after method
+        $controllerInstance->after();
 
-        // Send the rendered output
-        echo $view->render();
+        // Check if the view should be rendered
+        if($view->isEnabled()) {
+
+            // Get the output from the action view
+            $viewOuput = $view->render();
+
+            $layout = $view->getLayout();
+            if(empty($layout)) {
+                // No layout specified, send the view output as a response
+                echo $viewOuput;
+            }
+            else {
+                $layout = new Fizzy_View();
+                $layout->setBasePath($view->getBasePath())
+                   ->setScriptPath($view->getLayoutPath())
+                   ->setScript($view->getLayout());
+
+                $layout->assign('content', $viewOuput);
+                echo $layout->render();
+            }
+        }
     }
     
 }

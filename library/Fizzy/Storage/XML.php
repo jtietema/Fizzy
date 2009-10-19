@@ -1,13 +1,33 @@
 <?php
+/**
+ * Class Fizzy_Storage_XML
+ * @package Fizzy
+ * @subpackage Storage
+ *
+ * LICENSE
+ *
+ * This source file is subject to the new BSD license that is bundled
+ * with this package in the file LICENSE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://www.voidwalkers.nl/license/new-bsd
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to license@voidwalkers.nl so we can send you a copy immediately.
+ *
+ * @copyright Copyright (c) 2009 Voidwalkers (http://www.voidwalkers.nl)
+ * @license http://www.voidwalkers.nl/license/new-bsd The New BSD License
+ */
+
+/** Fizzy_Storage_Interface */
 require_once 'Fizzy/Storage/Interface.php';
-require_once 'Fizzy/Storage/Exception/InvalidConfig.php';
+
+/** Fizzy_Storage_XML_Document */
 require_once 'Fizzy/Storage/XML/Document.php';
-require_once 'Fizzy/Storage/Exception/XMLError.php';
 
 /**
  * Storage backend to a XML file.
  *
- * @author jeroen
+ * @author Jeroen Tietema <jeroen@voidwalkers.nl>
  */
 class Fizzy_Storage_XML implements Fizzy_Storage_Interface
 {
@@ -33,6 +53,7 @@ class Fizzy_Storage_XML implements Fizzy_Storage_Interface
 
         if (!is_dir($pieces[1]))
         {
+            require_once 'Fizzy/Storage/Exception/InvalidConfig.php';
             throw new Fizzy_Storage_Exception_InvalidConfig(
                 'Directory ' . $pieces[1] . ' does not exist.'
             );
@@ -192,6 +213,7 @@ class Fizzy_Storage_XML implements Fizzy_Storage_Interface
                 // we need a model to base our XML on
                 if ($model === null)
                 {
+                    require_once 'Fizzy/Storage/Exception/XMLError.php';
                     throw new Fizzy_Storage_Exception_XMLError(
                         "Can't create table without a model. " .
                         "Perhaps you are trying to fetch from a not existing table?"

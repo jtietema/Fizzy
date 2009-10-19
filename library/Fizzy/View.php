@@ -14,9 +14,8 @@
  * to license@voidwalkers.nl so we can send you a copy immediately.
  *
  * @copyright Copyright (c) 2009 Voidwalkers (http://www.voidwalkers.nl)
- * @license http://opensource.org/licenses/mit-license.php The MIT License
+ * @license http://www.voidwalkers.nl/license/new-bsd The New BSD License
  */
-
 
 /**
  * Fizzy View class for rendering view scripts and layouts.
@@ -61,6 +60,12 @@ class Fizzy_View
      * @var boolean
      */
     private $_rendered = false;
+
+    /**
+     * If the view is enabled and should be rendered.
+     * @var boolean
+     */
+    private $_enabled = true;
 
     /** **/
 
@@ -176,6 +181,31 @@ class Fizzy_View
     public function isRendered()
     {
         return $this->_rendered;
+    }
+
+    /**
+     * Disables the view for rendering.
+     */
+    public function disable()
+    {
+        $this->_enabled = false;
+    }
+
+    /**
+     * Enables the view for rendering.
+     */
+    public function enable()
+    {
+        $this->_enabled = true;
+    }
+
+    /**
+     * Returns if the view is enabled.
+     * @return boolean
+     */
+    public function isEnabled()
+    {
+        return $this->_enabled;
     }
 
     /**

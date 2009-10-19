@@ -30,7 +30,7 @@ require_once 'Fizzy/Route/Simple.php';
 require_once 'Fizzy/Route/Static.php';
 
 /**
- * Router class for Fizzy MVC framework.
+ * Router class for Fizzy.
  *
  * @author Mattijs Hoitink <mattijs@voidwalkers.nl>
  */

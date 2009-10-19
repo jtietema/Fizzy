@@ -30,5 +30,10 @@
             <controller>AdminPages</controller>
             <action>default</action>
         </admin_pages>
+        <homepage type="static">
+            <rule>/</rule>
+            <controller>pages</controller>
+            <action>homepage</action>
+        </homepage>
     </routes>
 </fizzy>

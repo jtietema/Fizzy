@@ -1,11 +1,21 @@
 <?php
 /**
  * Abstract Class Fizzy_Route_Abstract
- * 
- * @copyright Copyright (c) 2009 Voidwalkers (http://www.voidwalkers.nl)
- * @license http://opensource.org/licenses/mit-license.php The MIT License
  * @package Fizzy
  * @subpackage Route
+ *
+ * LICENSE
+ *
+ * This source file is subject to the new BSD license that is bundled
+ * with this package in the file LICENSE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://www.voidwalkers.nl/license/new-bsd
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to license@voidwalkers.nl so we can send you a copy immediately.
+ *
+ * @copyright Copyright (c) 2009 Voidwalkers (http://www.voidwalkers.nl)
+ * @license http://www.voidwalkers.nl/license/new-bsd The New BSD License
  */
 
 /** Fizzy_Route_Interface */
@@ -140,6 +150,23 @@ abstract class Fizzy_Route_Abstract implements Fizzy_Route_Interface
     public function getAction()
     {
         return $this->_action;
+    }
+
+    /**
+     * Changes a string value to camel case, by changing the first letter and
+     * each letter after an underscore to upper case.
+     * @param string $value
+     * @return string
+     */
+    protected function _camelCase($value)
+    {
+        $camels = preg_split('/_/', $value, -1, PREG_SPLIT_NO_EMPTY);
+        $case = '';
+        foreach($camels as $camel) {
+            $case .= ucfirst($camel);
+        }
+
+        return $case;
     }
 
 }

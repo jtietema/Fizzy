@@ -1,14 +1,24 @@
 <?php
 /**
  * Class Fizzy_Request
- * 
- * @copyright Copyright (c) 2009 Voidwalkers (http://www.voidwalkers.nl)
- * @license http://opensource.org/licenses/mit-license.php The MIT License
  * @package Fizzy
+ *
+ * LICENSE
+ *
+ * This source file is subject to the new BSD license that is bundled
+ * with this package in the file LICENSE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://www.voidwalkers.nl/license/new-bsd
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to license@voidwalkers.nl so we can send you a copy immediately.
+ *
+ * @copyright Copyright (c) 2009 Voidwalkers (http://www.voidwalkers.nl)
+ * @license http://www.voidwalkers.nl/license/new-bsd The New BSD License
  */
 
 /**
- * Request class for Fizzy MVC framework.
+ * Request class for Fizzy.
  *
  * @author Mattijs Hoitink <mattijs@voidwalkers.nl>
  */
@@ -94,7 +104,9 @@ class Fizzy_Request
         $this->_serverName = $_SERVER['SERVER_NAME'];
         $this->_path = (isset($_SERVER['PATH_INFO']) ? $_SERVER['PATH_INFO'] : '/');
         $this->_queryString = $_SERVER['QUERY_STRING'];
-        
+        // Get the baseUrl from the script name, and strip the trailing slash
+        $this->setBaseUrl(dirname($_SERVER['SCRIPT_NAME']));
+
         // Parse query string parameters
         $parameters = array();
         $pairs = preg_split('/&/', $this->_queryString, -1, PREG_SPLIT_NO_EMPTY);
@@ -165,9 +177,16 @@ class Fizzy_Request
      * @param string $baseUrl
      * @return Fizzy_Request
      */
-    public function setBaseUrl($baseUrl) {
-        $this->_baseUrl = $baseUrl;
+    public function setBaseUrl($baseUrl)
+    {
+        // Add leading slash
+        if(0 !== strpos($baseUrl, '/')) {
+            $baseUrl = '/' . $baseUrl;
+        }
+        // Strip trailing slash
+        $baseUrl = rtrim($baseUrl, '/');
 
+        $this->_baseUrl = $baseUrl;
         return $this;
     }
 
@@ -270,6 +289,15 @@ class Fizzy_Request
         $this->_action = $action;
 
         return $this;
+    }
+
+    /**
+     * Checks if the request was a POST request.
+     * @return boolean
+     */
+    public function isPost()
+    {
+        return ((boolean) isset($_POST) && !empty($_POST));
     }
     
 }

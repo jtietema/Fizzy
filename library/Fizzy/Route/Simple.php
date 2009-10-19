@@ -2,6 +2,7 @@
 /**
  * Class Fizzy_Route_Simple
  * @package Fizzy
+ * @subpackage Route
  *
  * LICENSE
  *
@@ -46,6 +47,11 @@ class Fizzy_Route_Simple extends Fizzy_Route_Abstract
         $this->_assemble();
     }
 
+    /**
+     * Match the route against the request.
+     * @param Fizzy_Request $request
+     * @return boolean
+     */
     public function match(Fizzy_Request $request)
     {
         $rule = $this->getRule();
@@ -57,9 +63,6 @@ class Fizzy_Route_Simple extends Fizzy_Route_Abstract
             return false;
         }
         
-        $controller = $this->getController();
-        $action = $this->getAction();
-
         // Slice the complete match of the matches array
         $parameters = array_slice($routeMatches[0], 1);
 
@@ -67,13 +70,17 @@ class Fizzy_Route_Simple extends Fizzy_Route_Abstract
         $parameters = array_merge($parameters, array_combine($this->_parameterMap, $parameters));
 
         // Inject the request object
-        $request->setController($controller);
-        $request->setAction($action);
+        $request->setController($this->_camelCase($this->getController()));
+        $request->setAction($this->_camelCase($this->getAction()));
         $request->addParameters($parameters);
 
         return true;
     }
 
+    /**
+     * Assemble the route by repacing named parameters and wildcards.
+     * @return string
+     */
     protected function _assemble()
     {
         //$namedParameterPattern   = "(?:/([^\/]*))?";
