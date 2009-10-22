@@ -96,15 +96,7 @@ class Fizzy_Storage
     }
 
     /**
-<<<<<<< HEAD:library/Fizzy/Storage.php
-     * Persist the given model (add or save).
-     * Returns the persisted model (with added id).
-     * 
-     * @param Fizzy_Storage_Model $model
-     * @return Fizzy_Storage_Model
-=======
-     * @see Fizzy_Interface
->>>>>>> 80f1e20baccdba8132e65e8729106e40982a089e:library/Fizzy/Storage.php
+     * @see Fizzy_Storage_Interface
      */
     public function persist(Fizzy_Storage_Model $model)
     {
@@ -112,13 +104,7 @@ class Fizzy_Storage
     }
 
     /**
-<<<<<<< HEAD:library/Fizzy/Storage.php
-     * Remove the given model from persistence.
-     *
-     * @param Fizzy_Storage_Model $model
-=======
-     * @see Fizzy_Interface
->>>>>>> 80f1e20baccdba8132e65e8729106e40982a089e:library/Fizzy/Storage.php
+     * @see Fizzy_Storage_Interface
      */
     public function remove(Fizzy_Storage_Model $model)
     {
@@ -126,25 +112,17 @@ class Fizzy_Storage
     }
 
     /**
-<<<<<<< HEAD:library/Fizzy/Storage.php
-     * Fetch one item of $type with $uid.
-     * 
-     * @param string $type
-     * @param mixed $uid
-     * @return Fizzy_Storage_Model|null
-=======
-     * @see Fizzy_Interface
->>>>>>> 80f1e20baccdba8132e65e8729106e40982a089e:library/Fizzy/Storage.php
+     * @see Fizzy_Storage_Interface
      */
     public function fetchOne($type, $uid)
     {
-        $array = $this->_driver->fetchOne($type, $uid);
+        $data = $this->_driver->fetchOne($type, $uid);
 
-        if ($array === null) {
+        if ($data === null) {
             return null;
         }
 
-        return $this->_buildModel($type, $array);
+        return $this->_buildModel($type, $data);
     }
 
     /**
@@ -155,54 +133,36 @@ class Fizzy_Storage
         $results = $this->_driver->fetchAll($type);
         
         $models = array();
-        foreach ($results as $array) {
-            $models[] = $this->_buildModel($type, $array);
+        foreach ($results as $data) {
+            $models[] = $this->_buildModel($type, $data);
         }
 
         return $models;
     }
 
     /**
-<<<<<<< HEAD:library/Fizzy/Storage.php
-     * Used to select a row by a Value in a specific column
-     * 
-     * @param string $type
-     * @param string $column
-     * @param mixed $value
-     * @return Fizzy_Storage_Model|null
-=======
-     * @see Fizzy_Interface
->>>>>>> 80f1e20baccdba8132e65e8729106e40982a089e:library/Fizzy/Storage.php
+     * @see Fizzy_Storage_Interface
      */
     public function fetchColumn($type, $column, $value)
     {
-        $array = $this->_driver->fetchColumn($type, $column, $value);
+        $data = $this->_driver->fetchColumn($type, $column, $value);
 
-        if ($array === null) {
+        if ($data === null) {
             return null;
         }
 
-        return $this->_buildModel($type, $array);
+        return $this->_buildModel($type, $data);
     }
 
     /**
-<<<<<<< HEAD:library/Fizzy/Storage.php
-     * Builds a model for the given type and fills it with the data array.
-     * @param string $type
-     * @param array $data
-     * @return Fizzy_Storage_Model
-     */
-    protected function _buildModel($type, $data)
-=======
      * Instanciates a Model for the given type and populates it with the given
      * array.
      *
      * @param string $type
-     * @param array $array
+     * @param array $data
      * @return Fizzy_Model
      */
-    protected function _buildModel($type, $array)
->>>>>>> 80f1e20baccdba8132e65e8729106e40982a089e:library/Fizzy/Storage.php
+    protected function _buildModel($type, $data)
     {
         $class = $this->_buildClassname($type);
         $model = new $class($data);
