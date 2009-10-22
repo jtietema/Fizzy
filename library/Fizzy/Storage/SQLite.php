@@ -38,6 +38,9 @@ class Fizzy_Storage_SQLite implements Fizzy_Storage_Interface
         $this->_pdo = new PDO($dsn);
     }
 
+    /**
+     * @see Fizzy_Storage_Interface
+     */
     public function persist(Fizzy_Storage_Model $model)
     {
         $type = $model->getType();
@@ -104,6 +107,9 @@ class Fizzy_Storage_SQLite implements Fizzy_Storage_Interface
         return $model;
     }
 
+    /**
+     * @see Fizzy_Storage_Interface
+     */
     public function remove(Fizzy_Storage_Model $model)
     {
         $type = $model->getType();
@@ -112,6 +118,9 @@ class Fizzy_Storage_SQLite implements Fizzy_Storage_Interface
         $stmt->execute();
     }
 
+    /**
+     * @see Fizzy_Interface
+     */
     public function fetchOne($type, $uid)
     {
         $stmt = $this->_pdo->prepare("SELECT * FROM $type WHERE id = :id");
@@ -127,12 +136,8 @@ class Fizzy_Storage_SQLite implements Fizzy_Storage_Interface
     }
 
     /**
-     * Fetches all rows of $type.
-     *
+     * @see Fizzy_Interface
      * @TODO: implement some sort of ordering
-     *
-     * @param string $type
-     * @return array
      */
     public function fetchAll($type)
     {
@@ -141,6 +146,9 @@ class Fizzy_Storage_SQLite implements Fizzy_Storage_Interface
         return $stmt->fetchAll();
     }
 
+    /**
+     * @see Fizzy_Interface
+     */
     public function fetchColumn($type, $column, $value)
     {
         $stmt = $this->_pdo->prepare("SELECT * FROM $type WHERE $column = :value");

@@ -96,11 +96,15 @@ class Fizzy_Storage
     }
 
     /**
+<<<<<<< HEAD:library/Fizzy/Storage.php
      * Persist the given model (add or save).
      * Returns the persisted model (with added id).
      * 
      * @param Fizzy_Storage_Model $model
      * @return Fizzy_Storage_Model
+=======
+     * @see Fizzy_Interface
+>>>>>>> 80f1e20baccdba8132e65e8729106e40982a089e:library/Fizzy/Storage.php
      */
     public function persist(Fizzy_Storage_Model $model)
     {
@@ -108,9 +112,13 @@ class Fizzy_Storage
     }
 
     /**
+<<<<<<< HEAD:library/Fizzy/Storage.php
      * Remove the given model from persistence.
      *
      * @param Fizzy_Storage_Model $model
+=======
+     * @see Fizzy_Interface
+>>>>>>> 80f1e20baccdba8132e65e8729106e40982a089e:library/Fizzy/Storage.php
      */
     public function remove(Fizzy_Storage_Model $model)
     {
@@ -118,11 +126,15 @@ class Fizzy_Storage
     }
 
     /**
+<<<<<<< HEAD:library/Fizzy/Storage.php
      * Fetch one item of $type with $uid.
      * 
      * @param string $type
      * @param mixed $uid
      * @return Fizzy_Storage_Model|null
+=======
+     * @see Fizzy_Interface
+>>>>>>> 80f1e20baccdba8132e65e8729106e40982a089e:library/Fizzy/Storage.php
      */
     public function fetchOne($type, $uid)
     {
@@ -136,10 +148,7 @@ class Fizzy_Storage
     }
 
     /**
-     * Fetch all entities from a specific type (e.g. pages, users).
-     * 
-     * @param string $type
-     * @return array
+     * @see Fizzy_Interface
      */
     public function fetchAll($type)
     {
@@ -154,12 +163,16 @@ class Fizzy_Storage
     }
 
     /**
+<<<<<<< HEAD:library/Fizzy/Storage.php
      * Used to select a row by a Value in a specific column
      * 
      * @param string $type
      * @param string $column
      * @param mixed $value
      * @return Fizzy_Storage_Model|null
+=======
+     * @see Fizzy_Interface
+>>>>>>> 80f1e20baccdba8132e65e8729106e40982a089e:library/Fizzy/Storage.php
      */
     public function fetchColumn($type, $column, $value)
     {
@@ -173,12 +186,23 @@ class Fizzy_Storage
     }
 
     /**
+<<<<<<< HEAD:library/Fizzy/Storage.php
      * Builds a model for the given type and fills it with the data array.
      * @param string $type
      * @param array $data
      * @return Fizzy_Storage_Model
      */
     protected function _buildModel($type, $data)
+=======
+     * Instanciates a Model for the given type and populates it with the given
+     * array.
+     *
+     * @param string $type
+     * @param array $array
+     * @return Fizzy_Model
+     */
+    protected function _buildModel($type, $array)
+>>>>>>> 80f1e20baccdba8132e65e8729106e40982a089e:library/Fizzy/Storage.php
     {
         $class = $this->_buildClassname($type);
         $model = new $class($data);
@@ -186,6 +210,12 @@ class Fizzy_Storage
         return $model;
     }
 
+    /**
+     * Builds a classname for given type
+     *
+     * @param string $type
+     * @return string
+     */
     protected function _buildClassname($type)
     {
         return ucfirst($type);

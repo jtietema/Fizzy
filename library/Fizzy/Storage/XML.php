@@ -71,6 +71,9 @@ class Fizzy_Storage_XML implements Fizzy_Storage_Interface
         $this->_xmlDocuments = array();
     }
 
+    /**
+     * @see Fizzy_Storage_Interface
+     */
     public function persist(Fizzy_Storage_Model $model)
     {
         $type = $model->getType();
@@ -124,6 +127,9 @@ class Fizzy_Storage_XML implements Fizzy_Storage_Interface
         return $model;
     }
 
+    /**
+     * @see Fizzy_Storage_Interface
+     */
     public function remove(Fizzy_Storage_Model $model)
     {
         $type = $model->getType();
@@ -142,10 +148,7 @@ class Fizzy_Storage_XML implements Fizzy_Storage_Interface
     }
 
     /**
-     * Fetch one element of $type by it's id.
-     * @param string $type
-     * @param string $uid
-     * @return array
+     * @see Fizzy_Storage_Interface
      */
     public function fetchOne($type, $uid)
     {
@@ -169,11 +172,7 @@ class Fizzy_Storage_XML implements Fizzy_Storage_Interface
     }
 
     /**
-     * Fetches one element of $type by a specific column.
-     * @param string $type
-     * @param string $column
-     * @param string $value
-     * @return array
+     * @see Fizzy_Storage_Interface
      */
     public function fetchColumn($type, $column, $value)
     {
@@ -195,9 +194,7 @@ class Fizzy_Storage_XML implements Fizzy_Storage_Interface
     }
 
     /**
-     * Fetches all elements for $type.
-     * @param string $type
-     * @return array
+     * @see Fizzy_Storage_Interface
      */
     public function fetchAll($type)
     {
