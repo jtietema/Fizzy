@@ -3,22 +3,22 @@
     <application>
         <title>Fizzy</title>
         <env>development</env>
-        <adminSwitch>admin</adminSwitch>
     </application>
     <router>
         <defaultController>default</defaultController>
         <defaultAction>default</defaultAction>
     </router>
     <storage>
-        <dsn>xml:../data/</dsn>
+        <dsn>xml:/home/mattijs/development/voidwalkers/fizzy/data</dsn>
     </storage>
     <paths>
-        <base>/var/www/fizzy.auth</base>
-        <controller>controllers</controller>
+        <base>/home/mattijs/development/voidwalkers/fizzy</base>
+        <controller>application/controllers</controller>
         <library>library</library>
-        <model>models</model>
+        <model>application/models</model>
         <public>public</public>
-        <view>view/scripts</view>
-        <layout>view/layouts</layout>
+        <view>application/views/scripts</view>
+        <layout>application/views/layouts</layout>
+        <template>application/views/templates</template>
     </paths>
 </fizzy>

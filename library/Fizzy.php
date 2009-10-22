@@ -18,21 +18,22 @@
  * 
  * @author Mattijs Hoitink <mattijs@voidwalkers.nl>
  */
-
-define('APPLICATION_PATH', realpath(dirname(__FILE__) . '/../'));
-define('CONFIG_DIR', APPLICATION_PATH . '/configs');
-define('LIBRARY_PATH', APPLICATION_PATH . '/library');
+define('ROOT_PATH', realpath(dirname(__FILE__) . '/../'));
+define('APPLICATION_PATH', realpath(dirname(__FILE__) . '/../application/'));
+define('CONFIG_PATH', APPLICATION_PATH . '/configs');
 define('CONTROLLER_PATH', APPLICATION_PATH . '/controllers');
-define('VIEWS_PATH', APPLICATION_PATH . '/views');
-define('MODELS_PATH', APPLICATION_PATH . '/models');
+define('MODEL_PATH', APPLICATION_PATH . '/models');
+define('VIEW_PATH', APPLICATION_PATH . '/views');
+define('LIBRARY_PATH', ROOT_PATH . '/library');
+define('DATA_PATH', ROOT_PATH . '/data');
 
-set_include_path(LIBRARY_PATH . PATH_SEPARATOR . MODELS_PATH . PATH_SEPARATOR . get_include_path());
+set_include_path(LIBRARY_PATH . PATH_SEPARATOR . MODEL_PATH . PATH_SEPARATOR . get_include_path());
 require_once 'Fizzy/Config.php';
 require_once 'Fizzy/FrontController.php';
 
 $config = Fizzy_Config::getInstance()
-          ->loadConfiguration(simplexml_load_file(CONFIG_DIR .'/fizzy.xml'))
-          ->loadConfiguration(simplexml_load_file(CONFIG_DIR .'/routes.xml'));
+          ->loadConfiguration(simplexml_load_file(CONFIG_PATH .'/fizzy.xml'))
+          ->loadConfiguration(simplexml_load_file(CONFIG_PATH .'/routes.xml'));
 
 $frontController = new Fizzy_FrontController($config);
 $frontController->dispatch();
