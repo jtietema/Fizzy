@@ -33,55 +33,59 @@ class PageController extends Fizzy_Controller
         $this->_storage = new Fizzy_Storage($storageOptions);
     }
 
+    /**
+     * Default action, redirects to homepageAction.
+     */
     public function defaultAction()
     {
-        echo "<p>This is PagesController::defaultAction().</p>";
-        
-        echo "<p>Parameters:<br />";
-        echo "<pre>";
-        print_r($this->_getParams());
-        echo "</pre></p>";
+        $this->_redirect('/');
     }
 
+    /**
+     * Shows the homepage.
+     */
     public function homepageAction()
     {
-        $model = $this->_storage->fetchOne('page', '1');
-        var_dump($model);
+        $page = $this->_storage->fetchColumn('page', 'homepage', 'true');
+        $paths = Fizzy_Config::getInstance()->getConfiguration('paths');
+        $templateDirectory = $paths['template'];
+
+        $this->getView()->setScriptPath($templateDirectory);
+        $this->getView()->setScript($page->template . '.phtml');
+
+        $this->getView()->page = $page;
     }
 
+    /**
+     * Shows a page by slug.
+     */
     public function showAction()
     {
         $slug = $this->_getParam('slug');
-        $model = $this->_storage->fetchColumn('page', 'slug', $slug);
+        $page = $this->_storage->fetchColumn('page', 'slug', $slug);
 
-        if(null !== $model) {
-            var_dump($model);
-            var_dump($model->getId());
-            $this->getView()->disable();
+        if(null !== $page) {
+            $paths = Fizzy_Config::getInstance()->getConfiguration('paths');
+            $templateDirectory = $paths['template'];
+
+            $this->getView()->setScriptPath($templateDirectory);
+            $this->getView()->setScript($page->template . '.phtml');
+
+            $this->getView()->page = $page;
         }
         else {
             $this->getView()->setScript('page/notfound.phtml');
         }
     }
 
+    /**
+     * Shows a list of pages.
+     */
     public function listAction()
     {
-        echo "<p>This is PagesController::listAction().</p>";
-
-        echo "<p>Parameters:<br />";
-        echo "<pre>";
-        print_r($this->_getParams());
-        echo "</pre></p>";
+        $pages = $this->_storage->fetchAll('page');
+        $this->getView()->pages = $pages;
     }
 
-    public function slugAction()
-    {
-        echo "<p>This is PagesController::slugAction().</p>";
-        
-        echo "<p>Parameters:<br />";
-        echo "<pre>";
-        print_r($this->_getParams());
-        echo "</pre></p>";
-    }
 
 }

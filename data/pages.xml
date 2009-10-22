@@ -1,8 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <pages>
-    <page uid="1">
+    <page uid="1255987346">
         <title><![CDATA[Voidwalkers - Welkom]]></title>
         <slug>voidwalkers</slug>
         <body><![CDATA[This is the body encapsulated in CDATA]]></body>
+        <homepage>true</homepage>
+        <template>default</template>
     </page>
 </pages>

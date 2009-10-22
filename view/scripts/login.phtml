@@ -1,5 +1,43 @@
-<form action="<?= $this->url ?>" method="POST">
-    Username: <input type="text" name="username" /> <br/>
-    Password: <input type="password" name="password" /> <br/>
-    <input type="submit" value="Login" />
-</form>
+<html>
+    <head>
+        <title>Fizzy - Login</title>
+        <link href="/css/screen.css" rel="stylesheet" type="text/css" media="screen" />
+        <link href="/css/admin.css" rel="stylesheet" type="text/css" media="screen" />
+    </head>
+    <body>
+
+        <div class="span-12 push-10 container last">
+            
+            <div id="content" class="content-container login-container">
+                <div id="content-wrapper">
+                    <h1>Fizzy</h1>
+
+                    <div class="form-container">
+                        <form action="<?= $this->url ?>" method="POST">
+
+                            <div class="form-row">
+                                <label for="username">username</label>
+                                <input type="text" name="username" />
+                            </div>
+
+                            <div class="form-row">
+                                <label for="password">password</label>
+                                <input type="password" name="password" />
+                            </div>
+
+                            <div class="form-row">
+                                <input type="submit" value="Login" />
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+            <div id="footer">
+                Copyright (c) 2009 <a href="http://www.voidwalkers.nl" title="Voidwalkers website">Voidwalkers</a> - <a href="http://www.voidwalkers.nl/license/new-bsd" title="Fizzy license">license</a>
+            </div>
+
+        </div>
+
+    </body>
+</html>

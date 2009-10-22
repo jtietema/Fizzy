@@ -31,6 +31,7 @@ require_once 'Fizzy/Storage/XML/Document.php';
  * Storage backend to a XML file.
  *
  * @author Jeroen Tietema <jeroen@voidwalkers.nl>
+ * @author Mattijs Hoitink <mattijs@voidwalkers.nl>
  */
 class Fizzy_Storage_XML implements Fizzy_Storage_Interface
 {
@@ -41,6 +42,10 @@ class Fizzy_Storage_XML implements Fizzy_Storage_Interface
      */
     protected $_xmlDocuments = null;
 
+    /**
+     * The directory where the xml files are stored.
+     * @var <type>
+     */
     protected $_dataDir = null;
 
     /**
@@ -136,12 +141,17 @@ class Fizzy_Storage_XML implements Fizzy_Storage_Interface
         return true;
     }
 
+    /**
+     * Fetch one element of $type by it's id.
+     * @param string $type
+     * @param string $uid
+     * @return array
+     */
     public function fetchOne($type, $uid)
     {
         $domDocument = $this->_initXML($type);
 
         $element = $domDocument->getElementByUid($uid);
-
         if ($element === null) {
             return null;
         }
@@ -149,51 +159,63 @@ class Fizzy_Storage_XML implements Fizzy_Storage_Interface
         $simpleXMLElement = simplexml_import_dom($element);
 
         $array = $this->_elementToArray($simpleXMLElement);
-
-        $array['id'] = $array['uid'];
-        unset($array['uid']);
+        if(isset($array['id'])) {
+            $array['id'] = $array['uid'];
+            unset($array['uid']);
+        }
+        
         return $array;
         
     }
 
+    /**
+     * Fetches one element of $type by a specific column.
+     * @param string $type
+     * @param string $column
+     * @param string $value
+     * @return array
+     */
     public function fetchColumn($type, $column, $value)
     {
         $domDocument = $this->_initXML($type);
         
-        $element = $domDocument->getElementByXpath("//*[$column='$value']");
+        $element = $domDocument->getElementByXpath("//*[{$column}='{$value}']");
         if ($element === null) {
             return null;
         }
 
         $simpleXMLElement = simplexml_import_dom($element);
-
         $array = $this->_elementToArray($simpleXMLElement);
-
-        $array['id'] = $array['uid'];
-        unset($array['uid']);
+        if(isset($array['id'])) {
+            $array['id'] = $array['uid'];
+            unset($array['uid']);
+        }
+        
         return $array;
     }
 
+    /**
+     * Fetches all elements for $type.
+     * @param string $type
+     * @return array
+     */
     public function fetchAll($type)
     {
         $xml = $this->_initXML($type);
-
-        $root = $xml->getElementByUid('root');
-
+        $nodes = $xml->getElementsByXpath("/{$this->_typeContrainerName($type)}/{$type}");
+        
         $results = array();
-        for ($i = 0; $i < $root->childNodes->length; $i++)
-        {
-            $element = $root->childNodes->item($i);
+        foreach($nodes as $node) {
+            $simpleXMLElement = simplexml_import_dom($node);
+            $elementArray = $this->_elementToArray($simpleXMLElement);
+            if(isset($elementArray['uid'])) {
+                $elementArray['id'] = $elementArray['uid'];
+                unset($elementArray['uid']);
+            }
 
-            $simpleXMLElement = simplexml_import_dom($element);
-            $array = $this->_elementToArray($simpleXMLElement);
-
-            $array['id'] = $array['uid'];
-            unset($array['uid']);
-            
-            $results[] = $array;
+            $results[] = $elementArray;
         }
-
+        
         return $results;
     }
 
@@ -242,7 +264,7 @@ class Fizzy_Storage_XML implements Fizzy_Storage_Interface
         // create the root
         $domDocument = new Fizzy_Storage_XML_Document();
         // @TODO: remove hardcoded plural
-        $root = $domDocument->createElement($model->getType() . 's');
+        $root = $domDocument->createElement($this->_typeContrainerName($model->getType()));
         $domDocument->appendChild($root);
         $attr = $domDocument->addAttributeWithValue('uid', 'root', $root);
         //$root->setIdAttribute('root', true);
@@ -268,7 +290,17 @@ class Fizzy_Storage_XML implements Fizzy_Storage_Interface
     protected function _filename($type)
     {
         // @TODO: remove hardcoded plural
-        return $this->_dataDir . DIRECTORY_SEPARATOR . $type . 's.xml';
+        return $this->_dataDir . DIRECTORY_SEPARATOR . $this->_typeContrainerName($type) . '.xml';
+    }
+
+    /**
+     * Returns the container name for the type.
+     * @param string $type
+     * @return string
+     */
+    protected function _typeContrainerName($type)
+    {
+        return $type . 's';
     }
 
     /**

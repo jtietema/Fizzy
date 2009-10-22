@@ -23,7 +23,8 @@
  *
  * @author Mattijs Hoitink <mattijs@voidwalkers.nl>
  */
-abstract class Fizzy_Model implements IteratorAggregate, Countable {
+abstract class Fizzy_Model implements IteratorAggregate, Countable
+{
 
     /**
      * Data container for internal storage of data.

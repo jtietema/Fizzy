@@ -35,8 +35,14 @@ require_once 'User.php';
 class SecureController extends Fizzy_Controller
 {
 
+    /**
+     * The request URI to redirect back to.
+     * @var string
+     */
     protected $_requestUri = null;
 
+    /** **/
+    
     protected function _init()
     {
         session_start('fizzy_session');
@@ -48,6 +54,9 @@ class SecureController extends Fizzy_Controller
         }
     }
 
+    /**
+     * Checks the user credentials and creates a session.
+     */
     public function loginAction()
     {
         if ($this->_request->getMethod() === Fizzy_Request::METHOD_POST)
@@ -63,7 +72,7 @@ class SecureController extends Fizzy_Controller
                 // doe header redirect naar index pagina
                 $_SESSION['username'] = $model->getUsername();
                 header('Location: http://' . $this->_request->getServerName() . $this->_requestUri);
-                die();
+                exit();
             }
             $this->_view->setScript('denied.phtml');
             
@@ -71,5 +80,14 @@ class SecureController extends Fizzy_Controller
             $this->_view->url = $this->_request->getRequestUri();
             $this->_view->setScript('login.phtml');
         }
+    }
+
+    /**
+     * Destroys the session and redirects the user back to the login screen.
+     */
+    public function logoutAction()
+    {
+        session_destroy();
+        $this->_redirect('/admin');
     }
 }

@@ -1,0 +1,40 @@
+<html>
+    <head>
+        <title>Fizzy Admin</title>
+        <link href="/css/screen.css" rel="stylesheet" type="text/css" media="screen" />
+        <link href="/css/admin.css" rel="stylesheet" type="text/css" media="screen" />
+    </head>
+    <body>
+            
+        <div id="header">
+            <div class="container">
+                <div id="navigation" class="span-24 last">
+                    <ul>
+                        <li><a href="/admin/pages">Pages</a></li>
+                        <li><a href="/admin/menu">Menu</a></li>
+                        <li><a href="/admin/users">Users</a></li>
+                        <li><a href="/admin/addons">Addons</a></li>
+                        <li><a href="/admin/settings">Settings</a></li>
+                        <li class="link-logout"><a href="/admin/logout">Logout</a></li>
+                    </ul>
+                    <div class="clear"></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="container">
+
+            <div id="content" class="span-24 last content-container">
+                <div id="content-wrapper">
+                    <?= $this->content ?>
+                </div>
+            </div>
+
+            <div id="footer" class="span-24 last">
+                (c) 2009 Voidwalkers - <a href="http://www.voidwalkers.nl/license/new-bsd">license</a>
+            </div>
+        </div>
+
+        <div class="clear"></div>
+    </body>
+</html>

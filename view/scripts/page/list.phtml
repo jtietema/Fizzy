@@ -1,0 +1,20 @@
+<h1>Pages</h1>
+
+<table border="1">
+    <thead>
+        <tr>
+            <td>Title</td>
+            <td>Slug</td>
+            <td>&nbsp;</td>
+        </tr>
+    </thead>
+    <tbody>
+        <?php foreach($this->pages as $page) : ?>
+        <tr>
+            <td><?= $page->title ?></td>
+            <td><?= $page->slug ?></td>
+            <td><a href="/page/<?= $page->slug ?>">view</a></td>
+        </tr>
+        <?php endforeach; ?>
+    </tbody>
+</table>

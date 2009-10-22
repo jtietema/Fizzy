@@ -124,4 +124,15 @@ class Fizzy_Controller
 
         return $parameters[$key];
     }
+
+    /**
+     * Redirect the request to another part of the application. Sets a Location
+     * header and exits.
+     * @param string $url
+     */
+    protected function _redirect($url)
+    {
+        header('Location: http://' . $this->_request->getServerName() . $url);
+        exit();
+    }
 }

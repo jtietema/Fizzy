@@ -59,8 +59,26 @@ class Fizzy_FrontController
     public function __construct(Fizzy_Config $config = null)
     {
         $this->_config = $config;
+        // Register autoload function for model classes
+        spl_autoload_register(array($this, 'autoload'));
     }
-    
+
+    /**
+     * Autoload function for model classes.
+     * @param string $class
+     */
+    public static function autoload($class)
+    {
+        $config = Fizzy_Config::getInstance();
+        $paths = $config->getConfiguration('paths');
+
+        $modelsPath = $paths['base'] . DIRECTORY_SEPARATOR . $paths['model'] . DIRECTORY_SEPARATOR . ucfirst($class) . '.php';
+        if(is_file($modelsPath)) {
+            require $modelsPath;
+        }
+
+    }
+
     /**
      * Sets the application configuration.
      * @param Fizzy_Config $config 
@@ -141,8 +159,7 @@ class Fizzy_FrontController
         $view = new Fizzy_View();
         $view->setbasePath($paths['base'])
              ->setScriptPath($paths['view'])
-             ->setLayoutPath($paths['layout'])
-             ->setLayout('default.phtml');
+             ->setLayoutPath($paths['layout']);
         $controllerInstance->setView($view);
 
         // retrieve the action

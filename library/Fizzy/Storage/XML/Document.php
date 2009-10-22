@@ -66,17 +66,35 @@ class Fizzy_Storage_XML_Document extends DOMDocument
         return $this->getElementByXpath("//*[@uid='$id']");
     }
 
+    /**
+     * Returns a single DOMElement by performing an Xpath query.
+     * @param string $query
+     * @return DOMElement
+     */
     public function getElementByXpath($query)
     {
-        // select the node with the correct id
         $xpath = new DOMXPath($this);
         $results = $xpath->query($query);
-        // set the element for futher use
-        if ($results->length === 0)
+
+        if ($results->length === 0) {
             return null;
+        }
 
         $element = $results->item(0);
         return $element;
+    }
+
+    /**
+     * Returns a node list by performing an Xpath query.
+     * @param string $query
+     * @return DOMNodeList
+     */
+    public function getElementsByXpath($query)
+    {
+        $xpath = new DOMXPath($this);
+        $results = $xpath->query($query);
+        
+        return $results;
     }
 
     public function save($filename = null)

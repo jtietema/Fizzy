@@ -144,7 +144,7 @@ class Fizzy_Storage
     public function fetchAll($type)
     {
         $results = $this->_driver->fetchAll($type);
-
+        
         $models = array();
         foreach ($results as $array) {
             $models[] = $this->_buildModel($type, $array);

@@ -1,0 +1,45 @@
+<h1>Page</h1>
+
+<div class="form-container">
+    <form action="" method="" name="PageForm" id="PageForm">
+
+        <div class="form-row">
+            <label for="title">Title</label>
+            <input type="text" name="title" id="title" value="" />
+        </div>
+
+        <div class="form-row">
+            <label for="slug">Slug</label>
+            <input type="text" name="slug" id="slug" value="" />
+        </div>
+
+        <div class="form-row">
+            <label for="body">Body</label>
+            <div style="float: left;">
+                <textarea name="body" id="body" style="width: 790px;"></textarea>
+            </div>
+            <div class="clear"></div>
+        </div>
+
+        <div class="form-row">
+            <label for="template">Template</label>
+            <select name="template" id="template">
+                <option value="default">Default</option>
+            </select>
+        </div>
+
+        <div class="form-row">
+            <label for="homepage">Homepage?</label>
+            <input type="checkbox" name="homepage" id="homepage" value="1" />
+        </div>
+
+        <div class="form-row form-row-last">
+            <input type="submit" name="PageFormSubmit" id="PageFormSubmit" value="Save" /> or <a href="/admin/pages">cancel</a>
+        </div>
+
+    </form>
+</div>
+<script type="text/javascript" src="http://js.nicedit.com/nicEdit-latest.js"></script>
+<script type="text/javascript">
+    new nicEditor().panelInstance('body');
+</script>
