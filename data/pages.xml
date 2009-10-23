@@ -1,8 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <pages>
     <page uid="1255987346">
-        <title><![CDATA[Voidwalkers - Welkom]]></title>
-        <slug>voidwalkers</slug>
+        <title><![CDATA[Welcome]]></title>
+        <slug>homepage</slug>
+        <body><![CDATA[This is the body encapsulated in CDATA]]></body>
+        <homepage>true</homepage>
+        <template>default</template>
+    </page>
+    <page uid="1255987347">
+        <title><![CDATA[About us]]></title>
+        <slug>about</slug>
+        <body><![CDATA[This is the body encapsulated in CDATA]]></body>
+        <homepage>true</homepage>
+        <template>default</template>
+    </page>
+    <page uid="1255987348">
+        <title><![CDATA[Contact]]></title>
+        <slug>contact</slug>
         <body><![CDATA[This is the body encapsulated in CDATA]]></body>
         <homepage>true</homepage>
         <template>default</template>
