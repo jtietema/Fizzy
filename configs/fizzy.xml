@@ -3,6 +3,7 @@
     <application>
         <title>Fizzy</title>
         <env>development</env>
+        <basePath>/home/mattijs/development/voidwalkers/fizzy</basePath>
         <defaultTemplate>page</defaultTemplate>
     </application>
     <router>
@@ -12,7 +13,4 @@
     <storage>
         <dsn>xml:/home/mattijs/development/voidwalkers/fizzy/data</dsn>
     </storage>
-    <paths>
-        <base>/home/mattijs/development/voidwalkers/fizzy</base>
-    </paths>
 </fizzy>

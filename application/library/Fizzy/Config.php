@@ -45,6 +45,8 @@ class Fizzy_Config
         self::SECTION_APPLICATION => array(
             'title' => 'Fizzy',
             'environment' => 'production',
+            'basePath' => '',
+            'defaultLayout' => 'default',
             'defaultTemplate' => 'page',
         ),
         self::SECTION_ROUTER => array (
@@ -109,7 +111,7 @@ class Fizzy_Config
 
     /**
      * Sets the configuration section with the given data. Overrides any
-     * existent configuration.
+     * existent data in the section.
      * @param string $section
      * @param mixed $data
      * @return Fizzy_Config
@@ -122,7 +124,7 @@ class Fizzy_Config
     }
 
     /**
-     * Merges a values from a section with given key => value array.
+     * Merges values from a section with given key => value array.
      * @param string $section
      * @param array $data
      * @return Fizzy_Config
@@ -150,14 +152,14 @@ class Fizzy_Config
      */
     public function setSectionValue($section, $key, $value)
     {
-        $section = $this->getSection($section);
+        $sectionData = $this->getSection($section);
 
-        if(null === $section) {
-            $section = array();
+        if(null === $sectionData) {
+            $sectionData = array();
         }
 
-        $section[$key] = $value;
-        $this->setSection($section);
+        $sectionData[$key] = $value;
+        $this->setSection($section, $sectionData);
 
         return $this;
     }
@@ -177,30 +179,69 @@ class Fizzy_Config
     }
 
     /**
-     * Sets a path within the application.
+     * Sets a path within the application. Paths must be set relative to the
+     * application root. The configured base path will be stripped from
+     * set paths.
      * @param string $alias
      * @param string|array $path
      * @return Fizzy_Config
      */
     public function setPath($alias, $path)
     {
-        $this->_configuration[self::SECTION_PATHS][$alias] = $value;
+        $basePath = $this->_configuration[self::SECTION_APPLICATION]['basePath'];
+
+        if(is_array($path)) {
+            $subPaths = array();
+            foreach($path as $subAlias => $subPath) {
+                if(0 === strpos($subPath, $basePath)) {
+                    $subPaths[$alias] = str_replace($basePath, '', $subPath);
+                }
+            }
+            $path = $subPaths;
+        }
+        else if('base' !== $alias) {
+            if(0 === strpos($path, $basePath)) {
+                $path = str_replace($basePath, '', $path);
+            }
+        }
+
+        $this->_configuration[self::SECTION_PATHS][$alias] = $path;
 
         return $this;
     }
     
     /**
-     * Returns a set path by name.
+     * Returns a set path by name. Paths are returned include the set base path.
+     * Use getApplicationPath($alias) to get the path relative to the
+     * application root.
      * @param string $alias
      * @return string|null
      */
     public function getPath($alias)
     {
-        if(array_key_exists($alias, $this->_configuration[self::SECTION_PATHS])) {
-            return $this->_configuration[self::SECTION_PATHS][$alias];
+        if(!array_key_exists($alias, $this->_configuration[self::SECTION_PATHS])) {
+            return null;
+        }
+        
+        $basePath = $this->_configuration[self::SECTION_APPLICATION]['basePath'];
+        $path = $this->_configuration[self::SECTION_PATHS][$alias];
+
+        if(is_array($path)) {
+            $subPaths = array();
+            foreach($path as $subAlias => $subPath) {
+                if(0 !== strpos($subPath, $basePath)) {
+                    $subPaths[$subAlias] = implode(DIRECTORY_SEPARATOR, array($basePath, $subPath));
+                }
+            }
+            $path = $subPaths;
+        }
+        else {
+            if(0 !== strpos($path, $basePath)) {
+                $path = implode(DIRECTORY_SEPARATOR, array($basePath, $path));
+            }
         }
 
-        return null;
+        return $path;
     }
 
     /**
@@ -215,14 +256,14 @@ class Fizzy_Config
 
     /**
      * Loads configuration from a SimpleXMLElement.
-     * @param SimpleXMLElement $config
+     * @param SimpleXMLElement $element
      * @return Fizzy_Config
      */
-    public function loadConfiguration(SimpleXMLElement $config)
+    public function loadConfiguration(SimpleXMLElement $element)
     {
         // Parse the config element
         $dataArray = array();
-        foreach($config->children() as $sectionName => $sectionData) {
+        foreach($element->children() as $sectionName => $sectionData) {
             $dataArray[$sectionName] = $this->_elementToArray($sectionData);
         }
 

@@ -131,7 +131,7 @@ class Fizzy_FrontController
     public function dispatch()
     {
         $config = $this->_config;
-        $application = $config->getSection('application');
+        $application = $config->getSection(Fizzy_Config::SECTION_APPLICATION);
         
         if(null === $this->_request) {
             $this->_request = new Fizzy_Request();
@@ -156,7 +156,7 @@ class Fizzy_FrontController
         $controllerClass = $controller . 'Controller';
 
         $controllerFileName = ucfirst($controllerClass) . '.php';
-        $controllerFilePath = $this->getFullPath('controllers') . DIRECTORY_SEPARATOR . $controllerFileName;
+        $controllerFilePath = $config->getPath('controllers') . DIRECTORY_SEPARATOR . $controllerFileName;
 
         if(!is_file($controllerFilePath)) {
             require_once 'Fizzy/Exception.php';
@@ -171,11 +171,11 @@ class Fizzy_FrontController
 
         $reflectionClass = new ReflectionClass($controllerClass);
         $controllerInstance = $reflectionClass->newInstance($request);
-        
+
         // Create a new view object for the controller
         $view = new Fizzy_View();
-        $view->setScriptPaths($this->getFullPath('views'))
-             ->setLayoutPaths($this->getFullPath('layouts'));
+        $view->setScriptPaths($config->getPath('views'))
+             ->setLayoutPaths($config->getPath('layouts'));
         $controllerInstance->setView($view);
 
         // retrieve the action
@@ -214,7 +214,7 @@ class Fizzy_FrontController
             else {
                 $layout = new Fizzy_View();
                 $layout->setScriptPaths($view->getLayoutPaths())
-                       ->setScript($view->getLayout());
+                       ->setScript($view->getLayout() . '.phtml');
 
                 $layout->assign('content', $viewOuput);
                 echo $layout->render();
@@ -228,9 +228,8 @@ class Fizzy_FrontController
      */
     public static function autoloadModel($class)
     {
-        $config = Fizzy_Config::getInstance();
         $modelFile = ucfirst($class) . '.php';
-        $modelDirectory = $config->getPath('base') . DIRECTORY_SEPARATOR . $config->getPath('models');
+        $modelDirectory = Fizzy_Config::getInstance()->getPath('models');
 
         $modelsPath = $modelDirectory . DIRECTORY_SEPARATOR . $modelFile;
         if(is_file($modelsPath)) {
