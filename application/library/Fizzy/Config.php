@@ -216,6 +216,7 @@ class Fizzy_Config
     /**
      * Loads configuration from a SimpleXMLElement.
      * @param SimpleXMLElement $config
+     * @return Fizzy_Config
      */
     public function loadConfiguration(SimpleXMLElement $config)
     {
@@ -231,29 +232,23 @@ class Fizzy_Config
     }
 
     /**
-     * Loads routes configuration from a SimpleXMLElement.
-     * @param SimpleXMLElement $config
+     * Loads routes configuration from a SimpleXMLElement. Merges the routes
+     * with the router section of the configuration.
+     * @param SimpleXMLElement $routes
+     * @return Fizzy_Config
      */
-    public function loadRoutes(SimpleXMLElement $config)
+    public function loadRoutes(SimpleXMLElement $routes)
     {
-        $routes = array();
-        foreach($config as $routeName => $routeData) {
-            $route = array();
-            foreach($routeData->children() as $childName => $childData) {
-                $route[$childName] = (string) $childData;
-            }
-            foreach($routeData->attributes() as $attrName => $attrData) {
-                $route[$attrName] = (string) $attrData;
-            }
-            $routes[$routeName] = $route;
+        $routesArray = array();
+        foreach($routes->children() as $routeName => $routeData) {
+            $routesArray[$routeName] = $this->_elementToArray($routeData);
         }
 
-        // Merge routes with previously loaded routes
-        if(array_key_exists('routes', $this->_configuration)) {
-            $routes = array_merge($this->_configuration['routes'], $routes);
-        }
+        $routerConfig = $this->getSection(self::SECTION_ROUTER);
+        $routerConfig = $this->_arrayMergeRecursive($routerConfig, $routesArray);
 
-        $this->_configuration['routes'] = $routes;
+        $this->setSection(self::SECTION_ROUTER, $routerConfig);
+
         return $this;
     }
 

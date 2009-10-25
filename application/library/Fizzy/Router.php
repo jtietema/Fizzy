@@ -17,6 +17,9 @@
  * @license http://www.voidwalkers.nl/license/new-bsd The New BSD License
  */
 
+/** Fizzy_AutoFill */
+require_once 'Fizzy/AutoFill.php';
+
 /** Fizzy_Route_Default **/
 require_once 'Fizzy/Route/Default.php';
 
@@ -34,7 +37,7 @@ require_once 'Fizzy/Route/Static.php';
  *
  * @author Mattijs Hoitink <mattijs@voidwalkers.nl>
  */
-class Fizzy_Router
+class Fizzy_Router extends Fizzy_AutoFill
 {
 
     /**
@@ -59,19 +62,21 @@ class Fizzy_Router
 
     /**
      * Fizzy_Router constructor.
-     * @param array $routes
+     * @param array $options
      */
-    public function __construct(array $routes = array())
+    public function __construct(array $options = array())
     {
-        // Add default route
-        $this->addRoute('default', array(
-            'type' => 'default',
-            'controller' => 'default',
-            'action' => 'default'
-        ));
+        parent::__construct($options);
 
-        // Add routes from config
-        $this->addRoutes($routes);
+        // Add default route
+        array_unshift(
+            $this->_routes,
+            $this->_getRouteInstance(array(
+                'type' => 'default',
+                'controller' => 'default',
+                'action' => 'default'
+            ))
+        );
     }
 
     /**
@@ -117,22 +122,41 @@ class Fizzy_Router
     }
 
     /**
+     * Sets the routes for the router as an array. Routes will be converted to
+     * Fizzy_Route classes. Any existent routes will be overridden.
+     * @param array $routes
+     * @return Fizzy_Router
+     */
+    public function setRoutes($routes)
+    {
+        // Reset the routes
+        $this->_routes = array();
+
+        // Add new routes
+        $this->addRoutes($routes);
+        
+        return $this;
+    }
+
+    /**
+     * Returns the routes for the router.
+     * @return array
+     */
+    public function getRoutes()
+    {
+        return $this->_routes;
+    }
+
+    /**
      * Adds a route to the router. The route array will be converted to
      * a route class specified by the type attribute of the route.
      * @param string $name
-     * @param array $routeConfig
+     * @param array $config
      * @return Fizzy_Router
      */
-    public function addRoute($name, array $routeConfig)
+    public function addRoute(array $config)
     {
-        if(!isset($routeConfig['type']) || empty($routeConfig['type'])) {
-            $routeConfig['type'] = 'Default';
-        }
-
-        $routeClass = 'Fizzy_Route_' . ucfirst($routeConfig['type']);
-        $route = new $routeClass($this, $routeConfig);
-
-        $this->_routes[$name] = $route;
+        $this->_routes[] = $this->_getRouteInstance($config);
 
         return $this;
     }
@@ -144,8 +168,8 @@ class Fizzy_Router
      */
     public function addRoutes(array $routes)
     {
-        foreach($routes as $name => $route) {
-            $this->addRoute($name, $route);
+        foreach($routes as $name => $config) {
+            $this->addRoute($config);
         }
 
         return $this;
@@ -169,5 +193,20 @@ class Fizzy_Router
         throw new Fizzy_Exception('No route found.');
     }
 
+    /**
+     * Gets a route instance by config array.
+     * @param array $config
+     * @return object
+     */
+    protected function _getRouteInstance(array $config)
+    {
+        if(!isset($config['type']) || empty($config['type'])) {
+            $config['type'] = 'Static';
+        }
 
+        $routeClass = 'Fizzy_Route_' . ucfirst($config['type']);
+        $route = new $routeClass($this, $config);
+
+        return $route;
+    }
 }

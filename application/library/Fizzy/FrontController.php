@@ -142,7 +142,7 @@ class Fizzy_FrontController
         $request = $this->_request;
         
         if(null === $this->_router) {
-            $this->_router = new Fizzy_Router($config->getSection('routes'));
+            $this->_router = new Fizzy_Router($config->getSection(Fizzy_Config::SECTION_ROUTER));
         }
         $router = $this->_router;
 

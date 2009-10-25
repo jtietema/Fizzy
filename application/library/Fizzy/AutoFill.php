@@ -1,6 +1,6 @@
 <?php
 /**
- * Abstract Class Fizzy_Optional
+ * Abstract Class Fizzy_AutoFill
  * @package Fizzy
  *
  * LICENSE
@@ -18,11 +18,14 @@
  */
 
 /**
- * Description of Optional
+ * Allows the extending class to be automatically filled through an options
+ * array. The array is looped an for each key the class is checked for a
+ * setter method. If the method is implemented it will be called with the
+ * value as parameter.
  *
  * @author Mattijs Hoitink <mattijs@voidwalkers.nl>
  */
-abstract class Optional
+abstract class Fizzy_AutoFill
 {
 
     /**
@@ -40,7 +43,7 @@ abstract class Optional
      */
     public function setOptions(array $options)
     {
-        foreach($options as $optin => $value) {
+        foreach($options as $option => $value) {
             $this->setOption($option, $value);
         }
     }
@@ -52,7 +55,7 @@ abstract class Optional
      * @param mixed $value
      */
     public function setOption($name, $value)
-    {
+    {   
         $methodName = 'set' . ucfirst($name);
         if(is_callable(array($this, $methodName))) {
             $this->$methodName($value);
