@@ -16,6 +16,8 @@
  * @copyright Copyright (c) 2009 Voidwalkers (http://www.voidwalkers.nl)
  * @license http://www.voidwalkers.nl/license/new-bsd The New BSD License
  */
+
+/** SecureController */
 require_once 'SecureController.php';
 
 /**
@@ -34,15 +36,19 @@ class AdminController extends SecureController
 
     /** **/
 
-    public function after()
-    {
-        if($this->getRequest()->getAction() != 'login') {
-            $this->getView()->setLayout('admin.phtml');
-        }
-    }
-
     public function defaultAction()
     {
         $this->_redirect('/admin/pages');
+    }
+
+    /**
+     * Make sure the admin layout is select, except for the login action.
+     * @see Fizzy_Controller
+     */
+    public function after()
+    {
+        if($this->getRequest()->getAction() != 'login') {
+            $this->getView()->setLayout('admin');
+        }
     }
 }

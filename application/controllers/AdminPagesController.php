@@ -29,10 +29,11 @@ class AdminPagesController extends SecureController
 
     /**
      * Makes sure the admin layout is selected.
+     * @see Fizzy_Controller
      */
     public function after()
     {
-        $this->getView()->setLayout('admin.phtml');
+        $this->getView()->setLayout('admin');
     }
 
 }
