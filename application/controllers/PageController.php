@@ -48,6 +48,7 @@ class PageController extends Fizzy_Controller
 
         $this->getView()->setScriptPaths($templates);
         $this->getView()->setScript($page->getTemplate() . '.phtml');
+        $this->getView()->setLayout($page->getLayout());
 
         $this->getView()->page = $page;
     }
@@ -66,7 +67,8 @@ class PageController extends Fizzy_Controller
             $templates = Fizzy_Config::getInstance()->getPath('templates');
 
             $this->getView()->setScriptPaths($templates);
-            $this->getView()->setScript($page->template . '.phtml');
+            $this->getView()->setScript($page->getTemplate() . '.phtml');
+            $this->getView()->setLayout($page->getLayout());
 
             $this->getView()->page = $page;
         }

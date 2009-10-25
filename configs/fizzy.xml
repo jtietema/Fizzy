@@ -4,7 +4,6 @@
         <title>Fizzy</title>
         <env>development</env>
         <basePath>/home/mattijs/development/voidwalkers/fizzy</basePath>
-        <defaultTemplate>page</defaultTemplate>
     </application>
     <router>
         <defaultController>default</defaultController>

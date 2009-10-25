@@ -59,10 +59,10 @@ class Fizzy_FrontController
     public function __construct(Fizzy_Config $config = null)
     {
         // Check for path definitions
-        $paths = $config->getSection('paths');
-        if(!isset($paths['base'])) {
+        $application = $config->getSection('application');
+        if(!isset($application['basePath']) || empty($application['basePath'])) {
             require_once 'Fizzy/Exception.php';
-            throw new Fizzy_Exception('No basepath configured.');
+            throw new Fizzy_Exception('No basePath set in application configuration.');
         }
         
         $this->_config = $config;

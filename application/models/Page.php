@@ -18,15 +18,21 @@ class Page extends Fizzy_Storage_Model
     protected $_type = 'page';
 
     /**
-     * Tempalte for the page.
+     * Template for the page.
      * @var string
      */
     public $template = null;
 
+    /**
+     * Layout for the page.
+     * @var string
+     */
+    public $layout = null;
+
     /** **/
 
     /**
-     * Override to return the default template.
+     * Override to return the default template if none is set.
      * @return string
      */
     public function getTemplate()
@@ -37,6 +43,20 @@ class Page extends Fizzy_Storage_Model
         }
 
         return $this->template;
+    }
+
+    /**
+     * Override to return the default layout if none is set.
+     * @return string
+     */
+    public function getLayout()
+    {
+        if(empty($this->layout)) {
+            $application = Fizzy_Config::getInstance()->getSection('application');
+            $this->layout = $application['defaultLayout'];
+        }
+
+        return $this->layout;
     }
 
 }
