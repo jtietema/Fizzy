@@ -42,6 +42,15 @@ class AdminController extends SecureController
     }
 
     /**
+     * Show fizzy configuration that was loaded.
+     */
+    public function configurationAction()
+    {
+        $this->getView()->configuration = Fizzy_Config::getInstance()->getConfiguration();
+        $this->getView()->setScript('admin/configuration.phtml');
+    }
+
+    /**
      * Make sure the admin layout is select, except for the login action.
      * @see Fizzy_Controller
      */

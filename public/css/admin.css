@@ -16,6 +16,7 @@ h1.header {
 
 h2 { font-size: 1.5em; }
 
+/** tables **/
 table {
     width: 920px;
     margin: 7px 0;
@@ -30,11 +31,15 @@ thead tr td {
     font-size: 13px;
 }
 table td {
-    padding: 1px 3px;
+    padding: 3px 5px;
     color: #666666;
+    vertical-align: top;
 }
 table tr.alt td {
     background: #F3F3F3;
+}
+table tbody tr:hover td {
+    background: #FFFAC0;
 }
 
 form {
@@ -59,10 +64,15 @@ input, textarea {
 input[type='submit'] {
     width: auto;
 }
+input[type='checkbox'] {
+    margin: 0.8em 0.5em 0.5em 0;
+    position: inherit;
+    top: auto;
+}
 label {
     padding: 1px 3px;
     text-align: right;
-    margin: 0 4px 0 0;
+    margin: 0.5em 0.5em 0.5em 0;
     display: block;
     float: left;
     color: #555555;

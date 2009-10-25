@@ -1,0 +1,40 @@
+<h1>Configuration</h1>
+<p>
+    The configuration below was loaded when Fizzy started. The configuration is devided into 
+    sections.
+</p>
+
+<?php foreach($this->configuration as $section => $sectionData) : ?>
+
+<h2><?= $section ; ?></h2>
+
+<table>
+    <thead>
+        <tr>
+            <td style="width: 250px;">Setting</td>
+            <td>Value</td>
+        </tr>
+    </thead>
+    <tbody>
+        <?php
+        $row = 0;
+        foreach($sectionData as $setting => $value) : ?>
+        <tr<?= ($row % 2 == 0) ? ' class="alt"' : ''; ?>>
+            <td><?= $setting; ?></td>
+            <td>
+                <?php if(is_array($value)) :
+                    echo implode(',<br />', $value);
+                else :
+                    echo $value;
+                endif; ?>
+            </td>
+        </tr>
+        <?php
+        $row++;
+        endforeach; ?>
+    </tbody>
+</table>
+<br />
+<?php endforeach; ?>
+
+
