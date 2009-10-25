@@ -11,7 +11,7 @@ class AdminPagesController extends SecureController
     public function listAction()
     {
         $config = Fizzy_Config::getInstance();
-        $storageOptions = $config->getConfiguration('storage');
+        $storageOptions = $config->getSection('storage');
         $this->_storage = new Fizzy_Storage($storageOptions);
 
         $pages = $this->_storage->fetchAll('page');

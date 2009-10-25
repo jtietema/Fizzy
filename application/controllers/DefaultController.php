@@ -6,8 +6,6 @@
 /** Fizzy_Controller */
 require_once 'Fizzy/Controller.php';
 
-require_once 'Menu.php';
-
 /**
  * Default controller.
  * @author Mattijs Hoitink <mattijs@voidwalkers.nl>

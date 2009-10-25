@@ -18,16 +18,13 @@
  * 
  * @author Mattijs Hoitink <mattijs@voidwalkers.nl>
  */
-define('ROOT_PATH', realpath(dirname(__FILE__) . '/../'));
-define('APPLICATION_PATH', realpath(dirname(__FILE__) . '/../application/'));
-define('CONFIG_PATH', APPLICATION_PATH . '/configs');
-define('CONTROLLER_PATH', APPLICATION_PATH . '/controllers');
-define('MODEL_PATH', APPLICATION_PATH . '/models');
-define('VIEW_PATH', APPLICATION_PATH . '/views');
-define('LIBRARY_PATH', ROOT_PATH . '/library');
-define('DATA_PATH', ROOT_PATH . '/data');
+define('ROOT_PATH', realpath(dirname(__FILE__) . DIRECTORY_SEPARATOR . '..'));
+define('APPLICATION_PATH', ROOT_PATH . DIRECTORY_SEPARATOR . 'application');
+define('CONFIG_PATH', ROOT_PATH . DIRECTORY_SEPARATOR . 'configs');
+define('LIBRARY_PATH', ROOT_PATH . DIRECTORY_SEPARATOR . 'library');
+define('DATA_PATH', ROOT_PATH . DIRECTORY_SEPARATOR . '/data');
 
-set_include_path(LIBRARY_PATH . PATH_SEPARATOR . MODEL_PATH . PATH_SEPARATOR . get_include_path());
+set_include_path(LIBRARY_PATH . PATH_SEPARATOR . get_include_path());
 require_once 'Fizzy/Config.php';
 require_once 'Fizzy/FrontController.php';
 

@@ -9,9 +9,6 @@ require_once 'Fizzy/Controller.php';
 /** Fizzy_Storage */
 require_once 'Fizzy/Storage.php';
 
-/** Page **/
-require_once 'Page.php';
-
 /**
  * Pages controller.
  * @author Mattijs Hoitink <mattijs@voidwalkers.nl>
@@ -29,8 +26,7 @@ class PageController extends Fizzy_Controller
     protected function _init()
     {
         $config = Fizzy_Config::getInstance();
-        $storageOptions = $config->getConfiguration('storage');
-        $this->_storage = new Fizzy_Storage($storageOptions);
+        $this->_storage = new Fizzy_Storage($config->getSection('storage'));
     }
 
     /**
@@ -47,11 +43,13 @@ class PageController extends Fizzy_Controller
     public function homepageAction()
     {
         $page = $this->_storage->fetchColumn('page', 'homepage', 'true');
-        $paths = Fizzy_Config::getInstance()->getConfiguration('paths');
-        $templateDirectory = $paths['template'];
+        $basePath = Fizzy_Config::getInstance()->getPath('base');
+        $templates = Fizzy_Config::getInstance()->getPath('templates');
 
-        $this->getView()->setScriptPath($templateDirectory);
-        $this->getView()->setScript($page->template . '.phtml');
+        foreach($templates as $alias => $templatePath) {
+            $this->getView()->addScriptPath($alias, implode(DIRECTORY_SEPARATOR, array($basePath, $templatePath)));
+        }
+        $this->getView()->setScript($page->getTemplate() . '.phtml');
 
         $this->getView()->page = $page;
     }
@@ -66,15 +64,18 @@ class PageController extends Fizzy_Controller
 
         if(null !== $page) {
             $paths = Fizzy_Config::getInstance()->getConfiguration('paths');
-            $templateDirectory = $paths['template'];
+            $basePath = Fizzy_Config::getInstance()->getPath('base');
+            $templates = Fizzy_Config::getInstance()->getPath('templates');
 
-            $this->getView()->setScriptPath($templateDirectory);
+            foreach($templates as $alias => $templatePath) {
+                $this->getView()->addScriptPath($alias, implode(DIRECTORY_SEPARATOR, array($basePath, $templatePath)));
+            }
             $this->getView()->setScript($page->template . '.phtml');
 
             $this->getView()->page = $page;
         }
         else {
-            $this->getView()->setScript('page/notfound.phtml');
+            $this->getView()->setScript('404.phtml');
         }
     }
 

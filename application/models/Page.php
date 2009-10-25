@@ -17,4 +17,26 @@ class Page extends Fizzy_Storage_Model
      */
     protected $_type = 'page';
 
+    /**
+     * Tempalte for the page.
+     * @var string
+     */
+    public $template = null;
+
+    /** **/
+
+    /**
+     * Override to return the default template.
+     * @return string
+     */
+    public function getTemplate()
+    {
+        if(empty($this->template)) {
+            $application = Fizzy_Config::getInstance()->getSection('application');
+            $this->template = $application['defaultTemplate'];
+        }
+
+        return $this->template;
+    }
+
 }

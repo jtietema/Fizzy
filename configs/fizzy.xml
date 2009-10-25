@@ -3,6 +3,7 @@
     <application>
         <title>Fizzy</title>
         <env>development</env>
+        <defaultTemplate>page</defaultTemplate>
     </application>
     <router>
         <defaultController>default</defaultController>
@@ -13,12 +14,5 @@
     </storage>
     <paths>
         <base>/home/mattijs/development/voidwalkers/fizzy</base>
-        <controller>application/controllers</controller>
-        <library>library</library>
-        <model>application/models</model>
-        <public>public</public>
-        <view>application/views/scripts</view>
-        <layout>application/views/layouts</layout>
-        <template>application/views/templates</template>
     </paths>
 </fizzy>

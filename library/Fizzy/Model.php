@@ -42,7 +42,7 @@ abstract class Fizzy_Model implements IteratorAggregate, Countable
     public function __construct(array $data = array())
     {
         foreach($data as $key => $value) {
-            $this->__set($key, $value);
+            $this->$key = $value;
         }
     }
 

@@ -26,22 +26,16 @@ class Fizzy_View
 {
 
     /**
-     * Base path for view and layout paths.
-     * @var string
+     * Directories containing view scripts.
+     * @var array
      */
-    private $_basePath = '';
-    
-    /**
-     * Directory containing view scripts.
-     * @var string
-     */
-    private $_scriptPath = '';
+    private $_scriptPaths = array();
 
     /**
-     * Directory containing layout scripts.
-     * @var string
+     * Directories containing layout scripts.
+     * @var array
      */
-    private $_layoutPath = '';
+    private $_layoutPaths = array();
 
     /**
      * The view script to render.
@@ -70,66 +64,74 @@ class Fizzy_View
     /** **/
 
     /**
-     * Set the base path for view and layout scripts.
-     * @param string $path
+     * Sets the directories containing view scripts. Paths must be set as
+     * absolute paths.
+     * @param array $paths
      * @return Fizzy_View
      */
-    public function setBasePath($path)
+    public function setScriptPaths(array $paths)
     {
-        $this->_basePath = $path;
+        $this->_scriptPaths = $paths;
 
         return $this;
     }
 
     /**
-     * Returns the base path for view and layout scripts.
-     * @return string
+     * Returns the directories containing view scripts.
+     * @return array
      */
-    public function getBasePath()
+    public function getScriptPaths()
     {
-        return $this->_basePath;
+        return $this->_scriptPaths;
     }
 
     /**
-     * Sets the path containing the view scripts.
+     * Adds a directory containing view scripts to the stack. Paths added must
+     * be absolute paths.
      * @param string $path
      * @return Fizzy_View
      */
-    public function setScriptPath($path)
+    public function addScriptPath($alias, $path)
     {
-        $this->_scriptPath = $path;
+        $this->_scriptPaths[$alias] = $path;
 
         return $this;
     }
 
     /**
-     * Gets the path containing the view scripts.
-     * @return string
-     */
-    public function getScriptPath()
-    {
-        return $this->_scriptPath;
-    }
-
-    /**
-     * Sets the path containing the layout scripts.
-     * @param string $path
+     * Sets the directories containing layout scripts. Paths must be set as
+     * absolute paths.
+     * @param array $paths
      * @return FIzzy_View
      */
-    public function setLayoutPath($path)
+    public function setLayoutPaths(array $paths)
     {
-        $this->_layoutPath = $path;
+        $this->_layoutPaths = $paths;
 
         return $this;
     }
 
     /**
-     * Returns the path containing the layout scripts.
-     * @return string
+     * Returns the directories containing layout scripts.
+     * @return array
      */
-    public function getLayoutPath()
+    public function getLayoutPaths()
     {
-        return $this->_layoutPath;
+        return $this->_layoutPaths;
+    }
+
+    /**
+     * Adds a directory containing layout scripts to the stack. Path must be
+     * added as an absolute path.
+     * @param string $alias
+     * @param string $path
+     * @return Fizzy_View
+     */
+    public function addLayoutPath($alias, $path)
+    {
+        $this->_layoutPaths[$alias] = $path;
+
+        return $this;
     }
 
     /**
@@ -245,14 +247,17 @@ class Fizzy_View
      */
     public function _script($name)
     {
-        $viewScript = implode(DIRECTORY_SEPARATOR, array($this->_basePath, $this->_scriptPath, $name));
-
-        if(!is_file($viewScript)) {
-            require_once 'Fizzy/Exception.php';
-            throw new Fizzy_Exception("View script {$name} could not be found in path {$this->_scriptPath}.");
+        foreach(array_reverse($this->_scriptPaths) as $alias => $path)
+        {
+            $viewScript = implode(DIRECTORY_SEPARATOR, array($path, $name));
+            if(is_file($viewScript)) {
+                return $viewScript;
+            }
         }
 
-        return $viewScript;
+        // No script found
+        require_once 'Fizzy/Exception.php';
+        throw new Fizzy_Exception("View script {$name} could not be found. Paths: " . implode('; ', array_reverse($this->_scriptPaths)) . ";");
     }
 
     public function __get($name)

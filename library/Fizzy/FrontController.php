@@ -37,7 +37,7 @@ class Fizzy_FrontController
      * @var Fizzy_Config
      */
     protected $_config = null;
-    
+
     /**
      * The request object.
      * @var Fizzy_Request
@@ -58,25 +58,16 @@ class Fizzy_FrontController
      */
     public function __construct(Fizzy_Config $config = null)
     {
+        // Check for path definitions
+        $paths = $config->getSection('paths');
+        if(!isset($paths['base'])) {
+            require_once 'Fizzy/Exception.php';
+            throw new Fizzy_Exception('No basepath configured.');
+        }
+        
         $this->_config = $config;
         // Register autoload function for model classes
-        spl_autoload_register(array($this, 'autoload'));
-    }
-
-    /**
-     * Autoload function for model classes.
-     * @param string $class
-     */
-    public static function autoload($class)
-    {
-        $config = Fizzy_Config::getInstance();
-        $paths = $config->getConfiguration('paths');
-
-        $modelsPath = $paths['base'] . DIRECTORY_SEPARATOR . $paths['model'] . DIRECTORY_SEPARATOR . ucfirst($class) . '.php';
-        if(is_file($modelsPath)) {
-            require $modelsPath;
-        }
-
+        spl_autoload_register(array($this, 'autoloadModel'));
     }
 
     /**
@@ -107,14 +98,40 @@ class Fizzy_FrontController
     }
 
     /**
+     * Returns the full path to an application path.
+     * @param string $alias
+     * @return string|null
+     */
+    public function getFullPath($alias)
+    {
+        if(null === $this->_config->getPath($alias)) {
+            return null;
+        }
+        $basePath = $this->_config->getPath('base');
+        $path = $this->_config->getPath($alias);
+
+        if(is_array($path)) {
+            $pathsArray = array();
+            foreach($path as $alias => $subpath) {
+                $pathsArray[$alias] = implode(DIRECTORY_SEPARATOR, array($basePath, $subpath));
+            }
+            $path = $pathsArray;
+        }
+        else {
+            $path = implode(DIRECTORY_SEPARATOR, array($basePath, $path));
+        }
+        
+        return $path;
+    }
+
+    /**
      * Dispatches the request to a controller.
      * @param Fizzy_Request $request
      */
     public function dispatch()
     {
         $config = $this->_config;
-        $paths = $config->getConfiguration('paths');
-        $application = $config->getConfiguration('application');
+        $application = $config->getSection('application');
         
         if(null === $this->_request) {
             $this->_request = new Fizzy_Request();
@@ -125,7 +142,7 @@ class Fizzy_FrontController
         $request = $this->_request;
         
         if(null === $this->_router) {
-            $this->_router = new Fizzy_Router($this->_config->getConfiguration('routes'));
+            $this->_router = new Fizzy_Router($config->getSection('routes'));
         }
         $router = $this->_router;
 
@@ -139,11 +156,11 @@ class Fizzy_FrontController
         $controllerClass = $controller . 'Controller';
 
         $controllerFileName = ucfirst($controllerClass) . '.php';
-        $controllerFilePath = CONTROLLER_PATH . DIRECTORY_SEPARATOR . $controllerFileName;
+        $controllerFilePath = $this->getFullPath('controllers') . DIRECTORY_SEPARATOR . $controllerFileName;
 
         if(!is_file($controllerFilePath)) {
             require_once 'Fizzy/Exception.php';
-            throw new Fizzy_Exception("Controller file for controller {$controllerClass} not found.");
+            throw new Fizzy_Exception("Controller file for {$controllerClass} not found under controller directory {$controllerFilePath}.");
         }
         require_once $controllerFilePath;
         
@@ -157,9 +174,8 @@ class Fizzy_FrontController
         
         // Create a new view object for the controller
         $view = new Fizzy_View();
-        $view->setbasePath($paths['base'])
-             ->setScriptPath($paths['view'])
-             ->setLayoutPath($paths['layout']);
+        $view->setScriptPaths($this->getFullPath('views'))
+             ->setLayoutPaths($this->getFullPath('layouts'));
         $controllerInstance->setView($view);
 
         // retrieve the action
@@ -197,14 +213,32 @@ class Fizzy_FrontController
             }
             else {
                 $layout = new Fizzy_View();
-                $layout->setBasePath($view->getBasePath())
-                   ->setScriptPath($view->getLayoutPath())
-                   ->setScript($view->getLayout());
+                $layout->setScriptPaths($view->getLayoutPaths())
+                       ->setScript($view->getLayout());
 
                 $layout->assign('content', $viewOuput);
                 echo $layout->render();
             }
         }
+    }
+
+    /**
+     * Autoload function for model classes.
+     * @param string $class
+     */
+    public static function autoloadModel($class)
+    {
+        $config = Fizzy_Config::getInstance();
+        $modelFile = ucfirst($class) . '.php';
+        $modelDirectory = $config->getPath('base') . DIRECTORY_SEPARATOR . $config->getPath('models');
+
+        $modelsPath = $modelDirectory . DIRECTORY_SEPARATOR . $modelFile;
+        if(is_file($modelsPath)) {
+            require $modelsPath;
+            return true;
+        }
+
+        return false;
     }
     
 }

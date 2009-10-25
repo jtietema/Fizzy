@@ -24,9 +24,6 @@ require_once 'Fizzy/Controller.php';
 /** Fizzy_Storage */
 require_once 'Fizzy/Storage.php';
 
-/** User */
-require_once 'User.php';
-
 /**
  * A controller secured by login
  *
@@ -63,7 +60,7 @@ class SecureController extends Fizzy_Controller
         {
             // perform login
             $config = Fizzy_Config::getInstance();
-            $storageOptions = $config->getConfiguration('storage');
+            $storageOptions = $config->getSection('storage');
             $storage = new Fizzy_Storage($storageOptions);
 
             $model = $storage->fetchColumn('user', 'username', $_POST['username']);
