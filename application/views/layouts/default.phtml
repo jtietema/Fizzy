@@ -1,10 +1,44 @@
 <html>
     <head>
-        <title>Fizzy Default Layout</title>
+        <title>Fizzy Admin</title>
+        <link href="/css/default-screen.css" rel="stylesheet" type="text/css" media="screen" />
+        <link href="/css/default.css" rel="stylesheet" type="text/css" media="screen" />
     </head>
     <body>
-        <div id="content">
-            <?= $this->content ?>
+
+        <div class="container">
+
+            <!-- HEADER -->
+            <div id="header" class="span-24 last">
+                <h1>Fizzy<span>CMS</span></h1>
+            </div>
+
+            <!-- NAVIGATION -->
+            <div id="navigation" class="span-24 last">
+                <ul>
+                    <li><a href="/">Home</a></li>
+                    <li><a href="/page/about">About</a></li>
+                    <li><a href="/page/configuration">Configuration</a></li>
+                    <li><a href="/page/extending">Extending</a></li>
+                    <li><a href="/page/more">More</a></li>
+               </ul>
+            </div>
+
+            <!-- CONTENT -->
+            <div id="main-wrapper" class="span-24 last">
+                <div id="content" class="span-24">
+                    <div class="content-block">
+                        <?= $this->content; ?>
+                    </div>
+                </div>
+            </div>
+
+            <!-- FOOTER -->
+            <div id="footer" class="span-24 last">
+                (c) 2009 <a href="http://www.voidwalkers.nl" title="The Voidwalkers">Voidwalkers</a> - <a href="http://www.voidwalkers.nl/license/bsd-license" title="Fizzy license">license</a>
+            </div>
+
         </div>
+
     </body>
 </html>
