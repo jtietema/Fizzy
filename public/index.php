@@ -1,3 +1,3 @@
 <?php
-
-require_once '../library/Fizzy.php';
+// Start Fizzy
+require_once '../application/Fizzy.php';

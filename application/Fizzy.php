@@ -18,13 +18,13 @@
  * 
  * @author Mattijs Hoitink <mattijs@voidwalkers.nl>
  */
-define('ROOT_PATH', realpath(dirname(__FILE__) . DIRECTORY_SEPARATOR . '..'));
-define('APPLICATION_PATH', ROOT_PATH . DIRECTORY_SEPARATOR . 'application');
-define('CONFIG_PATH', ROOT_PATH . DIRECTORY_SEPARATOR . 'configs');
+define('APPLICATION_PATH', realpath(dirname(__FILE__)));
+define('APPLICATION_LIBRARY_PATH', APPLICATION_PATH . DIRECTORY_SEPARATOR . 'library');
+define('ROOT_PATH', realpath(APPLICATION_PATH . DIRECTORY_SEPARATOR . '..'));
 define('LIBRARY_PATH', ROOT_PATH . DIRECTORY_SEPARATOR . 'library');
-define('DATA_PATH', ROOT_PATH . DIRECTORY_SEPARATOR . '/data');
+define('CONFIG_PATH', ROOT_PATH . DIRECTORY_SEPARATOR . 'configs');
 
-set_include_path(LIBRARY_PATH . PATH_SEPARATOR . get_include_path());
+set_include_path(LIBRARY_PATH . PATH_SEPARATOR . APPLICATION_LIBRARY_PATH . DIRECTORY_SEPARATOR . get_include_path());
 require_once 'Fizzy/Config.php';
 require_once 'Fizzy/FrontController.php';
 
