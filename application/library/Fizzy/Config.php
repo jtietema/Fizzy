@@ -51,10 +51,10 @@ class Fizzy_Config
         ),
         self::SECTION_ROUTER => array (
             'defaultController' => 'default',
-            'defaultAction' => 'default'
+            'defaultAction' => 'default',
+            'routes' => array(),
         ),
         self::SECTION_PATHS => array(
-            'base' => '',
             'application' => 'application',
             'controllers' => 'application/controllers',
             'models' => 'application/models',
@@ -191,18 +191,10 @@ class Fizzy_Config
         $basePath = $this->_configuration[self::SECTION_APPLICATION]['basePath'];
 
         if(is_array($path)) {
-            $subPaths = array();
-            foreach($path as $subAlias => $subPath) {
-                if(0 === strpos($subPath, $basePath)) {
-                    $subPaths[$alias] = str_replace($basePath, '', $subPath);
-                }
-            }
-            $path = $subPaths;
+            $path = array_walk($path, array($this, '_removeBasePath'));
         }
         else if('base' !== $alias) {
-            if(0 === strpos($path, $basePath)) {
-                $path = str_replace($basePath, '', $path);
-            }
+            $path = $this->_removeBasePath($path);
         }
 
         $this->_configuration[self::SECTION_PATHS][$alias] = $path;
@@ -227,21 +219,79 @@ class Fizzy_Config
         $path = $this->_configuration[self::SECTION_PATHS][$alias];
 
         if(is_array($path)) {
-            $subPaths = array();
-            foreach($path as $subAlias => $subPath) {
-                if(0 !== strpos($subPath, $basePath)) {
-                    $subPaths[$subAlias] = implode(DIRECTORY_SEPARATOR, array($basePath, $subPath));
-                }
-            }
-            $path = $subPaths;
+            array_walk($path, array($this, '_addBasePath'));
         }
         else {
-            if(0 !== strpos($path, $basePath)) {
-                $path = implode(DIRECTORY_SEPARATOR, array($basePath, $path));
-            }
+            $path = $this->_addBasePath($path);
         }
 
         return $path;
+    }
+
+    /**
+     * Adds the base path to an application path.
+     * @param string $path
+     * @return string
+     */
+    protected function _addBasePath(&$path)
+    {
+        $basePath = $this->_configuration[self::SECTION_APPLICATION]['basePath'];
+        $basePath = $this->_cleanPath($basePath);
+        
+        if(0 !== strpos($path, $basePath)) {
+            $path = $this->_createPath($basePath, $path);
+        }
+
+        return $path;
+    }
+
+    /**
+     * Removes the base path from an application path.
+     * @param string $path
+     * @return string
+     */
+    protected function _removeBasePath(&$path)
+    {
+        $basePath = $this->_configuration[self::SECTION_APPLICATION]['basePath'];
+        $basePath = $this->_cleanPath($basePath);
+
+        if(0 === strpos($path, $basePath)) {
+            $path = str_replace($basePath, '', $path);
+        }
+
+        return $path;
+    }
+
+    /**
+     * Cleans a path making sure it starts with a DIRECTORY_SEPARATOR and does
+     * not end with a DIRECTORY_SEPARATOR
+     * @param string $path
+     * @return string
+     */
+    protected function _cleanPath($path)
+    {
+        $path = str_replace(array('/', '\\'), DIRECTORY_SEPARATOR, $path);
+        if(0 !== strpos($path, DIRECTORY_SEPARATOR)) {
+            $path = DIRECTORY_SEPARATOR . $path;
+        }
+        $path = rtrim($path, DIRECTORY_SEPARATOR);
+        return $path;
+    }
+
+    /**
+     * Creates a path from multiple elements. Any number of elements can be
+     * supplied.
+     * @return <type>
+     */
+    public function _createPath()
+    {
+        if(0 === func_num_args()) {
+            return null;
+        }
+        $elements = func_get_args();
+        $elements = array_map(array($this, '_cleanPath'), $elements);
+
+        return implode('', $elements);
     }
 
     /**

@@ -33,7 +33,9 @@ class AdminPagesController extends SecureController
      */
     public function after()
     {
-        $this->getView()->setLayout('admin');
+        if($this->getRequest()->getAction() != 'login') {
+            $this->getView()->setLayout('admin');
+        }
     }
 
 }

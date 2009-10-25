@@ -8,7 +8,7 @@ class AdminUsersController extends SecureController
     public function listAction()
     {
         $config = Fizzy_Config::getInstance();
-        $storageOptions = $config->getConfiguration('storage');
+        $storageOptions = $config->getSection('storage');
         $this->_storage = new Fizzy_Storage($storageOptions);
 
         $users = $this->_storage->fetchAll('user');
@@ -22,6 +22,8 @@ class AdminUsersController extends SecureController
      */
     public function after()
     {
-        $this->getView()->setLayout('admin');
+        if($this->getRequest()->getAction() != 'login') {
+            $this->getView()->setLayout('admin');
+        }
     }
 }
