@@ -1,6 +1,10 @@
 <html>
     <head>
-        <title>Fizzy Admin</title>
+        <?php 
+            $application = Fizzy_Config::getInstance()->getSection(Fizzy_Config::SECTION_APPLICATION);
+            $title = $application['title'];
+         ?>
+        <title><?= $title; ?></title>
         <link href="/css/default-screen.css" rel="stylesheet" type="text/css" media="screen" />
         <link href="/css/default.css" rel="stylesheet" type="text/css" media="screen" />
     </head>

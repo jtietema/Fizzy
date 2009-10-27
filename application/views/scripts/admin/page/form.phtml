@@ -1,7 +1,7 @@
 <h1>Page</h1>
 
 <div class="form-container">
-    <form action="" method="" name="PageForm" id="PageForm">
+    <form action="/admin/pages/add" method="post" name="PageForm" id="PageForm">
 
         <div class="form-row">
             <label for="title">Title</label>
@@ -13,12 +13,17 @@
             <input type="text" name="slug" id="slug" value="" />
         </div>
 
-        <div class="form-row">
+        <div class="form-row yui-skin-sam">
             <label for="body">Body</label>
             <div style="float: left;">
                 <textarea name="body" id="body" style="width: 790px;"></textarea>
             </div>
             <div class="clear"></div>
+            <div style="text-align: right;">
+                <a href="#" onclick="showEditor();">show editor</a>
+                &nbsp;|&nbsp;
+                <a href="#" onclick="hideEditor();">hide editor</a>
+            </div>
         </div>
 
         <?php if(0 < count($this->availableTemplates)) : ?>
@@ -56,7 +61,22 @@
 
     </form>
 </div>
-<script type="text/javascript" src="http://js.nicedit.com/nicEdit-latest.js"></script>
+<script src="/js/yui/build/container/container_core-min.js"></script>
+<script src="/js/yui/build/menu/menu-min.js"></script>
+<script src="/js/yui/build/button/button-min.js"></script>
+<script src="/js/yui/build/editor/editor-min.js"></script>
+
 <script type="text/javascript">
-    new nicEditor().panelInstance('body');
+        var bodyEditorConfig = {
+            //ptags: true,
+            animate: true,
+            dompath: true,
+            focusAtStart: true,
+            handleSubmit: true
+        };
+
+    //Now let's load the Editor..
+    var bodyEditor = new YAHOO.widget.Editor('body', bodyEditorConfig);
+    bodyEditor.render();
+
 </script>
