@@ -174,7 +174,8 @@ class Fizzy_FrontController
 
         // Create a new view object for the controller
         $view = new Fizzy_View();
-        $view->setScriptPaths($config->getPath('views'))
+        $view->setRequest($request)
+             ->setScriptPaths($config->getPath('views'))
              ->setLayoutPaths($config->getPath('layouts'));
         $controllerInstance->setView($view);
 
@@ -213,7 +214,8 @@ class Fizzy_FrontController
             }
             else {
                 $layout = new Fizzy_View();
-                $layout->setScriptPaths($view->getLayoutPaths())
+                $layout->setRequest($request)
+                       ->setScriptPaths($view->getLayoutPaths())
                        ->setScript($view->getLayout() . '.phtml');
 
                 $layout->assign('content', $viewOuput);

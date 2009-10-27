@@ -3,7 +3,21 @@
     <page uid="1255987346">
         <title><![CDATA[Welcome]]></title>
         <slug>homepage</slug>
-        <body><![CDATA[This is the body encapsulated in CDATA]]></body>
+        <body><![CDATA[<p>
+        Voidwalkers is een klein webdevelopment bedrijf uit Utrecht. Gedreven door onze passie
+        voor programmeren en techniek, bouwen wij software met Open Source software zoals
+        PHP, Python en MySql.
+    </p>
+    <p>
+
+        Wij richten ons op de (technische) implementatie van onder andere websites, webapplicaties en webservices
+        en bieden ondersteuning aan bedrijven die daarvoor zelf de kennis en/of de resources niet in huis
+        hebben.
+    </p>
+    <p>
+        Kunnen wij je ergens mee helpen of heb je een vraag? Neem dan <a class="hint" href="contact">contact</a> met ons op.
+    </p>
+]]></body>
         <homepage>true</homepage>
     </page>
     <page uid="1255987347">
