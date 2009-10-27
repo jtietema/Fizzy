@@ -132,7 +132,7 @@ class Fizzy_Controller
      */
     protected function _redirect($url)
     {
-        header('Location: http://' . $this->_request->getServerName() . $url);
+        header('Location: http://' . $this->_request->getServerName() . $this->_request->getBaseUrl() . $url);
         exit();
     }
 }
