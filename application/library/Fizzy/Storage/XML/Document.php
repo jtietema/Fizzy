@@ -47,7 +47,8 @@ class Fizzy_Storage_XML_Document extends DOMDocument
         $cdata = $this->createCDATASection();
         $cdata->appendData($value);
 
-        $text = $this->createTextNode($cdata);
+        $text = $this->createTextNode();
+        $text->appendChild($cdata);
         $target->appendChild($text);
 
         return $element;
