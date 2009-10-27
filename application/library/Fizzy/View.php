@@ -17,51 +17,81 @@
  * @license http://www.voidwalkers.nl/license/new-bsd The New BSD License
  */
 
+/** Fizzy_ViewHelpers */
+require_once 'Fizzy/ViewHelpers.php';
+
 /**
  * Fizzy View class for rendering view scripts and layouts.
  *
  * @author Mattijs Hoitink <mattijs@voidwalkers.nl>
  */
-class Fizzy_View
+class Fizzy_View extends Fizzy_ViewHelpers
 {
+
+    /**
+     * The request object.
+     * @var Fizzy_Request
+     */
+    protected $_request = null;
 
     /**
      * Directories containing view scripts.
      * @var array
      */
-    private $_scriptPaths = array();
+    protected $_scriptPaths = array();
 
     /**
      * Directories containing layout scripts.
      * @var array
      */
-    private $_layoutPaths = array();
+    protected $_layoutPaths = array();
 
     /**
      * The view script to render.
      * @var string
      */
-    private $_script = '';
+    protected $_script = '';
 
     /**
      * The layout to use when rendering.
      * @var string
      */
-    private $_layout = '';
+    protected $_layout = '';
 
     /**
      * Whether the view is rendered.
      * @var boolean
      */
-    private $_rendered = false;
+    protected $_rendered = false;
 
     /**
      * If the view is enabled and should be rendered.
      * @var boolean
      */
-    private $_enabled = true;
+    protected $_enabled = true;
 
     /** **/
+
+    /**
+     * Sets the request object for the view
+     * @param Fizzy_Request $request
+     * @return Fizzy_View
+     */
+    public function setRequest(Fizzy_Request $request)
+    {
+        $this->_request = $request;
+
+        return $this;
+    }
+
+    /**
+     * Returns the request object for this view.
+     * @return Fizzy_Request
+     */
+    public function getRequest()
+    {
+        return $this->_request;
+    }
 
     /**
      * Sets the directories containing view scripts. Paths must be set as

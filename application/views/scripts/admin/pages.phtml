@@ -14,16 +14,15 @@
                 <td><?= $page->title ?></td>
                 <td><?= $page->slug ?></td>
                 <td>
-                    <a href="/page/<?= $page->slug ?>" title="View page" target="_blanc"><img src="/images/icon/view.png" alt="view icon" /></a>
-                    <a href="/page/edit/<?= $page->id ?>" title="Edit page"><img src="/images/icon/edit.png" alt="edit icon" /></a>
-                    <a href="/page/delete/<?= $page->id ?>" title="Delete page"><img src="/images/icon/sign_remove.png" alt="delete icon" /></a>
-                </td>
+                    <?= $this->link("/page/{$page->slug}", $this->img('/images/icon/view.png', array('alt' => 'View icon')), array('target' => '_blanc')); ?>
+                    <?= $this->link("/page/edit/{$this->id}", $this->img('/images/icon/edit.png')); ?>
+                    <?= $this->link("/page/delete/{$this->id}", $this->img('/images/icon/sign_remove.png')); ?>
             </tr>
             <?php endforeach; ?>
         </tbody>
     </table>
 
     <p>
-        <a href="/admin/pages/add">Add Page</a>
+        <?= $this->link('/admin/pages/add', $this->img('/images/icon/add.png') . ' Add Page'); ?>
     </p>
 </div>
