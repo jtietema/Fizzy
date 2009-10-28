@@ -62,7 +62,6 @@ abstract class Fizzy_Model implements IteratorAggregate, Countable
             return $this->_data[$name];
         }
 
-        trigger_error("Variable {$name} not found.");
         return null;
     }
 

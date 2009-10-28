@@ -103,7 +103,7 @@ class Fizzy_Storage_XML implements Fizzy_Storage_Interface
             }
 
             // add the element to the root element
-            $root = $domDocument->getElementByUid('root');
+            $root = $domDocument->getElementByXpath('/' . $this->_typeContrainerName($type));
             $root->appendChild($element);
         }
         else

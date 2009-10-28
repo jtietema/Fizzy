@@ -63,7 +63,7 @@ abstract class Fizzy_Storage_Model extends Fizzy_Model
         $identifier = $this->_identifier;
         if ($this->$identifier !== null) {
             require_once 'Fizzy/Exception.php';
-            throw new Fizzy_Exception("Can't change model ID's.");
+            throw new Fizzy_Exception("Can't change models identifier.");
         }
 
         $this->$identifier = $id;

@@ -12,9 +12,9 @@ class AdminPagesController extends SecureController
     {
         $config = Fizzy_Config::getInstance();
         $storageOptions = $config->getSection('storage');
-        $this->_storage = new Fizzy_Storage($storageOptions);
+        $storage = new Fizzy_Storage($storageOptions);
 
-        $pages = $this->_storage->fetchAll('page');
+        $pages = $storage->fetchAll('page');
         $this->getView()->pages = $pages;
         $this->getView()->setScript('admin/pages.phtml');
     }
@@ -38,6 +38,16 @@ class AdminPagesController extends SecureController
         
         // Unset default template and layout
         unset($templates[$application['defaultTemplate']], $layouts[$application['defaultLayout']]);
+
+        if($this->getRequest()->getMethod() === Fizzy_Request::METHOD_POST) {
+            $page = new Page($_POST);
+            $config = Fizzy_Config::getInstance();
+            $storageOptions = $config->getSection('storage');
+            $storage = new Fizzy_Storage($storageOptions);
+
+            $storage->persist($page);
+        }
+
 
         $this->getView()->availableTemplates = $templates;
         $this->getView()->availableLayouts = $layouts;
