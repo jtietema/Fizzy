@@ -15,15 +15,4 @@ class AdminUsersController extends SecureController
         $this->getView()->users = $users;
         $this->getView()->setScript('admin/users.phtml');
     }
-
-    /**
-     * Makes sure the admin layout is selected.
-     * @see Fizzy_Controller
-     */
-    public function after()
-    {
-        if($this->getRequest()->getAction() != 'login') {
-            $this->getView()->setLayout('admin');
-        }
-    }
 }

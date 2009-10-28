@@ -87,4 +87,15 @@ class SecureController extends Fizzy_Controller
         session_destroy();
         $this->_redirect('/admin');
     }
+
+    /**
+     * Makes sure the admin layout is selected.
+     * @see Fizzy_Controller
+     */
+    public function after()
+    {
+        if($this->getRequest()->getAction() != 'login') {
+            $this->getView()->setLayout('admin');
+        }
+    }
 }

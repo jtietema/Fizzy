@@ -19,16 +19,4 @@ class AdminMenuController extends SecureController
         $this->getView()->pages = $pages;
         $this->getView()->setScript('admin/menu.phtml');
     }
-
-    /**
-     * Make sure the admin layout is selected.
-     * @see Fizzy_Controller
-     */
-    public function after()
-    {
-        if($this->getRequest()->getAction() != 'login') {
-            $this->getView()->setLayout('admin');
-        }
-    }
-
 }
