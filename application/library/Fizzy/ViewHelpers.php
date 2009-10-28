@@ -1,6 +1,6 @@
 <?php
 /**
- * Class Fizzy_ViewHelpers
+ * Abstract class Fizzy_ViewHelpers
  * @package Fizzy
  *
  * LICENSE
@@ -22,7 +22,7 @@
  *
  * @author Mattijs Hoitink <mattijs@voidwalkers.nl>
  */
-class Fizzy_ViewHelpers {
+abstract class Fizzy_ViewHelpers {
 
     /**
      * Returns an url with the base url prefixed.

@@ -93,15 +93,14 @@ class Fizzy_Storage_XML implements Fizzy_Storage_Interface
 
             // store all the fields in the element
             $fields = $model->toArray();
-            // add the element to the root element
-            $root = $domDocument->getElementByUid('root');
             
             foreach ($fields as $key => $value)
             {
                 $domDocument->addElementWithValue($key, $value, $element);
             }
 
-            
+            // add the element to the root element
+            $root = $domDocument->getElementByXpath('/' . $this->_typeContrainerName($type));
             $root->appendChild($element);
         }
         else
