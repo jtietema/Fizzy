@@ -1,7 +1,7 @@
 <h1>Page</h1>
 
 <div class="form-container">
-    <form action="/admin/pages/add" method="post" name="PageForm" id="PageForm">
+    <form action="<?= $this->url("/admin/pages/add") ?>" method="post" name="PageForm" id="PageForm">
 
         <div class="form-row">
             <label for="title">Title</label>
@@ -61,10 +61,10 @@
 
     </form>
 </div>
-<script src="/js/yui/build/container/container_core-min.js"></script>
-<script src="/js/yui/build/menu/menu-min.js"></script>
-<script src="/js/yui/build/button/button-min.js"></script>
-<script src="/js/yui/build/editor/editor-min.js"></script>
+<script src="<?= $this->url("/js/yui/build/container/container_core-min.js") ?>"></script>
+<script src="<?= $this->url("/js/yui/build/menu/menu-min.js") ?>"></script>
+<script src="<?= $this->url("/js/yui/build/button/button-min.js") ?>"></script>
+<script src="<?= $this->url("/js/yui/build/editor/editor-min.js") ?>"></script>
 
 <script type="text/javascript">
         var bodyEditorConfig = {
