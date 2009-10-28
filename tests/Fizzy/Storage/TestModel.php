@@ -1,13 +1,13 @@
 <?php
 
-require_once 'Fizzy/Model.php';
+require_once 'Fizzy/Storage/Model.php';
 
 /**
  * Description of TestModel
  *
  * @author jeroen
  */
-class TestModel extends Fizzy_Model
+class TestModel extends Fizzy_Storage_Model
 {
     protected $_type = 'test';
 

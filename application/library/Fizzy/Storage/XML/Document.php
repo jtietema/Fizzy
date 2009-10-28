@@ -42,15 +42,12 @@ class Fizzy_Storage_XML_Document extends DOMDocument
     public function addElementWithValue($name, $value, DOMNode $target)
     {
         $element = $this->createElement($name);
-        $target->appendChild($element);
 
         $cdata = $this->createCDATASection($value);
-        //$cdata->appendData($value);
+        $element->appendChild($cdata);
 
-        $text = $this->createTextNode();
-        $text->appendChild($cdata);
-        $target->appendChild($text);
-
+        $target->appendChild($element);
+        
         return $element;
     }
 
@@ -114,6 +111,7 @@ class Fizzy_Storage_XML_Document extends DOMDocument
         }
         else
         {
+            require_once 'Fizzy/Storage/Exception/XMLError.php';
             throw new Fizzy_Storage_Exception_XMLError("Need a filename.");
         }
 

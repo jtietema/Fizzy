@@ -160,7 +160,7 @@ class Fizzy_Storage
      *
      * @param string $type
      * @param array $data
-     * @return Fizzy_Model
+     * @return Fizzy_Storage_Model
      */
     protected function _buildModel($type, $data)
     {

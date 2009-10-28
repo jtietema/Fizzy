@@ -93,17 +93,15 @@ class Fizzy_Storage_XML implements Fizzy_Storage_Interface
 
             // store all the fields in the element
             $fields = $model->toArray();
-            foreach ($fields as $key => $value)
-            {
-                $keyElement = $domDocument->createElement($key);
-                $element->appendChild($keyElement);
-
-                $valueTextNode = $domDocument->createTextNode($value);
-                $keyElement->appendChild($valueTextNode);
-            }
-
             // add the element to the root element
             $root = $domDocument->getElementByUid('root');
+            
+            foreach ($fields as $key => $value)
+            {
+                $domDocument->addElementWithValue($key, $value, $element);
+            }
+
+            
             $root->appendChild($element);
         }
         else
@@ -116,9 +114,10 @@ class Fizzy_Storage_XML implements Fizzy_Storage_Interface
             for ($i = 0; $i < $element->childNodes->length; $i++)
             {
                 $child = $element->childNodes->item($i);
-                $textNode = $child->firstChild;
-                $newTextNode = $domDocument->createTextNode($fields[$child->nodeName]);
-                $child->replaceChild($newTextNode, $textNode);
+                $newChild = $domDocument->createElement($child->nodeName);
+                $cdata = $domDocument->createCDATASection($fields[$child->nodeName]);
+                $newChild->appendChild($cdata);
+                $element->replaceChild($newChild, $child);
             }
         }
         $filename = $this->_filename($model->getType());

@@ -32,15 +32,15 @@ interface Fizzy_Storage_Interface
      * Persist the given model (add or save).
      * Returns the persisted model (with added id).
      *
-     * @param Fizzy_Model $model
-     * @return Fizzy_Model
+     * @param Fizzy_Storage_Model $model
+     * @return Fizzy_Storage_Model
      */
     public function persist(Fizzy_Storage_Model $model);
 
     /**
      * Remove the given model from persistence.
      *
-     * @param Fizzy_Model $model
+     * @param Fizzy_Storage_Model $model
      */
     public function remove(Fizzy_Storage_Model $model);
 
@@ -49,7 +49,7 @@ interface Fizzy_Storage_Interface
      *
      * @param string $type
      * @param mixed $uid
-     * @return Fizzy_Model|null
+     * @return Fizzy_Storage_Model|null
      */
     public function fetchOne($type, $uid);
 
@@ -67,7 +67,7 @@ interface Fizzy_Storage_Interface
      * @param string $type
      * @param string $column
      * @param mixed $value
-     * @return Fizzy_Model|null
+     * @return Fizzy_Storage_Model|null
      */
     public function fetchColumn($type, $column, $value);
 }
