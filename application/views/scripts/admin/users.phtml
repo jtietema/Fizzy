@@ -12,8 +12,8 @@
             <tr>
                 <td><?= $user->username; ?></td>
                 <td>
-                    <a href="/user/edit/<?= $user->id ?>" title="Edit user"><img src="/images/icon/edit.png" alt="edit icon" /></a>
-                    <a href="/user/delete/<?= $user->id ?>" title="Delete user"><img src="/images/icon/sign_remove.png" alt="delete icon" /></a>
+                    <a href="<?= $this->url("/user/edit/$user->id") ?>" title="Edit user"><img src="<?= $this->url("/images/icon/edit.png") ?>" alt="edit icon" /></a>
+                    <a href="<?= $this->url("/user/delete/$user->id") ?>" title="Delete user"><img src="<?= $this->url("/images/icon/sign_remove.png") ?>" alt="delete icon" /></a>
                 </td>
             </tr>
             <?php endforeach; ?>
@@ -21,6 +21,6 @@
     </table>
 
     <p>
-        <a href="/admin/users/add">Add User</a>
+        <?= $this->link('/admin/users/add', $this->img('/images/icon/add.png') . ' Add User'); ?>
     </p>
 </div>
