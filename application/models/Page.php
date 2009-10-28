@@ -3,7 +3,7 @@
  * Class Page
  */
 
-/** Fizzy_Model */
+/** Fizzy_Storage_Model */
 require_once 'Fizzy/Storage/Model.php';
 
 /**

@@ -31,25 +31,47 @@
             <action>homepage</action>
         </homepage>
 
+        <!--
+            Pages section
+        -->
         <admin_pages type="static">
             <rule>admin/pages</rule>
             <controller>AdminPages</controller>
             <action>list</action>
         </admin_pages>
+        <add_page type="static">
+            <rule>admin/page/add</rule>
+            <controller>AdminPages</controller>
+            <action>add</action>
+        </add_page>
+        <admin_page_by_id type="simple">
+            <rule>admin/page/edit/:id</rule>
+            <controller>AdminPages</controller>
+            <action>edit</action>
+        </admin_page_by_id>
+        <admin_delete_page_by_id type="simple">
+            <rule>admin/page/delete/:id</rule>
+            <controller>AdminPages</controller>
+            <action>delete</action>
+        </admin_delete_page_by_id>
+
+        <!--
+            Menu section
+        -->
         <admin_menu type="static">
             <rule>admin/menu</rule>
             <controller>AdminMenu</controller>
             <action>show</action>
         </admin_menu>
+
+        <!--
+            Users section
+        -->
         <admin_users type="static">
             <rule>admin/users</rule>
             <controller>AdminUsers</controller>
             <action>list</action>
         </admin_users>
-        <add_page type="static">
-            <rule>admin/pages/add</rule>
-            <controller>AdminPages</controller>
-            <action>add</action>
-        </add_page>
+        
     </routes>
 </fizzy>

@@ -160,7 +160,7 @@ class Fizzy_Storage_XML implements Fizzy_Storage_Interface
         $simpleXMLElement = simplexml_import_dom($element);
 
         $array = $this->_elementToArray($simpleXMLElement);
-        if(isset($array['id'])) {
+        if(isset($array['uid'])) {
             $array['id'] = $array['uid'];
             unset($array['uid']);
         }

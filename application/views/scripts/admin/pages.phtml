@@ -15,14 +15,14 @@
                 <td><?= $page->slug ?></td>
                 <td>
                     <?= $this->link("/page/{$page->slug}", $this->img('/images/icon/view.png', array('alt' => 'View icon')), array('target' => '_blanc')); ?>
-                    <?= $this->link("/page/edit/{$this->id}", $this->img('/images/icon/edit.png')); ?>
-                    <?= $this->link("/page/delete/{$this->id}", $this->img('/images/icon/sign_remove.png')); ?>
+                    <?= $this->link("/admin/page/edit/{$page->id}", $this->img('/images/icon/edit.png')); ?>
+                    <?= $this->link("/admin/page/delete/{$page->id}", $this->img('/images/icon/sign_remove.png')); ?>
             </tr>
             <?php endforeach; ?>
         </tbody>
     </table>
 
     <p>
-        <?= $this->link('/admin/pages/add', $this->img('/images/icon/add.png') . ' Add Page'); ?>
+        <?= $this->link('/admin/page/add', $this->img('/images/icon/add.png') . ' Add Page'); ?>
     </p>
 </div>

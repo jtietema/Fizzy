@@ -41,9 +41,25 @@ abstract class Fizzy_Model implements IteratorAggregate, Countable
      */
     public function __construct(array $data = array())
     {
+        $this->populate($data);
+    }
+
+    /**
+     * Used to populate an instance of a model
+     * @param array $data
+     * @param boolean $dontOverwriteId
+     * @return Fizzy_Model
+     */
+    public function populate(array $data = array(), $dontOverwriteId = false)
+    {
         foreach($data as $key => $value) {
+            // don't overwrite the id unless we want to
+            if ($dontOverwriteId && $key == 'id'){
+                continue;
+            }
             $this->$key = $value;
         }
+        return $this;
     }
 
     /**

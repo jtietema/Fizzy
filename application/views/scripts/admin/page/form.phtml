@@ -1,22 +1,24 @@
 <h1>Page</h1>
 
 <div class="form-container">
-    <form action="<?= $this->url("/admin/pages/add") ?>" method="post" name="PageForm" id="PageForm">
-
+    <form action="<?= $this->url("/admin/page/$this->action") ?>" method="post" name="PageForm" id="PageForm">
+        <?php if ($this->action === 'edit'): ?>
+        <input type="hidden" name="id" value="<?= $this->page->getId() ?>">
+        <?php endif; ?>
         <div class="form-row">
             <label for="title">Title</label>
-            <input type="text" name="title" id="title" value="" />
+            <input type="text" name="title" id="title" value="<?= $this->page->getTitle() ?>" />
         </div>
 
         <div class="form-row">
             <label for="slug">Slug</label>
-            <input type="text" name="slug" id="slug" value="" />
+            <input type="text" name="slug" id="slug" value="<?= $this->page->getSlug() ?>" />
         </div>
 
         <div class="form-row yui-skin-sam">
             <label for="body">Body</label>
             <div style="float: left;">
-                <textarea name="body" id="body" style="width: 790px;"></textarea>
+                <textarea name="body" id="body" style="width: 790px;"><?= $this->page->getBody() ?></textarea>
             </div>
             <div class="clear"></div>
             <div style="text-align: right;">
