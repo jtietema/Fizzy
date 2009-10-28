@@ -98,16 +98,25 @@ class AdminPagesController extends SecureController
             $page->setTitle(strip_tags($_POST['title']));
             $page->setSlug(strip_tags($_POST['slug']));
             $page->setBody($_POST['body']);
+
             if (isset($_POST['homepage'])){
                 $page->setHomepage('true');
+            } else {
+                $page->setHomepage(null);
             }
-            // @todo make sure we clear the template when it is set to null from something else
+
             if ($_POST['template'] !== 'null'){
                 $page->setTemplate($_POST['template']);
+            } else {
+                $page->setTemplate(null);
             }
+            
             if ($_POST['layout'] !== 'null'){
                 $page->setLayout($_POST['layout']);
+            } else {
+                $page->setLayout(null);
             }
+            
             $storage->persist($page);
 
             $this->_redirect('/admin/pages');

@@ -82,43 +82,36 @@ class Fizzy_Storage_XML implements Fizzy_Storage_Interface
 
         if ($model->getId() === null)
         {
-            // create the element containing this model
-            $element = $domDocument->createElement($type);
-
             // create an id for this model
             $id = time();
             $model->setId($id);
-            // store the id in XML
-            $domDocument->addAttributeWithValue('uid', $id, $element);
+        } else {
+            // remove the old model
+            $element = $domDocument->getElementByUid($model->getId());
+            $parent = $element->parentNode;
+            $parent->removeChild($element);
+        }
+        // create the element containing this model
+        $element = $domDocument->createElement($type);
 
-            // store all the fields in the element
-            $fields = $model->toArray();
-            
-            foreach ($fields as $key => $value)
-            {
+
+        // store the id in XML
+        $domDocument->addAttributeWithValue('uid', $model->getId(), $element);
+
+        // store all the fields in the element
+        $fields = $model->toArray();
+
+        foreach ($fields as $key => $value)
+        {
+            if ($value !== null && $key !== 'id'){
                 $domDocument->addElementWithValue($key, $value, $element);
             }
-
-            // add the element to the root element
-            $root = $domDocument->getElementByXpath('/' . $this->_typeContrainerName($type));
-            $root->appendChild($element);
         }
-        else
-        {
-            // select the node with the correct id
-            $element = $domDocument->getElementByUid($model->getId());
 
-            // store all the fields in the element
-            $fields = $model->toArray();
-            for ($i = 0; $i < $element->childNodes->length; $i++)
-            {
-                $child = $element->childNodes->item($i);
-                $newChild = $domDocument->createElement($child->nodeName);
-                $cdata = $domDocument->createCDATASection($fields[$child->nodeName]);
-                $newChild->appendChild($cdata);
-                $element->replaceChild($newChild, $child);
-            }
-        }
+        // add the element to the root element
+        $root = $domDocument->getElementByXpath('/' . $this->_typeContrainerName($type));
+        $root->appendChild($element);
+        
         $filename = $this->_filename($model->getType());
         $domDocument->save($filename);
         
@@ -127,6 +120,7 @@ class Fizzy_Storage_XML implements Fizzy_Storage_Interface
 
     /**
      * @see Fizzy_Storage_Interface
+     * @todo make sure we return false if the model was not found
      */
     public function remove(Fizzy_Storage_Model $model)
     {

@@ -34,7 +34,9 @@
             <select name="template" id="template">
                 <option value="null">Default</option>
                 <?php foreach($this->availableTemplates as $template) : ?>
-                <option value="<?= $template; ?>"><?= $template; ?></option>
+                <option value="<?= $template; ?>" <?= $this->page->getTemplate() === $template ? 'selected="selected"' : '' ?>>
+                    <?= $template; ?>
+                </option>
                 <?php endforeach;?>
             </select>
         </div>
@@ -46,7 +48,9 @@
             <select name="layout" id="layout">
                 <option value="null">Default</option>
                 <?php foreach($this->availableLayouts as $template) : ?>
-                <option value="<?= $template; ?>"><?= $template; ?></option>
+                <option value="<?= $template; ?>" <?= $this->page->getLayout() === $template ? 'selected="selected"' : '' ?>>
+                    <?= $template; ?>
+                </option>
                 <?php endforeach;?>
             </select>
         </div>
@@ -54,7 +58,7 @@
 
         <div class="form-row">
             <label for="homepage">Homepage?</label>
-            <input type="checkbox" name="homepage" id="homepage" value="1" />
+            <input type="checkbox" name="homepage" id="homepage" value="1" <?= $this->page->getHomepage() !== null ? 'checked="checked"' : '' ?> />
         </div>
 
         <div class="form-row form-row-last">
