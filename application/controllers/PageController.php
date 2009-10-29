@@ -79,9 +79,9 @@ class PageController extends Fizzy_Controller
 
     /**
      * Prepares the view to render a page.
-     * @param Page $page
+     * @param Page|null $page
      */
-    protected function _showPage(Page $page)
+    protected function _showPage($page)
     {
         if(null !== $page) {
             $paths = Fizzy_Config::getInstance()->getConfiguration('paths');

@@ -39,10 +39,10 @@ class Fizzy_Route_Static extends Fizzy_Route_Abstract
         $rule = $this->getRule();
 
         // Make sure the rule starts with a /
-        if(0 !== strpos('/', $rule)) {
+        if(0 !== strpos($rule, '/')) {
             $rule = '/' . $rule;
         }
-
+        
         if($path === $rule) {
             $request->setController($this->_camelCase($this->getController()));
             $request->setAction($this->_camelCase($this->getAction()));
