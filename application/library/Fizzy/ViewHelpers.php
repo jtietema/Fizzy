@@ -93,7 +93,6 @@ abstract class Fizzy_ViewHelpers {
      */
     protected function _cleanUrl($url)
     {
-        $url = str_replace(array('/', '\\'), DIRECTORY_SEPARATOR, $url);
         if(0 !== strpos($url, DIRECTORY_SEPARATOR)) {
             $url = DIRECTORY_SEPARATOR . $url;
         }

@@ -58,14 +58,8 @@ class PageController extends Fizzy_Controller
     public function homepageAction()
     {
         $page = $this->_storage->fetchColumn('page', 'homepage', 'true');
-        $basePath = Fizzy_Config::getInstance()->getPath('base');
-        $templates = Fizzy_Config::getInstance()->getPath('templates');
 
-        $this->getView()->setScriptPaths($templates);
-        $this->getView()->setScript($page->getTemplate() . '.phtml');
-        $this->getView()->setLayout($page->getLayout());
-
-        $this->getView()->page = $page;
+        $this->_showPage($page);
     }
 
     /**
@@ -74,11 +68,23 @@ class PageController extends Fizzy_Controller
     public function showAction()
     {
         $slug = $this->_getParam('slug');
-        $page = $this->_storage->fetchColumn('page', 'slug', $slug);
+        if(empty($slug)) {
+            $page = $this->_storage->fetchColumn('page', 'homepage', 'true');
+        } else {
+            $page = $this->_storage->fetchColumn('page', 'slug', $slug);
+        }
 
+        $this->_showPage($page);
+    }
+
+    /**
+     * Prepares the view to render a page.
+     * @param Page $page
+     */
+    protected function _showPage(Page $page)
+    {
         if(null !== $page) {
             $paths = Fizzy_Config::getInstance()->getConfiguration('paths');
-            $basePath = Fizzy_Config::getInstance()->getPath('base');
             $templates = Fizzy_Config::getInstance()->getPath('templates');
 
             $this->getView()->setScriptPaths($templates);
@@ -88,6 +94,8 @@ class PageController extends Fizzy_Controller
             $this->getView()->page = $page;
         }
         else {
+            $application = Fizzy_Config::getInstance()->getSection(Fizzy_Config::SECTION_APPLICATION);
+            $this->getView()->setLayout($application['defaultLayout']);
             $this->getView()->setScript('404.phtml');
         }
     }

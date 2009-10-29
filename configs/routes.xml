@@ -1,6 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <fizzy version="0.4">
     <routes>
+        <short_slug type="simple">
+            <rule>/:slug</rule>
+            <controller>page</controller>
+            <action>show</action>
+        </short_slug>
+        <homepage type="static">
+            <rule>/</rule>
+            <controller>page</controller>
+            <action>homepage</action>
+        </homepage>
+        <page_by_slug type="simple">
+            <rule>page/:slug</rule>
+            <controller>page</controller>
+            <action>show</action>
+        </page_by_slug>
         <pages type="static">
             <rule>pages</rule>
             <controller>page</controller>
@@ -20,16 +35,6 @@
                 <param>user</param>
             </parameters>
         </page_by_id>
-        <page_by_slug type="simple">
-            <rule>page/:slug</rule>
-            <controller>page</controller>
-            <action>show</action>
-        </page_by_slug>
-        <homepage type="static">
-            <rule>/</rule>
-            <controller>page</controller>
-            <action>homepage</action>
-        </homepage>
 
         <!--
             Pages section

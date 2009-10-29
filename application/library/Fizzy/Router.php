@@ -209,4 +209,5 @@ class Fizzy_Router extends Fizzy_AutoFill
 
         return $route;
     }
+
 }

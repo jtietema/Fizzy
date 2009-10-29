@@ -83,7 +83,6 @@ class Fizzy_Route_Simple extends Fizzy_Route_Abstract
      */
     protected function _assemble()
     {
-        //$namedParameterPattern   = "(?:/([^\/]*))?";
         $namedParameterPattern   = "([^\/]*)";
 
         $namedParameters = array();
@@ -104,7 +103,7 @@ class Fizzy_Route_Simple extends Fizzy_Route_Abstract
         }
 
         $this->_parameterMap = $namedParameters;
-        $this->_rule = implode('/', $parsedParts);
+        $this->_rule = '/' . implode('/', $parsedParts);
 
         return $this->_rule;
     }

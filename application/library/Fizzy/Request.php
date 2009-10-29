@@ -200,6 +200,16 @@ class Fizzy_Request
     }
 
     /**
+     * Returns the absolute URL for the request. The is the complete URL without
+     * the server name.
+     * @return string
+     */
+    public function getAbsoluteUrl()
+    {
+        return $this->_baseUrl . $this->_path;
+    }
+
+    /**
      * Returns all request parameters as key => value pairs. This contains the
      * parameters from the query string and parameters injected by routes.
      * @return array
