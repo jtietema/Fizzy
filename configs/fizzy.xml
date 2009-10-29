@@ -2,7 +2,7 @@
 <fizzy version="0.4">
     <application>
         <title>Fizzy</title>
-        <env>development</env>
+        <environment>development</environment>
         <basePath>/home/mattijs/development/voidwalkers/fizzy</basePath>
     </application>
     <router>
