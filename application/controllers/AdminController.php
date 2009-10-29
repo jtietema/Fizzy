@@ -2,6 +2,7 @@
 /**
  * Class AdminController
  * @package Fizzy
+ * @subpackage Controller
  *
  * LICENSE
  *
