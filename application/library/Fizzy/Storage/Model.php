@@ -2,6 +2,7 @@
 /**
  * Abstract Class Fizzy_Storage_Model
  * @package Fizzy
+ * @subpackage Storage
  *
  * LICENSE
  *

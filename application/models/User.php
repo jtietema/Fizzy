@@ -2,6 +2,7 @@
 /**
  * User model.
  * @package Fizzy
+ * @subpackage Model
  *
  * LICENSE
  *
