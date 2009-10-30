@@ -109,7 +109,6 @@ class XMLTest extends PHPUnit_Framework_TestCase
 
         $xml = new Fizzy_Storage_XML_Document('tests/data/tests.xml');
         $root = $xml->getElementByUid('root');
-        //var_dump($xml->saveXML());
         $this->assertEquals(1, $root->childNodes->length, "Should find 1 Child nodes");
     }
 
