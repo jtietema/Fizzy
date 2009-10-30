@@ -1,19 +1,64 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <pages>
-    
-    
-    
-<page uid="1255987348"><title><![CDATA[Contact]]></title><slug><![CDATA[contact]]></slug><body><![CDATA[This is the body <strong>encapsulated</strong> in CDATA]]></body></page><page uid="1255987347"><title><![CDATA[About us]]></title><slug><![CDATA[about]]></slug><body><![CDATA[This is the body encapsulated in CDATA]]></body></page><page uid="1255987346"><title><![CDATA[Welcome]]></title><slug><![CDATA[homepage]]></slug><body><![CDATA[<p>
- Voidwalkers is een klein webdevelopment bedrijf uit Utrecht. Gedreven door onze passie
- voor programmeren en techniek, bouwen wij software met Open Source software zoals
- PHP, Python en MySql.
- </p> 
- <p>
+    <page uid="1255987348">
+        <title><![CDATA[Configuration]]></title>
+        <slug><![CDATA[configuration]]></slug>
+        <body><![CDATA[<p>
+    Configuring Fizzy done in two locations.
+</p>
 
- Wij richten ons op de (technische) implementatie van onder andere websites, webapplicaties en webservices
- en bieden ondersteuning aan bedrijven die daarvoor zelf de kennis en/of de resources niet in huis
- hebben.
- </p> 
- <p>
- Kunnen wij je ergens mee helpen of heb je een vraag? Neem dan <a class="\" \\="" \="" href="/page/contact">contact</a> met ons op.
- </p>]]></body><homepage><![CDATA[true]]></homepage></page></pages>
+<h2>Configuration file</h2>
+<p>
+    To change the systems configuration the fizzy.xml file in the configs directory under the
+    root of the application can be changed. For a complete list of the configuration options
+    visit the project website.
+</p>
+
+<h2>Customized templates & Layouts</h2>
+<p>
+    Fizzy pages can be enriched with templates and layouts. These templates can be selected
+    when adding or editing a page in the administrator section. <br />
+</p>
+<p>
+    New templates and layouts can be placed in the custom directory under the
+    application root. For a complete overview of templating and layout options
+    visit the <a href="http://project.voidwalkers.nl/projects/show/fizzy" target="_blanc">project website</a>.
+</p>]]></body>
+    </page>
+    <page uid="1255987347">
+        <title><![CDATA[About Fizzy]]></title>
+        <slug><![CDATA[about]]></slug>
+        <body><![CDATA[<p>
+    Fizzy is a lightweight, easy to deploy Content Management System to administer
+    paginated content on a website. The system allows users to create, update and
+    delete content on their site with ease.
+</p>
+<p>
+    The dependencies for Fizzy are kept to a minimum, but can be extended by any
+    PHP programmer. In it's most basic form Fizzy does not require a database
+    and stores all its data in <a href="http://en.wikipedia.org/wiki/XML">XML</a> files.
+</p>]]></body>
+    </page>
+    <page uid="1255987346">
+        <title><![CDATA[Congratulations]]></title>
+        <slug><![CDATA[home]]></slug>
+        <body><![CDATA[<p>
+    This is the default layout for <a href="">Fizzy</a>. You are seeing this page
+    because you did not configure a default layout and template. See the
+    <a href="configuration">Configuration</a> page for more information about
+    configuring Fizzy.
+</p>
+<p>
+    If you want to know more about Fizzy, check the <a href="about">About</a>
+    page or visit the
+    <a href="http://project.voidwalkers.nl/projects/show/fizzy" target="_blanc">project website</a>
+    by clicking the more link.
+</p>
+<p>
+    You can administer your website by going to the <a href="admin">administrator page</a>. There
+    you can change the content of your site and add users. The default username and password for
+    the administrator section is "admin". Please change this to something more appropriate.
+</p>]]></body>
+        <homepage><![CDATA[true]]></homepage>
+    </page>
+</pages>
