@@ -3,13 +3,13 @@
     <application>
         <title>Fizzy</title>
         <environment>development</environment>
-        <basePath>/home/mattijs/development/voidwalkers/fizzy</basePath>
+        <basePath>/absolute/path/to/your/fizzy</basePath>
     </application>
     <router>
         <defaultController>default</defaultController>
         <defaultAction>default</defaultAction>
     </router>
     <storage>
-        <dsn>xml:/home/mattijs/development/voidwalkers/fizzy/data</dsn>
+        <dsn>xml:/absolute/path/to/your/fizzy/data</dsn>
     </storage>
 </fizzy>
