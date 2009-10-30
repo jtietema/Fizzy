@@ -21,15 +21,93 @@ require_once 'SecureController.php';
 
 class AdminUsersController extends SecureController
 {
+    protected $_storage = null;
 
-    public function listAction()
+    /**
+     * Setup the storage, this is needed by all actions
+     */
+    public function _init()
     {
+        parent::_init();
         $config = Fizzy_Config::getInstance();
         $storageOptions = $config->getSection('storage');
         $this->_storage = new Fizzy_Storage($storageOptions);
+    }
 
+    public function listAction()
+    {
         $users = $this->_storage->fetchAll('user');
         $this->getView()->users = $users;
         $this->getView()->setScript('admin/users.phtml');
+    }
+
+    /**
+     * Add an user
+     */
+    public function addAction()
+    {
+        $this->getView()->message = '';
+        $user = $this->getView()->user = new User();
+        if ($this->getRequest()->getMethod() === Fizzy_Request::METHOD_POST){
+            if ($_POST['password'] !== $_POST['password2']){
+                $this->getView()->message = 'Passwords are not equal.';
+                $user->setUsername($_POST['username']);
+            } elseif (empty($_POST['password'])){
+                $user->setUsername($_POST['username']);
+                $this->getView()->message = 'Password can not be empty.';
+            } elseif (empty($_POST['username'])){
+                $this->getView()->message = 'Username can not be empty.';
+            } else {
+                $user->setUsername($_POST['username']);
+                $user->setPassword(md5($_POST['password']));
+                $this->_storage->persist($user);
+                $this->_redirect('/admin/users');
+            }
+        }
+        $this->getView()->action = 'add';
+        $this->getView()->setScript('admin/user/form.phtml');
+    }
+
+    /**
+     * Edit an user
+     */
+    public function editAction()
+    {
+        $this->getView()->message = '';
+        $user = $this->getView()->user = $this->_storage->fetchOne('user', $this->_getParam('id'));
+        if ($this->getRequest()->getMethod() === Fizzy_Request::METHOD_POST){
+            if ($_POST['password'] === $_POST['password2'] && !empty($_POST['password']) && !empty($_POST['username'])){
+                $user->setUsername($_POST['username']);
+                $user->setPassword(md5($_POST['password']));
+                $this->_storage->persist($user);
+                $this->_redirect('/admin/users');
+            } elseif (!empty($_POST['username']) && empty($_POST['password']) && empty($_POST['password2'])){
+                $user->setUsername($_POST['username']);
+                $this->_storage->persist($user);
+                $this->_redirect('/admin/users');
+            } else {
+                $this->getView()->message = 'Username is empty or your passwords are not equal.';
+            }
+        }
+        $this->getView()->action = 'edit/' . $user->getId();
+        $this->getView()->setScript('admin/user/form.phtml');
+    }
+
+    /**
+     * Remove an user
+     */
+    public function deleteAction()
+    {
+        if ($this->getRequest()->getMethod() === Fizzy_Request::METHOD_POST){
+            if ($_POST['confirm'] === 'Yes'){
+                $user = $this->_storage->fetchOne('user', $this->_getParam('id'));
+                if ($user !== null){
+                    $this->_storage->remove($user);
+                }
+            }
+            $this->_redirect('/admin/users');
+        }
+        $this->getView()->user = $this->_storage->fetchOne('user', $this->_getParam('id'));
+        $this->getView()->setScript('admin/user/delete.phtml');
     }
 }

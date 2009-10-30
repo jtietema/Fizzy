@@ -1,0 +1,32 @@
+<h1>User</h1>
+
+<div class="form-container">
+    <?php if (!empty($this->message)) : ?>
+    <span class="error"><?= $this->message ?></span>
+    <?php endif; ?>
+    <form action="<?= $this->url("/admin/user/$this->action") ?>" method="post" name="UserForm" id="UserForm">
+        <?php if ($this->action === 'edit'): ?>
+        <input type="hidden" name="id" value="<?= $this->user->getId() ?>">
+        <?php endif; ?>
+        <div class="form-row">
+            <label for="username">Username</label>
+            <input type="text" name="username" id="username" value="<?= $this->user->getUsername() ?>" />
+        </div>
+
+        <div class="form-row">
+            <label for="password">Password</label>
+            <input type="password" name="password" id="password" value="" />
+        </div>
+
+        <div class="form-row">
+            <label for="password2">Password (again)</label>
+            <input type="password" name="password2" id="password2" value="" />
+        </div>
+
+        <div class="form-row form-row-last">
+            <input type="submit" name="UserFormSubmit" id="UserFormSubmit" value="Save" /> or <a href="/admin/users">cancel</a>
+        </div>
+
+    </form>
+</div>
+

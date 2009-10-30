@@ -45,6 +45,18 @@
             <controller>Admin</controller>
             <action>default</action>
         </admin>
+        <admin_logout type="static">
+            <rule>/admin/logout</rule>
+            <controller>Admin</controller>
+            <action>logout</action>
+        </admin_logout>
+        <admin_configuration type="static">
+            <rule>/admin/configuration</rule>
+            <controller>Admin</controller>
+            <action>configuration</action>
+        </admin_configuration>
+
+        <!-- Pages admin section -->
         <admin_pages type="static">
             <rule>/admin/pages</rule>
             <controller>AdminPages</controller>
@@ -79,6 +91,21 @@
             <controller>AdminUsers</controller>
             <action>list</action>
         </admin_users>
+        <admin_add_user type="static">
+            <rule>admin/user/add</rule>
+            <controller>AdminUsers</controller>
+            <action>add</action>
+        </admin_add_user>
+        <admin_edit_user type="simple">
+            <rule>admin/user/edit/:id</rule>
+            <controller>AdminUsers</controller>
+            <action>edit</action>
+        </admin_edit_user>
+        <admin_delete_user type="simple">
+            <rule>/admin/user/delete/:id</rule>
+            <controller>AdminUsers</controller>
+            <action>delete</action>
+        </admin_delete_user>
         
     </routes>
 </fizzy>

@@ -56,6 +56,7 @@ class SecureController extends Fizzy_Controller
      */
     public function loginAction()
     {
+        $this->getView()->message = '';
         if ($this->_request->getMethod() === Fizzy_Request::METHOD_POST)
         {
             // perform login
@@ -71,12 +72,11 @@ class SecureController extends Fizzy_Controller
                 header('Location: http://' . $this->_request->getServerName() . $this->_requestUri);
                 exit();
             }
-            $this->_view->setScript('denied.phtml');
+            $this->getView()->message = 'Username and/or password incorrect. Please try again.';
             
-        } else {
-            $this->_view->url = $this->_request->getRequestUri();
-            $this->_view->setScript('login.phtml');
         }
+        $this->getView()->url = $this->_request->getRequestUri();
+        $this->getView()->setScript('login.phtml');
     }
 
     /**
