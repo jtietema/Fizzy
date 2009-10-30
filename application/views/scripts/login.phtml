@@ -13,6 +13,9 @@
                     <h1>Fizzy</h1>
 
                     <div class="form-container">
+                        <?php if (!empty($this->message)) : ?>
+                        <span class="error"><?= $this->message ?></span>
+                        <?php endif; ?>
                         <form action="<?= $this->url ?>" method="POST">
 
                             <div class="form-row">

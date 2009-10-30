@@ -25,6 +25,24 @@ define('LIBRARY_PATH', ROOT_PATH . DIRECTORY_SEPARATOR . 'library');
 define('CONFIG_PATH', ROOT_PATH . DIRECTORY_SEPARATOR . 'configs');
 
 set_include_path(LIBRARY_PATH . PATH_SEPARATOR . APPLICATION_LIBRARY_PATH . DIRECTORY_SEPARATOR . get_include_path());
+
+function stripslashes_deep(&$value)
+{
+    $value = is_array($value) ?
+                array_map('stripslashes_deep', $value) :
+                stripslashes($value);
+
+    return $value;
+}
+
+// strip all injected slashes by magic_quotes_gpc
+if (function_exists("get_magic_quotes_gpc") && get_magic_quotes_gpc()){
+    stripslashes_deep($_GET);
+    stripslashes_deep($_POST);
+    stripslashes_deep($_REQUEST);
+    stripslashes_deep($_COOKIE);
+}
+
 require_once 'Fizzy/Config.php';
 require_once 'Fizzy/FrontController.php';
 
