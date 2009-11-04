@@ -1,6 +1,6 @@
 <?php
 /**
- * Class Fizzy_Storage_Backend_Storage
+ * Class Fizzy_Storage_Backend_Sqlite
  * @package Fizzy
  * @subpackage Storage
  *
