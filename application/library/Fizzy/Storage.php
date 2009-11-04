@@ -18,21 +18,25 @@
  * @license http://www.voidwalkers.nl/license/new-bsd The New BSD License
  */
 
- /** Fizzy_Storage_SQLite */
-require_once 'Fizzy/Storage/SQLite.php';
+/** Fizzy_Storage_Backend_Xml */
+//require_once 'Fizzy/Storage/Backend/Xml.php';
 
-/** Fizzy_Storage_XML */
-require_once 'Fizzy/Storage/XML.php';
+/** Fizzy_Storage_Backend_Sqlite */
+require_once 'Fizzy/Storage/Backend/Sqlite.php';
+
+/** Fizzy_Storage_Backend_Mysql */
+require_once 'Fizzy/Storage/Backend/Mysql.php';
 
 /**
  * Main storage Class. You should only use this class to communicate with the
  * persistence layer.
  *
  * @author Jeroen Tietema <jeroen@voidwalkers.nl>
+ * @author Mattijs Hoitink <mattijs@voidwalkers.nl>
  */
 class Fizzy_Storage
 {
-    /** Constants for drivers */
+    /** Constants for storage backend */
     const MYSQL = 'mysql';
     const SQLITE = 'sqlite';
     const XML = 'xml';
@@ -45,9 +49,9 @@ class Fizzy_Storage
 
     /**
      * The persistence driver used.
-     * @var Fizzy_Storage_Interface
+     * @var Fizzy_Storage_Driver_Interface
      */
-    protected $_driver = null;
+    protected $_backend = null;
 
     /** **/
     
@@ -57,114 +61,169 @@ class Fizzy_Storage
      */
     public function __construct(array $config)
     {
-        $this->_config = $config;
-
-        if(!isset($this->_config['dsn'])) {
+        if(!isset($config['dsn'])) {
             require_once 'Fizzy/Storage/Exception/InvalidConfig.php';
             throw new Fizzy_Storage_Exception_InvalidConfig('No DSN specified in storage configuration.');
         }
 
-        $dsn = strtolower($this->_config['dsn']);
-        if ($this->_getDriver($dsn) === self::SQLITE) {
-            $this->_driver = new Fizzy_Storage_SQLite($dsn);
-        }
-        elseif ($this->_getDriver($dsn) === self::XML) {
-            $this->_driver = new Fizzy_Storage_XML($dsn);
-        } 
+        $this->_loadBackend($config);
     }
 
     /**
-     * Parses the dsn and returns the driver to be used.
+     * Loads a backend driver based on the DSN.
      * 
-     * @param string $dsn
-     * @return string
+     * @param array $config
      */
-    protected function _getDriver($dsn)
+    protected function _loadBackend(array $config)
     {
-       $pieces = explode(':', $dsn);
-       
-       if (strtolower($pieces[0]) === self::SQLITE) {
-           return self::SQLITE;
-       }
-       elseif (strtolower($pieces[0]) === self::XML) {
-           return self::XML;
-       }
-       else {
-           require_once 'Fizzy/Storage/Exception/InvalidConfig.php';
-           throw new Fizzy_Storage_Exception_InvalidConfig("Unsupported driver:" . $pieces[0]);
-       }
+        $backendString = array_shift(explode(':', $config['dsn']));
+
+        switch(strtolower($backendString))
+        {
+            case self::XML:
+                $this->_backend = new Fizzy_Storage_Backend_Xml($config);
+                break;
+            case self::SQLITE:
+                $this->_backend = new Fizzy_Storage_Backend_Sqlite($config);
+                break;
+            case self::MYSQL:
+                $this->_backend = new Fizzy_Storage_Backend_Mysql($config);
+                break;
+            default:
+                require_once 'Fizzy/Storage/Exception/InvalidConfig.php';
+                throw new Fizzy_Storage_Exception_InvalidConfig("Unsupported backend:" . $backendString);
+        }
     }
 
     /**
-     * @see Fizzy_Storage_Interface
+     * Sets the storage backend.
+     * @param Fizzy_Storage_Backend_Interface $backend
+     * @return Fizzy_Storage
+     */
+    public function setBackend($backend)
+    {
+        $this->_backend = $backend;
+        return $this;
+    }
+
+    /**
+     * Returns the storage backend.
+     * @return Fizzy_Storage_Backend_Interface
+     */
+    public function getBackend()
+    {
+        return $this->_backend;
+    }
+
+    /**
+     * @see Fizzy_Storage_Backend_Interface
      */
     public function persist(Fizzy_Storage_Model $model)
     {
-        return $this->_driver->persist($model);
+        $container = $this->_getContainerName($model);
+        $data = $model->toArray();
+        $identifierField = $model->getIdentifierField();
+
+        $id = $this->_backend->persist($container, $data, $identifierField);
+
+        if(false === $id) {
+            return false;
+        }
+
+        if(null === $model->getId()) {
+            $model->setId($id);
+        }
+
+        return true;
     }
 
     /**
-     * @see Fizzy_Storage_Interface
+     * @see Fizzy_Storage_Backend_Interface
      */
-    public function remove(Fizzy_Storage_Model $model)
+    public function delete(Fizzy_Storage_Model $model)
     {
-        return $this->_driver->remove($model);
+        $container = $this->_getContainerName($model);
+        $id = $model->getId();
+
+        return $this->_backend->delete($container, $id);
     }
 
     /**
-     * @see Fizzy_Storage_Interface
+     * @see Fizzy_Storage_Backend_Interface
      */
-    public function fetchOne($type, $uid)
+    public function fetchOne($class, $identifier)
     {
-        $data = $this->_driver->fetchOne($type, $uid);
+        $container = $this->_getContainerName($class);
+        $data = $this->_backend->fetchOne($container, $identifier);
 
         if ($data === null) {
             return null;
         }
 
-        return $this->_buildModel($type, $data);
+        return $this->_buildModel($class, $data);
     }
 
     /**
-     * @see Fizzy_Interface
+     * @see Fizzy_Storage_Backend_Interface
      */
-    public function fetchAll($type)
+    public function fetchAll($class)
     {
-        $results = $this->_driver->fetchAll($type);
+        $container = $this->_getContainerName($class);
+        $data = $this->_backend->fetchAll($container);
         
         $models = array();
-        foreach ($results as $data) {
-            $models[] = $this->_buildModel($type, $data);
+        foreach ($data as $modelData) {
+            $model = $this->_buildModel($class, $modelData);
+            $models[$model->getId()] = $model;
         }
 
         return $models;
     }
 
     /**
-     * @see Fizzy_Storage_Interface
+     * @see Fizzy_Storage_Backend_Interface
      */
-    public function fetchColumn($type, $column, $value)
+    public function fetchByColumn($class, $columns)
     {
-        $data = $this->_driver->fetchColumn($type, $column, $value);
+        $container = $this->_getContainerName($class);
+        $data = $this->_backend->fetchByColumn($container, $columns);
 
-        if ($data === null) {
-            return null;
+        $models = array();
+        foreach ($data as $modelData) {
+            $model = $this->_buildModel($class, $modelData);
+            $models[$model->getId()] = $model;
         }
 
-        return $this->_buildModel($type, $data);
+        return $models;
+    }
+
+    /**
+     * @see Fizzy_Storage_Backend_Interface
+     */
+    public function hasErrors()
+    {
+        return $this->_backend->hasErrors();
+    }
+
+    /**
+     * @see Fizzy_Storage_Backend_Interface
+     */
+    public function getErrors()
+    {
+        return $this->_backend->getErrors();
     }
 
     /**
      * Instanciates a Model for the given type and populates it with the given
      * array.
      *
-     * @param string $type
+     * @param string $class
      * @param array $data
      * @return Fizzy_Storage_Model
      */
-    protected function _buildModel($type, $data)
+    protected function _buildModel($class, array $data)
     {
-        $class = $this->_buildClassname($type);
+        $class = $this->_buildClassname($class);
         $model = new $class($data);
         
         return $model;
@@ -179,5 +238,39 @@ class Fizzy_Storage
     protected function _buildClassname($type)
     {
         return ucfirst($type);
+    }
+
+    /**
+     * Returns the container name for a model
+     * @param object|string $class
+     * @return string
+     */
+    protected function _getContainerName($class)
+    {
+        // Check if it's a Fizzy_Stroage_Model and has a container name specified
+        if($class instanceof Fizzy_Storage_Model) {
+            if(is_callable(array($class, 'getContainerName'))) {
+                return $class->getContainerName();
+            } else {
+                $class = get_class($class);
+            }
+        }
+
+        // Check if $class is a string, or was converted to a string
+        if(is_string($class)) {
+            $reflectionClass = new ReflectionClass($class);
+            
+            if($reflectionClass->hasMethod('getContainerName')) {
+                $instance = $reflectionClass->newInstance();
+                return $instance->getContainerName();
+            }
+        }
+
+        // No previous solution worked, do it the ugly way
+        if(strpos($class, 's') !== strlen($class)) {
+            return strtolower($class) . 's';
+        } else {
+            return strtolower($class);
+        }
     }
 }

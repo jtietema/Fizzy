@@ -30,7 +30,7 @@ class Page extends Fizzy_Storage_Model
     /**
      * @see Fizzy_Storage_Model
      */
-    protected $_type = 'page';
+    protected $_containerName = 'page';
 
     /**
      * Template for the page.

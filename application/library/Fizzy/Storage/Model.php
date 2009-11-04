@@ -25,15 +25,15 @@ require_once 'Fizzy/Model.php';
  * Abstract Model class for storage based models.
  *
  * @author Jeroen Tietema <jeroen@voidwalkers.nl>
+ * @author Mattijs Hoitink <mattijs@voidwalkers.nl>
  */
 abstract class Fizzy_Storage_Model extends Fizzy_Model
 {
     /**
-     * Type of the model
-     *
+     * Container name for the model
      * @var string
      */
-    protected $_type = null;
+    protected $_containerName = null;
 
     /**
      * Identifiying column for this storage model.
@@ -71,13 +71,21 @@ abstract class Fizzy_Storage_Model extends Fizzy_Model
     }
 
     /**
-     * Return the type of this model.
-     *
+     * Returns the field used for uniquely identifying the model.
      * @return string
      */
-    public function getType()
+    public function getIdentifierField()
     {
-        return $this->_type;
+        return $this->_identifier;
+    }
+
+    /**
+     * Returns the name for the container to store the model.
+     * @return string
+     */
+    public function getContainerName()
+    {
+        return $this->_containerName;
     }
 
 }

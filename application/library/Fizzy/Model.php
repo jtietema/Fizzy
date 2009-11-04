@@ -92,7 +92,7 @@ abstract class Fizzy_Model implements IteratorAggregate, Countable
             require_once 'Fizzy/Exception.php';
             throw new Fizzy_Exception("Cannot set private or protected variables.");
         }
-
+        
         $this->_data[$name] = $value;
     }
 
