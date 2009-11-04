@@ -17,7 +17,9 @@
  * @copyright Copyright (c) 2009 Voidwalkers (http://www.voidwalkers.nl)
  * @license http://www.voidwalkers.nl/license/new-bsd The New BSD License
  */
-require_once 'Fizzy/Model.php';
+
+/** Fizzy_Storage_Model */
+require_once 'Fizzy/Storage/Model.php';
 
 /**
  * User model, represents an user in the CMS
