@@ -193,11 +193,11 @@ class Fizzy_Storage
     {
         $container = $this->_getContainerName($class);
         $data = $this->_backend->fetchByColumn($container, $fields);
-        
+
         $models = array();
-        foreach ($data as $modelData) {
+        foreach ($data as $identifier => $modelData) {
             $model = $this->_buildModel($class, $modelData);
-            $models[$model->getId()] = $model;
+            $models[$identifier] = $model;
         }
 
         return $models;
@@ -232,22 +232,6 @@ class Fizzy_Storage
     public function fetchByID($class, $identifierValue)
     {
         return $this->fetchByIdentifier($class, $identifierValue);
-    }
-
-    /**
-     * @see Fizzy_Storage_Backend_Interface
-     */
-    public function hasErrors()
-    {
-        return $this->_backend->hasErrors();
-    }
-
-    /**
-     * @see Fizzy_Storage_Backend_Interface
-     */
-    public function getErrors()
-    {
-        return $this->_backend->getErrors();
     }
 
     /**
@@ -295,7 +279,7 @@ class Fizzy_Storage
                 $class = get_class($class);
             }
         }
-
+        
         // Check if $class is a string, or was converted to a string
         if(is_string($class)) {
             $reflectionClass = new ReflectionClass($class);

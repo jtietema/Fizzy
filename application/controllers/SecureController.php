@@ -31,7 +31,6 @@ require_once 'Fizzy/Storage.php';
  */
 class SecureController extends Fizzy_Controller
 {
-
     /**
      * The request URI to redirect back to.
      * @var string
@@ -60,19 +59,24 @@ class SecureController extends Fizzy_Controller
         if ($this->_request->getMethod() === Fizzy_Request::METHOD_POST)
         {
             // perform login
-            $config = Fizzy_Config::getInstance();
-            $storageOptions = $config->getSection('storage');
-            $storage = new Fizzy_Storage($storageOptions);
-
-            $model = $storage->fetchColumn('user', 'username', $_POST['username']);
-            if ($model !== null && $model->getPassword() === md5($_POST['password']))
-            {
-                // doe header redirect naar index pagina
-                $_SESSION['username'] = $model->getUsername();
-                header('Location: http://' . $this->_request->getServerName() . $this->_requestUri);
-                exit();
+            $storage = new Fizzy_Storage(Fizzy_Config::getInstance()->getSection('storage'));
+            $users = $storage->fetchByField('User', array('username' => $_POST['username']));
+            if(0 < count($users)) {
+                $user = array_shift($users);
+                if ($user->getPassword() === md5($_POST['password']))
+                {
+                    // doe header redirect naar index pagina
+                    $_SESSION['username'] = $user->getUsername();
+                    header('Location: http://' . $this->_request->getServerName() . $this->_requestUri);
+                    exit();
+                }
+                else {
+                    $this->getView()->message = 'Incorrect password. Please try again.';
+                }
             }
-            $this->getView()->message = 'Username and/or password incorrect. Please try again.';
+            else {
+                $this->getView()->message = 'Username could not be found.';
+            }
             
         }
         $this->getView()->url = $this->_request->getRequestUri();

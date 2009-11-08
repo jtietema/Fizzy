@@ -78,16 +78,4 @@ interface Fizzy_Storage_Backend_Interface
      */
     public function fetchByColumn($container, array $columns);
 
-    /**
-     * Checks if the backend generated any errors.
-     * @return boolean
-     */
-    public function hasErrors();
-
-    /**
-     * Returns the error the backend generated.
-     * @return array
-     */
-    public function getErrors();
-    
 }

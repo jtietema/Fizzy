@@ -35,11 +35,9 @@ class AdminPagesController extends SecureController
      */
     public function listAction()
     {
-        $config = Fizzy_Config::getInstance();
-        $storageOptions = $config->getSection('storage');
-        $storage = new Fizzy_Storage($storageOptions);
+        $storage = new Fizzy_Storage(Fizzy_Config::getInstance()->getSection('storage'));
 
-        $pages = $storage->fetchAll('page');
+        $pages = $storage->fetchAll('Page');
         $this->getView()->pages = $pages;
         $this->getView()->setScript('admin/pages.phtml');
     }
@@ -79,10 +77,7 @@ class AdminPagesController extends SecureController
             if ($_POST['layout'] !== 'null'){
                 $page->setLayout($_POST['layout']);
             }
-            $config = Fizzy_Config::getInstance();
-            $storageOptions = $config->getSection('storage');
-            $storage = new Fizzy_Storage($storageOptions);
-
+            $storage = new Fizzy_Storage(Fizzy_Config::getInstance()->getSection('storage'));
             $storage->persist($page);
 
             $this->_redirect('/admin/pages');
@@ -117,12 +112,10 @@ class AdminPagesController extends SecureController
         // Unset default template and layout
         unset($templates[$application['defaultTemplate']], $layouts[$application['defaultLayout']]);
 
-        $config = Fizzy_Config::getInstance();
-        $storageOptions = $config->getSection('storage');
-        $storage = new Fizzy_Storage($storageOptions);
-
+        $storage = new Fizzy_Storage(Fizzy_Config::getInstance()->getSection('storage'));
+        $page = $storage->fetchByID('Page', $this->_getParam('id'));
+        
         if($this->getRequest()->getMethod() === Fizzy_Request::METHOD_POST) {
-            $page = $storage->fetchOne('page', $this->_getParam('id'));
             $page->setTitle(strip_tags($_POST['title']));
             $page->setSlug(strip_tags($_POST['slug']));
             $page->setBody($_POST['body']);
@@ -150,7 +143,7 @@ class AdminPagesController extends SecureController
             $this->_redirect('/admin/pages');
         }
 
-        $this->getView()->page = $page = $storage->fetchOne('page', $this->_getParam('id'));
+        $this->getView()->page = $page;
         $this->getView()->action = 'edit/' . $page->getId();
 
         $this->getView()->availableTemplates = $templates;
@@ -164,20 +157,15 @@ class AdminPagesController extends SecureController
      */
     public function deleteAction()
     {
-        $config = Fizzy_Config::getInstance();
-        $storageOptions = $config->getSection('storage');
-        $storage = new Fizzy_Storage($storageOptions);
-
-        if($this->getRequest()->getMethod() === Fizzy_Request::METHOD_POST) {
-            if ($_POST['confirm'] === 'Yes'){
-                $page = $storage->fetchOne('page', $this->_getParam('id'));
-                $storage->remove($page);
-            }
-            $this->_redirect('/admin/pages');
+        $id = $this->_getParam('id');
+        if(null !== $id)
+        {
+            $storage = new Fizzy_Storage(Fizzy_Config::getInstance()->getSection('storage'));
+            $page = $storage->fetchByID('Page', $id);
+            $storage->delete($page);
         }
-
-        $this->getView()->page = $storage->fetchOne('page', $this->_getParam('id'));
-        $this->getView()->setScript('admin/page/delete.phtml');
+        
+        $this->_redirect('/admin/pages');
     }
 
     /**

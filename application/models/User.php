@@ -31,6 +31,6 @@ class User extends Fizzy_Storage_Model
     /**
      * @see Fizzy_Storage_Model
      */
-    protected $_type = 'user';
+    protected $_containerName = 'user';
 
 }

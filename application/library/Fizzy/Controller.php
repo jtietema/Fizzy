@@ -115,11 +115,11 @@ class Fizzy_Controller
      * @param string $key
      * @return mixed
      */
-    protected function _getParam($key)
+    protected function _getParam($key, $default = null)
     {
         $parameters = $this->getRequest()->getParameters();
         if(!array_key_exists($key, $parameters)) {
-            return null;
+            return $default;
         }
 
         return $parameters[$key];

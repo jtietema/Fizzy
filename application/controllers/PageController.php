@@ -40,8 +40,7 @@ class PageController extends Fizzy_Controller
 
     protected function _init()
     {
-        $config = Fizzy_Config::getInstance();
-        $this->_storage = new Fizzy_Storage($config->getSection('storage'));
+        $this->_storage = new Fizzy_Storage(Fizzy_Config::getInstance()->getSection('storage'));
     }
 
     /**
@@ -57,9 +56,9 @@ class PageController extends Fizzy_Controller
      */
     public function homepageAction()
     {
-        $page = $this->_storage->fetchColumn('page', 'homepage', 'true');
+        $page = $this->_storage->fetchByField('Page', array('homepage' => 'true'));
 
-        $this->_showPage($page);
+        $this->_showPage(array_shift($page));
     }
 
     /**
@@ -69,12 +68,12 @@ class PageController extends Fizzy_Controller
     {
         $slug = $this->_getParam('slug');
         if(empty($slug)) {
-            $page = $this->_storage->fetchColumn('page', 'homepage', 'true');
+            $page = $this->_storage->fetchByField('Page', array('homepage' => 'true'));
         } else {
-            $page = $this->_storage->fetchColumn('page', 'slug', $slug);
+            $page = $this->_storage->fetchByField('Page', array('slug' => $slug));
         }
 
-        $this->_showPage($page);
+        $this->_showPage(array_shift($page));
     }
 
     /**
@@ -105,7 +104,7 @@ class PageController extends Fizzy_Controller
      */
     public function listAction()
     {
-        $pages = $this->_storage->fetchAll('page');
+        $pages = $this->_storage->fetchAll('Page');
         $this->getView()->pages = $pages;
     }
 

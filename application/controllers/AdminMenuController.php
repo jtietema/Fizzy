@@ -28,11 +28,9 @@ class AdminMenuController extends SecureController
 
     public function showAction()
     {
-        $config = Fizzy_Config::getInstance();
-        $storageOptions = $config->getSection('storage');
-        $this->_storage = new Fizzy_Storage($storageOptions);
+        $this->_storage = new Fizzy_Storage(Fizzy_Config::getInstance()->getSection('storage'));
 
-        $pages = $this->_storage->fetchAll('page');
+        $pages = $this->_storage->fetchAll('Page');
         $this->getView()->pages = $pages;
         $this->getView()->setScript('admin/menu.phtml');
     }

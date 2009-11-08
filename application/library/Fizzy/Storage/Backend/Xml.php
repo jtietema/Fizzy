@@ -123,9 +123,9 @@ class Fizzy_Storage_Backend_Xml extends Fizzy_Storage_Backend_Abstract
             $elementArray = $this->_elementToArray($simpleXMLElement);
             
             // Remove the identifier from the data
-            $identifier = $elementArray['uid'];
-            unset($elementArray['uid']);
-
+            $identifier = $elementArray[$this->_identifierField];
+            unset($elementArray[$this->_identifierField]);
+            
             $elements[$identifier] = $elementArray;
         }
         
@@ -290,10 +290,10 @@ class Fizzy_Storage_Backend_Xml extends Fizzy_Storage_Backend_Abstract
         foreach($columns as $key => $value) {
             $whereColumns[$key] = "{$key}='{$value}'";
         }
-
-        $nodeList = $document->getElementsByXpath("/container/page[" . implode(' and ', $whereColumns) . "]");
+        
+        $nodeList = $document->getElementsByXpath("/container/{$container}[" . implode(' and ', $whereColumns) . "]");
         $elements = $this->_parseNodeList($nodeList);
-
+        
         return $elements;
     }
 

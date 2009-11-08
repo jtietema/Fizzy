@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<users>
+<container>
     <user uid="1255987349">
         <username>admin</username>
         <password>21232f297a57a5a743894a0e4a801fc3</password>
     </user>
-</users>
+</container>

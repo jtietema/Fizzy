@@ -29,14 +29,12 @@ class AdminUsersController extends SecureController
     public function _init()
     {
         parent::_init();
-        $config = Fizzy_Config::getInstance();
-        $storageOptions = $config->getSection('storage');
-        $this->_storage = new Fizzy_Storage($storageOptions);
+        $this->_storage = new Fizzy_Storage(Fizzy_Config::getInstance()->getSection('storage'));
     }
 
     public function listAction()
     {
-        $users = $this->_storage->fetchAll('user');
+        $users = $this->_storage->fetchAll('User');
         $this->getView()->users = $users;
         $this->getView()->setScript('admin/users.phtml');
     }
@@ -74,7 +72,7 @@ class AdminUsersController extends SecureController
     public function editAction()
     {
         $this->getView()->message = '';
-        $user = $this->getView()->user = $this->_storage->fetchOne('user', $this->_getParam('id'));
+        $user = $this->getView()->user = $this->_storage->fetchByID('User', $this->_getParam('id'));
         if ($this->getRequest()->getMethod() === Fizzy_Request::METHOD_POST){
             if ($_POST['password'] === $_POST['password2'] && !empty($_POST['password']) && !empty($_POST['username'])){
                 $user->setUsername($_POST['username']);
@@ -98,16 +96,13 @@ class AdminUsersController extends SecureController
      */
     public function deleteAction()
     {
-        if ($this->getRequest()->getMethod() === Fizzy_Request::METHOD_POST){
-            if ($_POST['confirm'] === 'Yes'){
-                $user = $this->_storage->fetchOne('user', $this->_getParam('id'));
-                if ($user !== null){
-                    $this->_storage->remove($user);
-                }
-            }
-            $this->_redirect('/admin/users');
+        $id = $this->_getParam('id');
+        if(null !== $id)
+        {
+            $user = $this->_storage->fetchByID('User', $id);
+            $this->_storage->delete($user);
         }
-        $this->getView()->user = $this->_storage->fetchOne('user', $this->_getParam('id'));
-        $this->getView()->setScript('admin/user/delete.phtml');
+
+        $this->_redirect('/admin/users');
     }
 }
