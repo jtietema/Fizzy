@@ -36,10 +36,10 @@ abstract class Fizzy_Storage_Model extends Fizzy_Model
     protected $_containerName = null;
 
     /**
-     * Identifiying column for this storage model.
-     * @var string
+     * Identifier value for the model.
+     * @var mixed
      */
-    protected $_identifier = 'id';
+    protected $_identifier = null;
 
     /**
      * Get the unique identifier for this model.
@@ -47,12 +47,7 @@ abstract class Fizzy_Storage_Model extends Fizzy_Model
      */
     public function getId()
     {
-        $identifier = $this->_identifier;
-        if(isset($this->$identifier)) {
-            return $this->__get($this->_identifier);
-        }
-        
-        return null;
+        return $this->_identifier;
     }
 
     /**
@@ -61,22 +56,12 @@ abstract class Fizzy_Storage_Model extends Fizzy_Model
      */
     public function setId($id)
     {
-        $identifier = $this->_identifier;
-        if ($this->$identifier !== null) {
-            require_once 'Fizzy/Exception.php';
-            throw new Fizzy_Exception("Can't change models identifier.");
+        if(null !== $this->_identifier) {
+            require_once 'Fizzy/Storage/Exception.php';
+            throw new Fizzy_Storage_Exception("Can't change models identifier.");
         }
 
-        $this->$identifier = $id;
-    }
-
-    /**
-     * Returns the field used for uniquely identifying the model.
-     * @return string
-     */
-    public function getIdentifierField()
-    {
-        return $this->_identifier;
+        $this->_identifier = $id;
     }
 
     /**
@@ -85,6 +70,11 @@ abstract class Fizzy_Storage_Model extends Fizzy_Model
      */
     public function getContainerName()
     {
+        if(null === $this->_containerName) {
+            require_once 'Fizzy/Storage/Exception.php';
+            throw new Fizzy_Storage_Exception('Model ' . get_class($this) . ' does not have a container name.');
+        }
+        
         return $this->_containerName;
     }
 

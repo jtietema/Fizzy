@@ -18,27 +18,17 @@
  * @license http://www.voidwalkers.nl/license/new-bsd The New BSD License
  */
 
-/** Fizzy_AutoFill */
-require_once 'Fizzy/AutoFill.php';
-
-/** Fizzy_Storage_Backend_Interface */
-require_once 'Fizzy/Storage/Backend/Interface.php';
+/** Fizzy_Storage_Backend_Abstract */
+require_once 'Fizzy/Storage/Backend/Abstract.php';
 
 /**
  * Storage backend based on the PDO extension.
  *
  * @author Mattijs Hoitink <mattijs@voidwalkers.nl>
  */
-abstract class Fizzy_Storage_Backend_Pdo extends Fizzy_AutoFill
-    implements Fizzy_Storage_Backend_Interface
+abstract class Fizzy_Storage_Backend_Pdo extends Fizzy_Storage_Backend_Abstract
 {
     
-    /**
-     * DSN for the database connection.
-     * @var string
-     */
-    protected $_dsn = null;
-
     /**
      * Username for the database connection.
      * @var string
@@ -57,12 +47,6 @@ abstract class Fizzy_Storage_Backend_Pdo extends Fizzy_AutoFill
      */
     protected $_connection = null;
 
-    /**
-     * PDO errors
-     * @var array
-     */
-    protected $_errors = array();
-
     /** **/
 
     public function __construct($options = array())
@@ -74,30 +58,9 @@ abstract class Fizzy_Storage_Backend_Pdo extends Fizzy_AutoFill
             $this->_connection = new PDO($this->_dsn, $this->_username, $this->_password);
         }
         catch(PDOException $exception) {
-            // @todo log error
-            //echo $exception->getMessage();
-            //exit;
+            require_once 'Fizzy/Storage/Exception.php';
+            throw new Fizzy_Storage_Exception($exception->getMessage());
         }
-    }
-
-    /**
-     * Sets the DSN for the database connection.
-     * @param string $dsn
-     * @return Fizzy_Storage_Backend_Pdo
-     */
-    public function setDsn($dsn)
-    {
-        $this->_dsn = $dsn;
-        return $this;
-    }
-
-    /**
-     * Returns the DSN for the database connection.
-     * @return string
-     */
-    public function getDsn()
-    {
-        return $this->_dsn;
     }
 
     /**
@@ -150,24 +113,6 @@ abstract class Fizzy_Storage_Backend_Pdo extends Fizzy_AutoFill
     }
 
     /**
-     * Checks if there were any errors.
-     * @return boolean
-     */
-    public function hasErrors()
-    {
-        return (boolean) count($this->_errors);
-    }
-
-    /**
-     * Returns the errors for the last executed statement.
-     * @return array
-     */
-    public function getErrors()
-    {
-        return $this->_errors;
-    }
-
-    /**
      * Creates a prepared statement for the query.
      * @param string $query 
      * @return PDOStatement|null
@@ -176,12 +121,12 @@ abstract class Fizzy_Storage_Backend_Pdo extends Fizzy_AutoFill
     {
         $statement = $this->_connection->prepare($query);
         
-        if(false !== $statement) {
-            return $statement;
+        if(false === $statement) {
+            require_once 'Fizzy/Storage/Exception.php';
+            throw new Fizzy_Storage_Exception(implode(';', $this->_connection->errorInfo()));
         }
 
-        $this->_errors = implode(';', $this->_connection->errorInfo());
-        return null;
+        return $statement;
     }
 
     /**
@@ -192,12 +137,12 @@ abstract class Fizzy_Storage_Backend_Pdo extends Fizzy_AutoFill
     {
         $success = $statement->execute();
 
-        if(false !== $success) {
-            return $statement;
+        if(false === $success) {
+            require_once 'Fizzy/Storage/Exception.php';
+            throw new Fizzy_Storage_Exception(implode(';', $this->_connection->errorInfo()));
         }
         
-        $this->_errors = array(implode(';', $statement->errorInfo()));
-        return null;
+        return $statement;
     }
 
     /* Implementation of Fizzy_Storage_Backend_Interface */
@@ -210,46 +155,32 @@ abstract class Fizzy_Storage_Backend_Pdo extends Fizzy_AutoFill
     {
         // Prepare statement
         $statement = $this->_createStatement("SELECT * FROM `{$container}`");
-        if($this->hasErrors()) {
-            return array();
-        }
-        
         $executed = $this->_executeStatement($statement);
 
-        if($this->hasErrors()) {
-            return array();
-        }
-
-        $rows = $executed->fetchAll();
+        $rows = $executed->fetchAll(PDO::FETCH_ASSOC);
         return $rows;
     }
 
     /**
-     * FetchOne for PDO enabled drivers
      * @see Fizzy_Storage_Backend_Interface
      */
-    public function fetchOne($container, $identifier)
+    public function fetchByIdentifier($container, $identifier)
     {
-        $statement = $this->_createStatement("SELECT * FROM `{$container}` WHERE id = :id");
-        if($this->hasErrors()) {
-            return array();
-        }
-
-        $statement->bindValue(':id', $identifier, PDO::PARAM_INT);
+        $statement = $this->_createStatement("SELECT * FROM `{$container}` WHERE {$this->_identifierField} = :{$this->_identifierField}");
+        $statement->bindValue(":{$this->_identifierField}", $identifier, PDO::PARAM_STR);
         $executed = $this->_executeStatement($statement);
 
-        if($this->hasErrors()) {
+        // Fetch row from the executed statement
+        $row = $executed->fetch(PDO::FETCH_ASSOC);
+
+        if(empty($row)) {
             return null;
         }
 
-        // Fetch rows from the executed statement
-        $rows = $executed->fetch(PDO::FETCH_ASSOC);
-
-        if(!empty($rows)) {
-            return $rows;
-        }
-
-        return null;
+        $identifier = $row[$this->_identifierField];
+        unset($row[$this->_identifierField]);
+        
+        return array($identifier => $row);
     }
 
     /**
@@ -268,19 +199,14 @@ abstract class Fizzy_Storage_Backend_Pdo extends Fizzy_AutoFill
             $whereClause[] = "`{$column}` = :{$column}";
         }
         $query .= implode(' AND ', $whereClause);
-
-        $statement = $this->_connection->prepare($query);
+        
+        $statement = $this->_createStatement($query);
         foreach($columns as $column => $value) {
             $statement->bindValue(":{$column}", $value, PDO::PARAM_STR);
         }
-
         $executed = $this->_executeStatement($statement);
 
-        if($this->hasErrors()) {
-            return array();
-        }
-
-        $rows = $executed->fetchAll();
+        $rows = $executed->fetchAll(PDO::FETCH_ASSOC);
 
         if(!empty($rows)) {
             return $rows;
@@ -292,23 +218,16 @@ abstract class Fizzy_Storage_Backend_Pdo extends Fizzy_AutoFill
     /**
      * @see Fizzy_Storage_Backend_Interface
      */
-    public function delete($container, $identifierField, $identifierValue)
+    public function delete($container, $identifier)
     {
         // Check if the model is in persistence
         if(null === $identifier) {
             return true;
         }
-
-        $statement = $this->_createStatement("DELETE FROM `{$container}` WHERE `{$identifierField}` = :id");
-        if($this->hasErrors()) {
-            return false;
-        }
-        $statement->bindValue(':id', $identifierValue);
-
+        
+        $statement = $this->_createStatement("DELETE FROM `{$container}` WHERE `{$this->_identifierField}` = :{$this->_identifierField}");
+        $statement->bindValue(":{$this->_identifierField}", $identifier);
         $executed = $this->_executeStatement($statement);
-        if($this->hasErrors()) {
-            return false;
-        }
 
         return true;
     }
@@ -316,48 +235,35 @@ abstract class Fizzy_Storage_Backend_Pdo extends Fizzy_AutoFill
     /**
      * @see Fizzy_Storage_Driver_Interface
      */
-    public function persist($container, $data, $identifierField = null)
+    public function persist($container, $data, $identifier = null)
     {
         $columns = array_keys($data);
-        $identifierValue = (null !== $identifierField && isset($data[$identifierField])) ? $data[$identifierField] : null;
 
         $setClause = array();
         foreach($columns as $column) {
             $setClause[$column] = "`{$column}` = :{$column}";
         }
-
-        // Unset the id if the data set has one
-        if(null !== $identifierValue) {
-            unset($setClause[$identifierField]);
-        }
-        
         $setClause = implode(', ', $setClause);
 
-        if ($identifierValue !== null) {
-            $query = "UPDATE `{$container}` SET {$setClause} WHERE `{$identifierField}` = :{$identifierField}";
+        if (null !== $identifier) {
+            $query = "UPDATE `{$container}` SET {$setClause} WHERE `{$this->_identifierField}` = :{$this->_identifierField}";
         }
         else {
-            // Generate a new ID based on the current time as the id for the new model
-            $data[$identifierField] = time();
-            $query = "INSERT INTO `{$container}` SET `{$identifierField}` = :{$identifierField}, {$setClause};";
+            $query = "INSERT INTO `{$container}` SET {$setClause};";
         }
 
         $statement = $this->_createStatement($query);
-        if($this->hasErrors()) {
-            return false;
+        
+        if(null !== $identifier) {
+            $statement->bindValue(":{$this->_identifierField}", $identifier, PDO::PARAM_STR);
         }
-
         foreach($data as $column => $value) {
             $statement->bindValue(":{$column}", $value, PDO::PARAM_STR);
         }
         $executed = $this->_executeStatement($statement);
 
-        if($this->hasErrors()) {
-            return false;
-        }
-
         // Return the id for the data set
-        return $data[$identifierValue];
+        return $this->_connection->lastInsertId();
     }
 
 }

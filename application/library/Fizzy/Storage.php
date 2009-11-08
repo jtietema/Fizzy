@@ -19,7 +19,7 @@
  */
 
 /** Fizzy_Storage_Backend_Xml */
-//require_once 'Fizzy/Storage/Backend/Xml.php';
+require_once 'Fizzy/Storage/Backend/Xml.php';
 
 /** Fizzy_Storage_Backend_Sqlite */
 require_once 'Fizzy/Storage/Backend/Sqlite.php';
@@ -116,15 +116,16 @@ class Fizzy_Storage
     }
 
     /**
-     * @see Fizzy_Storage_Backend_Interface
+     * Persists a model in it's container.
+     * @param Fizzy_Storage_Model $model
+     * @return boolean
      */
     public function persist(Fizzy_Storage_Model $model)
     {
         $container = $this->_getContainerName($model);
         $data = $model->toArray();
-        $identifierField = $model->getIdentifierField();
 
-        $id = $this->_backend->persist($container, $data, $identifierField);
+        $id = $this->_backend->persist($container, $data, $identifier);
 
         if(false === $id) {
             return false;
@@ -138,14 +139,13 @@ class Fizzy_Storage
     }
 
     /**
-     * @see Fizzy_Storage_Backend_Interface
+     * Deletes a model from storage.
+     * @paran Fizzy_Storage_Model $model
      */
     public function delete(Fizzy_Storage_Model $model)
     {
         $container = $this->_getContainerName($model);
-        $id = $model->getId();
-
-        return $this->_backend->delete($container, $id);
+        return $this->_backend->delete($container, $model->getId());
     }
 
     /**
@@ -164,12 +164,35 @@ class Fizzy_Storage
     }
 
     /**
-     * @see Fizzy_Storage_Backend_Interface
+     * Fetches all items for a model class.
+     * @param object|string $class
+     * @return array
      */
     public function fetchAll($class)
     {
         $container = $this->_getContainerName($class);
         $data = $this->_backend->fetchAll($container);
+        
+        $models = array();
+        foreach ($data as $identifier => $modelData) {
+            $model = $this->_buildModel($class, $modelData);
+            $model->setId($identifier);
+            $models[$identifier] = $model;
+        }
+        
+        return $models;
+    }
+
+    /**
+     * Fetches items for a model class by the specified fields.
+     * @param object|string $class
+     * @param array $fields
+     * @return array
+     */
+    public function fetchByField($class, $fields)
+    {
+        $container = $this->_getContainerName($class);
+        $data = $this->_backend->fetchByColumn($container, $fields);
         
         $models = array();
         foreach ($data as $modelData) {
@@ -181,20 +204,34 @@ class Fizzy_Storage
     }
 
     /**
-     * @see Fizzy_Storage_Backend_Interface
+     * Fetches an item by its identifier.
+     * @param string $class
+     * @param mixed $identifier
+     * @return Fizzy_Storage_Model
      */
-    public function fetchByColumn($class, $columns)
+    public function fetchByIdentifier($class, $identifier)
     {
         $container = $this->_getContainerName($class);
-        $data = $this->_backend->fetchByColumn($container, $columns);
 
-        $models = array();
-        foreach ($data as $modelData) {
-            $model = $this->_buildModel($class, $modelData);
-            $models[$model->getId()] = $model;
+        $data = $this->_backend->fetchByIdentifier($container, $identifier);
+
+        if(!is_array($data) || 1 !== count($data)) {
+            return null;
         }
 
-        return $models;
+        $identifier = array_shift(array_keys($data));
+        $model = $this->_buildModel($class, array_shift($data));
+        $model->setId($identifier);
+
+        return $model;
+    }
+
+    /**
+     * Alias of {@see fetchByIdentifier}.
+     */
+    public function fetchByID($class, $identifierValue)
+    {
+        return $this->fetchByIdentifier($class, $identifierValue);
     }
 
     /**
@@ -250,7 +287,10 @@ class Fizzy_Storage
         // Check if it's a Fizzy_Stroage_Model and has a container name specified
         if($class instanceof Fizzy_Storage_Model) {
             if(is_callable(array($class, 'getContainerName'))) {
-                return $class->getContainerName();
+                $containerName = $class->getContainerName();
+                if(null !== $containerName) {
+                    return $containerName;
+                }
             } else {
                 $class = get_class($class);
             }
@@ -262,7 +302,10 @@ class Fizzy_Storage
             
             if($reflectionClass->hasMethod('getContainerName')) {
                 $instance = $reflectionClass->newInstance();
-                return $instance->getContainerName();
+                $containerName = $instance->getContainerName();
+                if(null !== $containerName) {
+                    return $containerName;
+                }
             }
         }
 

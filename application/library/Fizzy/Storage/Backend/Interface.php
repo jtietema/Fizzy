@@ -19,7 +19,9 @@
  */
 
 /**
- * Interface that all storage backends should implement.
+ * Interface for Fizzy storage backends. This interface must be implemented by
+ * all available storage backends to ensure the storage class can connect to
+ * all backends.
  *
  * @author Jeroen Tietema <jeroen@voidwalkers.nl>
  * @author Mattijs Hoitink <mattijs@voidwalkers.nl>
@@ -35,52 +37,55 @@ interface Fizzy_Storage_Backend_Interface
      * @param string|null $identifierField
      * @return int|boolean Returns the data set id on success, false on failure
      */
-    public function persist($container, $data, $identifierField = null);
+    public function persist($container, $data, $identifier = null);
 
     /**
-     * Delete the given model from persistence.
+     * Delete an item in a storage container.
      *
-     * @param string $container
-     * @param string $identifierField
-     * @param string $identifierValue
+     * @param string $container The name of the container the item is stored in.
+     * @param string $identifier The identifier for the item to delete.
      * @return boolean
      */
-    public function delete($container, $identifierField, $identifierValue);
+    public function delete($container, $identifier);
 
     /**
-     * Fetch one item of $type with $uid.
+     * Fetch all items from a storage container. The keys for the items are the
+     * identifiers for the item values.
      *
-     * @param string $container
-     * @param int $identifier
-     * @return array|null
-     */
-    public function fetchOne($container, $identifier);
-
-    /**
-     * Fetch all entities from a specific type (e.g. pages, users).
-     *
-     * @param string $container
+     * @param string $container The container to fetch the items from.
      * @return array
      */
     public function fetchAll($container);
 
     /**
-     * Fetches model using the specified column and value.
+     * Fetch one item from a storage container by it's identifier. Implementation
+     * must return an array with one item where the key of the item is the
+     * identifier for the value of the item.
      *
-     * @param string $container
-     * @param array $columns
+     * @param string $container The container to fetch the item from.
+     * @param string $identifier The identifier for the item to fetch.
+     * @return array|null
+     */
+    public function fetchByIdentifier($container, $identifier);
+
+    /**
+     * Fetches items from a storage container by the specified columns. The keys
+     * for the items are the identifiers for the item values.
+     *
+     * @param string $container The container to fetch the items from.
+     * @param array $columns The columns and values to match.
      * @return array
      */
     public function fetchByColumn($container, array $columns);
 
     /**
-     * Checks if the backend encountered any errors.
+     * Checks if the backend generated any errors.
      * @return boolean
      */
     public function hasErrors();
 
     /**
-     * Returns the error the backend encountered.
+     * Returns the error the backend generated.
      * @return array
      */
     public function getErrors();

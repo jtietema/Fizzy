@@ -1,6 +1,6 @@
 <?php
 /**
- * Class Fizzy_Storage_Exception_XMLError
+ * Class Fizzy_Storage_Exception
  * @package Fizzy
  * @subpackage Storage
  *
@@ -18,13 +18,10 @@
  * @license http://www.voidwalkers.nl/license/new-bsd The New BSD License
  */
 
-/** Fizzy_Exception */
-require_once 'Fizzy/Exception.php';
-
 /**
- * Description of XMLError
+ * Exception class for storage and storage backends.
  *
- * @author Jeroen Tietema <jeroen@voidwalkers.nl>
+ * @author Mattijs Hoitink <mattijs@voidwalkers.nl>
  */
-class Fizzy_Storage_Exception_XMLError extends Fizzy_Exception
+class Fizzy_Storage_Exception extends Exception
 {}
