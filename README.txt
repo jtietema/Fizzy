@@ -27,7 +27,7 @@ If you want to use the SQLite backend, the following PHP extensions are required
 
 Getting started
 ---------------
-First you will need to modify the basePath and the xml path in configs/fizzy.xml.
+First copy configs/fizzy.xml.default to configs/fizzy.xml and modify the basePath and the xml path.
 Then copy all the files to your webserver and you are good to go. It is
 recommended not to copy Fizzy to your web root. Only the files from the public
 folder need to be in your webroot. The data folder and all its files need to be
