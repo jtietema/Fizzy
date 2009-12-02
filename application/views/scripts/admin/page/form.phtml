@@ -42,11 +42,7 @@
             </div>
 
             <div class="clear"></div>
-            <div style="text-align: right;">
-                <a href="#" onclick="showEditor('body');">show editor</a>
-                &nbsp;|&nbsp;
-                <a href="#" onclick="hideEditor('body');">hide editor</a>
-            </div>
+            <div style="text-align: right;" id="editor-toggle"></div>
         </div>
 
         <?php if(0 < count($this->availableTemplates)) : ?>
@@ -90,27 +86,46 @@
 </div>
 <script type="text/javascript" src="<?= $this->url('/js/tiny_mce/tiny_mce.js'); ?>"></script>
 <script type="text/javascript">
-tinyMCE.init({
-    theme : "advanced",
-    mode : "textareas",
-    theme_advanced_toolbar_location : "top",
-    theme_advanced_toolbar_align : "left",
-    theme_advanced_buttons1: "formatselect,fontselect,fontsizeselect,separator,forecolor,backcolor,separator,removeformat,undo,redo",
-    theme_advanced_buttons2 : "bold,italic,underline,sub,sup,separator,justifyleft,justifycenter,justifyright,justifyfull,separator,bullist,numlist,separator,outdent,indent,blockquote,separator,link,unlink,image,separator,charmap,code,cleanup",
-    theme_advanced_buttons3: "",
-    theme_advanced_statusbar_location : "bottom"
+YUI().use('node-base', 'event', function(Y) {
+    var bodyEditor;
+    var toggleButton;
+    
+    // init tinyMCE
+    function init() {
+        tinyMCE.init({
+            mode : "exact",
+            elements: "body",
+            theme : "advanced",
+            theme_advanced_toolbar_location : "top",
+            theme_advanced_toolbar_align : "left",
+            theme_advanced_buttons1: "formatselect,fontselect,fontsizeselect,separator,forecolor,backcolor,separator,removeformat,undo,redo",
+            theme_advanced_buttons2 : "bold,italic,underline,sub,sup,separator,justifyleft,justifycenter,justifyright,justifyfull,separator,bullist,numlist,separator,outdent,indent,blockquote,separator,link,unlink,image,separator,charmap,code,cleanup",
+            theme_advanced_buttons3: "",
+            theme_advanced_statusbar_location : "bottom"
+        });
+        
+        toggleButton = Y.Node.create('<a href="#" id="toggleButton">hide editor</a>');
+        toggleButton.on('click', toggleEditor);
+        Y.Node.one('#editor-toggle').insert(toggleButton);
+    }
+    
+    var toggleEditor = function(id) {
+        tinyMCE.execCommand('mceToggleEditor', false, 'body');
+        if(tinyMCE.getInstanceById('body').isHidden()) {
+            toggleButton.setContent('show editor');
+        }
+        else {
+            toggleButton.setContent('hide editor');
+        }
+    }
+     
+    // Wait for DOM to finish
+    Y.on("domready", init);
 });
 
-function hideEditor(id) {
-    if(tinyMCE.getInstanceById(id)) {
-        tinyMCE.execCommand('mceRemoveControl', false, id);
-    }
-}
 
-function showEditor(id) {
-    if(!tinyMCE.getInstanceById(id)) {
-        tinyMCE.execCommand('mceAddControl', false, id);
-    }
-}
+
+
+
 </script>
 
