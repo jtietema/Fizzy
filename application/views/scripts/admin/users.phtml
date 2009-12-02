@@ -32,8 +32,8 @@
             <tr>
                 <td><?= $user->username; ?></td>
                 <td>
-                    <a href="<?= $this->url("/admin/user/edit/$user->id") ?>" title="Edit user"><img src="<?= $this->url("/images/icon/edit.png") ?>" alt="edit icon" /></a>
-                    <a href="<?= $this->url("/admin/user/delete/$user->id") ?>" title="Delete user"><img src="<?= $this->url("/images/icon/sign_remove.png") ?>" alt="delete icon" /></a>
+                    <a href="<?= $this->url("/admin/user/edit/$user->getId()") ?>" title="Edit user"><img src="<?= $this->url("/images/icon/edit.png") ?>" alt="edit icon" /></a>
+                    <a href="<?= $this->url("/admin/user/delete/$user->getId()") ?>" title="Delete user"><img src="<?= $this->url("/images/icon/sign_remove.png") ?>" alt="delete icon" /></a>
                 </td>
             </tr>
             <?php endforeach; ?>

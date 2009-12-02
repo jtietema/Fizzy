@@ -35,8 +35,8 @@
                 <td><?= $page->slug ?></td>
                 <td style="width: 100px;">
                     <?= $this->link("/page/{$page->slug}", $this->img('/images/icon/view.png', array('alt' => 'View icon')), array('target' => '_blanc')); ?>
-                    <?= $this->link("/admin/page/edit/{$page->id}", $this->img('/images/icon/edit.png')); ?>
-                    <?= $this->link("/admin/page/delete/{$page->id}", $this->img('/images/icon/sign_remove.png')); ?>
+                    <?= $this->link("/admin/page/edit/{$page->getId()}", $this->img('/images/icon/edit.png')); ?>
+                    <?= $this->link("/admin/page/delete/{$page->getId()}", $this->img('/images/icon/sign_remove.png')); ?>
             </tr>
             <?php endforeach; ?>
         </tbody>
