@@ -88,22 +88,18 @@
 
     </form>
 </div>
-
-<script src="<?= $this->url('/js/yui/build/container/container_core-min.js'); ?>"></script>
-<script src="<?= $this->url('/js/yui/build/menu/menu-min.js'); ?>"></script>
-<script src="<?= $this->url('/js/yui/build/button/button-min.js'); ?>"></script>
-<script src="<?= $this->url('/js/yui/build/editor/editor-min.js'); ?>"></script>
-
+<script type="text/javascript" src="<?= $this->url('/js/tiny_mce/tiny_mce.js'); ?>"></script>
 <script type="text/javascript">
-
-        var bodyEditorConfig = {
-            ptags: true,
-            animate: true,
-            dompath: true,
-            focusAtStart: true,
-            handleSubmit: true
-        };
-    //Now let's load the Editor..
-    var bodyEditor = new YAHOO.widget.Editor('body', bodyEditorConfig);
-    bodyEditor.render();
+tinyMCE.init({
+    theme : "advanced",
+    mode : "textareas",
+    plugins : "fullpage",
+    theme_advanced_toolbar_location : "top",
+    theme_advanced_toolbar_align : "left",
+    theme_advanced_buttons1: "formatselect,fontselect,fontsizeselect,separator,forecolor,backcolor,separator,removeformat,undo,redo",
+    theme_advanced_buttons2 : "bold,italic,underline,sub,sup,separator,justifyleft,justifycenter,justifyright,justifyfull,separator,bullist,numlist,separator,outdent,indent,blockquote,separator,link,unlink,image,separator,charmap,code,cleanup",
+    theme_advanced_buttons3: "",
+    theme_advanced_statusbar_location : "bottom"
+});
 </script>
+
