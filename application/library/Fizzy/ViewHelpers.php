@@ -52,7 +52,24 @@ abstract class Fizzy_ViewHelpers {
 
         return sprintf($html, $url, $attributes, $text);
     }
+    
+    /**
+     * Creates an HTML link with a javascript confirm.
+     * @param string $url
+     * @param string $text
+     * @param array $attributes
+     * @return string
+     */
+    public function link_confirm($url, $text, $confirm, array $attributes = array())
+    {
+        $html = '<a href="%s" onClick="return confirm(\'%s\');"%s>%s</a>';
+        $url = $this->_completeUrl($url);
 
+        $attributes = $this->_compileAttributes($attributes);
+
+        return sprintf($html, $url, $confirm, $attributes, $text);
+    }
+    
     /**
      * Creates an HTML image tag.
      * @param string $url

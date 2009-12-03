@@ -78,6 +78,23 @@
             <action>delete</action>
         </admin_delete_page_by_id>
 
+        <!-- Media admin sections  -->
+        <admin_media type="static">
+            <rule>/admin/media</rule>
+            <controller>AdminMedia</controller>
+            <action>default</action>
+        </admin_media>
+        <admin_media_upload type="static">
+            <rule>/admin/media/upload</rule>
+            <controller>AdminMedia</controller>
+            <action>upload</action>
+        </admin_media_upload>
+        <admin_media_delete type="simple">
+            <rule>/admin/media/delete/:name</rule>
+            <controller>AdminMedia</controller>
+            <action>delete</action>
+        </admin_media_delete>
+        
         <!-- Menu admin sections  -->
         <admin_menu type="static">
             <rule>/admin/menu</rule>

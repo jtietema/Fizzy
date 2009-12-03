@@ -1,0 +1,84 @@
+<?php
+// file type image declarations
+
+$types = array(
+    'png' => $this->url('/images/icon/page_white_picture.png'),
+    'jpg' => $this->url('/images/icon/page_white_picture.png'),
+    'jpeg' => $this->url('/images/icon/page_white_picture.png'),
+    'bmp' => $this->url('/images/icon/page_white_picture.png'),
+    'gif' => $this->url('/images/icon/page_white_picture.png'),
+    'doc' => $this->url('/images/icon/page_white_word.png'),
+    'docx' => $this->url('/images/icon/page_white_word.png'),
+    'xls' => $this->url('/images/icon/page_white_excel.png'),
+    'ppt' => $this->url('/images/icon/page_white_powerpoint.png'),
+    'pdf' => $this->url('/images/icon/page_white_pdf.png'),
+    'flv' => $this->url('/images/icon/page_white_flash.png'),
+    'zip' => $this->url('/images/icon/page_white_zip.png'),
+    'rar' => $this->url('/images/icon/page_white_zip.png'),
+    'txt' => $this->url('/images/icon/page_white_text.png'),
+);
+?>
+<h1 class="header">Media</h1>
+
+<p>
+    On this page you find the media available within Fizzy. With the form on the 
+    bottom of the page you are able to add files to Fizzy that you can use in 
+    your pages.
+</p>
+
+<div id="uploaded-files">
+    <h2>Files overview</h2>
+    
+    <div class="files-container">
+        <table class="files-table">
+            <?php if(0 < count($this->files)) : foreach($this->files as $fileInfo) : ?>
+            <tr>
+                <td class="icon"><img src="<?= (array_key_exists($fileInfo->type, $types)) ? $types[$fileInfo->type] : $this->url('/images/icon/page.png'); ?>" alt="" /></td>
+                <td class="filename"><?= $fileInfo->basename ?></td>
+                <td class="controls">
+                    <a href="<?= $this->url('/uploads/' . $fileInfo->basename); ?>" target="_blank" title="View file"><?= $this->img('/images/icon/view.png'); ?></a>
+                    <?= $this->link_confirm('/admin/media/delete/' . $fileInfo->basename, $this->img('/images/icon/delete.png'), "Are you sure you want to delete {$fileInfo->basename}?", array('title' => 'Delete file')); ?>
+                </td>
+            </tr>
+            <?php endforeach; else : ?>
+            <tr>
+                <td>
+                    No uploaded files were found. Use the form at the bottom to 
+                    add new files.
+                </td>
+            </tr>
+            <?php endif; ?>
+        </table>
+    </div>
+</div>
+
+<div id="upload-form">
+    <h2 class="header">Upload</h2>
+    <p>
+        Upload a new file by selecting it on your machine. Check the box if 
+        you want to overwrite a file that already exists with the same name.
+    </p>
+    <form action="<?= $this->url('/admin/media'); ?>" method="post" enctype="multipart/form-data">
+        <?php if(isset($this->messages) && !empty($this->messages)) : ?>
+        <div class="error">
+            <ul>
+            <?php foreach($this->messages as $message) : ?>
+                <li><?= $message ?></li>
+            <?php endforeach; ?>
+            </ul>
+         
+        </div>
+        <?php endif; ?>
+        
+        <div>
+            <input name="upload" type="file" />   
+        </div>
+        <div>
+	        <label for="overwrite">Overwrite existing file?</label>
+            <input type="checkbox" name="overwrite" value="1" />
+        </div>
+        <div>
+           <input type="submit" value="Upload" />
+       </div>
+    </form>
+</div>
