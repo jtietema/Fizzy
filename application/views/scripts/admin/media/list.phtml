@@ -54,7 +54,9 @@ $types = array(
                     <?php endif; ?>
                     <td class="controls">
                         <a href="<?= $this->url('/uploads/' . $fileInfo->basename); ?>" target="_blank" title="View file"><?= $this->img('/images/icon/view.png'); ?></a>
+                        <?php if(is_writable($this->uploadFolder)) : ?>
                         <?= $this->link_confirm('/admin/media/delete/' . urlencode($fileInfo->basename), $this->img('/images/icon/delete.png'), "Are you sure you want to delete {$fileInfo->basename}?", array('title' => 'Delete file')); ?>
+                        <?php endif; ?>
                     </td>
                 </tr>
                 <?php endforeach; ?>
@@ -79,9 +81,10 @@ $types = array(
         <br />
         
     </p>
+    <?php if(is_writable($this->uploadFolder)) : ?>
     <form action="<?= $this->url('/admin/media'); ?>" method="post" enctype="multipart/form-data">
         <?php if(isset($this->messages) && !empty($this->messages)) : ?>
-        <div class="error">
+        <div class="message error">
             <ul>
             <?php foreach($this->messages as $message) : ?>
                 <li><?= $message ?></li>
@@ -103,4 +106,13 @@ $types = array(
            <input type="submit" value="Upload" />
        </div>
     </form>
+    <?php else : ?>
+    <div class="message notice">
+        <p>
+            The upload directory found in the Fizzy configuration is not 
+            writable. Upload functionality will be disabled until it is made 
+            writable.
+        </p>
+    </div>
+    <?php endif; ?>
 </div>
