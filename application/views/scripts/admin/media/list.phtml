@@ -11,7 +11,7 @@ $types = array(
     'docx' => $this->url('/images/icon/page_white_word.png'),
     'xls' => $this->url('/images/icon/page_white_excel.png'),
     'ppt' => $this->url('/images/icon/page_white_powerpoint.png'),
-    'pdf' => $this->url('/images/icon/page_white_pdf.png'),
+    'pdf' => $this->url('/images/icon/page_white_text.png'),
     'flv' => $this->url('/images/icon/page_white_flash.png'),
     'zip' => $this->url('/images/icon/page_white_zip.png'),
     'rar' => $this->url('/images/icon/page_white_zip.png'),
@@ -54,7 +54,7 @@ $types = array(
                     <?php endif; ?>
                     <td class="controls">
                         <a href="<?= $this->url('/uploads/' . $fileInfo->basename); ?>" target="_blank" title="View file"><?= $this->img('/images/icon/view.png'); ?></a>
-                        <?= $this->link_confirm('/admin/media/delete/' . $fileInfo->basename, $this->img('/images/icon/delete.png'), "Are you sure you want to delete {$fileInfo->basename}?", array('title' => 'Delete file')); ?>
+                        <?= $this->link_confirm('/admin/media/delete/' . urlencode($fileInfo->basename), $this->img('/images/icon/delete.png'), "Are you sure you want to delete {$fileInfo->basename}?", array('title' => 'Delete file')); ?>
                     </td>
                 </tr>
                 <?php endforeach; ?>

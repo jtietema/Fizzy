@@ -69,8 +69,10 @@ s                );
     public function deleteAction()
     {
         $name = $this->_getParam('name');
+        
         if(null !== $name) 
         {
+            $name = basename(urldecode($name));
             $uploadFolder = Fizzy_Config::getInstance()->getPath('uploads');
             $file = $uploadFolder . DIRECTORY_SEPARATOR . $name;
             if(is_file($file))
