@@ -76,6 +76,8 @@ $types = array(
     <p>
         Upload a new file by selecting it on your machine. Check the box if 
         you want to overwrite a file that already exists with the same name.
+        <br />
+        
     </p>
     <form action="<?= $this->url('/admin/media'); ?>" method="post" enctype="multipart/form-data">
         <?php if(isset($this->messages) && !empty($this->messages)) : ?>
@@ -90,7 +92,8 @@ $types = array(
         <?php endif; ?>
         
         <div>
-            <input name="upload" type="file" />   
+            <input name="upload" type="file" /><br />
+            <small>The maximum size for a file upload is <strong><?= str_replace(array('K', 'M', 'G'), array(' KB', ' MB', ' GB'), $this->upload_max_filesize); ?></strong>.</small>
         </div>
         <div>
 	        <label for="overwrite">Overwrite existing file?</label>
