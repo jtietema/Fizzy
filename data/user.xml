@@ -3,5 +3,15 @@
     <user uid="1255987349">
         <username>admin</username>
         <password>21232f297a57a5a743894a0e4a801fc3</password>
+        <encryption>md5</encryption>
+    </user>
+    <user uid="1255987350">
+        <username>mattijs</username>
+        <password>19f049360e1dba6ac7565d541e373fbd72ca836f</password>
+        <encryption>sha1</encryption>
+    </user>
+    <user uid="1255987351">
+        <username>jeroen</username>
+        <password>jeroen</password>
     </user>
 </container>

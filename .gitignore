@@ -1,3 +1,4 @@
 *.swp
 data/docs/*
 configs/fizzy.xml
+*.pidaproject

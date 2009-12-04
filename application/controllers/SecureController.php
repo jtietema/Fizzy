@@ -28,6 +28,7 @@ require_once 'Fizzy/Storage.php';
  * A controller secured by login
  *
  * @author Jeroen Tietema <jeroen@voidwalkers.nl>
+ * @author Mattijs Hoitink <mattijs@voidwalkers.nl>
  */
 class SecureController extends Fizzy_Controller
 {
@@ -62,19 +63,29 @@ class SecureController extends Fizzy_Controller
             $storage = new Fizzy_Storage(Fizzy_Config::getInstance()->getSection('storage'));
             $users = $storage->fetchByField('User', array('username' => $_POST['username']));
             if(0 < count($users)) {
+                // fetch the user object
                 $user = array_shift($users);
-                if ($user->getPassword() === md5($_POST['password']))
+                // encrypt the password (or not)
+                $password = $_POST['password'];
+                $encryption = strtolower($user->getEncryption());
+                if(!empty($encryption) && 'plain' !== $encryption && in_array($encryption, array('md5', 'sha1')))
                 {
-                    // doe header redirect naar index pagina
+                    $password = $encryption($password);
+                }
+                if($user->getPassword() === $password)
+                {
+                    // do a header redirect to the index page
                     $_SESSION['username'] = $user->getUsername();
                     header('Location: http://' . $this->_request->getServerName() . $this->_requestUri);
                     exit();
                 }
-                else {
+                else 
+                {
                     $this->getView()->message = 'Incorrect password. Please try again.';
                 }
             }
-            else {
+            else 
+            {
                 $this->getView()->message = 'Username could not be found.';
             }
             
