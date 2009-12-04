@@ -31,16 +31,35 @@ $types = array(
     
     <div class="files-container">
         <table class="files-table">
-            <?php if(0 < count($this->files)) : foreach($this->files as $fileInfo) : ?>
-            <tr>
-                <td class="icon"><img src="<?= (array_key_exists($fileInfo->type, $types)) ? $types[$fileInfo->type] : $this->url('/images/icon/page.png'); ?>" alt="" /></td>
-                <td class="filename"><?= $fileInfo->basename ?></td>
-                <td class="controls">
-                    <a href="<?= $this->url('/uploads/' . $fileInfo->basename); ?>" target="_blank" title="View file"><?= $this->img('/images/icon/view.png'); ?></a>
-                    <?= $this->link_confirm('/admin/media/delete/' . $fileInfo->basename, $this->img('/images/icon/delete.png'), "Are you sure you want to delete {$fileInfo->basename}?", array('title' => 'Delete file')); ?>
-                </td>
-            </tr>
-            <?php endforeach; else : ?>
+            <?php if(0 < count($this->files)) : ?>
+            <thead>
+                <tr>
+                    <td colspan="2">Filename</td>
+                    <td>Size</td>
+                    <td>&nbsp;</td>
+                </tr>
+            </thead>
+            <tbody>
+                <?php foreach($this->files as $fileInfo) : ?>
+                <tr>
+                    <td class="icon"><img src="<?= (array_key_exists($fileInfo->type, $types)) ? $types[$fileInfo->type] : $this->url('/images/icon/page.png'); ?>" alt="" /></td>
+                    <td class="filename"><?= $fileInfo->basename; ?></td>
+                    <td class="size">
+                    <?php if($fileInfo->size < 1024) : ?>
+                    <?= round($fileInfo->size, 2); ?> b
+                    <?php elseif((1024*1024) > $fileInfo->size) : ?>
+                    <?= round($fileInfo->size / 1024, 2); ?> KB
+                    <?php else : ?>
+                    <?= round($fileInfo->size / (1024*1024), 2); ?> MB
+                    <?php endif; ?>
+                    <td class="controls">
+                        <a href="<?= $this->url('/uploads/' . $fileInfo->basename); ?>" target="_blank" title="View file"><?= $this->img('/images/icon/view.png'); ?></a>
+                        <?= $this->link_confirm('/admin/media/delete/' . $fileInfo->basename, $this->img('/images/icon/delete.png'), "Are you sure you want to delete {$fileInfo->basename}?", array('title' => 'Delete file')); ?>
+                    </td>
+                </tr>
+                <?php endforeach; ?>
+            </tbody>
+            <?php else : ?>
             <tr>
                 <td>
                     No uploaded files were found. Use the form at the bottom to 

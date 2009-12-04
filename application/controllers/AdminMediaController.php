@@ -30,7 +30,7 @@ class AdminMediaController extends SecureController
     
     public function defaultAction()
     {
-        $uploadFolder = Fizzy_Config::getInstance()->getPath('public') . DIRECTORY_SEPARATOR . 'uploads';
+        $uploadFolder = Fizzy_Config::getInstance()->getPath('uploads');
         
         if($this->getRequest()->getMethod() === Fizzy_Request::METHOD_POST)
         {
@@ -52,6 +52,7 @@ class AdminMediaController extends SecureController
                     'type' => substr(strrchr($file->getBaseName(), '.'), 1),
                     'basename' => $file->getBaseName(),
                     'path' => $file->getPath(),
+                    'size' => $file->getSize(),
 s                );
                 $files[] = (object) $fileInfo;
             }
@@ -70,7 +71,7 @@ s                );
         $name = $this->_getParam('name');
         if(null !== $name) 
         {
-            $uploadFolder = Fizzy_Config::getInstance()->getPath('public') . DIRECTORY_SEPARATOR . 'uploads';
+            $uploadFolder = Fizzy_Config::getInstance()->getPath('uploads');
             $file = $uploadFolder . DIRECTORY_SEPARATOR . $name;
             if(is_file($file))
             {
@@ -102,6 +103,10 @@ s                );
             if(!file_exists($destination) || $overwrite)
             {
                 move_uploaded_file($target, $destination);
+            }
+            else 
+            {
+                unlink($target);
             }
             return array();
         }

@@ -75,6 +75,7 @@ class Fizzy_Config
             'data' => 'data',
             'library' => 'library',
             'public' => 'public',
+            'uploads' => 'public/uploads',
         ),
     );
 

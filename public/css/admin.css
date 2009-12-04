@@ -225,18 +225,25 @@ label {
 }
 
 .files-table { margin-bottom: 0; }
-.files-table tr td {
+.files-table thead tr td, .files-table tbody tr td {
     line-height: 16px;
-    padding: 5px;
+    padding: 5px 5px 5px 10px;
 }
-.files-table tr:hover td {
+.files-table thead tr td {
+    background-color: #bbbbbb;
+    border-right: 1px solid #aaaaaa;
+    border-bottom: 1px solid #aaaaaa;
+    border-left: 1px solid #cccccc;
+}
+.files-table tbody tr:hover td {
     background-color: #dddddd;
 }
 .files-table .icon { width: 20px; text-align: center; }
 .files-table .filename {}
+.files-table .size { width: 75px; }
 .files-table .controls {
-    width: 150px;
-    text-align: right;
+    width: 50px;
+    text-align: center;
 }
 
 
