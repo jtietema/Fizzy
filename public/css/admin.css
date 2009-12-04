@@ -31,6 +31,24 @@ h3.header {
     font-size: 120%;
 }
 
+/** messages **/
+.message { margin: 0; padding: 0; }
+.message p { margin: 1em; }
+
+.notice {
+    background-image: url('../images/icon/dialog-warning.png');
+    background-repeat: no-repeat;
+    background-position: .7em;
+}
+.error {
+    background-image: url('../images/icon/dialog-error.png');
+    background-repeat: no-repeat;
+    background-position: .7em;
+}
+.notice p, .error p {
+    margin-left: 4em;
+}
+
 /** tables **/
 table.data-table {
     width: 920px;
