@@ -50,5 +50,13 @@ $config = Fizzy_Config::getInstance()
           ->loadConfiguration(simplexml_load_file(CONFIG_PATH .'/fizzy.xml'))
           ->loadRoutes(simplexml_load_file(CONFIG_PATH .'/routes.xml'));
 
+$basePath = $config->getSectionValue(Fizzy_Config::SECTION_APPLICATION, 'basePath');
+if(empty($basePath))
+{
+    // Set a default base path
+    $config->setSectionValue(Fizzy_Config::SECTION_APPLICATION, 'basePath', ROOT_PATH);
+}
+
+// Dispatch the request
 $frontController = new Fizzy_FrontController($config);
 $frontController->dispatch();

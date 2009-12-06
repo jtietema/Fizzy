@@ -180,6 +180,21 @@ class Fizzy_Config
     }
 
     /**
+     * Gets a value from a section with the given key.
+     * @param string $section
+     * @param string $key
+     * @return mixed|null
+     */
+    public function getSectionValue($section, $key)
+    {
+        if(array_key_exists($section, $this->_configuration) && is_array($this->_configuration[$section]) && array_key_exists($key, $this->_configuration[$section])) {
+            return $this->_configuration[$section][$key];
+        }
+
+        return null;
+    }
+
+    /**
      * Sets a path within the application. Paths must be set relative to the
      * application root. The configured base path will be stripped from
      * set paths.
