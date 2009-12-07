@@ -62,13 +62,22 @@ class Fizzy_Storage_Backend_Xml extends Fizzy_Storage_Backend_Abstract
         parent::__construct($options);
 
         $dsn = $this->getDsn();
-        list(,$dataPath) = explode(':', $dsn);
-        
+        list($protocol, $dataPath) = explode(':', $dsn);
+
         // Change path to system directory separator
         $dataPath = str_replace(array('/', '\\'), DIRECTORY_SEPARATOR, $dataPath);
         // Add a trailing slash
         $dataPath = rtrim($dataPath, DIRECTORY_SEPARATOR) . DIRECTORY_SEPARATOR;
+        // Check if path is relative within the web application root
+        if(0 !== strpos($dataPath, DIRECTORY_SEPARATOR))
+        {
+            $basePath = Fizzy_Config::getInstance()->getSectionValue(Fizzy_Config::SECTION_APPLICATION, 'basePath');
+            $dataPath = $basePath . $dataPath;
+        }
 
+        // Set the dsn with the corrected absolute or relative path
+        $this->setDsn($protocol . ':' . $dataPath);
+        
         if(!is_dir($dataPath) || !is_writable($dataPath)) {
             require_once 'Fizzy/Storage/Exception.php';
             throw new Fizzy_Storage_Exception(

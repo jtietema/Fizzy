@@ -28,4 +28,31 @@ require_once 'Fizzy/Storage/Backend/Pdo.php';
  * @author Mattijs Hoitink <mattijs@voidwalkers.nl>
  */
 class Fizzy_Storage_Backend_Sqlite extends Fizzy_Storage_Backend_Pdo
-{}
+{
+    /**
+     * Constructor. Will check the dsn for relative paths and prefix them with
+     * the application base path.
+     * @param array $options
+     */
+    public function __construct($options = array())
+    {
+        parent::__construct($options);
+
+        $dsn = $this->getDsn();
+        list($protocol, $dataPath) = explode(':', $dsn);
+
+        // Change path to system directory separator
+        $dataPath = str_replace(array('/', '\\'), DIRECTORY_SEPARATOR, $dataPath);
+        // Add a trailing slash
+        $dataPath = rtrim($dataPath, DIRECTORY_SEPARATOR) . DIRECTORY_SEPARATOR;
+        // Check if path is relative within the web application root
+        if(0 !== strpos($dataPath, DIRECTORY_SEPARATOR))
+        {
+            $basePath = Fizzy_Config::getInstance()->getSectionValue(Fizzy_Config::SECTION_APPLICATION, 'basePath');
+            $dataPath = $basePath . $dataPath;
+        }
+
+        // Set the dsn with the corrected absolute or relative path
+        $this->setDsn($protocol . ':' . $dataPath);
+    }
+}

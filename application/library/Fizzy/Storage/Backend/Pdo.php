@@ -49,20 +49,6 @@ abstract class Fizzy_Storage_Backend_Pdo extends Fizzy_Storage_Backend_Abstract
 
     /** **/
 
-    public function __construct($options = array())
-    {
-        parent::__construct($options);
-
-        // Make a new PDO connection
-        try {
-            $this->_connection = new PDO($this->_dsn, $this->_username, $this->_password);
-        }
-        catch(PDOException $exception) {
-            require_once 'Fizzy/Storage/Exception.php';
-            throw new Fizzy_Storage_Exception($exception->getMessage());
-        }
-    }
-
     /**
      * Sets the username for the database connection.
      * @param string $username
@@ -109,6 +95,18 @@ abstract class Fizzy_Storage_Backend_Pdo extends Fizzy_Storage_Backend_Abstract
      */
     public function getConnection()
     {
+        if(null === $this->_connection)
+        {
+            // Make a new PDO connection
+            try {
+                $this->_connection = new PDO($this->_dsn, $this->_username, $this->_password);
+            }
+            catch(PDOException $exception) {
+                require_once 'Fizzy/Storage/Exception.php';
+                throw new Fizzy_Storage_Exception($exception->getMessage());
+            }
+        }
+        
         return $this->_connection;
     }
 
@@ -119,11 +117,11 @@ abstract class Fizzy_Storage_Backend_Pdo extends Fizzy_Storage_Backend_Abstract
      */
     protected function _createStatement($query)
     {
-        $statement = $this->_connection->prepare($query);
+        $statement = $this->getConnection()->prepare($query);
         
         if(false === $statement) {
             require_once 'Fizzy/Storage/Exception.php';
-            throw new Fizzy_Storage_Exception(implode(';', $this->_connection->errorInfo()));
+            throw new Fizzy_Storage_Exception(implode(';', $this->getConnection()->errorInfo()));
         }
 
         return $statement;
@@ -139,7 +137,7 @@ abstract class Fizzy_Storage_Backend_Pdo extends Fizzy_Storage_Backend_Abstract
 
         if(false === $success) {
             require_once 'Fizzy/Storage/Exception.php';
-            throw new Fizzy_Storage_Exception(implode(';', $this->_connection->errorInfo()));
+            throw new Fizzy_Storage_Exception(implode(';', $this->getConnection()->errorInfo()));
         }
         
         return $statement;
@@ -263,7 +261,7 @@ abstract class Fizzy_Storage_Backend_Pdo extends Fizzy_Storage_Backend_Abstract
         $executed = $this->_executeStatement($statement);
 
         // Return the id for the data set
-        return $this->_connection->lastInsertId();
+        return $this->getConnection()->lastInsertId();
     }
 
 }
