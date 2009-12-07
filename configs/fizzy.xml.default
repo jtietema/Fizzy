@@ -1,15 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<fizzy version="0.4">
+<fizzy version="1.1">
     <application>
         <title>Fizzy</title>
-        <environment>development</environment>
-        <basePath>/absolute/path/to/your/fizzy</basePath>
+        <environment>production</environment>
     </application>
     <router>
         <defaultController>default</defaultController>
         <defaultAction>default</defaultAction>
     </router>
     <storage>
-        <dsn>xml:/absolute/path/to/your/fizzy/data</dsn>
+        <dsn>xml:data</dsn>
     </storage>
 </fizzy>
