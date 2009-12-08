@@ -72,7 +72,7 @@ class Fizzy_Storage_Backend_Xml extends Fizzy_Storage_Backend_Abstract
         if(0 !== strpos($dataPath, DIRECTORY_SEPARATOR))
         {
             $basePath = Fizzy_Config::getInstance()->getSectionValue(Fizzy_Config::SECTION_APPLICATION, 'basePath');
-            $dataPath = $basePath . $dataPath;
+            $dataPath = $basePath . DIRECTORY_SEPARATOR . $dataPath;
         }
 
         // Set the dsn with the corrected absolute or relative path

@@ -70,6 +70,7 @@ class Fizzy_Config
                 'application' => 'application/views/scripts',
                 'custom' => 'custom/templates'
             ),
+            'assets' => 'application/views/assets',
             'configs' => 'configs',
             'custom' => 'custom',
             'data' => 'data',

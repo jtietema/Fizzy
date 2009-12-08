@@ -55,6 +55,11 @@
             <controller>Admin</controller>
             <action>configuration</action>
         </admin_configuration>
+        <admin_assets type="simple">
+            <rule>/admin/:namespace/:asset</rule>
+            <controller>AdminAssets</controller>
+            <action>serve</action>
+        </admin_assets>
 
         <!-- Pages admin section -->
         <admin_pages type="static">
