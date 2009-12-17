@@ -41,7 +41,13 @@ class AdminMediaController extends SecureController
             }
         
         }
-        
+        // check if the uploads folder exists and is writable
+        $uploadFolder = Fizzy_Config::getInstance()->getPath('uploads');
+        if (!is_dir($uploadFolder) || !is_writable($uploadFolder))
+        {
+            $this->getView()->setScript('/admin/media/foldererror.phtml');
+            return;
+        }
         // Parse all files in the upload directory
         $files = array();
         foreach(new DirectoryIterator($uploadFolder) as $file) 

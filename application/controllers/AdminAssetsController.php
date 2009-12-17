@@ -37,15 +37,17 @@ class AdminAssetsController extends Fizzy_Controller
         if(!array_key_exists($namespace, $namespaces))
         {
             $this->_return404();
+            return;
         }
 
         // Get the absolute file path
         $asset = $this->_getAssetPath($this->getRequest()->getPath(), $namespaces[$namespace]);
-        
+
         // Check if the asset is valid
         if(!$this->_isValidAsset($asset))
         {
             $this->_return404();
+            return;
         }
 
         // Disable view rendering
@@ -57,7 +59,6 @@ class AdminAssetsController extends Fizzy_Controller
             header('Content-Type: ' . $contentType);
         }
         echo file_get_contents($asset);
-        return;
     }
 
     /**
@@ -68,7 +69,7 @@ class AdminAssetsController extends Fizzy_Controller
      */
     protected function _getAssetPath($url, $assetType)
     {
-        $assetUrl = $this->getRequest()->getBaseUrl() . '/admin/' . $assetType;
+        $assetUrl = '/admin/' . $assetType;
         $file = str_replace($assetUrl, '', $url);
 
         $assetsPath = Fizzy_Config::getInstance()->getPath('assets');
@@ -130,7 +131,6 @@ class AdminAssetsController extends Fizzy_Controller
     protected function _return404()
     {
         header($this->getRequest()->getProtocol() . " 404 Not Found");
-        exit;
     }
     
 }
