@@ -32,8 +32,8 @@
             <tr>
                 <td><?= $user->username; ?></td>
                 <td>
-                    <a href="<?= $this->url("/admin/user/edit/$user->getId()") ?>" title="Edit user"><img src="<?= $this->url("/images/icon/edit.png") ?>" alt="edit icon" /></a>
-                    <a href="<?= $this->url("/admin/user/delete/$user->getId()") ?>" title="Delete user"><img src="<?= $this->url("/images/icon/sign_remove.png") ?>" alt="delete icon" /></a>
+                    <a href="<?= $this->url("/admin/user/edit/$user->getId()") ?>" title="Edit user"><img src="<?= $this->url("/admin/images/icon/edit.png") ?>" alt="edit icon" /></a>
+                    <a href="<?= $this->url("/admin/user/delete/$user->getId()") ?>" title="Delete user"><img src="<?= $this->url("/admin/images/icon/sign_remove.png") ?>" alt="delete icon" /></a>
                 </td>
             </tr>
             <?php endforeach; ?>
@@ -41,6 +41,6 @@
     </table>
 
     <p>
-        <?= $this->link('/admin/user/add', $this->img('/images/icon/add.png') . ' Add User'); ?>
+        <?= $this->link('/admin/user/add', $this->img('/admin/images/icon/add.png') . ' Add User'); ?>
     </p>
 </div>
