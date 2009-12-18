@@ -127,7 +127,7 @@ label {
 
 /* Header */
 #header {
-    background: #2E3132 url('/images/menubg.png') repeat-x top left;
+    background: #2E3132 url('../images/menubg.png') repeat-x top left;
     border-bottom: 2px solid #353535;
 }
 
