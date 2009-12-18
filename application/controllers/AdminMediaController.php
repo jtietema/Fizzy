@@ -59,7 +59,7 @@ class AdminMediaController extends SecureController
                     'basename' => $file->getBaseName(),
                     'path' => $file->getPath(),
                     'size' => $file->getSize(),
-s                );
+                );
                 $files[] = (object) $fileInfo;
             }
         }
