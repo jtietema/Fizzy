@@ -1,0 +1,53 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>{#fizzymedia_dlg.title}</title>
+    <link href="<?= $this->url("/admin/css/admin.css") ?>" rel="stylesheet" type="text/css" media="screen" />
+    <script type="text/javascript" src="../../admin/js/tiny_mce/tiny_mce_popup.js"></script>
+    <script type="text/javascript" src="../../admin/js/tiny_mce/plugins/fizzymedia/js/dialog.js"></script>
+</head>
+<body>
+<div class="files-container">
+    <?php foreach($this->files as $fileInfo) : ?>
+    <div class="thumbnail" onclick="select('<?= $this->url('/uploads/' . $fileInfo->basename); ?>', this);">
+        <img class="thumbnail" src="<?= $this->url('/uploads/' . $fileInfo->basename); ?>" alt="<?= $fileInfo->basename ?>" />
+        
+        <div class="filename">
+            <?php if (strlen($fileInfo->basename) > 14):?>
+                <?= substr($fileInfo->basename, 0, 14); ?>...
+            <?php else: ?>
+                <?= $fileInfo->basename ?>
+            <?php endif; ?>
+        </div>
+        <div class="size">
+            <?php if($fileInfo->size < 1024) : ?>
+            <?= round($fileInfo->size, 2); ?> b
+            <?php elseif((1024*1024) > $fileInfo->size) : ?>
+            <?= round($fileInfo->size / 1024, 2); ?> KB
+            <?php else : ?>
+            <?= round($fileInfo->size / (1024*1024), 2); ?> MB
+            <?php endif; ?>
+        </div>
+    </div>
+    <?php endforeach; ?>
+
+    
+</div>
+<form onsubmit="FizzymediaDialog.insert();return false;" action="#">
+<div>
+<label>Description:</label>
+    <input type="text" name="alt" id="description" />
+<label>Width</label>
+    <input type="text" name="width" id="width" />
+<label>Height</label>
+    <input type="text" name="height" id="height" />
+<label>Border</label>
+    <input type="text" name="border" id="border" />
+<div class="clear"></div>
+    <input type="button" name="insert" value="{#insert}" onclick="FizzymediaDialog.insert();" />
+    <input type="button" name="cancel" value="{#cancel}" onclick="tinyMCEPopup.close();" />
+</div>
+</form>
+
+</body>
+</html>

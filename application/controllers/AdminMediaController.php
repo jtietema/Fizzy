@@ -154,4 +154,42 @@ class AdminMediaController extends SecureController
         
     }
     
+    public function galleryAction()
+    {
+        $this->getView()->setLayout('nolayout');
+        $uploadFolder = Fizzy_Config::getInstance()->getPath('uploads');
+        
+        // check if the uploads folder exists and is writable
+        $uploadFolder = Fizzy_Config::getInstance()->getPath('uploads');
+        if (!is_dir($uploadFolder) || !is_writable($uploadFolder))
+        {
+            $this->getView()->setScript('/admin/media/foldererror.phtml');
+            return;
+        }
+        // Parse all files in the upload directory
+        $files = array();
+        $imageTypes = array('png', 'jpg', 'jpeg', 'bmp', 'gif');
+        foreach(new DirectoryIterator($uploadFolder) as $file) 
+        {
+            if($file->isFile()) 
+            {
+                $fileInfo = array(
+                    'type' => substr(strrchr($file->getBaseName(), '.'), 1),
+                    'basename' => $file->getBaseName(),
+                    'path' => $file->getPath(),
+                    'size' => $file->getSize(),
+                );
+                if (in_array($fileInfo['type'], $imageTypes)) {
+                    $files[] = (object) $fileInfo;
+                }
+            }
+        }
+        
+        // Render the view
+        $this->getView()->files = $files;
+        $this->getView()->disable();
+        $this->getView()->setScript('/admin/media/gallery.phtml');
+        echo $this->getView()->render();
+    }
+    
 }

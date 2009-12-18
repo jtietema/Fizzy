@@ -104,6 +104,11 @@
             <controller>AdminMedia</controller>
             <action>delete</action>
         </admin_media_delete>
+        <admin_media_gallery type="static">
+            <rule>/admin/media/gallery</rule>
+            <controller>AdminMedia</controller>
+            <action>gallery</action>
+        </admin_media_gallery>
         
         <!-- Menu admin sections  -->
         <admin_menu type="static">
