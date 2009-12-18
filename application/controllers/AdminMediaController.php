@@ -27,8 +27,10 @@ require_once 'SecureController.php';
  */
 class AdminMediaController extends SecureController
 {
-    
-    public function defaultAction()
+    /**
+     * All common code for defaultAction and thumbnailsAction
+     */
+    protected function _show()
     {
         $uploadFolder = Fizzy_Config::getInstance()->getPath('uploads');
         
@@ -59,7 +61,7 @@ class AdminMediaController extends SecureController
                     'basename' => $file->getBaseName(),
                     'path' => $file->getPath(),
                     'size' => $file->getSize(),
-s                );
+                );
                 $files[] = (object) $fileInfo;
             }
         }
@@ -69,7 +71,18 @@ s                );
         $this->getView()->files = $files;
         $this->getView()->post_max_size = ini_get('post_max_size');
         $this->getView()->upload_max_filesize = ini_get('upload_max_filesize');
+    }
+    
+    public function defaultAction()
+    {
+        $this->_show();
         $this->getView()->setScript('/admin/media/list.phtml');
+    }
+    
+    public function thumbnailsAction()
+    {
+        $this->_show();
+        $this->getView()->setScript('/admin/media/thumbnails.phtml');
     }
     
     /**

@@ -89,6 +89,11 @@
             <controller>AdminMedia</controller>
             <action>default</action>
         </admin_media>
+        <admin_media_thumbnails type="static">
+            <rule>/admin/media/thumbnails</rule>
+            <controller>AdminMedia</controller>
+            <action>thumbnails</action>
+        </admin_media_thumbnails>
         <admin_media_upload type="static">
             <rule>/admin/media/upload</rule>
             <controller>AdminMedia</controller>

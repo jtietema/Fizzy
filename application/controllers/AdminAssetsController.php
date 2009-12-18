@@ -33,6 +33,10 @@ class AdminAssetsController extends Fizzy_Controller
     {
         $namespaces = array('css' => 'css', 'js' => 'js', 'image' => 'images', 'images' => 'images');
         $namespace = strtolower($this->_getParam('namespace'));
+        
+        // Disable view rendering
+        $this->getView()->disable();
+        
         // Check for valid namespace
         if(!array_key_exists($namespace, $namespaces))
         {
@@ -42,7 +46,7 @@ class AdminAssetsController extends Fizzy_Controller
 
         // Get the absolute file path
         $asset = $this->_getAssetPath($this->getRequest()->getPath(), $namespaces[$namespace]);
-
+        
         // Check if the asset is valid
         if(!$this->_isValidAsset($asset))
         {
@@ -50,15 +54,13 @@ class AdminAssetsController extends Fizzy_Controller
             return;
         }
 
-        // Disable view rendering
-        $this->getView()->disable();
-
         $contentType = $this->_getContentType($asset);
         if(null !== $contentType)
         {
             header('Content-Type: ' . $contentType);
         }
         echo file_get_contents($asset);
+        return;
     }
 
     /**
@@ -70,12 +72,12 @@ class AdminAssetsController extends Fizzy_Controller
     protected function _getAssetPath($url, $assetType)
     {
         $assetUrl = '/admin/' . $assetType;
-        $file = str_replace($assetUrl, '', $url);
-
+        $file = trim(str_replace($assetUrl, '', $url), DIRECTORY_SEPARATOR);
+        
         $assetsPath = Fizzy_Config::getInstance()->getPath('assets');
         $assetsPath = rtrim($assetsPath, DIRECTORY_SEPARATOR);
 
-        $filePath = $assetsPath . DIRECTORY_SEPARATOR . $assetType . DIRECTORY_SEPARATOR . $file;
+        $filePath = $assetsPath . DIRECTORY_SEPARATOR . rtrim($assetType, DIRECTORY_SEPARATOR) . DIRECTORY_SEPARATOR . $file;
         return realpath($filePath);
     }
 

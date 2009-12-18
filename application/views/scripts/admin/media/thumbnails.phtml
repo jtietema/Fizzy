@@ -1,6 +1,8 @@
 <?php
 // file type image declarations
 
+$images = array('png', 'jpg', 'jpeg', 'bmp', 'gif');
+
 $types = array(
     'png' => $this->url('/admin/images/icon/page_white_picture.png'),
     'jpg' => $this->url('/admin/images/icon/page_white_picture.png'),
@@ -31,53 +33,45 @@ $types = array(
     
     <div class="files-menubar">
         <ul>
-            <li><a href="<?= $this->url('/admin/media/thumbnails') ?>">Thumbnail view</a></li>
+            <li><a href="<?= $this->url('/admin/media') ?>">List view</a></li>
         </ul>
         <div class="clear"></div>
     </div>
-    
     <div class="files-container">
-        <table class="files-table">
-            <?php if(0 < count($this->files)) : ?>
-            <thead>
-                <tr>
-                    <td colspan="2">Filename</td>
-                    <td>Size</td>
-                    <td>&nbsp;</td>
-                </tr>
-            </thead>
-            <tbody>
-                <?php foreach($this->files as $fileInfo) : ?>
-                <tr>
-                    <td class="icon"><img src="<?= (array_key_exists($fileInfo->type, $types)) ? $types[$fileInfo->type] : $this->url('/images/icon/page.png'); ?>" alt="" /></td>
-                    <td class="filename"><?= $fileInfo->basename; ?></td>
-                    <td class="size">
-                        <?php if($fileInfo->size < 1024) : ?>
-                        <?= round($fileInfo->size, 2); ?> b
-                        <?php elseif((1024*1024) > $fileInfo->size) : ?>
-                        <?= round($fileInfo->size / 1024, 2); ?> KB
-                        <?php else : ?>
-                        <?= round($fileInfo->size / (1024*1024), 2); ?> MB
-                        <?php endif; ?>
-                    </td>
-                    <td class="controls">
-                        <a href="<?= $this->url('/uploads/' . $fileInfo->basename); ?>" target="_blank" title="View file"><?= $this->img('/admin/images/icon/view.png'); ?></a>
-                        <?php if(is_writable($this->uploadFolder)) : ?>
-                        <?= $this->link_confirm('/admin/media/delete/' . urlencode($fileInfo->basename), $this->img('/admin/images/icon/delete.png'), "Are you sure you want to delete {$fileInfo->basename}?", array('title' => 'Delete file')); ?>
-                        <?php endif; ?>
-                    </td>
-                </tr>
-                <?php endforeach; ?>
-            </tbody>
-            <?php else : ?>
-            <tr>
-                <td>
-                    No uploaded files were found. Use the form at the bottom to 
-                    add new files.
-                </td>
-            </tr>
+        <?php foreach($this->files as $fileInfo) : ?>
+        <div class="thumbnail">
+            <div class="controls">
+                <a href="<?= $this->url('/uploads/' . $fileInfo->basename); ?>" target="_blank" title="View file"><?= $this->img('/admin/images/icon/view.png'); ?></a>
+                <?php if(is_writable($this->uploadFolder)) : ?>
+                <?= $this->link_confirm('/admin/media/delete/' . urlencode($fileInfo->basename), $this->img('/admin/images/icon/delete.png'), "Are you sure you want to delete {$fileInfo->basename}?", array('title' => 'Delete file')); ?>
+                <?php endif; ?>
+            </div>
+            <?php if (in_array($fileInfo->type, $images)): ?>
+                <img class="thumbnail" src="<?= $this->url('/uploads/' . $fileInfo->basename); ?>" alt="<?= $fileInfo->basename ?>" />
+            <?php else: ?>
+                <img class="icon" src="<?= (array_key_exists($fileInfo->type, $types)) ? $types[$fileInfo->type] : $this->url('/admin/images/icon/page.png'); ?>" alt="" />
             <?php endif; ?>
-        </table>
+            
+            <div class="filename">
+                <?php if (strlen($fileInfo->basename) > 14):?>
+                    <?= substr($fileInfo->basename, 0, 14); ?>...
+                <?php else: ?>
+                    <?= $fileInfo->basename ?>
+                <?php endif; ?>
+            </div>
+            <div class="size">
+                <?php if($fileInfo->size < 1024) : ?>
+                <?= round($fileInfo->size, 2); ?> b
+                <?php elseif((1024*1024) > $fileInfo->size) : ?>
+                <?= round($fileInfo->size / 1024, 2); ?> KB
+                <?php else : ?>
+                <?= round($fileInfo->size / (1024*1024), 2); ?> MB
+                <?php endif; ?>
+            </div>
+        </div>
+        <?php endforeach; ?>
+    
+        
     </div>
 </div>
 
@@ -107,7 +101,7 @@ $types = array(
             <small>The maximum size for a file upload is <strong><?= str_replace(array('K', 'M', 'G'), array(' KB', ' MB', ' GB'), $this->upload_max_filesize); ?></strong>.</small>
         </div>
         <div>
-	        <label for="overwrite">Overwrite existing file?</label>
+            <label for="overwrite">Overwrite existing file?</label>
             <input type="checkbox" name="overwrite" value="1" />
         </div>
         <div>
