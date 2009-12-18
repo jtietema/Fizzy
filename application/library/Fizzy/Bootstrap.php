@@ -88,29 +88,21 @@ class Fizzy_Bootstrap
                 )
             ),
             # Admin media
-            /*'admin_media' => array(
-                'type' => 'Zend_Controller_Router_Route_Static',
-                'rule' => '/admin/media',
-                'defaults' => array (
-                    'controller' => 'admin_media',
-                    'action' => 'index'
-                )
-            ),*/
-            /*'admin_media_upload' => array(
-                'type' => 'Zend_Controller_Router_Route_Static',
-                'rule' => '/admin/media/upload',
-                'defaults' => array (
-                    'controller' => 'admin_media',
-                    'action' => 'upload'
-                )
-            ),*/
-            /*'admin_media_delete' => array(
-                'rule' => '/admin/media/delete/:name',
+            'admin_media_delete' => array(
+                'route' => '/admin/media/delete/:name',
                 'defaults' => array (
                     'controller' => 'admin_media',
                     'action' => 'delete'
                 )
-            ),*/
+            ),
+            'admin_media' => array(
+                'type' => 'Zend_Controller_Router_Route_Static',
+                'route' => '/admin/media',
+                'defaults' => array (
+                    'controller' => 'admin_media',
+                    'action' => 'index'
+                )
+            ),
             # Admin users
             /*'admin_users' => array(
                 'type' => 'Zend_Controller_Router_Route_Static',

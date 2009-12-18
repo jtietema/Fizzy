@@ -1,6 +1,6 @@
 <?php
 /**
- * Class AdminMediaController
+ * Class Admin_MediaController
  * @package Fizzy
  * @subpackage Controller
  *
@@ -19,25 +19,25 @@
  */
 
 /** SecureController */
-require_once 'Fizzy/Controller.php';
+require_once 'Fizzy/SecuredController.php';
 
 /**
  * Controller for media inside Fizzy. Enables basic upload and deletion of files.
  * @author Mattijs Hoitink <mattijs@voidwalkers.nl>
  */
-class Admin_MediaController extends Fizzy_Controller
+class Admin_MediaController extends Fizzy_SecuredController
 {
     
     public function indexAction()
     {
-        $uploadFolder = Fizzy_Config::getInstance()->getPath('uploads');
+        $uploadFolder = Zend_Registry::get('config')->paths->uploads;
         
-        if($this->getRequest()->getMethod() === Fizzy_Request::METHOD_POST)
+        if($this->_request->isPost())
         {
             if(isset($_FILES) && !empty($_FILES['upload'])) {
                 $overwrite = ((boolean) isset($_POST['overwrite']) && !empty($_POST['overwrite']));
                 $messages = $this->_handleUpload('upload', $uploadFolder, $overwrite);
-                $this->getView()->messages = $messages;
+                $this->view->messages = $messages;
             }
         
         }
@@ -53,17 +53,17 @@ class Admin_MediaController extends Fizzy_Controller
                     'basename' => $file->getBaseName(),
                     'path' => $file->getPath(),
                     'size' => $file->getSize(),
-s                );
+                );
                 $files[] = (object) $fileInfo;
             }
         }
         
         // Render the view
-        $this->getView()->uploadFolder = $uploadFolder;
-        $this->getView()->files = $files;
-        $this->getView()->post_max_size = ini_get('post_max_size');
-        $this->getView()->upload_max_filesize = ini_get('upload_max_filesize');
-        $this->getView()->setScript('/admin/media/list.phtml');
+        $this->view->uploadFolder = $uploadFolder;
+        $this->view->files = $files;
+        $this->view->post_max_size = ini_get('post_max_size');
+        $this->view->upload_max_filesize = ini_get('upload_max_filesize');
+        $this->renderScript('/admin/media/list.phtml');
     }
     
     /**
@@ -76,7 +76,7 @@ s                );
         if(null !== $name) 
         {
             $name = basename(urldecode($name));
-            $uploadFolder = Fizzy_Config::getInstance()->getPath('uploads');
+            $uploadFolder = Zend_Registry::get('config')->paths->uploads;
             $file = $uploadFolder . DIRECTORY_SEPARATOR . $name;
             if(is_file($file))
             {
