@@ -53,7 +53,7 @@ class Page extends Fizzy_Storage_Model
     public function getTemplate()
     {
         if(empty($this->template)) {
-            $application = Fizzy_Config::getInstance()->getSection('application');
+            $application = Zend_Registry::get('config')->application->toArray();
             $this->template = $application['defaultTemplate'];
         }
 
@@ -67,7 +67,7 @@ class Page extends Fizzy_Storage_Model
     public function getLayout()
     {
         if(empty($this->layout)) {
-            $application = Fizzy_Config::getInstance()->getSection('application');
+            $application = Zend_Registry::get('config')->application->toArray();
             $this->layout = $application['defaultLayout'];
         }
 

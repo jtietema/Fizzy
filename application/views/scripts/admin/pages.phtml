@@ -34,9 +34,9 @@
                 <td><?= $page->title ?></td>
                 <td><?= $page->slug ?></td>
                 <td style="width: 100px;">
-                    <?= $this->link("/page/{$page->slug}", $this->img('/admin/images/icon/view.png', array('alt' => 'View icon')), array('target' => '_blanc')); ?>
-                    <?= $this->link("/admin/page/edit/{$page->getId()}", $this->img('/admin/images/icon/edit.png', array('alt' => 'edit icon'))); ?>
-                    <?= $this->link("/admin/page/delete/{$page->getId()}", $this->img('/admin/images/icon/sign_remove.png', array('alt' => 'remove icon'))); ?>
+                    <?= $this->link("/pages/{$page->slug}", $this->img('/admin/images/icon/view.png', array('alt' => 'View icon')), array('target' => '_blanc')); ?>
+                    <?= $this->link("/admin/pages/edit/{$page->getId()}", $this->img('/admin/images/icon/edit.png', array('alt' => 'edit icon'))); ?>
+                    <?= $this->link("/admin/pages/delete/{$page->getId()}", $this->img('/admin/images/icon/sign_remove.png', array('alt' => 'remove icon'))); ?>
                 </td>
             </tr>
             <?php endforeach; ?>
@@ -44,6 +44,6 @@
     </table>
 
     <p>
-        <?= $this->link('/admin/page/add', $this->img('/admin/images/icon/add.png', array('alt' => 'add icon')) . ' Add Page'); ?>
+        <?= $this->link('/admin/pages/add', $this->img('/admin/images/icon/add.png', array('alt' => 'add icon')) . ' Add Page'); ?>
     </p>
 </div>

@@ -17,9 +17,9 @@
  * @copyright Copyright (c) 2009 Voidwalkers (http://www.voidwalkers.nl)
  * @license http://www.voidwalkers.nl/license/new-bsd The New BSD License
  */
-require_once 'SecureController.php';
+require_once 'Fizzy/Controller.php';
 
-class AdminUsersController extends SecureController
+class Admin_UsersController extends Fizzy_Controller
 {
     protected $_storage = null;
 

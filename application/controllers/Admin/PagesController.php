@@ -35,11 +35,11 @@ class Admin_PagesController extends Fizzy_SecuredController
      */
     public function listAction()
     {
-        $storage = new Fizzy_Storage(Fizzy_Config::getInstance()->getSection('storage'));
+        $storage = Zend_Registry::get('storage');
 
         $pages = $storage->fetchAll('Page');
-        $this->getView()->pages = $pages;
-        $this->getView()->setScript('admin/pages.phtml');
+        $this->view->pages = $pages;
+        $this->renderScript('admin/pages.phtml');
     }
 
     /**
@@ -62,7 +62,7 @@ class Admin_PagesController extends Fizzy_SecuredController
         // Unset default template and layout
         unset($templates[$application['defaultTemplate']], $layouts[$application['defaultLayout']]);
 
-        if($this->getRequest()->getMethod() === Fizzy_Request::METHOD_POST) {
+        if($this->_request->isPost()) {
             $page = new Page();
             $page->setTitle($_POST['title']);
             $page->setSlug($_POST['slug']);
@@ -77,13 +77,13 @@ class Admin_PagesController extends Fizzy_SecuredController
             if ($_POST['layout'] !== 'null'){
                 $page->setLayout($_POST['layout']);
             }
-            $storage = new Fizzy_Storage(Fizzy_Config::getInstance()->getSection('storage'));
+            $storage = Zend_Registry::get('storage');;
             $storage->persist($page);
 
             $this->_redirect('/admin/pages');
         }
 
-        //$this->view->page = new Page();
+        $this->view->page = new Page();
         $this->view->action = 'add';
 
         $this->view->availableTemplates = $templates;
@@ -97,13 +97,13 @@ class Admin_PagesController extends Fizzy_SecuredController
      */
     public function editAction()
     {
-        $application = Fizzy_Config::getInstance()->getSection(Fizzy_Config::SECTION_APPLICATION);
+        $application = Zend_Registry::get('config')->application->toArray();
         // Get template and layout paths
-        $templatePaths = Fizzy_Config::getInstance()->getPath('templates');
-        $layoutPaths = Fizzy_Config::getInstance()->getPath('layouts');
+        $templatePaths = Zend_Registry::get('config')->paths->templates->toArray();
+        $layoutPaths = Zend_Registry::get('config')->paths->layouts->toArray();
 
         // Unset the application template and layout paths, these are not accessible for users.
-        unset($templatePaths['application'], $layoutPaths['application']);
+        unset($templatePaths['fizzy'], $layoutPaths['fizzy']);
 
         // Get available templates and layouts
         $templates = $this->_getViewScripts($templatePaths);
@@ -112,10 +112,10 @@ class Admin_PagesController extends Fizzy_SecuredController
         // Unset default template and layout
         unset($templates[$application['defaultTemplate']], $layouts[$application['defaultLayout']]);
 
-        $storage = new Fizzy_Storage(Fizzy_Config::getInstance()->getSection('storage'));
+        $storage = Zend_Registry::get('storage');
         $page = $storage->fetchByID('Page', $this->_getParam('id'));
         
-        if($this->getRequest()->getMethod() === Fizzy_Request::METHOD_POST) {
+        if($this->_request->isPost()) {
             $page->setTitle(strip_tags($_POST['title']));
             $page->setSlug(strip_tags($_POST['slug']));
             $page->setBody($_POST['body']);
@@ -143,13 +143,13 @@ class Admin_PagesController extends Fizzy_SecuredController
             $this->_redirect('/admin/pages');
         }
 
-        $this->getView()->page = $page;
-        $this->getView()->action = 'edit/' . $page->getId();
+        $this->view->page = $page;
+        $this->view->action = 'edit/' . $page->getId();
 
-        $this->getView()->availableTemplates = $templates;
-        $this->getView()->availableLayouts = $layouts;
+        $this->view->availableTemplates = $templates;
+        $this->view->availableLayouts = $layouts;
 
-        $this->getView()->setScript('admin/page/form.phtml');
+        $this->renderScript('admin/page/form.phtml');
     }
 
     /**
@@ -160,7 +160,7 @@ class Admin_PagesController extends Fizzy_SecuredController
         $id = $this->_getParam('id');
         if(null !== $id)
         {
-            $storage = new Fizzy_Storage(Fizzy_Config::getInstance()->getSection('storage'));
+            $storage = Zend_Registry::get('storage');
             $page = $storage->fetchByID('Page', $id);
             $storage->delete($page);
         }

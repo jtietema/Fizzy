@@ -21,7 +21,7 @@
 <h1>Page</h1>
 
 <div class="form-container">
-    <form action="<?= $this->url("/admin/page/$this->action") ?>" method="post" name="PageForm" id="PageForm">
+    <form action="<?= $this->baseUrl("/admin/pages/$this->action") ?>" method="post" name="PageForm" id="PageForm">
         <?php if ($this->action === 'edit'): ?>
         <input type="hidden" name="id" value="<?= $this->page->getId() ?>">
         <?php endif; ?>

@@ -19,16 +19,16 @@
  */
 
 /** SecureController */
-require_once 'SecureController.php';
+require_once 'Fizzy/Controller.php';
 
 /**
  * Controller for media inside Fizzy. Enables basic upload and deletion of files.
  * @author Mattijs Hoitink <mattijs@voidwalkers.nl>
  */
-class AdminMediaController extends SecureController
+class Admin_MediaController extends Fizzy_Controller
 {
     
-    public function defaultAction()
+    public function indexAction()
     {
         $uploadFolder = Fizzy_Config::getInstance()->getPath('uploads');
         

@@ -24,23 +24,23 @@
     <head>
         <title>Fizzy Admin</title>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-        <link href="<?= $this->url("/admin/css/admin.css") ?>" rel="stylesheet" type="text/css" media="screen" />
-        <script type="text/javascript" src="<?= $this->url("/admin/js/yui-min.js"); ?>"></script>
-        <script type="text/javascript" src="<?= $this->url('/admin/js/tiny_mce/tiny_mce.js'); ?>"></script>
+        <link href="<?= $this->baseUrl("/admin/css/admin.css") ?>" rel="stylesheet" type="text/css" media="screen" />
+        <script type="text/javascript" src="<?= $this->baseUrl("/admin/js/yui-min.js"); ?>"></script>
+        <script type="text/javascript" src="<?= $this->baseUrl('/admin/js/tiny_mce/tiny_mce.js'); ?>"></script>
     </head>
     <body>
         <div id="header">
             <div class="container">
                 <div id="navigation" class="span-24 last">
                     <ul>
-                        <li><a href="<?= $this->url("/admin/pages") ?>">Pages</a></li>
-                        <li><a href="<?= $this->url("/admin/media") ?>">Media</a></li>
+                        <li><a href="<?= $this->baseUrl("/admin/pages") ?>">Pages</a></li>
+                        <li><a href="<?= $this->baseUrl("/admin/media") ?>">Media</a></li>
                         <!-- not implemented yet
-                        <li><a href="<?= $this->url("/admin/menu") ?>">Menu</a></li>
+                        <li><a href="<?= $this->baseUrl("/admin/menu") ?>">Menu</a></li>
                         -->
-                        <li><a href="<?= $this->url("/admin/users") ?>">Users</a></li>
-                        <li><a href="<?= $this->url("/admin/configuration") ?>">Configuration</a></li>
-                        <li class="link-logout"><a href="<?= $this->url("/admin/logout") ?>">Logout</a></li>
+                        <li><a href="<?= $this->baseUrl("/admin/users") ?>">Users</a></li>
+                        <li><a href="<?= $this->baseUrl("/admin/configuration") ?>">Configuration</a></li>
+                        <li class="link-logout"><a href="<?= $this->baseUrl("/admin/logout") ?>">Logout</a></li>
                     </ul>
                     <div class="clear"></div>
                 </div>
@@ -51,7 +51,7 @@
 
             <div id="content" class="span-24 last content-container">
                 <div id="content-wrapper">
-                    <?= $this->content ?>
+                    <?= $this->layout()->content; ?>
                 </div>
             </div>
 

@@ -19,14 +19,14 @@
  */
 
 /** SecureController */
-require_once 'SecureController.php';
+require_once 'Fizzy/Controller.php';
 
 /**
  * Description of AdminPagesController
  *
  * @author Jeroen Tietema <jeroen@voidwalkers.nl>
  */
-class AdminController extends SecureController
+class AdminController extends Fizzy_Controller
 {
     
     /**

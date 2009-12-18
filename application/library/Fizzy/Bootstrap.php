@@ -51,7 +51,7 @@ class Fizzy_Bootstrap
         'routes' => array (
             # Admin assets control
             'admin_assets' => array(
-                'route' => '/admin/:namespace/:asset',
+                'route' => '/admin/:namespace/*',
                 'defaults' => array (
                     'controller' => 'admin_assets',
                     'action' => 'serve'
@@ -88,83 +88,85 @@ class Fizzy_Bootstrap
                 )
             ),
             # Admin media
-            'admin_media' => array(
+            /*'admin_media' => array(
                 'type' => 'Zend_Controller_Router_Route_Static',
                 'rule' => '/admin/media',
                 'defaults' => array (
                     'controller' => 'admin_media',
+                    'action' => 'index'
                 )
-            ),
-            'admin_media_upload' => array(
+            ),*/
+            /*'admin_media_upload' => array(
                 'type' => 'Zend_Controller_Router_Route_Static',
                 'rule' => '/admin/media/upload',
                 'defaults' => array (
                     'controller' => 'admin_media',
                     'action' => 'upload'
                 )
-            ),
-            'admin_media_delete' => array(
+            ),*/
+            /*'admin_media_delete' => array(
                 'rule' => '/admin/media/delete/:name',
                 'defaults' => array (
                     'controller' => 'admin_media',
                     'action' => 'delete'
                 )
-            ),
+            ),*/
             # Admin users
-            'admin_users' => array(
+            /*'admin_users' => array(
                 'type' => 'Zend_Controller_Router_Route_Static',
                 'rule' => '/admin/users',
                 'defaults' => array (
                     'controller' => 'admin_users',
+                    'action' => 'index'
                 )
-            ),
-            'admin_users_add' => array(
+            ),*/
+            /*'admin_users_add' => array(
                 'type' => 'Zend_Controller_Router_Route_Static',
                 'rule' => '/admin/users/add',
                 'defaults' => array (
                     'controller' => 'admin_users',
                     'action' => 'add'
                 )
-            ),
-            'admin_users_edit' => array(
+            ),*/
+            /*'admin_users_edit' => array(
                 'rule' => '/admin/users/edit/:id',
                 'defaults' => array (
                     'controller' => 'admin_users',
                     'action' => 'edit'
                 )
-            ),
-            'admin_users_delete' => array(
+            ),*/
+            /*'admin_users_delete' => array(
                 'rule' => '/admin/users/delete/:id',
                 'defaults' => array (
                     'controller' => 'admin_users',
                     'action' => 'delete'
                 )
-            ),
+            ),*/
             # Static admin routes
-            'admin_configuration' => array(
+            /*'admin_configuration' => array(
                 'type' => 'Zend_Controller_Router_Route_Static',
-                'route' => '',
+                'route' => '/admin/configuration',
                 'defaults' => array (
                     'controller' => 'admin',
                     'action' => 'configuration'
                 )
-            ),
-            'admin_logout' => array(
+            ),*/
+            /*'admin_logout' => array(
                 'type' => 'Zend_Controller_Router_Route_Static',
-                'route' => '',
+                'route' => '/admin/logout',
                 'defaults' => array (
                     'controller' => 'admin',
                     'action' => 'logout'
                 )
-            ),
-            'admin_login' => array(
+            ),*/
+            /*'admin_login' => array(
                 'type' => 'Zend_Controller_Router_Route_Static',
                 'route' => '/admin/login',
                 'defaults' => array (
                     'controller' => 'admin',
                     'action' => 'login'
                 )
-            ),
+            ),*/
             'admin' => array (
                 'type' => 'Zend_Controller_Router_Route_Static',
                 'route' => '/admin',
@@ -182,7 +184,7 @@ class Fizzy_Bootstrap
             ),
             'models' => 'application/models',
             'views' => array(
-                'fizzy' => 'application/views/scripts',
+                'fizzy' => 'application/views',
                 'custom' => 'custom/views'
             ),
             'layouts' => array(
@@ -342,6 +344,9 @@ class Fizzy_Bootstrap
         $autoloader = Zend_Loader_Autoloader::getInstance();
         $autoloader->registerNamespace('Fizzy_');
 
+        # Autoloading for models
+        $autoloader->pushAutoloader(array('Fizzy_Autoloader', 'models'));
+
         return $autoloader;
     }
 
@@ -421,6 +426,7 @@ class Fizzy_Bootstrap
     {
         $front = Zend_Controller_Front::getInstance();
         $routes = $this->_config->routes;
+        $front->getRouter()->clearParams();
         $router = $front->getRouter()->addConfig($routes);
 
         return $router;
@@ -468,6 +474,7 @@ class Fizzy_Bootstrap
     {
         $layoutPaths = $this->_config->paths->layouts->toArray();
         $layout = new Zend_Layout($layoutPaths['fizzy'], true);
+        $layout->setLayout('admin');
 
         return $layout;
     }

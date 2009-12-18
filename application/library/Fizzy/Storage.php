@@ -218,8 +218,8 @@ class Fizzy_Storage
         if(!is_array($data) || 1 !== count($data)) {
             return null;
         }
-
-        $identifier = array_shift(array_keys($data));
+        $keys = array_keys($data);
+        $identifier = array_shift($keys);
         $model = $this->_buildModel($class, array_shift($data));
         $model->setId($identifier);
 

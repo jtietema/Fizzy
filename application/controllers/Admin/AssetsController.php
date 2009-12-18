@@ -50,6 +50,7 @@ class Admin_AssetsController extends Fizzy_Controller
 
         // Disable view rendering
         $this->_helper->viewRenderer->setNoRender(true);
+        $this->_helper->layout->disableLayout();
 
         $contentType = $this->_getContentType($asset);
         if(null !== $contentType)
@@ -86,7 +87,8 @@ class Admin_AssetsController extends Fizzy_Controller
      */
     protected function _isValidAsset($asset)
     {
-        return (is_file($asset) && 0 === strpos(realpath($asset), realpath(Fizzy_Config::getInstance()->getPath('assets'))));
+        $config = Zend_Registry::get('config');
+        return (is_file($asset) && 0 === strpos(realpath($asset), ($config->paths->assets)));
     }
 
     /**
