@@ -45,13 +45,14 @@ $types = array(
                     <td class="icon"><img src="<?= (array_key_exists($fileInfo->type, $types)) ? $types[$fileInfo->type] : $this->url('/images/icon/page.png'); ?>" alt="" /></td>
                     <td class="filename"><?= $fileInfo->basename; ?></td>
                     <td class="size">
-                    <?php if($fileInfo->size < 1024) : ?>
-                    <?= round($fileInfo->size, 2); ?> b
-                    <?php elseif((1024*1024) > $fileInfo->size) : ?>
-                    <?= round($fileInfo->size / 1024, 2); ?> KB
-                    <?php else : ?>
-                    <?= round($fileInfo->size / (1024*1024), 2); ?> MB
-                    <?php endif; ?>
+                        <?php if($fileInfo->size < 1024) : ?>
+                        <?= round($fileInfo->size, 2); ?> b
+                        <?php elseif((1024*1024) > $fileInfo->size) : ?>
+                        <?= round($fileInfo->size / 1024, 2); ?> KB
+                        <?php else : ?>
+                        <?= round($fileInfo->size / (1024*1024), 2); ?> MB
+                        <?php endif; ?>
+                    </td>
                     <td class="controls">
                         <a href="<?= $this->url('/uploads/' . $fileInfo->basename); ?>" target="_blank" title="View file"><?= $this->img('/images/icon/view.png'); ?></a>
                         <?php if(is_writable($this->uploadFolder)) : ?>
