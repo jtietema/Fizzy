@@ -37,7 +37,7 @@ class AdminController extends SecureController
 
     /** **/
 
-    public function defaultAction()
+    public function indexAction()
     {
         $this->_redirect('/admin/pages');
     }

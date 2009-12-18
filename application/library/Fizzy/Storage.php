@@ -76,10 +76,10 @@ class Fizzy_Storage
      */
     protected function _loadBackend(array $config)
     {
-        $backendString = array_shift(explode(':', $config['dsn']));
+        $dsnParts = explode(':', $config['dsn']);
+        $backendString = array_shift($dsnParts);
 
-        switch(strtolower($backendString))
-        {
+        switch(strtolower($backendString)) {
             case self::XML:
                 $this->_backend = new Fizzy_Storage_Backend_Xml($config);
                 break;

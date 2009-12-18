@@ -24,27 +24,51 @@ define('ROOT_PATH', realpath(APPLICATION_PATH . DIRECTORY_SEPARATOR . '..'));
 define('LIBRARY_PATH', ROOT_PATH . DIRECTORY_SEPARATOR . 'library');
 define('CONFIG_PATH', ROOT_PATH . DIRECTORY_SEPARATOR . 'configs');
 
+# Set include path
 set_include_path(LIBRARY_PATH . PATH_SEPARATOR . APPLICATION_LIBRARY_PATH . DIRECTORY_SEPARATOR . get_include_path());
 
-function stripslashes_deep(&$value)
-{
-    $value = is_array($value) ?
-                array_map('stripslashes_deep', $value) :
-                stripslashes($value);
+# Bootstrap Fizzy
+require_once 'Fizzy/Bootstrap.php';
+$bootstrap = new Fizzy_Bootstrap(CONFIG_PATH . DIRECTORY_SEPARATOR . 'fizzy.ini', 'development');
+$bootstrap->run(true);
 
-    return $value;
-}
+/*
+require_once 'Zend/Config/Ini.php';
+require_once 'Zend/Controller/Front.php';
+require_once 'Zend/Registry.php';
+require_once 'Zend/Layout.php';
+require_once 'Fizzy/Storage.php';
 
-// strip all injected slashes by magic_quotes_gpc
-if (function_exists("get_magic_quotes_gpc") && get_magic_quotes_gpc()){
-    stripslashes_deep($_GET);
-    stripslashes_deep($_POST);
-    stripslashes_deep($_REQUEST);
-    stripslashes_deep($_COOKIE);
-}
 
-require_once 'Fizzy/Config.php';
-require_once 'Fizzy/FrontController.php';
+# Create a front controller
+$frontController = Zend_Controller_Front::getInstance();
+$frontController->throwExceptions(true);
+
+# Set controllers
+$frontController->setControllerDirectory($config->paths->controllers->toArray())
+                ->setDefaultControllerName($config->application->defaultController)
+                ->setDefaultAction($config->application->defaultAction)
+                ->setDefaultModule('application');
+
+# Add routes
+$routes = new Zend_Config_Ini(CONFIG_PATH . DIRECTORY_SEPARATOR . 'routes.ini', null, true);
+$router = $frontController->getRouter()->addConfig($routes, null);
+
+# Create a new storage instance
+$storage = new Fizzy_Storage($config->storage->toArray());
+Zend_Registry::set('storage', $storage);
+
+# Set view
+
+# Start Layout
+Zend_Layout::startMvc(array(
+    'layoutPath' => $config->application->layouts
+));
+
+
+# Dispatch the request
+$frontController->dispatch();
+
 
 $config = Fizzy_Config::getInstance()
           ->loadConfiguration(simplexml_load_file(CONFIG_PATH .'/fizzy.xml'))
@@ -60,3 +84,4 @@ if(empty($basePath))
 // Dispatch the request
 $frontController = new Fizzy_FrontController($config);
 $frontController->dispatch();
+*/

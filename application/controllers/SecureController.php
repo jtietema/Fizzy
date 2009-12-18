@@ -19,7 +19,7 @@
  */
 
 /** Fizzy_Controller */
-require_once 'Fizzy/Controller.php';
+require_once 'Zend/Controller/Action.php';
 
 /** Fizzy_Storage */
 require_once 'Fizzy/Storage.php';
@@ -30,7 +30,7 @@ require_once 'Fizzy/Storage.php';
  * @author Jeroen Tietema <jeroen@voidwalkers.nl>
  * @author Mattijs Hoitink <mattijs@voidwalkers.nl>
  */
-class SecureController extends Fizzy_Controller
+class SecureController extends Zend_Controller_Action
 {
     /**
      * The request URI to redirect back to.
