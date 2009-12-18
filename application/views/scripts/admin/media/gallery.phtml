@@ -9,7 +9,7 @@
 <body>
 <div class="files-container">
     <?php foreach($this->files as $fileInfo) : ?>
-    <div class="thumbnail" onclick="select('<?= $this->url('/uploads/' . $fileInfo->basename); ?>', this);">
+    <div class="thumbnail" id="<?= $this->url('/uploads/' . $fileInfo->basename); ?>" onclick="select('<?= $this->url('/uploads/' . $fileInfo->basename); ?>', this);">
         <img class="thumbnail" src="<?= $this->url('/uploads/' . $fileInfo->basename); ?>" alt="<?= $fileInfo->basename ?>" />
         
         <div class="filename">
@@ -36,13 +36,15 @@
 <form onsubmit="FizzymediaDialog.insert();return false;" action="#">
 <div>
 <label>Description:</label>
-    <input type="text" name="alt" id="description" />
+    <input type="text" name="alt" id="alt" />
 <label>Width</label>
     <input type="text" name="width" id="width" />
 <label>Height</label>
     <input type="text" name="height" id="height" />
+<!--
 <label>Border</label>
     <input type="text" name="border" id="border" />
+-->
 <div class="clear"></div>
     <input type="button" name="insert" value="{#insert}" onclick="FizzymediaDialog.insert();" />
     <input type="button" name="cancel" value="{#cancel}" onclick="tinyMCEPopup.close();" />
