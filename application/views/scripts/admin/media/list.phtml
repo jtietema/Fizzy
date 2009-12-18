@@ -2,20 +2,20 @@
 // file type image declarations
 
 $types = array(
-    'png' => $this->url('/images/icon/page_white_picture.png'),
-    'jpg' => $this->url('/images/icon/page_white_picture.png'),
-    'jpeg' => $this->url('/images/icon/page_white_picture.png'),
-    'bmp' => $this->url('/images/icon/page_white_picture.png'),
-    'gif' => $this->url('/images/icon/page_white_picture.png'),
-    'doc' => $this->url('/images/icon/page_white_word.png'),
-    'docx' => $this->url('/images/icon/page_white_word.png'),
-    'xls' => $this->url('/images/icon/page_white_excel.png'),
-    'ppt' => $this->url('/images/icon/page_white_powerpoint.png'),
-    'pdf' => $this->url('/images/icon/page_white_text.png'),
-    'flv' => $this->url('/images/icon/page_white_flash.png'),
-    'zip' => $this->url('/images/icon/page_white_zip.png'),
-    'rar' => $this->url('/images/icon/page_white_zip.png'),
-    'txt' => $this->url('/images/icon/page_white_text.png'),
+    'png' => $this->url('/admin/images/icon/page_white_picture.png'),
+    'jpg' => $this->url('/admin/images/icon/page_white_picture.png'),
+    'jpeg' => $this->url('/admin/images/icon/page_white_picture.png'),
+    'bmp' => $this->url('/admin/images/icon/page_white_picture.png'),
+    'gif' => $this->url('/admin/images/icon/page_white_picture.png'),
+    'doc' => $this->url('/admin/images/icon/page_white_word.png'),
+    'docx' => $this->url('/admin/images/icon/page_white_word.png'),
+    'xls' => $this->url('/admin/images/icon/page_white_excel.png'),
+    'ppt' => $this->url('/admin/images/icon/page_white_powerpoint.png'),
+    'pdf' => $this->url('/admin/images/icon/page_white_text.png'),
+    'flv' => $this->url('/admin/images/icon/page_white_flash.png'),
+    'zip' => $this->url('/admin/images/icon/page_white_zip.png'),
+    'rar' => $this->url('/admin/images/icon/page_white_zip.png'),
+    'txt' => $this->url('/admin/images/icon/page_white_text.png'),
 );
 ?>
 <h1 class="header">Media</h1>
@@ -42,7 +42,7 @@ $types = array(
             <tbody>
                 <?php foreach($this->files as $fileInfo) : ?>
                 <tr>
-                    <td class="icon"><img src="<?= (array_key_exists($fileInfo->type, $types)) ? $types[$fileInfo->type] : $this->url('/images/icon/page.png'); ?>" alt="" /></td>
+                    <td class="icon"><img src="<?= (array_key_exists($fileInfo->type, $types)) ? $types[$fileInfo->type] : $this->url('/admin/images/icon/page.png'); ?>" alt="" /></td>
                     <td class="filename"><?= $fileInfo->basename; ?></td>
                     <td class="size">
                         <?php if($fileInfo->size < 1024) : ?>
@@ -54,9 +54,9 @@ $types = array(
                         <?php endif; ?>
                     </td>
                     <td class="controls">
-                        <a href="<?= $this->url('/uploads/' . $fileInfo->basename); ?>" target="_blank" title="View file"><?= $this->img('/images/icon/view.png'); ?></a>
+                        <a href="<?= $this->url('/uploads/' . $fileInfo->basename); ?>" target="_blank" title="View file"><?= $this->img('/admin/images/icon/view.png'); ?></a>
                         <?php if(is_writable($this->uploadFolder)) : ?>
-                        <?= $this->link_confirm('/admin/media/delete/' . urlencode($fileInfo->basename), $this->img('/images/icon/delete.png'), "Are you sure you want to delete {$fileInfo->basename}?", array('title' => 'Delete file')); ?>
+                        <?= $this->link_confirm('/admin/media/delete/' . urlencode($fileInfo->basename), $this->img('/admin/images/icon/delete.png'), "Are you sure you want to delete {$fileInfo->basename}?", array('title' => 'Delete file')); ?>
                         <?php endif; ?>
                     </td>
                 </tr>
