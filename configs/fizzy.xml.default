@@ -11,4 +11,7 @@
     <storage>
         <dsn>xml:data</dsn>
     </storage>
+    <paths>
+        <uploads>public/uploads</uploads>
+    </paths>
 </fizzy>
