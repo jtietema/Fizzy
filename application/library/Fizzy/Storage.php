@@ -125,7 +125,7 @@ class Fizzy_Storage
         $container = $this->_getContainerName($model);
         $data = $model->toArray();
 
-        $id = $this->_backend->persist($container, $data, $identifier);
+        $id = $this->_backend->persist($container, $data, $model->getId());
 
         if(false === $id) {
             return false;
