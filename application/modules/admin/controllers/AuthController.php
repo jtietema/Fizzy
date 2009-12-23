@@ -61,4 +61,9 @@ class Admin_AuthController extends Fizzy_Controller
         return new Zend_Form(new Zend_Config($formConfig));
     }
 
+    public function postDispatch()
+    {
+        $this->_helper->layout->setLayout('login');
+    }
+
 }
