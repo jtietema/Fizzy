@@ -46,7 +46,7 @@ class Admin_AuthController extends Fizzy_Controller
                     'options' => array (
                         'label' => 'Password',
                         'required' => true
-                    )
+                    ),
                 ),
                 'submit' => array (
                     'type' => 'submit',
@@ -58,7 +58,7 @@ class Admin_AuthController extends Fizzy_Controller
             )
         );
 
-        return new Zend_Form(new Zend_Config($formConfig));
+        return new Fizzy_Form(new Zend_Config($formConfig));
     }
 
     public function postDispatch()

@@ -86,6 +86,9 @@ class Admin_UserController extends Fizzy_SecuredController
                         'label' => 'Username',
                         'required' => true,
                         'value' => $user->username,
+                        'validators' => array (
+                            'usernameUnique'
+                        )
                     )
                 ),
                 'password' => array (
@@ -93,10 +96,11 @@ class Admin_UserController extends Fizzy_SecuredController
                     'options' => array (
                         'label' => 'Password',
                         'required' => true,
+                        'validators' => array (
+                            'passwordConfirm'
+                        )
                     ),
                 ),
-                /**
-                 * @todo create(/find) custom validator to validate passwords are the same
                 'password_confirm' => array (
                     'type' => 'password',
                     'options' => array (
@@ -105,7 +109,6 @@ class Admin_UserController extends Fizzy_SecuredController
                         'ignore' => true,
                     )
                 ),
-                */
                 'submit' => array (
                     'type' => 'submit',
                     'options' => array (
@@ -116,7 +119,7 @@ class Admin_UserController extends Fizzy_SecuredController
             ),
         );
         
-        return new Zend_Form(new Zend_Config($formConfig));
+        return new Fizzy_Form(new Zend_Config($formConfig));
     }
 
 }

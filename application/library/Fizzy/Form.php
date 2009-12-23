@@ -1,8 +1,8 @@
 <?php
 /**
- * Class Fizzy_Form_Element_Wysiwyg
+ * Class Fizzy_Form
  * @category Fizzy
- * @package Fizzy_Form_Element_Wysiwig
+ * @package Fizzy_Form
  *
  * LICENSE
  *
@@ -18,17 +18,25 @@
  * @license http://www.voidwalkers.nl/license/new-bsd The New BSD License
  */
 
-class Fizzy_Form_Element_Wysiwyg extends Zend_Form_Element_Xhtml
+/** Zend_Form */
+require_once 'Zend/Form.php';
+
+/**
+ * Fizzy form is an extension of the standard Zend_Form to load Fizzy
+ * form elements, decorators and validators.
+ *
+ * @author Mattijs Hoitink <mattijs@voidwalkers.nl>
+ */
+class Fizzy_Form extends Zend_Form
 {
     /**
-     * Use formTextarea view helper by default
-     * @var string
+     * Hook into the init mehtod call to load Fizzy form elements, decorators and
+     * validators.
      */
-    public $helper = 'wysiwyg';
-
     public function init()
     {
-        $view = $this->getView();
-        $view->addHelperPath('Fizzy/View/Helper', 'Fizzy_View_Helper');
+        $this->addPrefixPath('Fizzy_Form', 'Fizzy/Form', self::ELEMENT);
+        $this->addPrefixPath('Fizzy_Form', 'Fizzy/Form', self::DECORATOR);
+        $this->addElementPrefixPath('Fizzy_Validate', 'Fizzy/Validate', 'validate');
     }
 }
