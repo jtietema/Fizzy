@@ -42,23 +42,9 @@
   <page uid="1255987346">
     <title><![CDATA[Congratulations]]></title>
     <slug><![CDATA[home]]></slug>
-    <body><![CDATA[<p>
-    This is the default layout for <a href="">Fizzy</a>. You are seeing this page
-    because you did not configure a default layout and template. See the
-    <a href="configuration">Configuration</a> page for more information about
-    configuring Fizzy.
-</p>
-<p>
-    If you want to know more about Fizzy, check the <a href="about">About</a>
-    page or visit the
-    <a href="http://project.voidwalkers.nl/projects/show/fizzy" target="_blanc">project website</a>
-    by clicking the more link.
-</p>
-<p>
-    You can administer your website by going to the <a href="admin">administrator page</a>. There
-    you can change the content of your site and add users. The default username and password for
-    the administrator section is "admin". Please change this to something more appropriate.
-</p>]]></body>
-    <homepage><![CDATA[true]]></homepage>
+    <body><![CDATA[<p>This is the default layout for <a>Fizzy</a>. You are seeing this page     because you did not configure a default layout and template. See the     <a href="configuration">Configuration</a> page for more information about     configuring Fizzy.</p>
+<p>If you want to know more about Fizzy, check the <a href="about">About</a> page or visit the     <a href="http://project.voidwalkers.nl/projects/show/fizzy" target="_blanc">project website</a> by clicking the more link.</p>
+<p>You can administer your website by going to the <a href="admin">administrator page</a>. There     you can change the content of your site and add users. The default username and password for     the administrator section is "admin". Please change this to something more appropriate.</p>]]></body>
+    <homepage><![CDATA[1]]></homepage>
   </page>
 </container>

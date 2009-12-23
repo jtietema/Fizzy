@@ -1,0 +1,30 @@
+<h1 class="header">Configuration</h1>
+
+<div id="config-browser">
+<ul>
+    <?= arrayToList($this->config); ?>
+</ul>
+</div>
+
+<?php
+function arrayToList($array) {
+    $list = '';
+    foreach($array as $key => $value) {
+        $list .= "<li>\n";
+        $list .= "<span class=\"section\">{$key}</span>\n";
+
+        if(is_array($value)) {
+            $list .= "<ul>\n";
+            $list .= arrayToList($value);
+            $list .= "</ul>\n";
+        }
+        else {
+            $list .= " => <span class=\"value\">{$value}</span>\n";
+        }
+        
+        $list .= "</li>\n";
+    }
+
+    return $list;
+}
+?>

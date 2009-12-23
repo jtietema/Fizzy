@@ -20,7 +20,8 @@ class Fizzy_Bootstrap
     protected $_bootstrap = array (
         'autoLoader' => null,
         'registry' => null,
-        'logger' => null,
+#        'logger' => null,
+        'session' => null,
         'frontController' => null,
         'router' => null,
         'storage' => null,
@@ -42,65 +43,69 @@ class Fizzy_Bootstrap
     protected $_defaultConfig = array (
         'application' => array(
             'title' => 'Fizzy',
-            'basePath' => ROOT_PATH,
-            'defaultLayout' => 'default',
-            'defaultTemplate' => 'page',
+            'basePath' => '',
+            'defaultLayout' => 'fizzy',
+            'defaultTemplate' => 'page.phtml',
             'defaultController' => 'index',
             'defaultAction' => 'index',
         ),
         'routes' => array (
-            # Admin assets control
-            'admin_assets' => array(
-                'route' => '/admin/:namespace/*',
+            # Catch all for pages slugs
+            'page_by_slug' => array (
+                'route' => '/:slug',
                 'defaults' => array (
-                    'controller' => 'admin_assets',
-                    'action' => 'serve'
+                    'controller' => 'pages',
+                    'action' => 'slug'
                 )
             ),
             # Admin pages control
             'admin_pages' => array(
                 'type' => 'Zend_Controller_Router_Route_Static',
-                'route' => '/admin/pages',
+                'route' => '/fizzy/pages',
                 'defaults' => array (
-                    'controller' => 'admin_pages',
-                    'action' => 'list'
+                    'controller' => 'pages',
+                    'action' => 'index',
+                    'module' => 'admin'
                 )
             ),
             'admin_pages_add' => array(
-                'route' => '/admin/pages/add',
+                'route' => '/fizzy/pages/add',
                 'defaults' => array (
-                    'controller' => 'admin_pages',
-                    'action' => 'add'
+                    'controller' => 'pages',
+                    'action' => 'add',
+                    'module' => 'admin'
                 )
             ),
             'admin_pages_edit' => array(
-                'route' => '/admin/pages/edit/:id',
+                'route' => '/fizzy/pages/edit/:id',
                 'defaults' => array (
-                    'controller' => 'admin_pages',
-                    'action' => 'edit'
+                    'controller' => 'pages',
+                    'action' => 'edit',
+                    'module' => 'admin'
                 )
             ),
             'admin_pages_delete' => array(
-                'route' => '/admin/pages/delete/:id',
+                'route' => '/fizzy/pages/delete/:id',
                 'defaults' => array (
-                    'controller' => 'admin_pages',
-                    'action' => 'delete'
+                    'controller' => 'pages',
+                    'action' => 'delete',
+                    'module' => 'admin'
                 )
             ),
             # Admin media
-            'admin_media_delete' => array(
+            /*'admin_media_delete' => array(
                 'route' => '/admin/media/delete/:name',
                 'defaults' => array (
                     'controller' => 'admin_media',
                     'action' => 'delete'
                 )
-            ),
+            ),*/
             'admin_media' => array(
                 'type' => 'Zend_Controller_Router_Route_Static',
-                'route' => '/admin/media',
+                'route' => '/fizzy/media',
                 'defaults' => array (
-                    'controller' => 'admin_media',
-                    'action' => 'index'
+                    'controller' => 'media',
+                    'module' => 'admin'
                 )
             ),
             # Admin users
@@ -161,17 +166,19 @@ class Fizzy_Bootstrap
             ),*/
             'admin' => array (
                 'type' => 'Zend_Controller_Router_Route_Static',
-                'route' => '/admin',
+                'route' => '/fizzy',
                 'defaults' => array (
-                    'controller' => 'admin',
-                    'action' => 'index'
+                    'controller' => 'index',
+                    'action' => 'index',
+                    'module' => 'admin'
                 )
             ),
         ),
         'paths' => array(
             'application' => 'application',
             'controllers' => array (
-                'fizzy' => 'application/controllers',
+                'default' => 'application/modules/default/controllers',
+                'admin' => 'application/modules/admin/controllers',
                 'custom' => 'custom/controllers',
             ),
             'models' => 'application/models',
@@ -180,14 +187,14 @@ class Fizzy_Bootstrap
                 'custom' => 'custom/views'
             ),
             'layouts' => array(
-                'fizzy' => 'application/views/layouts',
+                'fizzy' => 'application/layouts',
                 'custom' => 'custom/layouts',
             ),
             'templates' => array (
-                'fizzy' => 'application/views/scripts',
+                'fizzy' => 'application/templates',
                 'custom' => 'custom/templates'
             ),
-            'assets' => 'application/views/assets',
+            'assets' => 'application/assets',
             'configs' => 'configs',
             'custom' => 'custom',
             'data' => 'data',
@@ -215,6 +222,9 @@ class Fizzy_Bootstrap
     public function  __construct($config = null, $environment = 'production')
     {
         $finalConfig = new Zend_Config($this->_defaultConfig, true);
+        # Set default basePath in case none is available in the custom config
+        $finalConfig->application->basePath = realpath(dirname(__FILE__) . '/../../../');
+
         # Merge the custom configuration with the defaults
         if(null !== $config) {
             if(is_array($config)) {
@@ -274,12 +284,53 @@ class Fizzy_Bootstrap
     }
 
     /**
+     * Corrects relative paths by prefixing them with the configured base path.
+     *
+     * @param array|string $value
+     * @return array|string
+     */
+    protected function _correctPaths($value)
+    {
+        if(is_array($value)) {
+            foreach($value as $childKey => $childValue) {
+                $value[$childKey] = $this->_correctPaths($childValue);
+            }
+        }
+        else {
+            if(0 !== strpos($value, DIRECTORY_SEPARATOR)) {
+                $value = $this->_config->application->basePath . DIRECTORY_SEPARATOR . $value;
+            }
+        }
+
+        return $value;
+    }
+
+    /**
      * Returns the configuration for Fizzy.
      * @return Zend_Config
      */
     public function getConfig()
     {
         return $this->_config;
+    }
+    
+    /**
+     * Shortcut to get a path by it's key from the configuration.
+     * @param strubg $key
+     * @return string|null
+     */
+    public function getPath($key)
+    {
+        $section = $this->_config->paths->get($key, null);
+        if(null === $section) {
+            return null;
+        }
+        
+        if($section instanceof Zend_Config) {
+            $section = $section->toArray();
+        }
+        
+        return $section;
     }
 
     /**
@@ -327,7 +378,10 @@ class Fizzy_Bootstrap
     }
 
     /**
-     * Initializes the autoloader and registers the Fizzy_ namespace.
+     * Initializes the autoloader. The default namespaces registered are Zend_
+     * and ZendX_. This stage adds the Fizzy_ namespace to that.
+     * An Autoloader is added to the stack for Fizzy models.
+     * @see Fizzy_Autoloader
      * @return Zend_Loader_Autoloader
      */
     protected function _initAutoLoader()
@@ -365,48 +419,44 @@ class Fizzy_Bootstrap
         
     }
 
-    /**
-     * Corrects relative paths by prefixing them with the configured base path.
-     * @todo Remove ROOT_PATH constant and use configurable basePath as prefix
-     * @param array|string $value
-     * @return array|string
-     */
-    protected function _correctPaths($value)
+    protected function _initSession()
     {
-        if(is_array($value)) {
-            foreach($value as $childKey => $childValue) {
-                $value[$childKey] = $this->_correctPaths($childValue);
-            }
-        }
-        else {
-            if(0 !== strpos($value, DIRECTORY_SEPARATOR)) {
-                $value = ROOT_PATH . DIRECTORY_SEPARATOR . $value;
-            }
-        }
-
-        return $value;
+        Zend_Session::start();
+        return null;
     }
 
     /**
      * Initializes the front controller
+     * @return Zend_Controller_Front
      */
     protected function _initFrontController()
     {
         $frontController = Zend_Controller_Front::getInstance();
-        if('production' !== $this->_environment) {
-            $frontController->throwExceptions(true);
-        }
 
         # Add configuration
         $frontController->setDefaultControllerName($this->_config->application->defaultController)
-                ->setDefaultAction($this->_config->application->defaultAction)
-                ->setDefaultModule('fizzy');
+                        ->setDefaultAction($this->_config->application->defaultAction);
         
-        $controllers = $this->_config->paths->controllers->toArray();
-        foreach($controllers as $module => $path) {
-            $frontController->addControllerDirectory($path, $module);
+        # Add module directory for Fizzy core
+        $frontController->addModuleDirectory($this->getPath('application') . DIRECTORY_SEPARATOR . 'modules');
+        
+        # Add custom folder as module
+        $frontController->addControllerDirectory($this->getPath('custom') . DIRECTORY_SEPARATOR . 'controllers', 'custom');
+        
+        # Set error handling
+        if('development' === $this->_environment) {
+            # Allow exceptions and unregister the error handler plugin
+            $frontController->throwExceptions(true);
+            $frontController->unregisterPlugin('ErrorHandler');
         }
-
+        else {
+            $errorHandler = new Zend_Controller_Plugin_ErrorHandler(array (
+                'controller' => 'error',
+                'action' => 'error',
+                'module' => 'default'
+            ));
+        }
+        
         return $frontController;
     }
 
@@ -416,10 +466,11 @@ class Fizzy_Bootstrap
      */
     protected function _initRouter()
     {
-        $front = Zend_Controller_Front::getInstance();
+        $router = Zend_Controller_Front::getInstance()->getRouter();
+        
         $routes = $this->_config->routes;
-        $front->getRouter()->clearParams();
-        $router = $front->getRouter()->addConfig($routes);
+        $router->clearParams()
+               ->addConfig($routes);
 
         return $router;
     }
@@ -430,6 +481,7 @@ class Fizzy_Bootstrap
      */
     protected function _initStorage()
     {
+        $storage = null;
         if(isset($this->_config->storage)) {
             $storage = new Fizzy_Storage($this->_config->storage->toArray());
             Zend_Registry::set('storage', $storage);
@@ -444,9 +496,8 @@ class Fizzy_Bootstrap
      */
     protected function _initView()
     {
-        $viewPaths = $this->_config->paths->views->toArray();
         $view = new Zend_View();
-        foreach($viewPaths as $path) {
+        foreach($this->getPath('views') as $path) {
             $view->addBasePath($path);
         }
 
@@ -464,9 +515,9 @@ class Fizzy_Bootstrap
      */
     protected function _initLayout()
     {
-        $layoutPaths = $this->_config->paths->layouts->toArray();
+        $layoutPaths = $this->getPath('layouts');
         $layout = new Zend_Layout($layoutPaths['fizzy'], true);
-        $layout->setLayout('admin');
+        $layout->setLayout($this->_config->application->defaultLayout);
 
         return $layout;
     }

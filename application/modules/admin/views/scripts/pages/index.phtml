@@ -1,0 +1,29 @@
+<h1>Pages</h1>
+<div>
+    <table class="data-table">
+        <thead>
+            <tr>
+                <td>Title</td>
+                <td>Slug</td>
+                <td>&nbsp;</td>
+            </tr>
+        </thead>
+        <tbody>
+            <?php foreach($this->pages as $page) : ?>
+            <tr>
+                <td><?= $page->title ?></td>
+                <td><?= $page->slug ?></td>
+                <td style="width: 100px;">
+                    <?= $this->link("/pages/{$page->slug}", $this->img('/fizzy_assets/images/icon/view.png', array('alt' => 'View icon')), array('target' => '_blanc')); ?>
+                    <?= $this->link("/fizzy/pages/edit/{$page->getId()}", $this->img('/fizzy_assets/images/icon/edit.png', array('alt' => 'edit icon'))); ?>
+                    <?= $this->linkConfirm("/fizzy/pages/delete/{$page->getId()}", $this->img('/fizzy_assets/images/icon/sign_remove.png', array('alt' => 'remove icon')), 'Are you sure?'); ?>
+                </td>
+            </tr>
+            <?php endforeach; ?>
+        </tbody>
+    </table>
+
+    <p>
+        <?= $this->link('/fizzy/pages/add', $this->img('/fizzy_assets/images/icon/add.png', array('alt' => 'add icon')) . ' Add Page'); ?>
+    </p>
+</div>

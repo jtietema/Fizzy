@@ -1,4 +1,2 @@
-*.swp
-data/docs/*
-configs/fizzy.xml
 configs/fizzy.ini
+data/*.xml

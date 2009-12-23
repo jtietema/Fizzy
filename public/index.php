@@ -1,6 +1,6 @@
 <?php
 /**
- * index.php
+ * Fizzy public entry point
  * @package Fizzy
  *
  * LICENSE
@@ -16,5 +16,6 @@
  * @copyright Copyright (c) 2009 Voidwalkers (http://www.voidwalkers.nl)
  * @license http://www.voidwalkers.nl/license/new-bsd The New BSD License
  */
-// Start Fizzy
-require_once '../application/Fizzy.php';
+
+# Bootstrap Fizzy
+require_once '../application/bootstrap.php';

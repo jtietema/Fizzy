@@ -1,0 +1,26 @@
+<h1 class="header">Users</h1>
+<div>
+    <table class="data-table">
+        <thead>
+            <tr>
+                <td>Username</td>
+                <td>&nbsp;</td>
+            </tr>
+        </thead>
+        <tbody>
+            <?php foreach($this->users as $user) : ?>
+            <tr>
+                <td><?= $user->username; ?></td>
+                <td style="width: 100px;">
+                    <?= $this->link("/fizzy/user/edit/{$user->getId()}", $this->img('/fizzy_assets/images/icon/edit.png', array('alt' => 'edit icon'))); ?>
+                    <?= $this->linkConfirm("/fizzy/user/delete/{$user->getId()}", $this->img('/fizzy_assets/images/icon/sign_remove.png', array('alt' => 'remove icon')), 'Are you sure you want to delete user ' . $user->username .'?'); ?>
+                </td>
+            </tr>
+            <?php endforeach; ?>
+        </tbody>
+    </table>
+
+    <p>
+        <?= $this->link('/fizzy/user/add', $this->img('/fizzy_assets/images/icon/add.png', array('alt' => 'add icon')) . ' Add User'); ?>
+    </p>
+</div>
