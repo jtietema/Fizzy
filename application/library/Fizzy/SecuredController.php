@@ -21,4 +21,33 @@
 require_once 'Fizzy/Controller.php';
 
 class Fizzy_SecuredController extends Fizzy_Controller
-{}
+{
+    /**
+     * Identity object for the autheticated user.
+     * @var mixed
+     */
+    protected $_identity = null;
+
+    /** **/
+    
+    /**
+     * Check for authentication identity
+     */
+    public function preDispatch()
+    {
+        if (!Zend_Auth::getInstance()->hasIdentity()) {
+            $this->_redirect('/fizzy/login', array('prependBase' => true));
+        }
+
+        $this->_identity = Zend_Auth::getInstance()->getIdentity();
+    }
+
+    /**
+     * Returns the identity for the authenticated user.
+     * @return mixed
+     */
+    public function getIdentity()
+    {
+        return $this->_identity;
+    }
+}

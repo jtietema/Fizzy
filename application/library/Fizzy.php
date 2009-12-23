@@ -161,22 +161,24 @@ class Fizzy
                     'module' => 'admin'
                 )
             ),
-            /*'admin_logout' => array(
+            'fizzy_logout' => array(
                 'type' => 'Zend_Controller_Router_Route_Static',
-                'route' => '/admin/logout',
+                'route' => '/fizzy/logout',
                 'defaults' => array (
-                    'controller' => 'admin',
-                    'action' => 'logout'
+                    'controller' => 'auth',
+                    'action' => 'logout',
+                    'module' => 'admin'
                 )
-            ),*/
-            /*'admin_login' => array(
+            ),
+            'fizzy_login' => array(
                 'type' => 'Zend_Controller_Router_Route_Static',
-                'route' => '/admin/login',
+                'route' => '/fizzy/login',
                 'defaults' => array (
-                    'controller' => 'admin',
-                    'action' => 'login'
+                    'controller' => 'auth',
+                    'action' => 'login',
+                    'module' => 'admin'
                 )
-            ),*/
+            ),
             'admin' => array (
                 'type' => 'Zend_Controller_Router_Route_Static',
                 'route' => '/fizzy',
