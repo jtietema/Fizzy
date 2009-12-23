@@ -387,10 +387,10 @@ class Fizzy
     {
         # Strip all injected slashes by magic_quotes_gpc
         if (function_exists("get_magic_quotes_gpc") && get_magic_quotes_gpc()){
-            stripslashes_deep($_GET);
-            stripslashes_deep($_POST);
-            stripslashes_deep($_REQUEST);
-            stripslashes_deep($_COOKIE);
+            $this->_stripslashesDeep($_GET);
+            $this->_stripslashesDeep($_POST);
+            $this->_stripslashesDeep($_REQUEST);
+            $this->_stripslashesDeep($_COOKIE);
         }
 
         if('development' === $this->_environment)
