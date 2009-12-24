@@ -42,19 +42,28 @@ class Fizzy_Validate_SlugUnique extends Zend_Validate_Abstract
      * @param string $value
      * @return boolean
      */
-    public function isValid($value)
+    public function isValid($value, $context = null)
     {
         $value = (string) $value;
         $this->_setValue($value);
-
+        
         $storage = Fizzy::getInstance()->getStorage();
         $pages = $storage->fetchAll('Page');
         $slugs = array();
         foreach($pages as $page) {
-            $slugs[] = $page->slug;
+            $slugs[$page->getId()] = $page->slug;
         }
 
-        if(in_array($value, $slugs)) {
+        # Check if we are editing the page the slug belongs to
+        $editingOriginal = false;
+        if(is_array($context) && isset($context['id'])) {
+            $id = $context['id'];
+            if(array_key_exists($id, $slugs) && $value === $slugs[$id]) {
+                $editingOriginal = true;
+            }
+        }
+
+        if(in_array($value, $slugs) && !$editingOriginal) {
             $this->_error(self::NOT_UNIQUE);
             return false;
         }

@@ -80,6 +80,13 @@ class Admin_UserController extends Fizzy_SecuredController
         $formConfig = array (
             'action' => $action,
             'elements' => array (
+                'id' => array (
+                    'type' => 'hidden',
+                    'options' => array (
+                        'required' => false,
+                        'value' => $user->getId()
+                    )
+                ),
                 'username' => array (
                     'type' => 'text',
                     'options' => array (

@@ -42,7 +42,7 @@ class Fizzy_Validate_UsernameUnique extends Zend_Validate_Abstract
      * @param string $value
      * @return boolean
      */
-    public function isValid($value)
+    public function isValid($value, $context = null)
     {
         $value = (string) $value;
         $this->_setValue($value);
@@ -51,10 +51,19 @@ class Fizzy_Validate_UsernameUnique extends Zend_Validate_Abstract
         $users = $storage->fetchAll('User');
         $usernames = array();
         foreach($users as $user) {
-            $usernames[] = $user->username;
+            $usernames[$user->getId()] = $user->username;
         }
 
-        if(in_array($value, $usernames)) {
+        # Check if we are editing the page the slug belongs to
+        $editingOriginal = false;
+        if(is_array($context) && isset($context['id'])) {
+            $id = $context['id'];
+            if(array_key_exists($id, $usernames) && $value === $usernames[$id]) {
+                $editingOriginal = true;
+            }
+        }
+
+        if(in_array($value, $usernames) && !$editingOriginal) {
             $this->_error(self::NOT_UNIQUE);
             return false;
         }
