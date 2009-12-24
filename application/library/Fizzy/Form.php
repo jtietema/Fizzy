@@ -35,8 +35,7 @@ class Fizzy_Form extends Zend_Form
      */
     public function init()
     {
-        $this->addPrefixPath('Fizzy_Form', 'Fizzy/Form', self::ELEMENT);
-        $this->addPrefixPath('Fizzy_Form', 'Fizzy/Form', self::DECORATOR);
+        $this->addPrefixPath('Fizzy_Form', 'Fizzy/Form');
         $this->addElementPrefixPath('Fizzy_Validate', 'Fizzy/Validate', 'validate');
         $this->addElementPrefixPath('Fizzy_Filter', 'Fizzy/Filter', 'filter');
     }

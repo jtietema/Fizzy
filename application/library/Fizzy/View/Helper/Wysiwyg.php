@@ -91,7 +91,7 @@ class Fizzy_View_Helper_Wysiwyg extends Zend_View_Helper_FormElement
                 . '</div>'
                 . '<div class="wysiwyg-toggle"></div>'
                 . '<script type="text/javascript">'
-
+                . 'fizzy.wysiwyg.register("body");'
                 . '</script>'
                 . '</div>';
         

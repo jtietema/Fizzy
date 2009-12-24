@@ -94,13 +94,6 @@ class Admin_PagesController extends Fizzy_SecuredController
         $formConfig = array (
             'action' => $action,
             'elements' => array (
-                'id' => array (
-                    'type' => 'hidden',
-                    'options' => array (
-                        'required' => false,
-                        'value' => $page->getId()
-                    )
-                ),
                 'title' => array (
                     'type' => 'text',
                     'options' => array (
@@ -124,7 +117,7 @@ class Admin_PagesController extends Fizzy_SecuredController
                     )
                 ),
                 'body' => array (
-                    'type' => 'textarea',
+                    'type' => 'wysiwyg',
                     'options' => array (
                         'label' => 'Body',
                         'required' => true,
@@ -168,7 +161,9 @@ class Admin_PagesController extends Fizzy_SecuredController
             ),
         );
 
-        return new Fizzy_Form(new Zend_Config($formConfig));
+        $form = new Fizzy_Form();
+        $form->setOptions($formConfig);
+        return $form;
     }
     
 }
