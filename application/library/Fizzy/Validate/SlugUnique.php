@@ -1,6 +1,6 @@
 <?php
 /**
- * Class Fizzy_Validate_UsernameUnique
+ * Class Fizzy_Validate_SlugUnique
  * @category Fizzy
  * @package Fizzy_Validate
  *
@@ -22,17 +22,17 @@
 require_once 'Zend/Validate/Abstract.php';
 
 /**
- * Form validator to check if a username is unique. Advises the Fizzy_Storage
+ * Form validator to check if a page slug is unique. Advises the Fizzy_Storage
  * to check this.
  *
  * @author Mattijs Hoitink <mattijs@voidwalkers.nl>
  */
-class Fizzy_Validate_UsernameUnique extends Zend_Validate_Abstract
+class Fizzy_Validate_SlugUnique extends Zend_Validate_Abstract
 {
     const NOT_UNIQUE = 'notUnique';
 
     protected $_messageTemplates = array (
-        self::NOT_UNIQUE => 'Username is not unique.'
+        self::NOT_UNIQUE => 'Slug is not unique.'
     );
 
     /** **/
@@ -48,13 +48,13 @@ class Fizzy_Validate_UsernameUnique extends Zend_Validate_Abstract
         $this->_setValue($value);
 
         $storage = Fizzy::getInstance()->getStorage();
-        $users = $storage->fetchAll('User');
-        $usernames = array();
-        foreach($users as $user) {
-            $usernames[] = $user->username;
+        $pages = $storage->fetchAll('Page');
+        $slugs = array();
+        foreach($pages as $page) {
+            $slugs[] = $page->slug;
         }
 
-        if(in_array($value, $usernames)) {
+        if(in_array($value, $slugs)) {
             $this->_error(self::NOT_UNIQUE);
             return false;
         }

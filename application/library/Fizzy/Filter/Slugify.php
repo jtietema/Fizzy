@@ -1,8 +1,8 @@
 <?php
 /**
- * Class Fizzy_Form
+ * Class Fizzy_Filter_Slugify
  * @category Fizzy
- * @package Fizzy_Form
+ * @package Fizzy_Filter
  *
  * LICENSE
  *
@@ -18,26 +18,27 @@
  * @license http://www.voidwalkers.nl/license/new-bsd The New BSD License
  */
 
-/** Zend_Form */
-require_once 'Zend/Form.php';
+/** Zend_Filter_Interface */
+require_once 'Zend/Filter/Interface.php';
 
 /**
- * Fizzy form is an extension of the standard Zend_Form to load Fizzy
- * form elements, decorators and validators.
+ * Filter to change a value to a slugified version. This replaces all non
+ * letters and digits by a '-'.
  *
  * @author Mattijs Hoitink <mattijs@voidwalkers.nl>
  */
-class Fizzy_Form extends Zend_Form
+class Fizzy_Filter_Slugify implements Zend_Filter_Interface
 {
     /**
-     * Hook into the init mehtod call to load Fizzy form elements, decorators and
-     * validators.
+     * Filters the value and returns a slugified version.
+     * @param string $value
      */
-    public function init()
+    public function filter($value)
     {
-        $this->addPrefixPath('Fizzy_Form', 'Fizzy/Form', self::ELEMENT);
-        $this->addPrefixPath('Fizzy_Form', 'Fizzy/Form', self::DECORATOR);
-        $this->addElementPrefixPath('Fizzy_Validate', 'Fizzy/Validate', 'validate');
-        $this->addElementPrefixPath('Fizzy_Filter', 'Fizzy/Filter', 'filter');
+        # Replace all non letters or digits by -
+        $value = preg_replace('/\W+/', '-', $value);
+        $value = strtolower(trim($value, '-'));
+        
+        return $value;
     }
 }

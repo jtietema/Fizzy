@@ -108,6 +108,12 @@ class Admin_PagesController extends Fizzy_SecuredController
                         'label' => 'Slug',
                         'required' => true,
                         'value' => $page->slug,
+                        'filters' => array (
+                            'slugify'
+                        ),
+                        'validators' => array (
+                            'slugUnique'
+                        )
                     )
                 ),
                 'body' => array (
@@ -155,9 +161,7 @@ class Admin_PagesController extends Fizzy_SecuredController
             ),
         );
 
-        $form = new Zend_Form();
-        $form->setOptions($formConfig);
-        return $form;
+        return new Fizzy_Form(new Zend_Config($formConfig));
     }
     
 }
