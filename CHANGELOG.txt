@@ -5,6 +5,18 @@ support and improved SQLite support. Also the WYSIWYG editor changed to
 TinyMCE. The Media Library also debutes in this version.
 
 Below the list of changes. For more detail consult the git log.
+
+Version 1.1.1
+=============
+ * Issue #262: unclosed <td> in Media Library
+ * Issue #263: File Icons in the Media Library are not shown correctly
+ * Issue #264: The menu background is not served correctly
+ * Issue #265: lost character in MediaController
+ * Issue #266: Icon's in user view are not shown correctly
+ * Issue #270: saving an existing page inserts a new one
+
+Version 1.1.0
+=============
  * Issue #83: XML dsn
  * Issue #120: Polish the XML backend
  * Issue #133: Fizzy configuration
