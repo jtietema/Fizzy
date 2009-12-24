@@ -94,6 +94,13 @@ class Admin_PagesController extends Fizzy_SecuredController
         $formConfig = array (
             'action' => $action,
             'elements' => array (
+                'id' => array (
+                    'type' => 'hidden',
+                    'options' => array (
+                        'required' => false,
+                        'value' => $page->getId(),
+                    )
+                ),
                 'title' => array (
                     'type' => 'text',
                     'options' => array (

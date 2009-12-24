@@ -1,0 +1,23 @@
+<div id="messages" class="span-24 last">
+    <?= $this->fizzyMessages(); ?>
+    <script type="text/javascript">
+        $(document).ready(function() {
+            $('#messages > .message').each(function(index, element) {
+                // Create a button
+                var button = $("<a></a>").attr('href','#').attr('class', 'message-close');
+                // Add close image to the button
+                var i = new Image();
+                $(i).attr('src', "<?= $this->baseUrl('/fizzy_assets/images/icon/cross.png'); ?>");
+                button.html(i);
+                // fade on click
+                button.click(function() {
+                    $(element).slideUp('fast');
+                });
+
+                // Add the button to the container
+                $(element).append(button);
+            });
+        });
+
+    </script>
+</div>

@@ -47,11 +47,7 @@
 
         <div class="container">
 
-            <div id="messages" class="span-24 last">
-                <div class="message">
-                    <?= $this->fizzyMessages(); ?>
-                </div>
-            </div>
+            <?= $this->render('flashMessages.phtml'); ?>
 
             <div id="content" class="span-24 last content-container">
                 <div id="content-wrapper">
