@@ -35,7 +35,9 @@ class Admin_View_Helper_FizzyMessages extends Zend_View_Helper_Abstract
                 foreach($messages as $message) {
                     $output .= "<li>{$message}</li>\n";
                 }
-                $output .= "\n</ul>\n</div>";
+
+                $output .= "\n</ul>\n";
+                $output .= "</div>";
             }
         }
 

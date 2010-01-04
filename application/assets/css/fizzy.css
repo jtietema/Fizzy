@@ -34,32 +34,49 @@ h3.header {
 }
 
 /** messages **/
+.error, .notice, .success, .info { padding: .8em; margin-bottom: 1em; border: 2px solid #ddd; }
+.error { background: #FBE3E4; color: #8a1f11; border-color: #FBC2C4; }
+.notice { background: #FFF6BF; color: #514721; border-color: #FFD324; }
+.success { background: #E6EFC2; color: #264409; border-color: #C6D880; }
+.info { background: #648ADC; color: #193D88; border-color: #1B51C2; }
+.error a { color: #8a1f11; }
+.notice a { color: #514721; }
+.success a { color: #264409; }
+.info a { color: #193D88; }
+
 #messages {
-    min-height: 2em;
+    min-height: 3.75em;
     line-height: 2em;
-    margin: 1em 0;
+    margin: 1em 0 0 0;
 }
 
 #messages ul {
     margin: 0 0 0 1em;
 }
 
-.message {
-    margin: 0 0 0 4px;
+#messages .message {
+    margin: 0 0 1em 8px;
     padding: 2px 0;
     background-repeat: no-repeat;
     background-position: 8px 6px;
+    position: relative;
 }
-.message .info {
+.message-close {
+    position: absolute;
+    right: 10px;
+    top: 6px;
+}
+
+#messages .info {
     background-image: url('../images/icon/sign_info.png');
 }
-.message .success {
+#messages .success {
     background-image: url('../images/icon/sign_tick.png');
 }
-.message .warning {
+#messages .warning {
     background-image: url('../images/icon/sign_warning.png');
 }
-.message .error {
+#messages .error {
     background-image: url('../images/icon/sign_error.png');
 }
 

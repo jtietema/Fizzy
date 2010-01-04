@@ -58,7 +58,7 @@ class Fizzy_Validate_SlugUnique extends Zend_Validate_Abstract
         $editingOriginal = false;
         if(is_array($context) && isset($context['id'])) {
             $id = $context['id'];
-            if(array_key_exists($id, $slugs) && $value === $slugs[$id]) {
+            if(array_key_exists($id, $slugs) && $value == $slugs[$id]) {
                 $editingOriginal = true;
             }
         }
