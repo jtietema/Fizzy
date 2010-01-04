@@ -1,0 +1,43 @@
+<div id="upload-form">
+    <h2 class="header">Upload</h2>
+    <p>
+        Upload a new file by selecting it on your machine. Check the box if 
+        you want to overwrite a file that already exists with the same name.
+        <br />
+        
+    </p>
+    <?php if(is_writable($this->uploadFolder)) : ?>
+    <form action="<?= $this->url('/admin/media'); ?>" method="post" enctype="multipart/form-data">
+        <?php if(isset($this->messages) && !empty($this->messages)) : ?>
+        <div class="message error">
+            <ul>
+            <?php foreach($this->messages as $message) : ?>
+                <li><?= $message ?></li>
+            <?php endforeach; ?>
+            </ul>
+         
+        </div>
+        <?php endif; ?>
+        
+        <div>
+            <input name="upload" type="file" /><br />
+            <small>The maximum size for a file upload is <strong><?= str_replace(array('K', 'M', 'G'), array(' KB', ' MB', ' GB'), $this->upload_max_filesize); ?></strong>.</small>
+        </div>
+        <div>
+            <label for="overwrite">Overwrite existing file?</label>
+            <input type="checkbox" name="overwrite" value="1" />
+        </div>
+        <div>
+           <input type="submit" value="Upload" />
+       </div>
+    </form>
+    <?php else : ?>
+    <div class="message notice">
+        <p>
+            The upload directory found in the Fizzy configuration is not 
+            writable. Upload functionality will be disabled until it is made 
+            writable.
+        </p>
+    </div>
+    <?php endif; ?>
+</div>

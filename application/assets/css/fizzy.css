@@ -161,7 +161,7 @@ label {
 /* Header */
 #header {
     height: 3.1em;
-    background: #2E3132 url('/images/menubg.png') repeat-x top left;
+    background: #2E3132 url('../images/menubg.png') repeat-x top left;
     border-bottom: 2px solid #353535;
 }
 
@@ -298,6 +298,55 @@ label {
     text-align: center;
 }
 
+/* Media Thumbnails view */
+.files-container div.thumbnail {
+    float:left;
+    margin: 1em 0 0 1em;
+    padding: 5px 10px;
+    text-align: center;
+    border: solid 1px black;
+    background-color: white;
+    width: 140px;
+    height: 140px;
+}
+.files-container div.thumbnail img.thumbnail {
+    max-width: 120px;
+    max-height: 80px;
+}
+.files-container div.thumbnail img.icon {
+    margin: 32px 52px;
+}
+.files-container div.thumbnail div.controls {
+    text-align: right;
+}
+.files-menubar {
+    background: #2E3132 url('../images/menubg.png') repeat-x top left;
+    border-bottom: 2px solid #353535;
+    border-left: 1px #656565 solid;
+}
+.files-menubar ul {
+    list-style-image: none;
+    list-style-position: outside;
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+}
+.files-menubar ul li {
+    float: left;
+    margin-right: 0;
+    position: relative;
+}
+.files-menubar ul li a {
+    display: block;
+    padding: 3px 8px;
+    text-align: center;
+    color: #FFFFFF;
+    text-decoration: none;
+    border-right: 1px #656565 solid;
+}
+.files-menubar ul li a:hover {
+    background: #424242;
+}
 
 /* Menu ordering */
 

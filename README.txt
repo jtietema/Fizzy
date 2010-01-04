@@ -4,10 +4,10 @@ Welcome to Fizzy!
 Introduction
 ------------
 Fizzy is a small PHP 5 Content Management System. It is designed to be portable.
-It doesn't require MySQL so it is ideal for small shared hosting accounts or
-low memory VPS systems. It's flexible MVC architecture allows for quick
-development and it storage backend ensures you don't have to worry about SQL
-queries and alike.
+It addition to MySQL it supports XML and SQLite. This makes it is ideal for 
+small shared hosting accounts or low memory VPS systems. It's flexible MVC 
+architecture allows for quick development and it storage backend ensures you 
+don't have to worry about SQL queries and alike.
 
 For more information, see http://project.voidwalkers.nl/projects/show/fizzy
 
@@ -24,15 +24,23 @@ If you want to use the SQLite backend, the following PHP extensions are required
 - PDO
 - PDO SQLite extension
 
+For MySQL you need:
+- PDO
+- PDO MySQL extension
+
 
 Getting started
 ---------------
-First copy configs/fizzy.xml.default to configs/fizzy.xml and modify the basePath and the xml path.
+First copy configs/fizzy.xml.default to configs/fizzy.xml and modify the xml 
+path. 
+
 Then copy all the files to your webserver and you are good to go. It is
 recommended not to copy Fizzy to your web root. Only the files from the public
-folder need to be in your webroot. The data folder and all its files need to be
-writeable for the webserver. Also make sure the public/uploads folder exists and is writable by 
-the webserver if you want to upload files.
+folder need to be in your webroot.
+
+The data folder and all its files need to be writeable for the webserver. Also
+make sure the public/uploads folder exists and is writable by the webserver if 
+you want to upload files.
 
 Visit http://<your-site> for the demo site.
 Visit http://<your-site>/admin for the admin interface.
