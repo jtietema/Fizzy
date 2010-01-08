@@ -46,9 +46,36 @@ class Admin_MediaController extends Fizzy_SecuredController
         $this->view->uploadFolder = $uploadFolder;
         $this->view->files = $files;
         $this->view->form = $form;
-
+        $this->view->type = $this->_request->getParam('type', 'list');
 
         $this->renderScript('media.phtml');
+    }
+    
+    public function displayAction()
+    {
+        $uploadFolder = Fizzy::getInstance()->getPath('uploads');
+        
+        $files = array();
+        foreach(new DirectoryIterator($uploadFolder) as $file) {
+            if($file->isFile()) {
+                $fileInfo = array(
+                    'type' => substr(strrchr($file->getBaseName(), '.'), 1),
+                    'basename' => $file->getBaseName(),
+                    'path' => $file->getPath(),
+                    'size' => $file->getSize(),
+                );
+                $files[] = (object) $fileInfo;
+            }
+        }
+        
+        $type = $this->_getParam('type', 'list');
+        if($type == 'thumbnail') {
+            $script = 'media/thumbnails.phtml';
+        } else {
+            $script = 'media/list.phtml';
+        }
+        
+        $this->renderScript($script);
     }
 
     public function deleteAction()
@@ -111,4 +138,32 @@ class Admin_MediaController extends Fizzy_SecuredController
         return new Zend_Form(new Zend_Config($formConfig));
     }
     
+    public function galleryAction()
+    {
+        $uploadFolder = Fizzy::getInstance()->getPath('uploads');
+
+        // Parse all files in the upload directory
+        $files = array();
+        $imageTypes = array('png', 'jpg', 'jpeg', 'bmp', 'gif');
+        foreach(new DirectoryIterator($uploadFolder) as $file) 
+        {
+            if($file->isFile()) 
+            {
+                $fileInfo = array(
+                    'type' => substr(strrchr($file->getBaseName(), '.'), 1),
+                    'basename' => $file->getBaseName(),
+                    'path' => $file->getPath(),
+                    'size' => $file->getSize(),
+                );
+                if (in_array($fileInfo['type'], $imageTypes)) {
+                    $files[] = (object) $fileInfo;
+                }
+            }
+        }
+        
+        // Render the view
+        $this->view->files = $files;
+        $this->_helper->layout->disableLayout();
+    }
+
 }

@@ -119,6 +119,14 @@ class Fizzy
                     'module' => 'admin'
                 )
             ),
+            'admin_media_gallery' => array(
+                'route' => '/fizzy/media/gallery',
+                'defaults' => array(
+                    'controller' => 'media',
+                    'action' => 'gallery',
+                    'module' => 'admin'
+                )
+            ),
             'fizzy_users' => array(
                 'route' => '/fizzy/users',
                 'defaults' => array (

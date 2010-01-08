@@ -1,0 +1,58 @@
+<?php
+// file type image declarations
+
+$images = array('png', 'jpg', 'jpeg', 'bmp', 'gif');
+
+$types = array(
+    'png' => $this->baseUrl('/fizzy_assets/images/icon/page_white_picture.png'),
+    'jpg' => $this->baseUrl('/fizzy_assets/images/icon/page_white_picture.png'),
+    'jpeg' => $this->baseUrl('/fizzy_assets/images/icon/page_white_picture.png'),
+    'bmp' => $this->baseUrl('/fizzy_assets/images/icon/page_white_picture.png'),
+    'gif' => $this->baseUrl('/fizzy_assets/images/icon/page_white_picture.png'),
+    'doc' => $this->baseUrl('/fizzy_assets/images/icon/page_white_word.png'),
+    'docx' => $this->baseUrl('/fizzy_assets/images/icon/page_white_word.png'),
+    'xls' => $this->baseUrl('/fizzy_assets/images/icon/page_white_excel.png'),
+    'ppt' => $this->baseUrl('/fizzy_assets/images/icon/page_white_powerpoint.png'),
+    'pdf' => $this->baseUrl('/fizzy_assets/images/icon/page_white_text.png'),
+    'flv' => $this->baseUrl('/fizzy_assets/images/icon/page_white_flash.png'),
+    'zip' => $this->baseUrl('/fizzy_assets/images/icon/page_white_zip.png'),
+    'rar' => $this->baseUrl('/fizzy_assets/images/icon/page_white_zip.png'),
+    'txt' => $this->baseUrl('/fizzy_assets/images/icon/page_white_text.png'),
+);
+?>
+<div class="files-container">
+    <?php foreach($this->files as $fileInfo) : ?>
+    <div class="thumbnail">
+        <div class="controls">
+            <a href="<?= $this->baseUrl('/uploads/' . $fileInfo->basename); ?>" target="_blank" title="View file"><?= $this->img('/fizzy_assets/images/icon/view.png'); ?></a>
+            <?php if(is_writable($this->uploadFolder)) : ?>
+            <?= $this->linkConfirm('/fizzy_assets/media/delete/' . urlencode($fileInfo->basename), $this->img('/fizzy_assets/images/icon/delete.png'), "Are you sure you want to delete {$fileInfo->basename}?", array('title' => 'Delete file')); ?>
+            <?php endif; ?>
+        </div>
+        <?php if (in_array($fileInfo->type, $images)): ?>
+            <img class="thumbnail" src="<?= $this->baseUrl('/uploads/' . $fileInfo->basename); ?>" alt="<?= $fileInfo->basename ?>" />
+        <?php else: ?>
+            <img class="icon" src="<?= (array_key_exists($fileInfo->type, $types)) ? $types[$fileInfo->type] : $this->baseUrl('/fizzy_assets/images/icon/page.png'); ?>" alt="" />
+        <?php endif; ?>
+        
+        <div class="filename">
+            <?php if (strlen($fileInfo->basename) > 14):?>
+                <?= substr($fileInfo->basename, 0, 14); ?>...
+            <?php else: ?>
+                <?= $fileInfo->basename ?>
+            <?php endif; ?>
+        </div>
+        <div class="size">
+            <?php if($fileInfo->size < 1024) : ?>
+            <?= round($fileInfo->size, 2); ?> b
+            <?php elseif((1024*1024) > $fileInfo->size) : ?>
+            <?= round($fileInfo->size / 1024, 2); ?> KB
+            <?php else : ?>
+            <?= round($fileInfo->size / (1024*1024), 2); ?> MB
+            <?php endif; ?>
+        </div>
+    </div>
+    <?php endforeach; ?>
+
+    
+</div>
