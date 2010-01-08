@@ -1,0 +1,65 @@
+<?php
+/**
+ * Fizzy layout
+ * @package Fizzy
+ * @subpackage Views
+ *
+ * LICENSE
+ *
+ * This source file is subject to the new BSD license that is bundled
+ * with this package in the file LICENSE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://www.voidwalkers.nl/license/new-bsd
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to license@voidwalkers.nl so we can send you a copy immediately.
+ *
+ * @copyright Copyright (c) 2009 Voidwalkers (http://www.voidwalkers.nl)
+ * @license http://www.voidwalkers.nl/license/new-bsd The New BSD License
+ */
+ ?>
+ <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+ "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+    <head>
+        <title>Fizzy</title>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <link href="<?= $this->baseUrl("/fizzy_assets/css/fizzy.css") ?>" rel="stylesheet" type="text/css" media="screen" />
+        <script type="text/javascript" src="<?= $this->baseUrl("/fizzy_assets/js/jquery-1.3.2.min.js"); ?>"></script>
+        <script type="text/javascript" src="<?= $this->baseUrl('/fizzy_assets/js/tiny_mce/tiny_mce.js'); ?>"></script>
+        <script type="text/javascript" src="<?= $this->baseUrl('/fizzy_assets/js/fizzy.js'); ?>"></script>
+    </head>
+    <body>
+        <div id="header">
+            <div class="container">
+                <div id="navigation" class="span-24 last">
+                    <ul>
+                        <li><a href="<?= $this->baseUrl("/fizzy/pages") ?>">Pages</a></li>
+                        <li><a href="<?= $this->baseUrl("/fizzy/media") ?>">Media</a></li>
+                        <li><a href="<?= $this->baseUrl("/fizzy/users") ?>">Users</a></li>
+                        <li><a href="<?= $this->baseUrl("/fizzy/configuration") ?>">Configuration</a></li>
+                        <li class="link-logout"><a href="<?= $this->baseUrl("/fizzy/logout") ?>">Logout</a></li>
+                    </ul>
+                    <div class="clear"></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="container">
+
+            <?= $this->render('flashMessages.phtml'); ?>
+
+            <div id="content" class="span-24 last content-container">
+                <div id="content-wrapper">
+                    <?= $this->layout()->content; ?>
+                </div>
+            </div>
+
+            <div id="footer" class="span-24 last">
+                (c) 2009-<?= date('Y'); ?> Voidwalkers - <a href="http://www.voidwalkers.nl/license/new-bsd">license</a>
+            </div>
+        </div>
+
+        <div class="clear"></div>
+    </body>
+</html>

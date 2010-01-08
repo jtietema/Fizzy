@@ -28,7 +28,7 @@ class Fizzy
         'frontController' => null,
         'router' => null,
         'storage' => null,
-        'view' => null,
+#        'view' => null,
         'layout' => null,
     );
 
@@ -53,7 +53,7 @@ class Fizzy
         'application' => array(
             'title' => 'Fizzy',
             'basePath' => '',
-            'defaultLayout' => 'fizzy',
+            'defaultLayout' => 'default',
             'defaultTemplate' => 'page.phtml',
             'defaultController' => 'index',
             'defaultAction' => 'index',
@@ -202,24 +202,13 @@ class Fizzy
             'controllers' => array (
                 'default' => 'application/modules/default/controllers',
                 'admin' => 'application/modules/admin/controllers',
-                'custom' => 'custom/controllers',
             ),
             'models' => 'application/models',
-            'views' => array(
-                'fizzy' => 'application/views',
-                'custom' => 'custom/views'
-            ),
-            'layouts' => array(
-                'fizzy' => 'application/layouts',
-                'custom' => 'custom/layouts',
-            ),
             'templates' => array (
                 'fizzy' => 'application/templates',
-                'custom' => 'custom/templates'
             ),
             'assets' => 'application/assets',
             'configs' => 'configs',
-            'custom' => 'custom',
             'data' => 'data',
             'log' => 'data/fizzy.log',
             'library' => 'library',
@@ -564,10 +553,13 @@ class Fizzy
      */
     protected function _initLayout()
     {
-        $layoutPaths = $this->getPath('layouts');
-        $layout = new Zend_Layout($layoutPaths['fizzy'], true);
-        $layout->setLayout($this->_config->application->defaultLayout);
-
+        $layout = Zend_Layout::startMvc(array (
+            'layout' => 'default',
+        ));
+        
+        $front = $this->getFrontController();
+        $front->registerPlugin(new Fizzy_Layout_ControllerPlugin());
+        
         return $layout;
     }
 
