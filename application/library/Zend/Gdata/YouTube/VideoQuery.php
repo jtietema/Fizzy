@@ -18,7 +18,7 @@
  * @subpackage YouTube
  * @copyright  Copyright (c) 2005-2009 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: VideoQuery.php 18951 2009-11-12 16:26:19Z alexander $
+ * @version    $Id: VideoQuery.php 20099 2010-01-06 16:42:47Z bate $
  */
 
 /**
@@ -140,7 +140,7 @@ class Zend_Gdata_YouTube_VideoQuery extends Zend_Gdata_Query
                     $temp = trim($param);
                     // strip off the optional exclamation mark for numeric check
                     if (substr($temp, -1) == '!') {
-                        $temp = substr($temp, -1);
+                        $temp = substr($temp, 0, -1);
                     }
                     if (!is_numeric($temp)) {
                         require_once 'Zend/Gdata/App/InvalidArgumentException.php';

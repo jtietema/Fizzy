@@ -16,13 +16,18 @@
  * @package    Zend_Paginator
  * @copyright  Copyright (c) 2005-2009 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: Iterator.php 18951 2009-11-12 16:26:19Z alexander $
+ * @version    $Id: Iterator.php 19231 2009-11-25 09:40:21Z bate $
  */
 
 /**
  * @see Zend_Paginator_Adapter_Interface
  */
 require_once 'Zend/Paginator/Adapter/Interface.php';
+
+/**
+ * @see Zend_Paginator_SerializableLimitIterator
+ */
+require_once 'Zend/Paginator/SerializableLimitIterator.php';
 
 /**
  * @category   Zend
@@ -80,7 +85,9 @@ class Zend_Paginator_Adapter_Iterator implements Zend_Paginator_Adapter_Interfac
             return array();
         }
 
-        return new LimitIterator($this->_iterator, $offset, $itemCountPerPage);
+        // @link http://bugs.php.net/bug.php?id=49906 | ZF-8084
+        // return new LimitIterator($this->_iterator, $offset, $itemCountPerPage);
+        return new Zend_Paginator_SerializableLimitIterator($this->_iterator, $offset, $itemCountPerPage);
     }
 
     /**

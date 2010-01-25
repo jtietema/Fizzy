@@ -17,7 +17,7 @@
  * @subpackage Index
  * @copyright  Copyright (c) 2005-2009 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: SegmentInfo.php 18951 2009-11-12 16:26:19Z alexander $
+ * @version    $Id: SegmentInfo.php 19205 2009-11-23 20:18:43Z alexander $
  */
 
 /** Zend_Search_Lucene_Index_TermsStream_Interface */
@@ -1850,9 +1850,11 @@ class Zend_Search_Lucene_Index_SegmentInfo implements Zend_Search_Lucene_Index_T
                 break;
         }
 
-
+        // Calculate next segment start id (since $this->_docMap structure may be cleaned by $this->nextTerm() call)
+        $nextSegmentStartId = $startId + (($mode == self::SM_MERGE_INFO) ? count($this->_docMap) : $this->_docCount);
         $this->nextTerm();
-        return $startId + (($mode == self::SM_MERGE_INFO) ? count($this->_docMap) : $this->_docCount);
+
+        return $nextSegmentStartId;
     }
 
 

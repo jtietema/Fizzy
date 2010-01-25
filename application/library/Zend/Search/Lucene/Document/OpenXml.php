@@ -17,15 +17,13 @@
  * @subpackage Document
  * @copyright  Copyright (c) 2005-2009 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: OpenXml.php 18951 2009-11-12 16:26:19Z alexander $
+ * @version    $Id: OpenXml.php 19631 2009-12-14 11:43:11Z alexander $
  */
 
 
 /** Zend_Search_Lucene_Document */
 require_once 'Zend/Search/Lucene/Document.php';
 
-
-if (class_exists('ZipArchive', false)) {
 
 /**
  * OpenXML document.
@@ -129,5 +127,3 @@ abstract class Zend_Search_Lucene_Document_OpenXml extends Zend_Search_Lucene_Do
         return implode('/', $absolutes);
     }
 }
-
-} // end if (class_exists('ZipArchive'))

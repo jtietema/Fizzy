@@ -16,7 +16,7 @@
  * @package    Zend_Controller
  * @subpackage Router
  * @copyright  Copyright (c) 2005-2009 Zend Technologies USA Inc. (http://www.zend.com)
- * @version    $Id: Route.php 18951 2009-11-12 16:26:19Z alexander $
+ * @version    $Id: Route.php 19735 2009-12-18 01:41:08Z dasprid $
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
 
@@ -153,7 +153,6 @@ class Zend_Controller_Router_Route extends Zend_Controller_Router_Route_Abstract
      * @param string $route Map used to match with later submitted URL path
      * @param array $defaults Defaults for map variables with keys as variable names
      * @param array $reqs Regular expression requirements for variables (keys as variable names)
-     * @param array          $reqs       Regular expression requirements for variables (keys as variable names)
      * @param Zend_Translate $translator Translator to use for this instance
      */
     public function __construct($route, $defaults = array(), $reqs = array(), Zend_Translate $translator = null, $locale = null)
@@ -241,6 +240,8 @@ class Zend_Controller_Router_Route extends Zend_Controller_Router_Route_Abstract
                             $this->_wildcardData[$var] = (isset($path[$i+1])) ? urldecode($path[$i+1]) : null;
                         }
                     }
+
+                    $matchedPath = implode($this->_urlDelimiter, $path);
                     break;
                 }
 

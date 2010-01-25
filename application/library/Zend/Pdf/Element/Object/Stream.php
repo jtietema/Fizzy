@@ -16,7 +16,7 @@
  * @package    Zend_Pdf
  * @copyright  Copyright (c) 2005-2009 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: Stream.php 18993 2009-11-15 17:09:16Z alexander $
+ * @version    $Id: Stream.php 19744 2009-12-18 14:47:56Z alexander $
  */
 
 
@@ -211,6 +211,11 @@ class Zend_Pdf_Element_Object_Stream extends Zend_Pdf_Element_Object
                                                                         $this->_originalDictionary['DecodeParms'][$id]);
                     break;
 
+                case 'RunLengthDecode':
+                    require_once 'Zend/Pdf/Filter/RunLength.php';
+                    $valueRef = Zend_Pdf_Filter_RunLength::decode($valueRef);
+                    break;
+
                 default:
                     require_once 'Zend/Pdf/Exception.php';
                     throw new Zend_Pdf_Exception('Unknown stream filter: \'' . $filterName . '\'.');
@@ -265,7 +270,12 @@ class Zend_Pdf_Element_Object_Stream extends Zend_Pdf_Element_Object
                                                                         $this->_originalDictionary['DecodeParms'][$id]);
                     break;
 
-                default:
+                 case 'RunLengthDecode':
+                    require_once 'Zend/Pdf/Filter/RunLength.php';
+                    $valueRef = Zend_Pdf_Filter_RunLength::encode($valueRef);
+                    break;
+
+               default:
                     require_once 'Zend/Pdf/Exception.php';
                     throw new Zend_Pdf_Exception('Unknown stream filter: \'' . $filterName . '\'.');
             }

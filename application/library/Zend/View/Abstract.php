@@ -16,7 +16,7 @@
  * @package    Zend_View
  * @copyright  Copyright (c) 2005-2009 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: Abstract.php 19117 2009-11-20 17:44:14Z matthew $
+ * @version    $Id: Abstract.php 20105 2010-01-06 21:28:26Z matthew $
  */
 
 /** Zend_Loader */
@@ -109,10 +109,10 @@ abstract class Zend_View_Abstract implements Zend_View_Interface
     private $_escape = 'htmlspecialchars';
 
     /**
-     * Encoding to use in escaping mechanisms; defaults to latin1 (ISO-8859-1)
+     * Encoding to use in escaping mechanisms; defaults to utf-8
      * @var string
      */
-    private $_encoding = 'ISO-8859-1';
+    private $_encoding = 'UTF-8';
 
     /**
      * Flag indicating whether or not LFI protection for rendering view scripts is enabled

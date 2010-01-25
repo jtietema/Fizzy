@@ -16,7 +16,7 @@
  * @package    Zend_Pdf
  * @copyright  Copyright (c) 2005-2009 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: Page.php 18993 2009-11-15 17:09:16Z alexander $
+ * @version    $Id: Page.php 19750 2009-12-18 17:10:19Z alexander $
  */
 
 /** Internally used classes */
@@ -284,11 +284,11 @@ class Zend_Pdf_Page
                     $param1 = Zend_Pdf_Page::SIZE_LETTER_LANDSCAPE;
                     break;
                 default:
-                    // should be in "x:y" form
+                    // should be in "x:y" or "x:y:" form
             }
 
             $pageDim = explode(':', $param1);
-            if(count($pageDim) == 3) {
+            if(count($pageDim) == 2  ||  count($pageDim) == 3) {
                 $pageWidth  = $pageDim[0];
                 $pageHeight = $pageDim[1];
             } else {

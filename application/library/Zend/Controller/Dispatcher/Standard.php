@@ -17,7 +17,7 @@
  * @subpackage Dispatcher
  * @copyright  Copyright (c) 2005-2009 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: Standard.php 19093 2009-11-20 14:59:00Z bate $
+ * @version    $Id: Standard.php 19236 2009-11-25 14:45:08Z bate $
  */
 
 /** Zend_Loader */
@@ -335,7 +335,7 @@ class Zend_Controller_Dispatcher_Standard extends Zend_Controller_Dispatcher_Abs
         $dispatchDir = $this->getDispatchDirectory();
         $loadFile    = $dispatchDir . DIRECTORY_SEPARATOR . $this->classToFilename($className);
 
-        if (file_exists($loadFile)) {
+        if (Zend_Loader::isReadable($loadFile)) {
             include_once $loadFile;
         } else {
             require_once 'Zend/Controller/Dispatcher/Exception.php';

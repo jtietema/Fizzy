@@ -16,7 +16,7 @@
  * @package    Zend_Dojo
  * @subpackage View
  * @copyright  Copyright (c) 2005-2009 Zend Technologies USA Inc. (http://www.zend.com)
- * @version    $Id: Container.php 19058 2009-11-19 19:57:17Z matthew $
+ * @version    $Id: Container.php 20146 2010-01-08 15:19:07Z matthew $
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
 
@@ -1023,11 +1023,18 @@ EOJ;
             return '';
         }
 
+        $enc = 'UTF-8';
+        if ($this->view instanceof Zend_View_Interface
+            && method_exists($this->view, 'getEncoding')
+        ) {
+            $enc = $this->view->getEncoding();
+        }
+
         $html = array();
         foreach ($layers as $path) {
             $html[] = sprintf(
                 '<script type="text/javascript" src="%s"></script>',
-                htmlentities($path, ENT_QUOTES)
+                htmlspecialchars($path, ENT_QUOTES, $enc)
             );
         }
 

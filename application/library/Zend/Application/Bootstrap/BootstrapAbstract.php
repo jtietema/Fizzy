@@ -17,7 +17,7 @@
  * @subpackage Bootstrap
  * @copyright  Copyright (c) 2005-2009 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: BootstrapAbstract.php 18951 2009-11-12 16:26:19Z alexander $
+ * @version    $Id: BootstrapAbstract.php 19319 2009-11-30 22:15:36Z freak $
  */
 
 /**
@@ -351,7 +351,7 @@ abstract class Zend_Application_Bootstrap_BootstrapAbstract
                 }
             }
 
-            if (class_exists($plugin)) {
+            if (class_exists($plugin)) { //@SEE ZF-7550
                 $spec = (array) $spec;
                 $spec['bootstrap'] = $this;
                 $instance = new $plugin($spec);
