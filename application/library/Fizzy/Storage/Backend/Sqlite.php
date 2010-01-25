@@ -48,7 +48,7 @@ class Fizzy_Storage_Backend_Sqlite extends Fizzy_Storage_Backend_Pdo
         // Check if path is relative within the web application root
         if(0 !== strpos($dataPath, DIRECTORY_SEPARATOR))
         {
-            $basePath = Fizzy_Config::getInstance()->getSectionValue(Fizzy_Config::SECTION_APPLICATION, 'basePath');
+            $basePath = Fizzy::getInstance()->getSectionValue(Fizzy::SECTION_APPLICATION, 'basePath');
             $dataPath = $basePath . $dataPath;
         }
 
