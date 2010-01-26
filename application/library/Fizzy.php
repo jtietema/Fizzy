@@ -530,16 +530,6 @@ class Fizzy
         $manager->setAttribute('model_loading', 'conservative');
         
         Doctrine::loadModels(ROOT_PATH . '/' .$this->_defaultConfig['paths']['models']);
-
-        /*
-        $storage = null;
-        if(isset($this->_config->storage)) {
-            $storage = new Fizzy_Storage($this->_config->storage->toArray());
-            Zend_Registry::set('storage', $storage);
-        }
-
-        return $storage;
-        */
     }
 
     /**
