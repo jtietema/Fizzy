@@ -1,0 +1,48 @@
+Page:
+    Home:
+        title: Congratulations
+        slug: home
+        body: |
+            <p>
+                <img src="/fizzy.git/public/uploads/pastedpic_04222008_234311.png" alt="" width="80" />
+            </p>
+            <p>
+                This is the default layout for <a>Fizzy</a>. You are seeing this page because you did not configure a default layout and template. See the <a href="/fizzy.git/public/fizzy/pages/edit/configuration">Configuration</a> page for more information about configuring Fizzy.
+            </p>
+            <p>
+                If you want to know more about Fizzy, check the <a href="/fizzy.git/public/fizzy/pages/edit/about">About</a> page or visit the <a href="http://project.voidwalkers.nl/projects/show/fizzy" target="_blanc">project website</a> by clicking the more link.
+            </p>
+            <p>
+                You can administer your website by going to the <a href="/fizzy.git/public/fizzy/pages/edit/admin">administrator page</a>. There you can change the content of your site and add users. The default username and password for the administrator section is "admin". Please change this to something more appropriate.
+            </p>
+        homepage: true
+    Configuration:
+        title: Configuration
+        slug: configuration
+        body: |
+            <p>
+                Configuring Fizzy done in two locations.
+            </p>
+            <h2>Configuration file</h2>
+            <p>
+                To change the systems configuration the fizzy.xml file in the configs directory under the root of the application can be changed. For a complete list of the configuration options visit the project website.
+            </p>
+            <h2>Customized templates &amp; Layouts</h2>
+            <p>
+                Fizzy pages can be enriched with templates and layouts. These templates can be selected when adding or editing a page in the administrator section. <br />
+            </p>
+            <p>
+                New templates and layouts can be placed in the custom directory under the application root. For a complete overview of templating and layout options visit the <a href="http://project.voidwalkers.nl/projects/show/fizzy" target="_blanc">project website</a>.
+            </p>
+        homepage: false
+    About:
+        title: About Fizzy
+        slug: about
+        body: |
+            <p>
+                Fizzy is a lightweight, easy to deploy Content Management System to administer paginated content on a website. The system allows users to create, update and delete content on their site with ease.
+            </p>
+            <p>
+                The dependencies for Fizzy are kept to a minimum, but can be extended by any PHP programmer. In it's most basic form Fizzy does not require a database and stores all its data in <a href="http://en.wikipedia.org/wiki/XML">XML</a> files.
+            </p>
+        homepage: false

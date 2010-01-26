@@ -8,8 +8,9 @@ class Admin_PagesController extends Fizzy_SecuredController
      */
     public function indexAction()
     {
-        $storage = Zend_Registry::get('storage');
-        $pages = $storage->fetchAll('Page');
+        $query = Doctrine_Query::create()->from('Page');
+        $pages = $query->fetchArray();
+
         $this->view->pages = $pages;
     }
 
@@ -24,9 +25,8 @@ class Admin_PagesController extends Fizzy_SecuredController
         if($this->_request->isPost()) {
             if($form->isValid($_POST)) {
                 $page->populate($form->getValues());
-                $storage = Zend_Registry::get('storage');
-                $storage->persist($page);
-                
+                $page->save();
+
                 $this->addSuccessMessage("Page {$page->title} was saved successfully.");
                 $this->_redirect('/fizzy/pages', array('prependBase' => true));
             }
@@ -43,18 +43,18 @@ class Admin_PagesController extends Fizzy_SecuredController
             $this->_redirect('/fizzy/pages', array('prependBase' => true));
         }
 
-        $storage = Zend_Registry::get('storage');
-        $page = $storage->fetchByID('Page', $id);
+        $query = Doctrine_Query::create()->from('Page')->where('id = ?', $id);
+        $page = $query->fetchOne();
         if(null === $page) {
             $this->addErrorMessage("Page with ID {$id} could not be found.");
             $this->_redirect('/fizzy/pages', array('prependBase' => true));
         }
-        $form = $this->_getForm($this->view->baseUrl('/fizzy/pages/edit/' . $page->getId()), $page);
+        $form = $this->_getForm($this->view->baseUrl('/fizzy/pages/edit/' . $page['id']), $page);
 
         if($this->_request->isPost()) {
             if($form->isValid($_POST)) {
                 $page->populate($form->getValues());
-                $storage->persist($page);
+                $page->save();
 
                 $this->addSuccessMessage("Page \"<strong>{$page->title}</strong>\" was successfully saved.");
                 $this->_redirect('/fizzy/pages', array('prependBase' => true));
@@ -72,10 +72,10 @@ class Admin_PagesController extends Fizzy_SecuredController
     {
         $id = $this->_getParam('id', null);
         if(null !== $id) {
-            $storage = Zend_Registry::get('storage');
-            $page = $storage->fetchByID('Page', $id);
+            $query = Doctrine_Query::create()->from('Page')->where('id = ?', $id);
+            $page = $query->fetchOne();
             if(null !== $page) {
-                $storage->delete($page);
+                $page->delete();
                 $this->addSuccessMessage("Page {$page->title} was successfully deleted.");
             }
         }
@@ -98,7 +98,7 @@ class Admin_PagesController extends Fizzy_SecuredController
                     'type' => 'hidden',
                     'options' => array (
                         'required' => false,
-                        'value' => $page->getId(),
+                        'value' => $page['id'],
                     )
                 ),
                 'title' => array (

@@ -8,7 +8,7 @@ class Admin_AuthController extends Fizzy_Controller
         $form = $this->_getForm();
         if($this->_request->isPost()) {
             if($form->isValid($_POST)) {
-                $authAdapter = new Fizzy_Storage_AuthAdapter(
+                $authAdapter = new Fizzy_Doctrine_AuthAdapter(
                     $form->username->getValue(), $form->password->getValue()
                 );
                 $result = Zend_Auth::getInstance()->authenticate($authAdapter);

@@ -47,23 +47,15 @@ class Fizzy_Validate_UsernameUnique extends Zend_Validate_Abstract
         $value = (string) $value;
         $this->_setValue($value);
 
-        $storage = Fizzy::getInstance()->getStorage();
-        $users = $storage->fetchAll('User');
-        $usernames = array();
-        foreach($users as $user) {
-            $usernames[$user->getId()] = $user->username;
+        $query = Doctrine_Query::create()->from('User')->where('username = ?', $value);
+        $users = $query->fetchArray();
+
+        if (count($users) > 1) {
+            $this->_error(self::NOT_UNIQUE);
+            return false;
         }
 
-        # Check if we are editing the page the slug belongs to
-        $editingOriginal = false;
-        if(is_array($context) && isset($context['id'])) {
-            $id = $context['id'];
-            if(array_key_exists($id, $usernames) && $value === $usernames[$id]) {
-                $editingOriginal = true;
-            }
-        }
-
-        if(in_array($value, $usernames) && !$editingOriginal) {
+        if (count($users) === 1 && $context['id'] !== $users[0]['id']) {
             $this->_error(self::NOT_UNIQUE);
             return false;
         }

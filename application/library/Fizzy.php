@@ -519,6 +519,19 @@ class Fizzy
      */
     protected function _initStorage()
     {
+        require_once 'Doctrine.php';
+        $autoloader = Zend_Loader_Autoloader::getInstance();
+        $autoloader->pushAutoloader(array('Doctrine', 'autoload'));
+
+        $manager = Doctrine_Manager::getInstance();
+
+        Doctrine_Manager::connection($this->_config->storage->dsn);
+
+        $manager->setAttribute('model_loading', 'conservative');
+        
+        Doctrine::loadModels(ROOT_PATH . '/' .$this->_defaultConfig['paths']['models']);
+
+        /*
         $storage = null;
         if(isset($this->_config->storage)) {
             $storage = new Fizzy_Storage($this->_config->storage->toArray());
@@ -526,6 +539,7 @@ class Fizzy
         }
 
         return $storage;
+        */
     }
 
     /**

@@ -10,10 +10,10 @@
         <tbody>
             <?php foreach($this->users as $user) : ?>
             <tr>
-                <td><?= $user->username; ?></td>
+                <td><?= $user['username'] ?></td>
                 <td style="width: 100px;">
-                    <?= $this->link("/fizzy/user/edit/{$user->getId()}", $this->img('/fizzy_assets/images/icon/edit.png', array('alt' => 'edit icon'))); ?>
-                    <?= $this->linkConfirm("/fizzy/user/delete/{$user->getId()}", $this->img('/fizzy_assets/images/icon/sign_remove.png', array('alt' => 'remove icon')), 'Are you sure you want to delete user ' . $user->username .'?'); ?>
+                    <?= $this->link("/fizzy/user/edit/{$user['id']}", $this->img('/fizzy_assets/images/icon/edit.png', array('alt' => 'edit icon'))); ?>
+                    <?= $this->linkConfirm("/fizzy/user/delete/{$user['id']}", $this->img('/fizzy_assets/images/icon/sign_remove.png', array('alt' => 'remove icon')), 'Are you sure you want to delete user ' . $user['username'] .'?'); ?>
                 </td>
             </tr>
             <?php endforeach; ?>

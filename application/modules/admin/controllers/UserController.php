@@ -5,8 +5,8 @@ class Admin_UserController extends Fizzy_SecuredController
 
     public function indexAction()
     {
-        $storage = Zend_Registry::get('storage');
-        $users = $storage->fetchAll('User');
+        $query = Doctrine_Query::create()->from('User');
+        $users = $query->fetchArray();
         $this->view->users = $users;
         $this->renderScript('/user/list.phtml');
     }
@@ -19,8 +19,7 @@ class Admin_UserController extends Fizzy_SecuredController
         if($this->_request->isPost()) {
             if($form->isValid($_POST)) {
                 $user->populate($form->getValues());
-                $storage = Zend_Registry::get('storage');
-                $storage->persist($user);
+                $user->save();
 
                 $this->addSuccessMessage("User {$user->username} was successfully saved.");
                 $this->_redirect('/fizzy/users', array('prependBase' => true));
@@ -38,18 +37,18 @@ class Admin_UserController extends Fizzy_SecuredController
             $this->_redirect('/fizzy/users', array('prependBase' => true));
         }
 
-        $storage = Zend_Registry::get('storage');
-        $user = $storage->fetchByID('User', $id);
+        $query = Doctrine_Query::create()->from('User')->where('id = ?', $id);
+        $user = $query->fetchOne();
         if(null === $user) {
             $this->addErrorMessage("User with ID {$id} could not be found.");
             $this->_redirect('/fizzy/users', array('prependBase' => true));
         }
-        $form = $this->_getForm($this->view->baseUrl('/fizzy/user/edit/' . $user->getId()), $user);
+        $form = $this->_getForm($this->view->baseUrl('/fizzy/user/edit/' . $user->id), $user);
 
         if($this->_request->isPost()) {
             if($form->isValid($_POST)) {
                 $user->populate($form->getValues());
-                $storage->persist($user);
+                $user->save();
 
                 $this->addSuccessMessage("User <strong>{$user->username}</strong> was successfully saved.");
                 $this->_redirect('/fizzy/users', array('prependBase' => true));
@@ -64,10 +63,10 @@ class Admin_UserController extends Fizzy_SecuredController
     {
         $id = $this->_getParam('id', null);
         if(null !== $id) {
-            $storage = Zend_Registry::get('storage');
-            $user = $storage->fetchByID('User', $id);
+            $query = Doctrine_Query::create()->from('User')->where('id = ?', $id);
+            $user = $query->fetchOne();
             if(null !== $user) {
-                $storage->delete($user);
+                $user->delete();
                 $this->addSuccessMessage("User {$user->username} was successfully deleted.");
             }
             
@@ -84,7 +83,7 @@ class Admin_UserController extends Fizzy_SecuredController
                     'type' => 'hidden',
                     'options' => array (
                         'required' => false,
-                        'value' => $user->getId()
+                        'value' => $user->id
                     )
                 ),
                 'username' => array (

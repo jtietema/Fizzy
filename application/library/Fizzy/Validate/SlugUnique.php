@@ -47,23 +47,17 @@ class Fizzy_Validate_SlugUnique extends Zend_Validate_Abstract
         $value = (string) $value;
         $this->_setValue($value);
         
-        $storage = Fizzy::getInstance()->getStorage();
-        $pages = $storage->fetchAll('Page');
-        $slugs = array();
-        foreach($pages as $page) {
-            $slugs[$page->getId()] = $page->slug;
-        }
+        $query = Doctrine_Query::create()->from('Page')->where('slug = ?', $value);
+        $pages = $query->fetchArray();
 
-        # Check if we are editing the page the slug belongs to
-        $editingOriginal = false;
-        if(is_array($context) && isset($context['id'])) {
-            $id = $context['id'];
-            if(array_key_exists($id, $slugs) && $value == $slugs[$id]) {
-                $editingOriginal = true;
-            }
+        // we already have multiple items with this slug (should never occur).
+        if (count($pages) > 1){
+            $this->_error(self::NOT_UNIQUE);
+            return false;
         }
-
-        if(in_array($value, $slugs) && !$editingOriginal) {
+        
+        // check if the found slug belongs to the current document. If not return false.
+        if (count($pages) === 1 && $context['id'] !== $pages[0]['id']) {
             $this->_error(self::NOT_UNIQUE);
             return false;
         }

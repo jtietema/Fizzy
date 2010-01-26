@@ -1,0 +1,26 @@
+#!/usr/bin/env php
+<?php
+
+define('APPLICATION_PATH', realpath(dirname(__FILE__) . '/application'));
+define('LIBRARY_PATH', realpath(APPLICATION_PATH . '/library'));
+
+set_include_path(LIBRARY_PATH . PATH_SEPARATOR . APPLICATION_PATH . '/models/doctrine/generated' . PATH_SEPARATOR . get_include_path());
+
+require_once 'Doctrine.php';
+spl_autoload_register(array('Doctrine', 'autoload'));
+
+$manager = Doctrine_Manager::getInstance();
+
+Doctrine_Manager::connection('mysql://root@localhost/fizzy', 'doctrine');
+
+$manager->setAttribute('model_loading', 'conservative');
+
+$cli_config = array(
+    'models_path' => APPLICATION_PATH . '/models',
+    'sql_path' => APPLICATION_PATH . '/../database/sql',
+    'yaml_schema_path' => APPLICATION_PATH . '/../database/schema',
+    'migrations_path' => APPLICATION_PATH . '/../database/migrations',
+    'data_fixtures_path' => APPLICATION_PATH . '/../database/fixtures'
+);
+$cli = new Doctrine_Cli($cli_config);
+$cli->run($_SERVER['argv']);
