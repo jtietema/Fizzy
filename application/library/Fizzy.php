@@ -68,6 +68,13 @@ class Fizzy
                     'action' => 'slug'
                 )
             ),
+            'contact' => array(
+                'route' => '/contact',
+                'defaults' => array(
+                    'controller' => 'contact',
+                    'action' => 'index'
+                )
+            ),
             # Admin pages control
             'admin_pages' => array(
                 'type' => 'Zend_Controller_Router_Route_Static',
