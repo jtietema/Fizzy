@@ -12,16 +12,17 @@ class PagesController extends Fizzy_Controller
     {
         $slug = $this->_getParam('slug', null);
         if(null === $slug) {
-            # Redirect to 404
+            # Get default homepage
+            $query = Doctrine_Query::create()->from('Page')->where('homepage = ?', true);
+            $page = $query->fetchOne();
+        } else {
+            $query = Doctrine_Query::create()->from('Page')->where('slug = ?', $slug);
+            $page = $query->fetchOne();
         }
 
-        $storage = Zend_Registry::get('storage');
-        $pages = $storage->fetchByField('Page', array('slug' => $slug));
-        if(1 < count($pages)) {
+        if($page === null) {
             # Log user exception viewable in the backend
         }
-
-        $page = array_shift($pages);
 
         $config = Zend_Registry::get('config');
         $templatePaths = $config->paths->templates->toArray();
