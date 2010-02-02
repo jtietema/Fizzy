@@ -35,7 +35,7 @@ class Fizzy_Doctrine_AuthAdapter implements Zend_Auth_Adapter_Interface
 
     public function setModelClass($modelClass)
     {
-        $this->_modelClass = $modeClass;
+        $this->_modelClass = $modelClass;
 
         return $this;
     }
