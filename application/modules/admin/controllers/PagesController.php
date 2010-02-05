@@ -2,6 +2,8 @@
 
 class Admin_PagesController extends Fizzy_SecuredController
 {
+    protected $_sessionNamespace = 'fizzy';
+    protected $_redirect = '/fizzy/login';
 
     /**
      * Shows a list of pages managed by Fizzy.

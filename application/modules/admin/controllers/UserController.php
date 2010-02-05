@@ -2,6 +2,8 @@
 
 class Admin_UserController extends Fizzy_SecuredController
 {
+    protected $_sessionNamespace = 'fizzy';
+    protected $_redirect = '/fizzy/login';
 
     public function indexAction()
     {

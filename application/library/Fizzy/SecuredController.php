@@ -28,6 +28,17 @@ class Fizzy_SecuredController extends Fizzy_Controller
      */
     protected $_identity = null;
 
+    /**
+     * The session namespace used for the security credentials
+     * @var string
+     */
+    protected $_sessionNamespace = null;
+
+    /**
+     * Url to redirect to when not logged in
+     * @var string
+     */
+    protected $_redirect = null;
     /** **/
     
     /**
@@ -35,8 +46,13 @@ class Fizzy_SecuredController extends Fizzy_Controller
      */
     public function preDispatch()
     {
-        if (!Zend_Auth::getInstance()->hasIdentity()) {
-            $this->_redirect('/fizzy/login', array('prependBase' => true));
+        if ($this->_sessionNamespace === null || $this->_redirect === null) {
+            throw new Fizzy_Exception('Please provide a $_sessionNamespace and $_redirect in your Fizzy_SecuredController subclass.');
+        }
+        $auth = Zend_Auth::getInstance();
+        $auth->setStorage(new Zend_Auth_Storage_Session($this->_sessionNamespace));
+        if (!$auth->hasIdentity()) {
+            $this->_redirect($this->_redirect, array('prependBase' => true));
         }
 
         $this->_identity = Zend_Auth::getInstance()->getIdentity();

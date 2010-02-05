@@ -7,6 +7,9 @@
  */
 class Admin_MediaController extends Fizzy_SecuredController
 {
+    protected $_sessionNamespace = 'fizzy';
+    protected $_redirect = '/fizzy/login';
+    
     /**
      * @todo implement overwrite checkbox
      */

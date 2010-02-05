@@ -11,7 +11,9 @@ class Admin_AuthController extends Fizzy_Controller
                 $authAdapter = new Fizzy_Doctrine_AuthAdapter(
                     $form->username->getValue(), $form->password->getValue()
                 );
-                $result = Zend_Auth::getInstance()->authenticate($authAdapter);
+                $auth = Zend_Auth::getInstance();
+                $auth->setStorage(new Zend_Auth_Storage_Session('fizzy'));
+                $result = $auth->authenticate($authAdapter);
                 if($result->isValid()) {
                     $this->_redirect('/fizzy', array('prependBase' => true));
                 }
@@ -26,7 +28,9 @@ class Admin_AuthController extends Fizzy_Controller
 
     public function logoutAction()
     {
-        Zend_Auth::getInstance()->clearIdentity();
+        $auth = Zend_Auth::getInstance();
+        $auth->setStorage(new Zend_Auth_Storage_Session('fizzy'));
+        $auth->clearIdentity();
         $this->_redirect('/fizzy', array('prependBase' => true));
     }
 
