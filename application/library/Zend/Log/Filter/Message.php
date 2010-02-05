@@ -21,7 +21,7 @@
  */
 
 /** Zend_Log_Filter_Interface */
-require_once 'Zend/Log/Filter/Interface.php';
+// require_once 'Zend/Log/Filter/Interface.php';
 
 /**
  * @category   Zend
@@ -47,7 +47,7 @@ class Zend_Log_Filter_Message implements Zend_Log_Filter_Interface
     public function __construct($regexp)
     {
         if (@preg_match($regexp, '') === false) {
-            require_once 'Zend/Log/Exception.php';
+            // require_once 'Zend/Log/Exception.php';
             throw new Zend_Log_Exception("Invalid regular expression '$regexp'");
         }
         $this->_regexp = $regexp;

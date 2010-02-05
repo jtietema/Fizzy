@@ -22,7 +22,7 @@
 /**
  * @see Zend_Validate_Abstract
  */
-require_once 'Zend/Validate/Abstract.php';
+// require_once 'Zend/Validate/Abstract.php';
 
 /**
  * @category   Zend
@@ -63,16 +63,16 @@ class Zend_Validate_Barcode extends Zend_Validate_Abstract
         switch (strtolower($barcodeType)) {
             case 'upc':
             case 'upc-a':
-                require_once 'Zend/Validate/Barcode/UpcA.php';
+                // require_once 'Zend/Validate/Barcode/UpcA.php';
                 $class = 'Zend_Validate_Barcode_UpcA';
                 break;
             case 'ean13':
             case 'ean-13':
-                require_once 'Zend/Validate/Barcode/Ean13.php';
+                // require_once 'Zend/Validate/Barcode/Ean13.php';
                 $class = 'Zend_Validate_Barcode_Ean13';
                 break;
             default:
-                require_once 'Zend/Validate/Exception.php';
+                // require_once 'Zend/Validate/Exception.php';
                 throw new Zend_Validate_Exception("Barcode type '$barcodeType' is not supported'");
                 break;
         }

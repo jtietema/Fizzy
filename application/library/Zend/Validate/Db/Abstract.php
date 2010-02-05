@@ -23,7 +23,7 @@
 /**
  * @see Zend_Validate_Abstract
  */
-require_once 'Zend/Validate/Abstract.php';
+// require_once 'Zend/Validate/Abstract.php';
 
 /**
  * Class for Database record validation
@@ -118,7 +118,7 @@ abstract class Zend_Validate_Db_Abstract extends Zend_Validate_Abstract
         if ($this->_adapter === null) {
             $this->_adapter = Zend_Db_Table_Abstract::getDefaultAdapter();
             if (null === $this->_adapter) {
-                require_once 'Zend/Validate/Exception.php';
+                // require_once 'Zend/Validate/Exception.php';
                 throw new Zend_Validate_Exception('No database adapter present');
             }
         }

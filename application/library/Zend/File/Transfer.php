@@ -36,7 +36,7 @@ class Zend_File_Transfer
      */
     public function __construct($protocol = null)
     {
-        require_once 'Zend/File/Transfer/Exception.php';
+        // require_once 'Zend/File/Transfer/Exception.php';
         throw new Zend_File_Transfer_Exception('Implementation in progress');
 
         switch (strtoupper($protocol)) {
@@ -46,13 +46,13 @@ class Zend_File_Transfer
         }
 
         if (!class_exists($adapter)) {
-            require_once 'Zend/Loader.php';
+            // require_once 'Zend/Loader.php';
             Zend_Loader::loadClass($adapter);
         }
 
         $this->_adapter = new $adapter();
         if (!$this->_adapter instanceof Zend_File_Transfer_Adapter) {
-            require_once 'Zend/File/Transfer/Exception.php';
+            // require_once 'Zend/File/Transfer/Exception.php';
             throw new Zend_File_Transfer_Exception("Adapter " . $adapter . " does not extend Zend_File_Transfer_Adapter'");
         }
 

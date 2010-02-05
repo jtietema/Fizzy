@@ -19,9 +19,9 @@
  * @version    $Id: Version.php 18951 2009-11-12 16:26:19Z alexander $
  */
 
-require_once 'Zend/Tool/Framework/Registry.php';
-require_once 'Zend/Tool/Framework/Provider/Interface.php';
-require_once 'Zend/Version.php';
+// require_once 'Zend/Tool/Framework/Registry.php';
+// require_once 'Zend/Tool/Framework/Provider/Interface.php';
+// require_once 'Zend/Version.php';
 
 /**
  * Version Provider

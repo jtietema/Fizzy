@@ -23,12 +23,12 @@
 /**
  * @see Zend_Service_Amazon_Abstract
  */
-require_once 'Zend/Service/Amazon/Abstract.php';
+// require_once 'Zend/Service/Amazon/Abstract.php';
 
 /**
  * @see Zend_Crypt_Hmac
  */
-require_once 'Zend/Crypt/Hmac.php';
+// require_once 'Zend/Crypt/Hmac.php';
 
 /**
  * Class for connecting to the Amazon Simple Queue Service (SQS)
@@ -114,7 +114,7 @@ class Zend_Service_Amazon_Sqs extends Zend_Service_Amazon_Abstract
                     $retry = true;
                     $retry_count++;
                 } else {
-                    require_once 'Zend/Service/Amazon/Sqs/Exception.php';
+                    // require_once 'Zend/Service/Amazon/Sqs/Exception.php';
                     throw new Zend_Service_Amazon_Sqs_Exception($result->Error->Code);
                 }
             } else {
@@ -140,7 +140,7 @@ class Zend_Service_Amazon_Sqs extends Zend_Service_Amazon_Abstract
         $result = $this->_makeRequest($queue_url, 'DeleteQueue');
 
         if ($result->Error->Code !== null) {
-            require_once 'Zend/Service/Amazon/Sqs/Exception.php';
+            // require_once 'Zend/Service/Amazon/Sqs/Exception.php';
             throw new Zend_Service_Amazon_Sqs_Exception($result->Error->Code);
         }
 
@@ -158,7 +158,7 @@ class Zend_Service_Amazon_Sqs extends Zend_Service_Amazon_Abstract
         $result = $this->_makeRequest(null, 'ListQueues');
 
         if ($result->ListQueuesResult->QueueUrl === null) {
-            require_once 'Zend/Service/Amazon/Sqs/Exception.php';
+            // require_once 'Zend/Service/Amazon/Sqs/Exception.php';
             throw new Zend_Service_Amazon_Sqs_Exception($result->Error->Code);
         }
 
@@ -200,10 +200,10 @@ class Zend_Service_Amazon_Sqs extends Zend_Service_Amazon_Abstract
         $result = $this->_makeRequest($queue_url, 'SendMessage', $params);
 
         if ($result->SendMessageResult->MessageId === null) {
-            require_once 'Zend/Service/Amazon/Sqs/Exception.php';
+            // require_once 'Zend/Service/Amazon/Sqs/Exception.php';
             throw new Zend_Service_Amazon_Sqs_Exception($result->Error->Code);
         } else if ((string) $result->SendMessageResult->MD5OfMessageBody != $checksum) {
-            require_once 'Zend/Service/Amazon/Sqs/Exception.php';
+            // require_once 'Zend/Service/Amazon/Sqs/Exception.php';
             throw new Zend_Service_Amazon_Sqs_Exception('MD5 of body does not match message sent');
         }
 
@@ -236,7 +236,7 @@ class Zend_Service_Amazon_Sqs extends Zend_Service_Amazon_Abstract
         $result = $this->_makeRequest($queue_url, 'ReceiveMessage', $params);
 
         if ($result->ReceiveMessageResult->Message === null) {
-            require_once 'Zend/Service/Amazon/Sqs/Exception.php';
+            // require_once 'Zend/Service/Amazon/Sqs/Exception.php';
             throw new Zend_Service_Amazon_Sqs_Exception($result->Error->Code);
         }
 
@@ -295,7 +295,7 @@ class Zend_Service_Amazon_Sqs extends Zend_Service_Amazon_Abstract
         $result = $this->_makeRequest($queue_url, 'GetQueueAttributes', $params);
 
         if ($result->GetQueueAttributesResult->Attribute === null) {
-            require_once 'Zend/Service/Amazon/Sqs/Exception.php';
+            // require_once 'Zend/Service/Amazon/Sqs/Exception.php';
             throw new Zend_Service_Amazon_Sqs_Exception($result->Error->Code);
         }
 

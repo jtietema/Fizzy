@@ -23,12 +23,12 @@
 /**
  * @see Zend_Locale
  */
-require_once 'Zend/Locale.php';
+// require_once 'Zend/Locale.php';
 
 /**
  * @see Zend_Translate_Plural
  */
-require_once 'Zend/Translate/Plural.php';
+// require_once 'Zend/Translate/Plural.php';
 
 /**
  * Basic adapter class for each translation source adapter
@@ -139,7 +139,7 @@ abstract class Zend_Translate_Adapter {
         try {
             $locale    = Zend_Locale::findLocale($locale);
         } catch (Zend_Locale_Exception $e) {
-            require_once 'Zend/Translate/Exception.php';
+            // require_once 'Zend/Translate/Exception.php';
             throw new Zend_Translate_Exception("The given Language '{$locale}' does not exist");
         }
 
@@ -239,7 +239,7 @@ abstract class Zend_Translate_Adapter {
             } else if ((isset($this->_options[$key]) and ($this->_options[$key] != $option)) or
                     !isset($this->_options[$key])) {
                 if (($key == 'log') && !($option instanceof Zend_Log)) {
-                    require_once 'Zend/Translate/Exception.php';
+                    // require_once 'Zend/Translate/Exception.php';
                     throw new Zend_Translate_Exception('Instance of Zend_Log expected for option log');
                 }
 
@@ -308,7 +308,7 @@ abstract class Zend_Translate_Adapter {
         try {
             $locale = Zend_Locale::findLocale($locale);
         } catch (Zend_Locale_Exception $e) {
-            require_once 'Zend/Translate/Exception.php';
+            // require_once 'Zend/Translate/Exception.php';
             throw new Zend_Translate_Exception("The given Language ({$locale}) does not exist");
         }
 
@@ -447,7 +447,7 @@ abstract class Zend_Translate_Adapter {
         try {
             $locale    = Zend_Locale::findLocale($locale);
         } catch (Zend_Locale_Exception $e) {
-            require_once 'Zend/Translate/Exception.php';
+            // require_once 'Zend/Translate/Exception.php';
             throw new Zend_Translate_Exception("The given Language '{$locale}' does not exist");
         }
 
@@ -748,7 +748,7 @@ abstract class Zend_Translate_Adapter {
      */
     public static function clearCache()
     {
-        require_once 'Zend/Cache.php';
+        // require_once 'Zend/Cache.php';
         self::$_cache->clean(Zend_Cache::CLEANING_MODE_MATCHING_TAG, array('Zend_Translate'));
     }
 

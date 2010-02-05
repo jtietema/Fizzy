@@ -19,7 +19,7 @@
  * @version    $Id: ArrayOfTypeSequence.php 16971 2009-07-22 18:05:45Z mikaelkael $
  */
 
-require_once "Zend/Soap/Wsdl/Strategy/DefaultComplexType.php";
+// require_once "Zend/Soap/Wsdl/Strategy/DefaultComplexType.php";
 
 class Zend_Soap_Wsdl_Strategy_ArrayOfTypeSequence extends Zend_Soap_Wsdl_Strategy_DefaultComplexType
 {

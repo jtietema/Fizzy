@@ -23,42 +23,42 @@
 /**
  * @see Zend_Tool_Framework_Manifest_ProviderManifestable
  */
-require_once 'Zend/Tool/Framework/Manifest/ProviderManifestable.php';
+// require_once 'Zend/Tool/Framework/Manifest/ProviderManifestable.php';
 
 /**
  * @see Zend_Tool_Project_Provider_Profile
  */
-require_once 'Zend/Tool/Project/Provider/Profile.php';
+// require_once 'Zend/Tool/Project/Provider/Profile.php';
 
 /**
  * @see Zend_Tool_Project_Provider_Project
  */
-require_once 'Zend/Tool/Project/Provider/Project.php';
+// require_once 'Zend/Tool/Project/Provider/Project.php';
 
 /**
  * @see Zend_Tool_Project_Provider_Controller
  */
-require_once 'Zend/Tool/Project/Provider/Controller.php';
+// require_once 'Zend/Tool/Project/Provider/Controller.php';
 
 /**
  * @see Zend_Tool_Project_Provider_Action
  */
-require_once 'Zend/Tool/Project/Provider/Action.php';
+// require_once 'Zend/Tool/Project/Provider/Action.php';
 
 /**
  * @see Zend_Tool_Project_Provider_View
  */
-require_once 'Zend/Tool/Project/Provider/View.php';
+// require_once 'Zend/Tool/Project/Provider/View.php';
 
 /**
  * @see Zend_Tool_Project_Provider_Module
  */
-require_once 'Zend/Tool/Project/Provider/Module.php';
+// require_once 'Zend/Tool/Project/Provider/Module.php';
 
 /**
  * @see Zend_Tool_Project_Provider_ProjectProvider
  */
-require_once 'Zend/Tool/Project/Provider/ProjectProvider.php';
+// require_once 'Zend/Tool/Project/Provider/ProjectProvider.php';
 
 /**
  * @category   Zend

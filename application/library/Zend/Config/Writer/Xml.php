@@ -22,12 +22,12 @@
 /**
  * @see Zend_Config_Writer
  */
-require_once 'Zend/Config/Writer.php';
+// require_once 'Zend/Config/Writer.php';
 
 /**
  * @see Zend_Config_Xml
  */
-require_once 'Zend/Config/Xml.php';
+// require_once 'Zend/Config/Xml.php';
 
 /**
  * @category   Zend
@@ -102,12 +102,12 @@ class Zend_Config_Writer_Xml extends Zend_Config_Writer
         }
 
         if ($this->_filename === null) {
-            require_once 'Zend/Config/Exception.php';
+            // require_once 'Zend/Config/Exception.php';
             throw new Zend_Config_Exception('No filename was set');
         }
 
         if ($this->_config === null) {
-            require_once 'Zend/Config/Exception.php';
+            // require_once 'Zend/Config/Exception.php';
             throw new Zend_Config_Exception('No config was set');
         }
 
@@ -149,7 +149,7 @@ class Zend_Config_Writer_Xml extends Zend_Config_Writer
         $result = @file_put_contents($this->_filename, $xmlString, $flags);
 
         if ($result === false) {
-            require_once 'Zend/Config/Exception.php';
+            // require_once 'Zend/Config/Exception.php';
             throw new Zend_Config_Exception('Could not write to file "' . $this->_filename . '"');
         }
     }
@@ -178,7 +178,7 @@ class Zend_Config_Writer_Xml extends Zend_Config_Writer
                     $branchType = 'string';
                 }
             } else if ($branchType !== (is_numeric($key) ? 'numeric' : 'string')) {
-                require_once 'Zend/Config/Exception.php';
+                // require_once 'Zend/Config/Exception.php';
                 throw new Zend_Config_Exception('Mixing of string and numeric keys is not allowed');
             }
 

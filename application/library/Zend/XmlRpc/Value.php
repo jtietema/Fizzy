@@ -169,51 +169,51 @@ abstract class Zend_XmlRpc_Value
             case self::XMLRPC_TYPE_I4:
                 // fall through to the next case
             case self::XMLRPC_TYPE_INTEGER:
-                require_once 'Zend/XmlRpc/Value/Integer.php';
+                // require_once 'Zend/XmlRpc/Value/Integer.php';
                 return new Zend_XmlRpc_Value_Integer($value);
 
             case self::XMLRPC_TYPE_I8:
                 // fall through to the next case
             case self::XMLRPC_TYPE_APACHEI8:
-                require_once 'Zend/XmlRpc/Value/BigInteger.php';
+                // require_once 'Zend/XmlRpc/Value/BigInteger.php';
                 return new Zend_XmlRpc_Value_BigInteger($value);
 
             case self::XMLRPC_TYPE_DOUBLE:
-                require_once 'Zend/XmlRpc/Value/Double.php';
+                // require_once 'Zend/XmlRpc/Value/Double.php';
                 return new Zend_XmlRpc_Value_Double($value);
 
             case self::XMLRPC_TYPE_BOOLEAN:
-                require_once 'Zend/XmlRpc/Value/Boolean.php';
+                // require_once 'Zend/XmlRpc/Value/Boolean.php';
                 return new Zend_XmlRpc_Value_Boolean($value);
 
             case self::XMLRPC_TYPE_STRING:
-                require_once 'Zend/XmlRpc/Value/String.php';
+                // require_once 'Zend/XmlRpc/Value/String.php';
                 return new Zend_XmlRpc_Value_String($value);
 
             case self::XMLRPC_TYPE_BASE64:
-                require_once 'Zend/XmlRpc/Value/Base64.php';
+                // require_once 'Zend/XmlRpc/Value/Base64.php';
                 return new Zend_XmlRpc_Value_Base64($value);
 
             case self::XMLRPC_TYPE_NIL:
                 // fall through to the next case
             case self::XMLRPC_TYPE_APACHENIL:
-                require_once 'Zend/XmlRpc/Value/Nil.php';
+                // require_once 'Zend/XmlRpc/Value/Nil.php';
                 return new Zend_XmlRpc_Value_Nil();
 
             case self::XMLRPC_TYPE_DATETIME:
-                require_once 'Zend/XmlRpc/Value/DateTime.php';
+                // require_once 'Zend/XmlRpc/Value/DateTime.php';
                 return new Zend_XmlRpc_Value_DateTime($value);
 
             case self::XMLRPC_TYPE_ARRAY:
-                require_once 'Zend/XmlRpc/Value/Array.php';
+                // require_once 'Zend/XmlRpc/Value/Array.php';
                 return new Zend_XmlRpc_Value_Array($value);
 
             case self::XMLRPC_TYPE_STRUCT:
-                require_once 'Zend/XmlRpc/Value/Struct.php';
+                // require_once 'Zend/XmlRpc/Value/Struct.php';
                 return new Zend_XmlRpc_Value_Struct($value);
 
             default:
-                require_once 'Zend/XmlRpc/Value/Exception.php';
+                // require_once 'Zend/XmlRpc/Value/Exception.php';
                 throw new Zend_XmlRpc_Value_Exception('Given type is not a '. __CLASS__ .' constant');
         }
     }
@@ -241,42 +241,42 @@ abstract class Zend_XmlRpc_Value
                 // Break intentionally omitted
             case 'array':
                 // Default native type for a PHP array (a simple numeric array) is 'array'
-                require_once 'Zend/XmlRpc/Value/Array.php';
+                // require_once 'Zend/XmlRpc/Value/Array.php';
                 $obj = 'Zend_XmlRpc_Value_Array';
 
                 // Determine if this is an associative array
                 if (!empty($value) && is_array($value) && (array_keys($value) !== range(0, count($value) - 1))) {
-                    require_once 'Zend/XmlRpc/Value/Struct.php';
+                    // require_once 'Zend/XmlRpc/Value/Struct.php';
                     $obj = 'Zend_XmlRpc_Value_Struct';
                 }
                 return new $obj($value);
 
             case 'integer':
-                require_once 'Zend/XmlRpc/Value/Integer.php';
+                // require_once 'Zend/XmlRpc/Value/Integer.php';
                 return new Zend_XmlRpc_Value_Integer($value);
 
             case 'i8':
-                require_once 'Zend/XmlRpc/Value/BigInteger.php';
+                // require_once 'Zend/XmlRpc/Value/BigInteger.php';
                 return new Zend_XmlRpc_Value_BigInteger($value);
 
             case 'double':
-                require_once 'Zend/XmlRpc/Value/Double.php';
+                // require_once 'Zend/XmlRpc/Value/Double.php';
                 return new Zend_XmlRpc_Value_Double($value);
 
             case 'boolean':
-                require_once 'Zend/XmlRpc/Value/Boolean.php';
+                // require_once 'Zend/XmlRpc/Value/Boolean.php';
                 return new Zend_XmlRpc_Value_Boolean($value);
 
             case 'NULL':
             case 'null':
-                require_once 'Zend/XmlRpc/Value/Nil.php';
+                // require_once 'Zend/XmlRpc/Value/Nil.php';
                 return new Zend_XmlRpc_Value_Nil();
 
             case 'string':
                 // Fall through to the next case
             default:
                 // If type isn't identified (or identified as string), it treated as string
-                require_once 'Zend/XmlRpc/Value/String.php';
+                // require_once 'Zend/XmlRpc/Value/String.php';
                 return new Zend_XmlRpc_Value_String($value);
         }
     }
@@ -298,7 +298,7 @@ abstract class Zend_XmlRpc_Value
                 $xml = new SimpleXMLElement($xml);
             } catch (Exception $e) {
                 // The given string is not a valid XML
-                require_once 'Zend/XmlRpc/Value/Exception.php';
+                // require_once 'Zend/XmlRpc/Value/Exception.php';
                 throw new Zend_XmlRpc_Value_Exception('Failed to create XML-RPC value from XML string: '.$e->getMessage(),$e->getCode());
             }
         }
@@ -328,40 +328,40 @@ abstract class Zend_XmlRpc_Value
             case self::XMLRPC_TYPE_I4:
                 // Fall through to the next case
             case self::XMLRPC_TYPE_INTEGER:
-                require_once 'Zend/XmlRpc/Value/Integer.php';
+                // require_once 'Zend/XmlRpc/Value/Integer.php';
                 $xmlrpcValue = new Zend_XmlRpc_Value_Integer($value);
                 break;
             case self::XMLRPC_TYPE_APACHEI8:
                 // Fall through to the next case
             case self::XMLRPC_TYPE_I8:
-                require_once 'Zend/XmlRpc/Value/BigInteger.php';
+                // require_once 'Zend/XmlRpc/Value/BigInteger.php';
                 $xmlrpcValue = new Zend_XmlRpc_Value_BigInteger($value);
                 break;
             case self::XMLRPC_TYPE_DOUBLE:
-                require_once 'Zend/XmlRpc/Value/Double.php';
+                // require_once 'Zend/XmlRpc/Value/Double.php';
                 $xmlrpcValue = new Zend_XmlRpc_Value_Double($value);
                 break;
             case self::XMLRPC_TYPE_BOOLEAN:
-                require_once 'Zend/XmlRpc/Value/Boolean.php';
+                // require_once 'Zend/XmlRpc/Value/Boolean.php';
                 $xmlrpcValue = new Zend_XmlRpc_Value_Boolean($value);
                 break;
             case self::XMLRPC_TYPE_STRING:
-                require_once 'Zend/XmlRpc/Value/String.php';
+                // require_once 'Zend/XmlRpc/Value/String.php';
                 $xmlrpcValue = new Zend_XmlRpc_Value_String($value);
                 break;
             case self::XMLRPC_TYPE_DATETIME:  // The value should already be in a iso8601 format
-                require_once 'Zend/XmlRpc/Value/DateTime.php';
+                // require_once 'Zend/XmlRpc/Value/DateTime.php';
                 $xmlrpcValue = new Zend_XmlRpc_Value_DateTime($value);
                 break;
             case self::XMLRPC_TYPE_BASE64:    // The value should already be base64 encoded
-                require_once 'Zend/XmlRpc/Value/Base64.php';
+                // require_once 'Zend/XmlRpc/Value/Base64.php';
                 $xmlrpcValue = new Zend_XmlRpc_Value_Base64($value, true);
                 break;
             case self::XMLRPC_TYPE_NIL:
                 // Fall through to the next case
             case self::XMLRPC_TYPE_APACHENIL:
                 // The value should always be NULL
-                require_once 'Zend/XmlRpc/Value/Nil.php';
+                // require_once 'Zend/XmlRpc/Value/Nil.php';
                 $xmlrpcValue = new Zend_XmlRpc_Value_Nil();
                 break;
             case self::XMLRPC_TYPE_ARRAY:
@@ -376,7 +376,7 @@ abstract class Zend_XmlRpc_Value
                 }
 
                 if (null === $data) {
-                    require_once 'Zend/XmlRpc/Value/Exception.php';
+                    // require_once 'Zend/XmlRpc/Value/Exception.php';
                     throw new Zend_XmlRpc_Value_Exception('Invalid XML for XML-RPC native '. self::XMLRPC_TYPE_ARRAY .' type: ARRAY tag must contain DATA tag');
                 }
                 $values = array();
@@ -385,7 +385,7 @@ abstract class Zend_XmlRpc_Value
                 foreach ($data->value as $element) {
                     $values[] = self::_xmlStringToNativeXmlRpc($element);
                 }
-                require_once 'Zend/XmlRpc/Value/Array.php';
+                // require_once 'Zend/XmlRpc/Value/Array.php';
                 $xmlrpcValue = new Zend_XmlRpc_Value_Array($values);
                 break;
             case self::XMLRPC_TYPE_STRUCT:
@@ -401,11 +401,11 @@ abstract class Zend_XmlRpc_Value
                     }
                     $values[(string)$member->name] = self::_xmlStringToNativeXmlRpc($member->value);
                 }
-                require_once 'Zend/XmlRpc/Value/Struct.php';
+                // require_once 'Zend/XmlRpc/Value/Struct.php';
                 $xmlrpcValue = new Zend_XmlRpc_Value_Struct($values);
                 break;
             default:
-                require_once 'Zend/XmlRpc/Value/Exception.php';
+                // require_once 'Zend/XmlRpc/Value/Exception.php';
                 throw new Zend_XmlRpc_Value_Exception('Value type \''. $type .'\' parsed from the XML string is not a known XML-RPC native type');
                 break;
         }

@@ -20,7 +20,7 @@
  * @version    $Id: Response.php 16971 2009-07-22 18:05:45Z mikaelkael $
  */
 
-require_once 'Zend/Http/Response.php';
+// require_once 'Zend/Http/Response.php';
 
 /**
  * @category   Zend

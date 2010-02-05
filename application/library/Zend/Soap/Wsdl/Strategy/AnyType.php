@@ -20,7 +20,7 @@
  * @version    $Id: AnyType.php 18951 2009-11-12 16:26:19Z alexander $
  */
 
-require_once "Zend/Soap/Wsdl/Strategy/Interface.php";
+// require_once "Zend/Soap/Wsdl/Strategy/Interface.php";
 
 class Zend_Soap_Wsdl_Strategy_AnyType implements Zend_Soap_Wsdl_Strategy_Interface
 {

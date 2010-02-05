@@ -119,7 +119,7 @@ class Zend_Crypt
         /**
          * @see Zend_Crypt_Exception
          */
-        require_once 'Zend/Crypt/Exception.php';
+        // require_once 'Zend/Crypt/Exception.php';
         throw new Zend_Crypt_Exception('\'' . $algorithm . '\' is not supported by any available extension or native function');
     }
 

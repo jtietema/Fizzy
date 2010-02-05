@@ -23,7 +23,7 @@
 /**
  * @see Zend_Tool_Framework_Metadata_Interface
  */
-require_once 'Zend/Tool/Framework/Metadata/Interface.php';
+// require_once 'Zend/Tool/Framework/Metadata/Interface.php';
 
 /**
  * @category   Zend

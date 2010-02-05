@@ -22,7 +22,7 @@
 /**
  * @see Zend_Ldap_Collection_Iterator_Interface
  */
-require_once 'Zend/Ldap/Collection/Iterator/Interface.php';
+// require_once 'Zend/Ldap/Collection/Iterator/Interface.php';
 
 /**
  * Zend_Ldap_Collection_Iterator_Default is the default collection iterator implementation
@@ -86,7 +86,7 @@ class Zend_Ldap_Collection_Iterator_Default implements Zend_Ldap_Collection_Iter
             /**
              * @see Zend_Ldap_Exception
              */
-            require_once 'Zend/Ldap/Exception.php';
+            // require_once 'Zend/Ldap/Exception.php';
             throw new Zend_Ldap_Exception($this->_ldap, 'counting entries');
         }
     }
@@ -185,7 +185,7 @@ class Zend_Ldap_Collection_Iterator_Default implements Zend_Ldap_Collection_Iter
         /**
          * @see Zend_Ldap_Exception
          */
-        require_once 'Zend/Ldap/Exception.php';
+        // require_once 'Zend/Ldap/Exception.php';
         if ($this->_current === false) {
             $msg = $this->_ldap->getLastError($code);
             if ($code === Zend_Ldap_Exception::LDAP_SIZELIMIT_EXCEEDED) {
@@ -211,7 +211,7 @@ class Zend_Ldap_Collection_Iterator_Default implements Zend_Ldap_Collection_Iter
         /**
          * @see Zend_Ldap_Exception
          */
-        require_once 'Zend/Ldap/Exception.php';
+        // require_once 'Zend/Ldap/Exception.php';
         if ($this->_current === false &&
                 $this->_ldap->getLastErrorCode() > Zend_Ldap_Exception::LDAP_SUCCESS) {
             throw new Zend_Ldap_Exception($this->_ldap, 'getting first entry');

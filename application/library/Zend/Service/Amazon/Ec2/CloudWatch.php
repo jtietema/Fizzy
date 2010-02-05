@@ -20,7 +20,7 @@
  * @version    $Id: CloudWatch.php 19067 2009-11-19 22:13:54Z sidhighwind $
  */
 
-require_once 'Zend/Service/Amazon/Ec2/Abstract.php';
+// require_once 'Zend/Service/Amazon/Ec2/Abstract.php';
 
 /**
  * An Amazon EC2 interface that allows yout to run, terminate, reboot and describe Amazon

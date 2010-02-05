@@ -21,7 +21,7 @@
  */
 
 /** Zend_Log_Filter_Interface */
-require_once 'Zend/Log/Filter/Interface.php';
+// require_once 'Zend/Log/Filter/Interface.php';
 
 /**
  * @category   Zend
@@ -54,7 +54,7 @@ class Zend_Log_Filter_Priority implements Zend_Log_Filter_Interface
     public function __construct($priority, $operator = '<=')
     {
         if (! is_integer($priority)) {
-            require_once 'Zend/Log/Exception.php';
+            // require_once 'Zend/Log/Exception.php';
             throw new Zend_Log_Exception('Priority must be an integer');
         }
 

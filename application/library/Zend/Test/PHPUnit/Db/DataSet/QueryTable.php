@@ -21,9 +21,9 @@
  */
 
 
-require_once "PHPUnit/Extensions/Database/DataSet/QueryTable.php";
+// require_once "PHPUnit/Extensions/Database/DataSet/QueryTable.php";
 
-require_once "PHPUnit/Extensions/Database/DB/IDatabaseConnection.php";
+// require_once "PHPUnit/Extensions/Database/DB/IDatabaseConnection.php";
 
 /**
  * Represent a PHPUnit Database Extension table with Queries using a Zend_Db adapter for assertion against other tables.
@@ -47,7 +47,7 @@ class Zend_Test_PHPUnit_Db_DataSet_QueryTable extends PHPUnit_Extensions_Databas
     public function __construct($tableName, $query, PHPUnit_Extensions_Database_DB_IDatabaseConnection $databaseConnection)
     {
         if( !($databaseConnection instanceof Zend_Test_PHPUnit_Db_Connection) ) {
-            require_once "Zend/Test/PHPUnit/Db/Exception.php";
+            // require_once "Zend/Test/PHPUnit/Db/Exception.php";
             throw new Zend_Test_PHPUnit_Db_Exception("Zend_Test_PHPUnit_Db_DataSet_QueryTable only works with Zend_Test_PHPUnit_Db_Connection connections-");
         }
         parent::__construct($tableName, $query, $databaseConnection);

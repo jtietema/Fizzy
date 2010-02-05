@@ -20,7 +20,7 @@
  * @version    $Id: Abstract.php 16971 2009-07-22 18:05:45Z mikaelkael $
  */
 
-require_once "Zend/Soap/Wsdl/Strategy/Interface.php";
+// require_once "Zend/Soap/Wsdl/Strategy/Interface.php";
 
 /**
  * Abstract class for Zend_Soap_Wsdl_Strategy.

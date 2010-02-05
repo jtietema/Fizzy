@@ -20,7 +20,7 @@
  * @version    $Id: Reserved.php 16971 2009-07-22 18:05:45Z mikaelkael $
  */
 
-require_once 'Zend/Service/Amazon/Ec2/Abstract.php';
+// require_once 'Zend/Service/Amazon/Ec2/Abstract.php';
 
 /**
  * Allows you to interface with the reserved instances on Amazon Ec2

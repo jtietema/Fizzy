@@ -22,17 +22,17 @@
 /**
  * @see Zend_Feed_Reader_Extension_FeedAbstract
  */
-require_once 'Zend/Feed/Reader/Extension/FeedAbstract.php';
+// require_once 'Zend/Feed/Reader/Extension/FeedAbstract.php';
 
 /**
  * @see Zend_Date
  */
-require_once 'Zend/Date.php';
+// require_once 'Zend/Date.php';
 
 /**
  * @see Zend_Uri
  */
-require_once 'Zend/Uri.php';
+// require_once 'Zend/Uri.php';
 
 /**
  * @category   Zend

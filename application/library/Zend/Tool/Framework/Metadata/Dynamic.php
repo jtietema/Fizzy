@@ -23,7 +23,7 @@
 /**
  * @see Zend_Tool_Framework_Metadata_Interface
  */
-require_once 'Zend/Tool/Framework/Metadata/Interface.php';
+// require_once 'Zend/Tool/Framework/Metadata/Interface.php';
 
 /**
  * @category   Zend
@@ -129,7 +129,7 @@ class Zend_Tool_Framework_Metadata_Dynamic implements Zend_Tool_Framework_Metada
         } elseif (array_key_exists($name, $this->_dynamicAttributes)) {
             return ;
         } else {
-            require_once 'Zend/Tool/Framework/Registry/Exception.php';
+            // require_once 'Zend/Tool/Framework/Registry/Exception.php';
             throw new Zend_Tool_Framework_Registry_Exception('Property ' . $name . ' was not located in this metadata.');
         }
     }
@@ -146,7 +146,7 @@ class Zend_Tool_Framework_Metadata_Dynamic implements Zend_Tool_Framework_Metada
             $this->{'set' . $name}($value);
             return;
         } else {
-            require_once 'Zend/Tool/Framework/Registry/Exception.php';
+            // require_once 'Zend/Tool/Framework/Registry/Exception.php';
             throw new Zend_Tool_Framework_Registry_Exception('Property ' . $name . ' was not located in this registry.');
         }
     }

@@ -22,23 +22,23 @@
 /**
  * @see Zend_Feed_Reader
  */
-require_once 'Zend/Feed/Reader.php';
+// require_once 'Zend/Feed/Reader.php';
 
 /**
  * @see Zend_Feed_Reader_Entry_Atom
  */
-require_once 'Zend/Feed/Reader/Entry/Atom.php';
+// require_once 'Zend/Feed/Reader/Entry/Atom.php';
 
 
 /**
  * @see Zend_Feed_Reader_Entry_Rss
  */
-require_once 'Zend/Feed/Reader/Entry/Rss.php';
+// require_once 'Zend/Feed/Reader/Entry/Rss.php';
 
 /**
  * @see Zend_feed_Reader_FeedInterface
  */
-require_once 'Zend/Feed/Reader/FeedInterface.php';
+// require_once 'Zend/Feed/Reader/FeedInterface.php';
 
 /**
  * @category   Zend
@@ -259,7 +259,7 @@ abstract class Zend_Feed_Reader_FeedAbstract implements Zend_Feed_Reader_FeedInt
                 return call_user_func_array(array($extension, $method), $args);
             }
         }
-        require_once 'Zend/Feed/Exception.php';
+        // require_once 'Zend/Feed/Exception.php';
         throw new Zend_Feed_Exception('Method: ' . $method
         . 'does not exist and could not be located on a registered Extension');
     }
