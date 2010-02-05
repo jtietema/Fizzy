@@ -27,7 +27,7 @@ require_once 'Zend/Validate/Abstract.php';
  *
  * @author Mattijs Hoitink <mattijs@voidwalkers.nl>
  */
-class Fizzy_Validate_PasswordConfirm extends Zend_Validate_Abstract
+class Fizzy_Validate_EqualsField extends Zend_Validate_Abstract
 {
     const NOT_MATCH = 'notMatch';
 
@@ -53,6 +53,15 @@ class Fizzy_Validate_PasswordConfirm extends Zend_Validate_Abstract
         $this->_oppositeField = $field;
 
         return $this;
+    }
+
+    /**
+     * Sets the fieldname shown in the error
+     * @param string $name
+     */
+    public function setFieldName($name)
+    {
+        $this->setMessage($name . ' confirmation does not match', self::NOT_MATCH);
     }
 
     /**

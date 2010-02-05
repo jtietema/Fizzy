@@ -76,6 +76,10 @@ class Admin_UserController extends Fizzy_SecuredController
 
     protected function _getForm($action, User $user)
     {
+        $passwordConfirm = new Fizzy_Validate_EqualsField();
+        $passwordConfirm->setOppositeField('password_confirm');
+        $passwordConfirm->setFieldName('Password');
+
         $formConfig = array (
             'action' => $action,
             'elements' => array (
@@ -103,7 +107,7 @@ class Admin_UserController extends Fizzy_SecuredController
                         'label' => 'Password',
                         'required' => true,
                         'validators' => array (
-                            'passwordConfirm'
+                            $passwordConfirm
                         )
                     ),
                 ),
