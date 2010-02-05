@@ -9,9 +9,14 @@ set_include_path(LIBRARY_PATH . PATH_SEPARATOR . APPLICATION_PATH . '/models/doc
 require_once 'Doctrine.php';
 spl_autoload_register(array('Doctrine', 'autoload'));
 
+require_once 'Zend/Loader/Autoloader.php';
+$autoloader = Zend_Loader_Autoloader::getInstance();
+
+$config = new Zend_Config_Ini('configs/fizzy.ini', 'storage');
+
 $manager = Doctrine_Manager::getInstance();
 
-Doctrine_Manager::connection('mysql://root@localhost/fizzy', 'doctrine');
+Doctrine_Manager::connection($config->dsn, 'doctrine');
 
 $manager->setAttribute('model_loading', 'conservative');
 
