@@ -220,7 +220,6 @@ class Fizzy
             'log' => 'data/fizzy.log',
             'library' => 'library',
             'public' => 'public',
-            'uploads' => 'public/uploads',
         ),
     );
 

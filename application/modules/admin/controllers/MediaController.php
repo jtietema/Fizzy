@@ -9,13 +9,13 @@ class Admin_MediaController extends Fizzy_SecuredController
 {
     protected $_sessionNamespace = 'fizzy';
     protected $_redirect = '/fizzy/login';
-    
+
     /**
      * @todo implement overwrite checkbox
      */
     public function indexAction()
     {
-        $uploadFolder = Fizzy::getInstance()->getPath('uploads');
+        $uploadFolder = ROOT_PATH . '/public/uploads/';
 
         $form = $this->_getForm($uploadFolder);
 
@@ -56,7 +56,7 @@ class Admin_MediaController extends Fizzy_SecuredController
     
     public function displayAction()
     {
-        $uploadFolder = Fizzy::getInstance()->getPath('uploads');
+        $uploadFolder = ROOT_PATH . '/public/uploads/';
         
         $files = array();
         foreach(new DirectoryIterator($uploadFolder) as $file) {
@@ -88,7 +88,7 @@ class Admin_MediaController extends Fizzy_SecuredController
         if(null !== $name)
         {
             $name = basename(urldecode($name));
-            $uploadFolder = Fizzy::getInstance()->getPath('uploads');
+            $uploadFolder = ROOT_PATH . '/public/uploads/';
             $file = $uploadFolder . DIRECTORY_SEPARATOR . $name;
             if(is_file($file))
             {
@@ -143,7 +143,7 @@ class Admin_MediaController extends Fizzy_SecuredController
     
     public function galleryAction()
     {
-        $uploadFolder = Fizzy::getInstance()->getPath('uploads');
+        $uploadFolder = ROOT_PATH . '/public/uploads/';
 
         // Parse all files in the upload directory
         $files = array();
