@@ -47,7 +47,13 @@ class Fizzy_Image_Sizer
      * Name template for resized images.
      * @var string
      */
-    protected $_nameTemplate = 'resized-%width%x%height%.%type%';
+    protected $_nameTemplate = 'resized-%time%-%width%x%height%.%type%';
+
+    /**
+     * Time the creation process is started.
+     * @var string
+     */
+    protected $_time = null;
 
     /** **/
 
@@ -83,6 +89,18 @@ class Fizzy_Image_Sizer
         return $this;
     }
 
+    /**
+     * Set the name template for the resized images. Parameters that can be
+     * used in the template are:
+     * <ul>
+     *   <li>%time% - the time the image is generated</li>
+     *   <li>%width% - the width of the resized image</li>
+     *   <li>%height% - the height of the resized image</li>
+     *   <li>%type% - the extension that is used for generating</li>
+     * </ul>
+     * @param string $template
+     * @return Fizzy_Image_Sizer
+     */
     public function setNameTemplate($template)
     {
         $this->_nameTemplate = $template;
@@ -90,6 +108,11 @@ class Fizzy_Image_Sizer
         return $this;
     }
 
+    /**
+     * Set the target path where the resized images should be saved.
+     * @param string $path
+     * @return Fizzy_Image_Sizer
+     */
     public function setTargetPath($path)
     {
         $realpath = realpath($path);
@@ -102,20 +125,43 @@ class Fizzy_Image_Sizer
         return $this;
     }
 
+    /**
+     * Creates one or more sizes of the original, based on the parameters, and
+     * saves them to the target path.
+     * @param array $sizes
+     */
     public function createSizes(array $sizes)
     {
         $image = $this->_image;
+        $this->_time = time();
         foreach($sizes as $size) {
             list($width, $height) = $this->_getDimensions($size);
             $this->_createResize($image, intval($width), intval($height));
         }
     }
 
+    /**
+     * Returns a dimensions array. When a string is passed in an array will be
+     * created with the value as the width and height parameter. The same goes
+     * for an array with only one value.
+     * If the array contains two values they are checked.
+     * @param array|string $dimensions
+     * @return array
+     */
     protected function _getDimensions($dimensions)
     {
         if (is_array($dimensions)) {
+            list($width, $height) = $dimensions;
+            if(!is_numeric($width)) {
+                throw new Exception("Value {$width} is not a valid height dimension.");
+            }
+            if(!isset($height) || null === $height) {
+                $height = $width;
+            } else if(!is_numeric($height)) {
+                throw new Exception("Value {$height} is not a valid height dimension.");
+            }
             
-            
+            $dimensions = array(intval($width), intval($height));
         }
         else if (is_string($dimensions)) {
             $size = intval($dimensions);
@@ -147,6 +193,7 @@ class Fizzy_Image_Sizer
         $image = $image->cropCentered($width, $height);
         
         $filename = $this->_nameTemplate;
+        $filename = str_replace('%time%', $this->_time, $filename);
         $filename = str_replace('%width%', $width, $filename);
         $filename = str_replace('%height%', $height, $filename);
         $filename = str_replace('%type%', $this->_imageType, $filename);

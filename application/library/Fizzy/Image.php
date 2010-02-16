@@ -255,7 +255,7 @@ class Fizzy_Image
      * @param string $direction
      * @return Fizzy_Image
      */
-    public function rotate($degree, $direction)
+    public function rotate($degree, $direction = 'cw')
     {
         throw new Fizzy_Image_Exception('Not implemented');
     }
@@ -264,16 +264,18 @@ class Fizzy_Image
      * Flips the image around the horizontal axis.
      * @return Fizzy_Image
      */
-    public function flipHorizontal()
+    public function flip()
     {
-        throw new Fizzy_Image_Exception('Not implemented');
+        $adapter = $this->_getAdapterClone();
+        $adapter->rotate(180);
+        return new self($adapter);
     }
 
     /**
-     * Flips the image around the vertical axis.
+     * Mirrors the image around the vertical axis.
      * @return Fizzy_Image
      */
-    public function flipVertical()
+    public function mirror()
     {
         throw new Fizzy_Image_Exception('Not implemented');
     }

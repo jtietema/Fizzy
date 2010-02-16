@@ -110,6 +110,28 @@ class Fizzy_Image_Adapter_GD extends Fizzy_Image_Adapter_Abstract
     }
 
     /**
+     * Rotates the image by given degree.
+     * @param int $degree
+     * @param Resource $backgroundColor
+     * @return Fizzy_Image_Adapter_GD
+     */
+    public function rotate($degree, $backgroundColor = null)
+    {
+        if (!is_numeric($degree)) {
+            throw new Fizzy_Image_Exception("{$degree} is not a valid  number.");
+        }
+        if (null === $backgroundColor) {
+            $backgroundColor = 0;
+        }
+
+        $originalImage = $this->_image;
+        $this->_image = imagerotate($originalImage, $degree, $backgroundColor);
+        imagedestroy($originalImage);
+
+        return $this;
+    }
+
+    /**
      * @see Fizzy_Image_Adapter_Interface
      * @return int
      */
