@@ -7,7 +7,8 @@
     <script type="text/javascript" src="<?= $this->baseUrl('/fizzy_assets/js/tiny_mce/plugins/fizzymedia/js/dialog.js') ?>"></script>
 </head>
 <body>
-<div class="files-container">
+
+<div id="image-picker" class="files-container">
     <?php foreach($this->files as $fileInfo) : ?>
     <div class="thumbnail" id="<?= $this->baseUrl('/uploads/' . $fileInfo->basename); ?>" onclick="select('<?= $this->baseUrl('/uploads/' . $fileInfo->basename); ?>', this);">
         <img class="thumbnail" src="<?= $this->baseUrl('/uploads/' . $fileInfo->basename); ?>" alt="<?= $fileInfo->basename ?>" />
@@ -35,16 +36,51 @@
 </div>
 <form onsubmit="FizzymediaDialog.insert();return false;" action="#">
 <div>
-<label>Description:</label>
-    <input type="text" name="alt" id="alt" />
-<label>Width</label>
-    <input type="text" name="width" id="width" />
-<label>Height</label>
-    <input type="text" name="height" id="height" />
-<!--
-<label>Border</label>
-    <input type="text" name="border" id="border" />
--->
+    <div class="form-left">
+        <label>Description:</label>
+            <input type="text" name="alt" id="alt" />
+        <label>Width</label>
+            <input type="text" name="width" id="width" class="small" /> px
+        <label>Height</label>
+            <input type="text" name="height" id="height" class="small" /> px
+        <label>Alignment</label>
+            <select name="position" id="position">
+                <option value="none">-- Not Set --</option>
+                <option value="left">Left</option>
+                <option value="right">Right</option>
+                <option value="baseline">Baseline</option>
+                <option value="top">Top</option>
+                <option value="middle">Middle</option>
+                <option value="bottom">Bottom</option>
+                <option value="text-top">Text top</option>
+                <option value="text-bottom">Text bottom</option>
+            </select>
+
+        <label>Border</label>
+            <input type="text" name="border" id="border" class="small" /> px
+    </div>
+    <div class="form-right">
+        <label>Margins</label>
+            <table>
+                <tr>
+                    <td></td>
+                    <td> <input type="text" name="marginTop" id="marginTop" /></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td><input type="text" name="marginLeft" id="marginLeft" /></td>
+                    <td class="center"><img src="<?= $this->baseUrl('/fizzy_assets/js/tiny_mce/plugins/fizzymedia/img/flower.png');?>" alt="flower"  /></td>
+                    <td><input type="text" name="marginRight" id="marginRight" /></td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td> <input type="text" name="marginBottom" id="marginBottom" /></td>
+                    <td></td>
+                </tr>
+            </table>
+        <p>You can specify the margins around the picture above.</p>
+    </div>
+    
 <div class="clear"></div>
     <input type="button" name="insert" value="{#insert}" onclick="FizzymediaDialog.insert();" />
     <input type="button" name="cancel" value="{#cancel}" onclick="tinyMCEPopup.close();" />

@@ -140,7 +140,10 @@ class Admin_MediaController extends Fizzy_SecuredController
 
         return new Zend_Form(new Zend_Config($formConfig));
     }
-    
+
+    /**
+     * Action for the image picker popup
+     */
     public function galleryAction()
     {
         $uploadFolder = ROOT_PATH . '/public/uploads/';

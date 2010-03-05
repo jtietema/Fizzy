@@ -211,9 +211,8 @@ class Fizzy
                 'admin' => 'application/modules/admin/controllers',
             ),
             'models' => 'application/models',
-            'templates' => array (
-                'fizzy' => 'application/templates',
-            ),
+            'templatePath' => 'application/modules/default/views/templates',
+            'layoutPath' => 'application/modules/default/views/layouts',
             'assets' => 'application/assets',
             'configs' => 'configs',
             'data' => 'data',

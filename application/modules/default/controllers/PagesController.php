@@ -25,8 +25,8 @@ class PagesController extends Fizzy_Controller
         }
 
         $config = Zend_Registry::get('config');
-        $templatePaths = $config->paths->templates->toArray();
-        $this->view->setScriptPath($templatePaths);
+        $templatePath = $config->paths->templatePath;
+        $this->view->setScriptPath($templatePath);
         $this->_helper->layout->setLayout($page->getLayout());
 
         $this->view->page = $page;

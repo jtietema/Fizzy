@@ -47,8 +47,7 @@ class Page extends BasePage
         if ('default' !== $array['template'])
             $this->template = $array['template'];
         
-        if ('default' !== $array['layout'])
-            $this->layout = $array['layout'];
+        $this->layout = $array['layout'];
 
         return $this;
     }

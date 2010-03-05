@@ -93,6 +93,8 @@ class Admin_PagesController extends Fizzy_SecuredController
      */
     protected function _getForm($action, $page)
     {
+        $config = Zend_Registry::get('config');
+        
         $formConfig = array (
             'action' => $action,
             'elements' => array (
@@ -138,7 +140,7 @@ class Admin_PagesController extends Fizzy_SecuredController
                     'options' => array (
                         'label' => 'Template',
                         'required' => true,
-                        'multiOptions' => array('default' => 'Default'),
+                        'multiOptions' => $this->_fetchFiles($config->paths->templatePath),
                         'value' => $page->getTemplate(),
                     )
                 ),
@@ -147,7 +149,7 @@ class Admin_PagesController extends Fizzy_SecuredController
                     'options' => array (
                         'label' => 'Layout',
                         'required' => true,
-                        'multiOptions' => array('default' => 'Default'),
+                        'multiOptions' => $this->_fetchFiles($config->paths->layoutPath, false),
                         'value' => $page->getLayout(),
                     )
                 ),
@@ -173,6 +175,30 @@ class Admin_PagesController extends Fizzy_SecuredController
         $form = new Fizzy_Form();
         $form->setOptions($formConfig);
         return $form;
+    }
+
+    /**
+     * Fetches a list of files from a given directory
+     * 
+     * @param string $dir
+     * @return array
+     */
+    protected function _fetchFiles($dir, $keepExtension = true)
+    {
+        $files = array();
+        $dir = new DirectoryIterator($dir);
+        foreach ($dir as $file) {
+            if($file->isDot()) {
+                continue;
+            }
+            $pieces = explode('.', $file->getFilename());
+            if ($keepExtension) {
+                $files[$file->getFilename()] = $pieces[0];
+            } else {
+                $files[$pieces[0]] = $pieces[0];
+            }
+        }
+        return $files;
     }
     
 }
