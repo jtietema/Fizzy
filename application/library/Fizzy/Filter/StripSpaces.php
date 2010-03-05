@@ -1,6 +1,6 @@
 <?php
 /**
- * Class Fizzy_Filter_Slugify
+ * Class Fizzy_Filter_StripSpaces
  * @category Fizzy
  * @package Fizzy_Filter
  *
@@ -18,27 +18,23 @@
  * @license http://www.voidwalkers.nl/license/new-bsd The New BSD License
  */
 
-/** Zend_Filter_Interface */
-require_once 'Zend/Filter/Interface.php';
+/** Zend_Filter_PregReplace */
+require_once 'Zend/Filter/PregReplace.php';
 
 /**
- * Filter to change a value to a slugified version. This replaces all non
- * letters and digits by a '-'.
- *
+ * Filter to strip all spaces from a string.
+ * 
  * @author Mattijs Hoitink <mattijs@voidwalkers.nl>
  */
-class Fizzy_Filter_Slugify implements Zend_Filter_Interface
+class Fizzy_Filter_StripSpaces extends Zend_Filter_PregReplace
 {
     /**
-     * Filters the value and returns a slugified version.
-     * @param string $value
+     * @see Zend_Filter_PregReplace
      */
-    public function filter($value)
-    {
-        # Replace all non letters or digits by -
-        $value = preg_replace('/\W+/', '-', $value);
-        $value = strtolower(trim($value, '-'));
-        
-        return $value;
-    }
+    protected $_matchPattern = '(\s*)';
+    
+    /**
+     * @see Zend_Filter_PregReplace
+     */
+    protected $_replacement = '';
 }
