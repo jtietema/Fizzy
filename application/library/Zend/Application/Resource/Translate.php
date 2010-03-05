@@ -15,10 +15,16 @@
  * @category   Zend
  * @package    Zend_Application
  * @subpackage Resource
- * @copyright  Copyright (c) 2005-2009 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: Translate.php 16200 2009-06-21 18:50:06Z thomas $
+ * @version    $Id: Translate.php 20816 2010-02-01 21:13:54Z freak $
  */
+
+/**
+ * @see Zend_Application_Resource_ResourceAbstract
+ */
+require_once 'Zend/Application/Resource/ResourceAbstract.php';
+
 
 /**
  * Resource for setting translation options
@@ -27,7 +33,7 @@
  * @category   Zend
  * @package    Zend_Application
  * @subpackage Resource
- * @copyright  Copyright (c) 2005-2009 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
 class Zend_Application_Resource_Translate extends Zend_Application_Resource_ResourceAbstract
@@ -53,6 +59,8 @@ class Zend_Application_Resource_Translate extends Zend_Application_Resource_Reso
      * Retrieve translate object
      *
      * @return Zend_Translate
+     * @throws Zend_Application_Resource_Exception if registry key was used
+     *          already but is no instance of Zend_Translate
      */
     public function getTranslate()
     {
@@ -60,6 +68,7 @@ class Zend_Application_Resource_Translate extends Zend_Application_Resource_Reso
             $options = $this->getOptions();
 
             if (!isset($options['data'])) {
+                require_once 'Zend/Application/Resource/Exception.php';
                 throw new Zend_Application_Resource_Exception('No translation source data provided.');
             }
 
@@ -67,15 +76,28 @@ class Zend_Application_Resource_Translate extends Zend_Application_Resource_Reso
             $locale  = isset($options['locale'])  ? $options['locale']  : null;
             $translateOptions = isset($options['options']) ? $options['options'] : array();
 
-            $this->_translate = new Zend_Translate(
-                $adapter, $options['data'], $locale, $translateOptions
-            );
-
             $key = (isset($options['registry_key']) && !is_numeric($options['registry_key']))
                  ? $options['registry_key']
                  : self::DEFAULT_REGISTRY_KEY;
 
-            Zend_Registry::set($key, $this->_translate);
+            if(Zend_Registry::isRegistered($key)) {
+                $translate = Zend_Registry::get($key);
+                if(!$translate instanceof Zend_Translate) {
+                    require_once 'Zend/Application/Resource/Exception.php';
+                    throw new Zend_Application_Resource_Exception($key
+                                   . ' already registered in registry but is '
+                                   . 'no instance of Zend_Translate');
+                }
+
+                $translate->addTranslation($options['data'], $locale, $options);
+                $this->_translate = $translate;
+            } else {
+                $this->_translate = new Zend_Translate(
+                    $adapter, $options['data'], $locale, $translateOptions
+                );
+
+                Zend_Registry::set($key, $this->_translate);
+            }
         }
 
         return $this->_translate;

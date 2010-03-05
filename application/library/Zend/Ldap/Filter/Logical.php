@@ -15,19 +15,19 @@
  * @category   Zend
  * @package    Zend_Ldap
  * @subpackage Filter
- * @copyright  Copyright (c) 2005-2008 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: Logical.php 17829 2009-08-26 15:07:10Z sgehrig $
+ * @version    $Id: Logical.php 20096 2010-01-06 02:05:09Z bkarwin $
  */
 
 /**
  * @see Zend_Ldap_Filter_Abstract
  */
-// require_once 'Zend/Ldap/Filter/Abstract.php';
+require_once 'Zend/Ldap/Filter/Abstract.php';
 /**
  * @see Zend_Ldap_Filter_String
  */
-// require_once 'Zend/Ldap/Filter/String.php';
+require_once 'Zend/Ldap/Filter/String.php';
 
 /**
  * Zend_Ldap_Filter_Logical provides a base implementation for a grouping filter.
@@ -35,7 +35,7 @@
  * @category   Zend
  * @package    Zend_Ldap
  * @subpackage Filter
- * @copyright  Copyright (c) 2005-2008 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
 abstract class Zend_Ldap_Filter_Logical extends Zend_Ldap_Filter_Abstract
@@ -71,7 +71,7 @@ abstract class Zend_Ldap_Filter_Logical extends Zend_Ldap_Filter_Abstract
                 /**
                  * @see Zend_Ldap_Filter_Exception
                  */
-                // require_once 'Zend/Ldap/Filter/Exception.php';
+                require_once 'Zend/Ldap/Filter/Exception.php';
                 throw new Zend_Ldap_Filter_Exception('Only strings or Zend_Ldap_Filter_Abstract allowed.');
             }
         }

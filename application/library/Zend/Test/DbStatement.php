@@ -13,14 +13,17 @@
  * to license@zend.com so we can send you a copy immediately.
  *
  * @category   Zend
- * @package    Test
+ * @package    Zend_Test
  * @subpackage PHPUnit
- * @copyright  Copyright (c) 2005-2009 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: DbStatement.php 18951 2009-11-12 16:26:19Z alexander $
+ * @version    $Id: DbStatement.php 20096 2010-01-06 02:05:09Z bkarwin $
  */
 
-// require_once "Zend/Db/Statement/Interface.php";
+/**
+ * @see Zend_Db_Statement_Interface
+ */
+require_once "Zend/Db/Statement/Interface.php";
 
 /**
  * Testing Database Statement that acts as a stack to SQL resultsets.
@@ -28,7 +31,7 @@
  * @category   Zend
  * @package    Zend_Test
  * @subpackage PHPUnit
- * @copyright  Copyright (c) 2005-2009 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
 class Zend_Test_DbStatement implements Zend_Db_Statement_Interface
@@ -302,7 +305,7 @@ class Zend_Test_DbStatement implements Zend_Db_Statement_Interface
             return false;
         } else {
             if(count($row) < $col) {
-                // require_once "Zend/Db/Statement/Exception.php";
+                require_once "Zend/Db/Statement/Exception.php";
                 throw new Zend_Db_Statement_Exception(
                     "Column Position '".$col."' is out of bounds."
                 );

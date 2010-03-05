@@ -14,14 +14,14 @@
  *
  * @category   Zend
  * @package    Zend_Controller
- * @copyright  Copyright (c) 2005-2009 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
 
 /**
  * Zend_XmlRpc_Request
  */
-// require_once 'Zend/XmlRpc/Request.php';
+require_once 'Zend/XmlRpc/Request.php';
 
 /**
  * XmlRpc Request object -- Request via STDIN
@@ -32,9 +32,9 @@
  *
  * @category Zend
  * @package  Zend_XmlRpc
- * @copyright  Copyright (c) 2005-2009 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version $Id: Stdin.php 16208 2009-06-21 19:19:26Z thomas $
+ * @version $Id: Stdin.php 20096 2010-01-06 02:05:09Z bkarwin $
  */
 class Zend_XmlRpc_Request_Stdin extends Zend_XmlRpc_Request
 {

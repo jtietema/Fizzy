@@ -15,23 +15,23 @@
  * @category   Zend
  * @package    Zend_Service
  * @subpackage Twitter
- * @copyright  Copyright (c) 2005-2009 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: Twitter.php 19096 2009-11-20 15:33:15Z sidhighwind $
+ * @version    $Id: Twitter.php 20096 2010-01-06 02:05:09Z bkarwin $
  */
 /**
  * @see Zend_Rest_Client
  */
-// require_once 'Zend/Rest/Client.php';
+require_once 'Zend/Rest/Client.php';
 /**
  * @see Zend_Rest_Client_Result
  */
-// require_once 'Zend/Rest/Client/Result.php';
+require_once 'Zend/Rest/Client/Result.php';
 /**
  * @category   Zend
  * @package    Zend_Service
  * @subpackage Twitter
- * @copyright  Copyright (c) 2005-2009 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
 class Zend_Service_Twitter extends Zend_Rest_Client
@@ -889,7 +889,7 @@ class Zend_Service_Twitter extends Zend_Rest_Client
     protected function _validateScreenName($name)
     {
         if (!preg_match('/^[a-zA-Z0-9_]{0,20}$/', $name)) {
-            // require_once 'Zend/Service/Twitter/Exception.php';
+            require_once 'Zend/Service/Twitter/Exception.php';
             throw new Zend_Service_Twitter_Exception('Screen name, "' . $name . '" should only contain alphanumeric characters and' . ' underscores, and not exceed 15 characters.');
         }
         return $name;
@@ -906,7 +906,7 @@ class Zend_Service_Twitter extends Zend_Rest_Client
     {
         // Get the URI object and configure it
         if (!$this->_uri instanceof Zend_Uri_Http) {
-            // require_once 'Zend/Rest/Client/Exception.php';
+            require_once 'Zend/Rest/Client/Exception.php';
             throw new Zend_Rest_Client_Exception('URI object must be set before performing call');
         }
 

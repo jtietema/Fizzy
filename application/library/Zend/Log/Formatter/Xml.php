@@ -15,21 +15,21 @@
  * @category   Zend
  * @package    Zend_Log
  * @subpackage Formatter
- * @copyright  Copyright (c) 2005-2009 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: Xml.php 20105 2010-01-06 21:28:26Z matthew $
+ * @version    $Id: Xml.php 20104 2010-01-06 21:26:01Z matthew $
  */
 
 /** Zend_Log_Formatter_Interface */
-// require_once 'Zend/Log/Formatter/Interface.php';
+require_once 'Zend/Log/Formatter/Interface.php';
 
 /**
  * @category   Zend
  * @package    Zend_Log
  * @subpackage Formatter
- * @copyright  Copyright (c) 2005-2009 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: Xml.php 20105 2010-01-06 21:28:26Z matthew $
+ * @version    $Id: Xml.php 20104 2010-01-06 21:26:01Z matthew $
  */
 class Zend_Log_Formatter_Xml implements Zend_Log_Formatter_Interface
 {

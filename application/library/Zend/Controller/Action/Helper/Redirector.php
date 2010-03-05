@@ -15,21 +15,21 @@
  * @category   Zend
  * @package    Zend_Controller
  * @subpackage Zend_Controller_Action_Helper
- * @copyright  Copyright (c) 2005-2009 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: Redirector.php 16971 2009-07-22 18:05:45Z mikaelkael $
+ * @version    $Id: Redirector.php 20096 2010-01-06 02:05:09Z bkarwin $
  */
 
 /**
  * @see Zend_Controller_Action_Helper_Abstract
  */
-// require_once 'Zend/Controller/Action/Helper/Abstract.php';
+require_once 'Zend/Controller/Action/Helper/Abstract.php';
 
 /**
  * @category   Zend
  * @package    Zend_Controller
  * @subpackage Zend_Controller_Action_Helper
- * @copyright  Copyright (c) 2005-2009 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
 class Zend_Controller_Action_Helper_Redirector extends Zend_Controller_Action_Helper_Abstract
@@ -92,7 +92,7 @@ class Zend_Controller_Action_Helper_Redirector extends Zend_Controller_Action_He
     {
         $code = (int)$code;
         if ((300 > $code) || (307 < $code) || (304 == $code) || (306 == $code)) {
-            // require_once 'Zend/Controller/Action/Exception.php';
+            require_once 'Zend/Controller/Action/Exception.php';
             throw new Zend_Controller_Action_Exception('Invalid redirect HTTP status code (' . $code  . ')');
         }
 
@@ -525,7 +525,7 @@ class Zend_Controller_Action_Helper_Redirector extends Zend_Controller_Action_He
             return call_user_func_array(array($this, 'gotoSimpleAndExit'), $args);
         }
 
-        // require_once 'Zend/Controller/Action/Exception.php';
+        require_once 'Zend/Controller/Action/Exception.php';
         throw new Zend_Controller_Action_Exception(sprintf('Invalid method "%s" called on redirector', $method));
     }
 }

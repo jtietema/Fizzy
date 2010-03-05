@@ -14,20 +14,20 @@
  *
  * @category   Zend
  * @package    Zend_Filter
- * @copyright  Copyright (c) 2005-2009 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: PregReplace.php 16217 2009-06-21 19:39:00Z thomas $
+ * @version    $Id: PregReplace.php 21086 2010-02-18 21:10:39Z thomas $
  */
 
 /**
  * @see Zend_Filter_Interface
  */
-// require_once 'Zend/Filter/Interface.php';
+require_once 'Zend/Filter/Interface.php';
 
 /**
  * @category   Zend
  * @package    Zend_Filter
- * @copyright  Copyright (c) 2005-2009 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
 class Zend_Filter_PregReplace implements Zend_Filter_Interface
@@ -77,19 +77,37 @@ class Zend_Filter_PregReplace implements Zend_Filter_Interface
 
     /**
      * Constructor
+     * Supported options are
+     *     'match'   => matching pattern
+     *     'replace' => replace with this
      *
-     * @param  string $match
-     * @param  string $replace
+     * @param  string|array $options
      * @return void
      */
-    public function __construct($matchPattern = null, $replacement = null)
+    public function __construct($options = null)
     {
-        if ($matchPattern) {
-            $this->setMatchPattern($matchPattern);
+        if ($options instanceof Zend_Config) {
+            $options = $options->toArray();
+        } else if (!is_array($options)) {
+            $options = func_get_args();
+            $temp    = array();
+            if (!empty($options)) {
+                $temp['match'] = array_shift($options);
+            }
+
+            if (!empty($options)) {
+                $temp['replace'] = array_shift($options);
+            }
+
+            $options = $temp;
         }
 
-        if ($replacement) {
-            $this->setReplacement($replacement);
+        if (array_key_exists('match', $options)) {
+            $this->setMatchPattern($options['match']);
+        }
+
+        if (array_key_exists('replace', $options)) {
+            $this->setReplacement($options['replace']);
         }
     }
 
@@ -146,7 +164,7 @@ class Zend_Filter_PregReplace implements Zend_Filter_Interface
     public function filter($value)
     {
         if ($this->_matchPattern == null) {
-            // require_once 'Zend/Filter/Exception.php';
+            require_once 'Zend/Filter/Exception.php';
             throw new Zend_Filter_Exception(get_class($this) . ' does not have a valid MatchPattern set.');
         }
 

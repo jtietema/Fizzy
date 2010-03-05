@@ -15,25 +15,25 @@
  * @category   Zend
  * @package    Zend_Tool
  * @subpackage Framework
- * @copyright  Copyright (c) 2005-2009 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: Signature.php 18951 2009-11-12 16:26:19Z alexander $
+ * @version    $Id: Signature.php 20096 2010-01-06 02:05:09Z bkarwin $
  */
 
 /**
  * @see Zend_Reflection_Class
  */
-// require_once 'Zend/Reflection/Class.php';
+require_once 'Zend/Reflection/Class.php';
 
 /**
  * @see Zend_Tool_Framework_Registry
  */
-// require_once 'Zend/Tool/Framework/Registry/EnabledInterface.php';
+require_once 'Zend/Tool/Framework/Registry/EnabledInterface.php';
 
 /**
  * @see Zend_Tool_Framework_Action_Base
  */
-// require_once 'Zend/Tool/Framework/Action/Base.php';
+require_once 'Zend/Tool/Framework/Action/Base.php';
 
 /**
  * The purpose of Zend_Tool_Framework_Provider_Signature is to derive
@@ -41,7 +41,7 @@
  *
  * @category   Zend
  * @package    Zend_Tool
- * @copyright  Copyright (c) 2005-2009 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
 class Zend_Tool_Framework_Provider_Signature implements Zend_Tool_Framework_Registry_EnabledInterface
@@ -202,10 +202,11 @@ class Zend_Tool_Framework_Provider_Signature implements Zend_Tool_Framework_Regi
      * @param string $actionName
      * @return array
      */
-    public function getActionableMethodByActionName($actionName)
+    public function getActionableMethodByActionName($actionName, $specialtyName = '_Global')
     {
         foreach ($this->_actionableMethods as $actionableMethod) {
-            if ($actionName == $actionableMethod['actionName']) {
+            if ($actionName == $actionableMethod['actionName']
+                && $specialtyName == $actionableMethod['specialty']) {
                 return $actionableMethod;
             }
         }
@@ -255,7 +256,7 @@ class Zend_Tool_Framework_Provider_Signature implements Zend_Tool_Framework_Regi
         if ($this->_providerReflection->hasMethod('getSpecialties')) {
             $specialties = $this->_provider->getSpecialties();
             if (!is_array($specialties)) {
-                // require_once 'Zend/Tool/Framework/Provider/Exception.php';
+                require_once 'Zend/Tool/Framework/Provider/Exception.php';
                 throw new Zend_Tool_Framework_Provider_Exception(
                     'Provider ' . get_class($this->_provider) . ' must return an array for method getSpecialties().'
                     );
@@ -264,7 +265,7 @@ class Zend_Tool_Framework_Provider_Signature implements Zend_Tool_Framework_Regi
             $defaultProperties = $this->_providerReflection->getDefaultProperties();
             $specialties = (isset($defaultProperties['_specialties'])) ? $defaultProperties['_specialties'] : array();
             if (!is_array($specialties)) {
-                // require_once 'Zend/Tool/Framework/Provider/Exception.php';
+                require_once 'Zend/Tool/Framework/Provider/Exception.php';
                 throw new Zend_Tool_Framework_Provider_Exception(
                     'Provider ' . get_class($this->_provider) . '\'s property $_specialties must be an array.'
                     );

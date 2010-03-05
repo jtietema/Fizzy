@@ -15,22 +15,22 @@
  * @category   Zend
  * @package    Zend_Db
  * @subpackage Statement
- * @copyright  Copyright (c) 2005-2009 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: Db2.php 18951 2009-11-12 16:26:19Z alexander $
+ * @version    $Id: Db2.php 20096 2010-01-06 02:05:09Z bkarwin $
  */
 
 /**
  * @see Zend_Db_Statement
  */
-// require_once 'Zend/Db/Statement.php';
+require_once 'Zend/Db/Statement.php';
 
 /**
  * Extends for DB2 native adapter.
  *
  * @package    Zend_Db
  * @subpackage Statement
- * @copyright  Copyright (c) 2005-2009 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
 class Zend_Db_Statement_Db2 extends Zend_Db_Statement
@@ -65,7 +65,7 @@ class Zend_Db_Statement_Db2 extends Zend_Db_Statement
             /**
              * @see Zend_Db_Statement_Db2_Exception
              */
-            // require_once 'Zend/Db/Statement/Db2/Exception.php';
+            require_once 'Zend/Db/Statement/Db2/Exception.php';
             throw new Zend_Db_Statement_Db2_Exception(
                 db2_stmt_errormsg(),
                 db2_stmt_error()
@@ -100,7 +100,7 @@ class Zend_Db_Statement_Db2 extends Zend_Db_Statement
             /**
              * @see Zend_Db_Statement_Db2_Exception
              */
-            // require_once 'Zend/Db/Statement/Db2/Exception.php';
+            require_once 'Zend/Db/Statement/Db2/Exception.php';
             throw new Zend_Db_Statement_Db2_Exception(
                 db2_stmt_errormsg(),
                 db2_stmt_error()
@@ -208,7 +208,7 @@ class Zend_Db_Statement_Db2 extends Zend_Db_Statement
             /**
              * @see Zend_Db_Statement_Db2_Exception
              */
-            // require_once 'Zend/Db/Statement/Db2/Exception.php';
+            require_once 'Zend/Db/Statement/Db2/Exception.php';
             throw new Zend_Db_Statement_Db2_Exception(
                 db2_stmt_errormsg(),
                 db2_stmt_error());
@@ -272,7 +272,7 @@ class Zend_Db_Statement_Db2 extends Zend_Db_Statement
                 /**
                  * @see Zend_Db_Statement_Db2_Exception
                  */
-                // require_once 'Zend/Db/Statement/Db2/Exception.php';
+                require_once 'Zend/Db/Statement/Db2/Exception.php';
                 throw new Zend_Db_Statement_Db2_Exception("Invalid fetch mode '$style' specified");
                 break;
         }
@@ -306,7 +306,7 @@ class Zend_Db_Statement_Db2 extends Zend_Db_Statement
         /**
          * @see Zend_Db_Statement_Db2_Exception
          */
-        // require_once 'Zend/Db/Statement/Db2/Exception.php';
+        require_once 'Zend/Db/Statement/Db2/Exception.php';
         throw new Zend_Db_Statement_Db2_Exception(__FUNCTION__ . '() is not implemented');
     }
 

@@ -14,20 +14,20 @@
  *
  * @category   Zend
  * @package    Zend_Filter
- * @copyright  Copyright (c) 2005-2009 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: Rename.php 16971 2009-07-22 18:05:45Z mikaelkael $
+ * @version    $Id: Rename.php 20096 2010-01-06 02:05:09Z bkarwin $
  */
 
 /**
  * @see Zend_Filter_Interface
  */
-// require_once 'Zend/Filter/Interface.php';
+require_once 'Zend/Filter/Interface.php';
 
 /**
  * @category   Zend
  * @package    Zend_Filter
- * @copyright  Copyright (c) 2005-2009 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
 class Zend_Filter_File_Rename implements Zend_Filter_Interface
@@ -58,12 +58,11 @@ class Zend_Filter_File_Rename implements Zend_Filter_Interface
         } elseif (is_string($options)) {
             $options = array('target' => $options);
         } elseif (!is_array($options)) {
-            // require_once 'Zend/Filter/Exception.php';
+            require_once 'Zend/Filter/Exception.php';
             throw new Zend_Filter_Exception('Invalid options argument provided to filter');
         }
 
         if (1 < func_num_args()) {
-            trigger_error('Support for multiple arguments is deprecated in favor of a single options array', E_USER_NOTICE);
             $argv = func_get_args();
             array_shift($argv);
             $source    = array_shift($argv);
@@ -123,7 +122,7 @@ class Zend_Filter_File_Rename implements Zend_Filter_Interface
         if (is_string($options)) {
             $options = array('target' => $options);
         } elseif (!is_array($options)) {
-            // require_once 'Zend/Filter/Exception.php';
+            require_once 'Zend/Filter/Exception.php';
             throw new Zend_Filter_Exception ('Invalid options to rename filter provided');
         }
 
@@ -156,7 +155,7 @@ class Zend_Filter_File_Rename implements Zend_Filter_Interface
         }
 
         if (file_exists($file['target'])) {
-            // require_once 'Zend/Filter/Exception.php';
+            require_once 'Zend/Filter/Exception.php';
             throw new Zend_Filter_Exception(sprintf("File '%s' could not be renamed. It already exists.", $value));
         }
 
@@ -190,7 +189,7 @@ class Zend_Filter_File_Rename implements Zend_Filter_Interface
             return $file['target'];
         }
 
-        // require_once 'Zend/Filter/Exception.php';
+        require_once 'Zend/Filter/Exception.php';
         throw new Zend_Filter_Exception(sprintf("File '%s' could not be renamed. An error occured while processing the file.", $value));
     }
 

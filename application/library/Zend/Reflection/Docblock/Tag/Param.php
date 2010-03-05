@@ -14,18 +14,18 @@
  *
  * @category   Zend
  * @package    Zend_Reflection
- * @copyright  Copyright (c) 2005-2009 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: Param.php 19062 2009-11-19 21:04:08Z beberlei $
+ * @version    $Id: Param.php 20096 2010-01-06 02:05:09Z bkarwin $
  */
 
 /** Zend_Reflection_Docblock_Tag */
-// require_once 'Zend/Reflection/Docblock/Tag.php';
+require_once 'Zend/Reflection/Docblock/Tag.php';
 
 /**
  * @category   Zend
  * @package    Zend_Reflection
- * @copyright  Copyright (c) 2005-2009 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
 class Zend_Reflection_Docblock_Tag_Param extends Zend_Reflection_Docblock_Tag
@@ -50,12 +50,12 @@ class Zend_Reflection_Docblock_Tag_Param extends Zend_Reflection_Docblock_Tag
         $matches = array();
 
         if (!preg_match('#^@(\w+)\s+([\w|\\\]+)(?:\s+(\$\S+))?(?:\s+(.*))?#s', $tagDocblockLine, $matches)) {
-            // require_once 'Zend/Reflection/Exception.php';
+            require_once 'Zend/Reflection/Exception.php';
             throw new Zend_Reflection_Exception('Provided docblock line is does not contain a valid tag');
         }
 
         if ($matches[1] != 'param') {
-            // require_once 'Zend/Reflection/Exception.php';
+            require_once 'Zend/Reflection/Exception.php';
             throw new Zend_Reflection_Exception('Provided docblock line is does not contain a valid @param tag');
         }
 

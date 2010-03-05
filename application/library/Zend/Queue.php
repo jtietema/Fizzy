@@ -14,9 +14,9 @@
  *
  * @category   Zend
  * @package    Zend_Queue
- * @copyright  Copyright (c) 2005-2009 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: Queue.php 18951 2009-11-12 16:26:19Z alexander $
+ * @version    $Id: Queue.php 20096 2010-01-06 02:05:09Z bkarwin $
  */
 
 /**
@@ -24,7 +24,7 @@
  *
  * @category   Zend
  * @package    Zend_Queue
- * @copyright  Copyright (c) 2005-2009 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
 class Zend_Queue implements Countable
@@ -106,7 +106,7 @@ class Zend_Queue implements Countable
         if ((null === $adapter)
             && (!is_array($options) && (!$options instanceof Zend_Config))
         ) {
-            // require_once 'Zend/Queue/Exception.php';
+            require_once 'Zend/Queue/Exception.php';
             throw new Zend_Queue_Exception('No valid params passed to constructor');
         }
 
@@ -227,7 +227,7 @@ class Zend_Queue implements Countable
             );
 
             if (!class_exists($adapterName)) {
-                // require_once 'Zend/Loader.php';
+                require_once 'Zend/Loader.php';
                 Zend_Loader::loadClass($adapterName);
             }
 
@@ -239,7 +239,7 @@ class Zend_Queue implements Countable
         }
 
         if (!$adapter instanceof Zend_Queue_Adapter_AdapterInterface) {
-            // require_once 'Zend/Queue/Exception.php';
+            require_once 'Zend/Queue/Exception.php';
             throw new Zend_Queue_Exception("Adapter class '" . get_class($adapterName) . "' does not implement Zend_Queue_Adapter_AdapterInterface");
         }
 
@@ -324,12 +324,12 @@ class Zend_Queue implements Countable
     public function createQueue($name, $timeout = null)
     {
         if (!is_string($name)) {
-            // require_once 'Zend/Queue/Exception.php';
+            require_once 'Zend/Queue/Exception.php';
             throw new Zend_Queue_Exception('$name is not a string');
         }
 
         if ((null !== $timeout) && !is_integer($timeout)) {
-            // require_once 'Zend/Queue/Exception.php';
+            require_once 'Zend/Queue/Exception.php';
             throw new Zend_Queue_Exception('$timeout must be an integer');
         }
 
@@ -439,12 +439,12 @@ class Zend_Queue implements Countable
     public function receive($maxMessages=null, $timeout=null)
     {
         if (($maxMessages !== null) && !is_integer($maxMessages)) {
-            // require_once 'Zend/Queue/Exception.php';
+            require_once 'Zend/Queue/Exception.php';
             throw new Zend_Queue_Exception('$maxMessages must be an integer or null');
         }
 
         if (($timeout !== null) && !is_integer($timeout)) {
-            // require_once 'Zend/Queue/Exception.php';
+            require_once 'Zend/Queue/Exception.php';
             throw new Zend_Queue_Exception('$timeout must be an integer or null');
         }
 
@@ -524,7 +524,7 @@ class Zend_Queue implements Countable
             /**
              * @see Zend_Queue_Exception
              */
-            // require_once 'Zend/Queue/Exception.php';
+            require_once 'Zend/Queue/Exception.php';
             throw new Zend_Queue_Exception("$name is not a string");
         }
 

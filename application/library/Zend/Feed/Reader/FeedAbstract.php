@@ -14,36 +14,25 @@
  *
  * @category   Zend
  * @package    Zend_Feed_Reader
- * @copyright  Copyright (c) 2005-2008 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: FeedAbstract.php 19044 2009-11-19 16:44:24Z padraic $
+ * @version    $Id: FeedAbstract.php 20096 2010-01-06 02:05:09Z bkarwin $
  */
 
 /**
  * @see Zend_Feed_Reader
  */
-// require_once 'Zend/Feed/Reader.php';
-
-/**
- * @see Zend_Feed_Reader_Entry_Atom
- */
-// require_once 'Zend/Feed/Reader/Entry/Atom.php';
-
-
-/**
- * @see Zend_Feed_Reader_Entry_Rss
- */
-// require_once 'Zend/Feed/Reader/Entry/Rss.php';
+require_once 'Zend/Feed/Reader.php';
 
 /**
  * @see Zend_feed_Reader_FeedInterface
  */
-// require_once 'Zend/Feed/Reader/FeedInterface.php';
+require_once 'Zend/Feed/Reader/FeedInterface.php';
 
 /**
  * @category   Zend
  * @package    Zend_Feed_Reader
- * @copyright  Copyright (c) 2005-2008 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
 abstract class Zend_Feed_Reader_FeedAbstract implements Zend_Feed_Reader_FeedInterface
@@ -83,6 +72,11 @@ abstract class Zend_Feed_Reader_FeedAbstract implements Zend_Feed_Reader_FeedInt
      */
     protected $_xpath = null;
 
+    /**
+     * Array of loaded extensions
+     *
+     * @var array
+     */
     protected $_extensions = array();
 
     /**
@@ -228,16 +222,6 @@ abstract class Zend_Feed_Reader_FeedAbstract implements Zend_Feed_Reader_FeedInt
     }
 
     /**
-     * Return the feed as an array
-     *
-     * @return array
-     */
-    public function toArray() // untested
-    {
-        return $this->_data;
-    }
-
-    /**
      * Check to see if the iterator is still valid
      *
      * @return boolean
@@ -259,7 +243,7 @@ abstract class Zend_Feed_Reader_FeedAbstract implements Zend_Feed_Reader_FeedInt
                 return call_user_func_array(array($extension, $method), $args);
             }
         }
-        // require_once 'Zend/Feed/Exception.php';
+        require_once 'Zend/Feed/Exception.php';
         throw new Zend_Feed_Exception('Method: ' . $method
         . 'does not exist and could not be located on a registered Extension');
     }

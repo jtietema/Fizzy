@@ -16,9 +16,9 @@
  * @category   Zend
  * @package    Zend_Gdata
  * @subpackage Spreadsheets
- * @copyright  Copyright (c) 2005-2009 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: DocumentQuery.php 18951 2009-11-12 16:26:19Z alexander $
+ * @version    $Id: DocumentQuery.php 20096 2010-01-06 02:05:09Z bkarwin $
  */
 
 /**
@@ -39,7 +39,7 @@ require_once('Zend/Gdata/Query.php');
  * @category   Zend
  * @package    Zend_Gdata
  * @subpackage   Spreadsheets
- * @copyright  Copyright (c) 2005-2009 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
 class Zend_Gdata_Spreadsheets_DocumentQuery extends Zend_Gdata_Query
@@ -224,14 +224,14 @@ class Zend_Gdata_Spreadsheets_DocumentQuery extends Zend_Gdata_Query
         if ($this->_visibility != null) {
             $uri .= '/'.$this->_visibility;
         } else {
-            // require_once 'Zend/Gdata/App/Exception.php';
+            require_once 'Zend/Gdata/App/Exception.php';
             throw new Zend_Gdata_App_Exception('A visibility must be provided for document queries.');
         }
 
         if ($this->_projection != null) {
             $uri .= '/'.$this->_projection;
         } else {
-            // require_once 'Zend/Gdata/App/Exception.php';
+            require_once 'Zend/Gdata/App/Exception.php';
             throw new Zend_Gdata_App_Exception('A projection must be provided for document queries.');
         }
 
@@ -250,7 +250,7 @@ class Zend_Gdata_Spreadsheets_DocumentQuery extends Zend_Gdata_Query
         if ($this->_documentType != null) {
             $uri .= '/'.$this->_documentType;
         } else {
-            // require_once 'Zend/Gdata/App/Exception.php';
+            require_once 'Zend/Gdata/App/Exception.php';
             throw new Zend_Gdata_App_Exception('A document type must be provided for document queries.');
         }
 
@@ -263,7 +263,7 @@ class Zend_Gdata_Spreadsheets_DocumentQuery extends Zend_Gdata_Query
             if ($this->_spreadsheetKey != null) {
                 $uri .= '/'.$this->_spreadsheetKey;
             } else {
-                // require_once 'Zend/Gdata/App/Exception.php';
+                require_once 'Zend/Gdata/App/Exception.php';
                 throw new Zend_Gdata_App_Exception('A spreadsheet key must be provided for worksheet document queries.');
             }
             $uri .= $this->appendVisibilityProjection();

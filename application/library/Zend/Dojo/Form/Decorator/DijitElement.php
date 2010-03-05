@@ -14,12 +14,12 @@
  *
  * @category   Zend
  * @package    Zend_Form
- * @copyright  Copyright (c) 2005-2009 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
 
 /** Zend_Form_Decorator_ViewHelper */
-// require_once 'Zend/Form/Decorator/ViewHelper.php';
+require_once 'Zend/Form/Decorator/ViewHelper.php';
 
 /**
  * Zend_Dojo_Form_Decorator_DijitElement
@@ -36,9 +36,9 @@
  *
  * @package    Zend_Dojo
  * @subpackage Form_Decorator
- * @copyright  Copyright (c) 2005-2009 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: DijitElement.php 18951 2009-11-12 16:26:19Z alexander $
+ * @version    $Id: DijitElement.php 20622 2010-01-25 20:25:57Z matthew $
  */
 class Zend_Dojo_Form_Decorator_DijitElement extends Zend_Form_Decorator_ViewHelper
 {
@@ -152,7 +152,7 @@ class Zend_Dojo_Form_Decorator_DijitElement extends Zend_Form_Decorator_ViewHelp
         $element = $this->getElement();
         $view = $element->getView();
         if (null === $view) {
-            // require_once 'Zend/Form/Decorator/Exception.php';
+            require_once 'Zend/Form/Decorator/Exception.php';
             throw new Zend_Form_Decorator_Exception('DijitElement decorator cannot render without a registered view object');
         }
 
@@ -164,9 +164,7 @@ class Zend_Dojo_Form_Decorator_DijitElement extends Zend_Form_Decorator_ViewHelp
         $name      = $element->getFullyQualifiedName();
 
         $dijitParams = $this->getDijitParams();
-        if ($element->isRequired()) {
-            $dijitParams['required'] = true;
-        }
+        $dijitParams['required'] = $element->isRequired();
 
         $id = $element->getId();
         if ($view->dojo()->hasDijit($id)) {

@@ -16,25 +16,25 @@
  * @category   Zend
  * @package    Zend_Gdata
  * @subpackage Gdata
- * @copyright  Copyright (c) 2005-2009 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: RecurrenceException.php 16971 2009-07-22 18:05:45Z mikaelkael $
+ * @version    $Id: RecurrenceException.php 20096 2010-01-06 02:05:09Z bkarwin $
  */
 
 /**
  * @see Zend_Gdata_Extension
  */
-// require_once 'Zend/Gdata/Extension.php';
+require_once 'Zend/Gdata/Extension.php';
 
 /**
  * @see Zend_Gdata_Extension_EntryLink
  */
-// require_once 'Zend/Gdata/Extension/EntryLink.php';
+require_once 'Zend/Gdata/Extension/EntryLink.php';
 
 /**
  * @see Zend_Gdata_Extension_OriginalEvent
  */
-// require_once 'Zend/Gdata/Extension/OriginalEvent.php';
+require_once 'Zend/Gdata/Extension/OriginalEvent.php';
 
 /**
  * Data model class to represent an entry's recurrenceException
@@ -42,7 +42,7 @@
  * @category   Zend
  * @package    Zend_Gdata
  * @subpackage Gdata
- * @copyright  Copyright (c) 2005-2009 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
 class Zend_Gdata_Extension_RecurrenceException extends Zend_Gdata_Extension

@@ -16,30 +16,30 @@
  * @category   Zend
  * @package    Zend_Gdata
  * @subpackage App
- * @copyright  Copyright (c) 2005-2009 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: App.php 19513 2009-12-08 00:00:51Z tjohns $
+ * @version    $Id: App.php 20096 2010-01-06 02:05:09Z bkarwin $
  */
 
 /**
  * Zend_Gdata_Feed
  */
-// require_once 'Zend/Gdata/App/Feed.php';
+require_once 'Zend/Gdata/App/Feed.php';
 
 /**
  * Zend_Gdata_Http_Client
  */
-// require_once 'Zend/Http/Client.php';
+require_once 'Zend/Http/Client.php';
 
 /**
  * Zend_Version
  */
-// require_once 'Zend/Version.php';
+require_once 'Zend/Version.php';
 
 /**
  * Zend_Gdata_App_MediaSource
  */
-// require_once 'Zend/Gdata/App/MediaSource.php';
+require_once 'Zend/Gdata/App/MediaSource.php';
 
 /**
  * Provides Atom Publishing Protocol (APP) functionality.  This class and all
@@ -49,7 +49,7 @@
  * @category   Zend
  * @package    Zend_Gdata
  * @subpackage App
- * @copyright  Copyright (c) 2005-2009 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
 class Zend_Gdata_App
@@ -244,7 +244,7 @@ class Zend_Gdata_App
             $client = new Zend_Http_Client();
         }
         if (!$client instanceof Zend_Http_Client) {
-            // require_once 'Zend/Gdata/App/HttpException.php';
+            require_once 'Zend/Gdata/App/HttpException.php';
             throw new Zend_Gdata_App_HttpException(
                 'Argument is not an instance of Zend_Http_Client.');
         }
@@ -331,7 +331,7 @@ class Zend_Gdata_App
     public static function setGzipEnabled($enabled = false)
     {
         if ($enabled && !function_exists('gzinflate')) {
-            // require_once 'Zend/Gdata/App/InvalidArgumentException.php';
+            require_once 'Zend/Gdata/App/InvalidArgumentException.php';
             throw new Zend_Gdata_App_InvalidArgumentException(
                     'You cannot enable gzipped responses if the zlib module ' .
                     'is not enabled in your PHP installation.');
@@ -589,7 +589,7 @@ class Zend_Gdata_App
     public function performHttpRequest($method, $url, $headers = null,
         $body = null, $contentType = null, $remainingRedirects = null)
     {
-        // require_once 'Zend/Http/Client/Exception.php';
+        require_once 'Zend/Http/Client/Exception.php';
         if ($remainingRedirects === null) {
             $remainingRedirects = self::getMaxRedirects();
         }
@@ -608,13 +608,13 @@ class Zend_Gdata_App
         // check the overridden method
         if (($method == 'POST' || $method == 'PUT') && $body === null &&
             $headers['x-http-method-override'] != 'DELETE') {
-                // require_once 'Zend/Gdata/App/InvalidArgumentException.php';
+                require_once 'Zend/Gdata/App/InvalidArgumentException.php';
                 throw new Zend_Gdata_App_InvalidArgumentException(
                         'You must specify the data to post as either a ' .
                         'string or a child of Zend_Gdata_App_Entry');
         }
         if ($url === null) {
-            // require_once 'Zend/Gdata/App/InvalidArgumentException.php';
+            require_once 'Zend/Gdata/App/InvalidArgumentException.php';
             throw new Zend_Gdata_App_InvalidArgumentException(
                 'You must specify an URI to which to post.');
         }
@@ -653,10 +653,10 @@ class Zend_Gdata_App
             $oldHttpAdapter = $this->_httpClient->getAdapter();
 
             if ($oldHttpAdapter instanceof Zend_Http_Client_Adapter_Proxy) {
-                // require_once 'Zend/Gdata/HttpAdapterStreamingProxy.php';
+                require_once 'Zend/Gdata/HttpAdapterStreamingProxy.php';
                 $newAdapter = new Zend_Gdata_HttpAdapterStreamingProxy();
             } else {
-                // require_once 'Zend/Gdata/HttpAdapterStreamingSocket.php';
+                require_once 'Zend/Gdata/HttpAdapterStreamingSocket.php';
                 $newAdapter = new Zend_Gdata_HttpAdapterStreamingSocket();
             }
             $this->_httpClient->setAdapter($newAdapter);
@@ -675,7 +675,7 @@ class Zend_Gdata_App
             if ($usingMimeStream) {
                 $this->_httpClient->setAdapter($oldHttpAdapter);
             }
-            // require_once 'Zend/Gdata/App/HttpException.php';
+            require_once 'Zend/Gdata/App/HttpException.php';
             throw new Zend_Gdata_App_HttpException($e->getMessage(), $e);
         }
         if ($response->isRedirect() && $response->getStatus() != '304') {
@@ -685,13 +685,13 @@ class Zend_Gdata_App
                     $method, $newUrl, $headers, $body,
                     $contentType, $remainingRedirects);
             } else {
-                // require_once 'Zend/Gdata/App/HttpException.php';
+                require_once 'Zend/Gdata/App/HttpException.php';
                 throw new Zend_Gdata_App_HttpException(
                         'Number of redirects exceeds maximum', null, $response);
             }
         }
         if (!$response->isSuccessful()) {
-            // require_once 'Zend/Gdata/App/HttpException.php';
+            require_once 'Zend/Gdata/App/HttpException.php';
             $exceptionMessage = 'Expected response code 200, got ' .
                 $response->getStatus();
             if (self::getVerboseExceptionMessages()) {
@@ -807,7 +807,7 @@ class Zend_Gdata_App
         @ini_restore('track_errors');
 
         if (!$success) {
-            // require_once 'Zend/Gdata/App/Exception.php';
+            require_once 'Zend/Gdata/App/Exception.php';
             throw new Zend_Gdata_App_Exception(
                 "DOMDocument cannot parse XML: $php_errormsg");
         }
@@ -837,7 +837,7 @@ class Zend_Gdata_App
         $feed = @file_get_contents($filename, $useIncludePath);
         @ini_restore('track_errors');
         if ($feed === false) {
-            // require_once 'Zend/Gdata/App/Exception.php';
+            require_once 'Zend/Gdata/App/Exception.php';
             throw new Zend_Gdata_App_Exception(
                 "File could not be loaded: $php_errormsg");
         }
@@ -1024,7 +1024,7 @@ class Zend_Gdata_App
                      // Autoloading disabled on next line for compatibility
                      // with magic factories. See ZF-6660.
                      if (!class_exists($name . '_' . $class, false)) {
-                        // require_once 'Zend/Loader.php';
+                        require_once 'Zend/Loader.php';
                         @Zend_Loader::loadClass($name . '_' . $class);
                      }
                      $foundClassName = $name . '_' . $class;
@@ -1047,12 +1047,12 @@ class Zend_Gdata_App
                 }
                 return $instance;
             } else {
-                // require_once 'Zend/Gdata/App/Exception.php';
+                require_once 'Zend/Gdata/App/Exception.php';
                 throw new Zend_Gdata_App_Exception(
                         "Unable to find '${class}' in registered packages");
             }
         } else {
-            // require_once 'Zend/Gdata/App/Exception.php';
+            require_once 'Zend/Gdata/App/Exception.php';
             throw new Zend_Gdata_App_Exception("No such method ${method}");
         }
     }

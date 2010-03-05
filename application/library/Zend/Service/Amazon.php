@@ -16,21 +16,21 @@
  * @category   Zend
  * @package    Zend_Service
  * @subpackage Amazon
- * @copyright  Copyright (c) 2005-2009 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: Amazon.php 18951 2009-11-12 16:26:19Z alexander $
+ * @version    $Id: Amazon.php 20096 2010-01-06 02:05:09Z bkarwin $
  */
 
 /**
  * @see Zend_Rest_Client
  */
-// require_once 'Zend/Rest/Client.php';
+require_once 'Zend/Rest/Client.php';
 
 /**
  * @category   Zend
  * @package    Zend_Service
  * @subpackage Amazon
- * @copyright  Copyright (c) 2005-2009 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
 class Zend_Service_Amazon
@@ -90,7 +90,7 @@ class Zend_Service_Amazon
             /**
              * @see Zend_Service_Exception
              */
-            // require_once 'Zend/Service/Exception.php';
+            require_once 'Zend/Service/Exception.php';
             throw new Zend_Service_Exception("Unknown country code: $countryCode");
         }
 
@@ -120,7 +120,7 @@ class Zend_Service_Amazon
             /**
              * @see Zend_Service_Exception
              */
-            // require_once 'Zend/Service/Exception.php';
+            require_once 'Zend/Service/Exception.php';
             throw new Zend_Service_Exception('An error occurred sending request. Status code: '
                                            . $response->getStatus());
         }
@@ -132,7 +132,7 @@ class Zend_Service_Amazon
         /**
          * @see Zend_Service_Amazon_ResultSet
          */
-        // require_once 'Zend/Service/Amazon/ResultSet.php';
+        require_once 'Zend/Service/Amazon/ResultSet.php';
         return new Zend_Service_Amazon_ResultSet($dom);
     }
 
@@ -161,7 +161,7 @@ class Zend_Service_Amazon
             /**
              * @see Zend_Service_Exception
              */
-            // require_once 'Zend/Service/Exception.php';
+            require_once 'Zend/Service/Exception.php';
             throw new Zend_Service_Exception(
                 'An error occurred sending request. Status code: ' . $response->getStatus()
             );
@@ -178,14 +178,14 @@ class Zend_Service_Amazon
             /**
              * @see Zend_Service_Amazon_Item
              */
-            // require_once 'Zend/Service/Amazon/Item.php';
+            require_once 'Zend/Service/Amazon/Item.php';
             return new Zend_Service_Amazon_Item($items->item(0));
         }
 
         /**
          * @see Zend_Service_Amazon_ResultSet
          */
-        // require_once 'Zend/Service/Amazon/ResultSet.php';
+        require_once 'Zend/Service/Amazon/ResultSet.php';
         return new Zend_Service_Amazon_ResultSet($dom);
     }
 
@@ -262,7 +262,7 @@ class Zend_Service_Amazon
      */
     static public function computeSignature($baseUri, $secretKey, array $options)
     {
-        // require_once "Zend/Crypt/Hmac.php";
+        require_once "Zend/Crypt/Hmac.php";
 
         $signature = self::buildRawSignature($baseUri, $options);
         return base64_encode(
@@ -315,7 +315,7 @@ class Zend_Service_Amazon
                     /**
                      * @see Zend_Service_Exception
                      */
-                    // require_once 'Zend/Service/Exception.php';
+                    require_once 'Zend/Service/Exception.php';
                     throw new Zend_Service_Exception("$message ($code)");
             }
         }

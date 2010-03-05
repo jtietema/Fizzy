@@ -14,9 +14,9 @@
  *
  * @category  Zend
  * @package   Zend_Uri
- * @copyright Copyright (c) 2005-2009 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
  * @license   http://framework.zend.com/license/new-bsd     New BSD License
- * @version   $Id: Uri.php 18951 2009-11-12 16:26:19Z alexander $
+ * @version   $Id: Uri.php 20096 2010-01-06 02:05:09Z bkarwin $
  */
 
 /**
@@ -24,7 +24,7 @@
  *
  * @category  Zend
  * @package   Zend_Uri
- * @copyright Copyright (c) 2005-2009 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
  * @license   http://framework.zend.com/license/new-bsd     New BSD License
  */
 abstract class Zend_Uri
@@ -94,13 +94,13 @@ abstract class Zend_Uri
         $schemeSpecific = isset($uri[1]) === true ? $uri[1] : '';
 
         if (strlen($scheme) === 0) {
-            // require_once 'Zend/Uri/Exception.php';
+            require_once 'Zend/Uri/Exception.php';
             throw new Zend_Uri_Exception('An empty string was supplied for the scheme');
         }
 
         // Security check: $scheme is used to load a class file, so only alphanumerics are allowed.
         if (ctype_alnum($scheme) === false) {
-            // require_once 'Zend/Uri/Exception.php';
+            require_once 'Zend/Uri/Exception.php';
             throw new Zend_Uri_Exception('Illegal scheme supplied, only alphanumeric characters are permitted');
         }
 
@@ -118,13 +118,13 @@ abstract class Zend_Uri
             case 'mailto':
                 // TODO
             default:
-                // require_once 'Zend/Uri/Exception.php';
+                require_once 'Zend/Uri/Exception.php';
                 throw new Zend_Uri_Exception("Scheme \"$scheme\" is not supported");
                 break;
         }
 
         if (!class_exists($className)) {
-            // require_once 'Zend/Loader.php';
+            require_once 'Zend/Loader.php';
             Zend_Loader::loadClass($className);
         }
         $schemeHandler = new $className($scheme, $schemeSpecific);
@@ -149,10 +149,16 @@ abstract class Zend_Uri
     /**
      * Set global configuration options
      *
-     * @param array $config
+     * @param Zend_Config|array $config
      */
-    static public function setConfig(array $config)
+    static public function setConfig($config)
     {
+        if ($config instanceof Zend_Config) {
+            $config = $config->toArray();
+        } elseif (!is_array($config)) {
+            throw new Zend_Uri_Exception("Config must be an array or an instance of Zend_Config.");
+        }
+
         foreach ($config as $k => $v) {
             self::$_config[$k] = $v;
         }

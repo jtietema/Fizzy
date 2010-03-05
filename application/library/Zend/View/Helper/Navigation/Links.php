@@ -15,15 +15,15 @@
  * @category   Zend
  * @package    Zend_View
  * @subpackage Helper
- * @copyright  Copyright (c) 2005-2009 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: Links.php 16971 2009-07-22 18:05:45Z mikaelkael $
+ * @version    $Id: Links.php 20096 2010-01-06 02:05:09Z bkarwin $
  */
 
 /**
  * @see Zend_View_Helper_Navigation_HelperAbstract
  */
-// require_once 'Zend/View/Helper/Navigation/HelperAbstract.php';
+require_once 'Zend/View/Helper/Navigation/HelperAbstract.php';
 
 /**
  * Helper for printing <link> elements
@@ -31,7 +31,7 @@
  * @category   Zend
  * @package    Zend_View
  * @subpackage Helper
- * @copyright  Copyright (c) 2005-2009 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
 class Zend_View_Helper_Navigation_Links
@@ -270,10 +270,12 @@ class Zend_View_Helper_Navigation_Links
     public function findRelation(Zend_Navigation_Page $page, $rel, $type)
     {
         if (!in_array($rel, array('rel', 'rev'))) {
-            // require_once 'Zend/View/Exception.php';
-            throw new Zend_View_Exception(sprintf(
+            require_once 'Zend/View/Exception.php';
+            $e = new Zend_View_Exception(sprintf(
                 'Invalid argument: $rel must be "rel" or "rev"; "%s" given',
                 $rel));
+            $e->setView($this->view);
+            throw $e;
         }
 
         if (!$result = $this->_findFromProperty($page, $rel, $type)) {
@@ -707,10 +709,12 @@ class Zend_View_Helper_Navigation_Links
     public function renderLink(Zend_Navigation_Page $page, $attrib, $relation)
     {
         if (!in_array($attrib, array('rel', 'rev'))) {
-            // require_once 'Zend/View/Exception.php';
-            throw new Zend_View_Exception(sprintf(
+            require_once 'Zend/View/Exception.php';
+            $e = new Zend_View_Exception(sprintf(
                     'Invalid relation attribute "%s", must be "rel" or "rev"',
                     $attrib));
+            $e->setView($this->view);
+            throw $e;
         }
 
         if (!$href = $page->getHref()) {

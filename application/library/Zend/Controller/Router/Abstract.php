@@ -15,14 +15,14 @@
  * @category   Zend
  * @package    Zend_Controller
  * @subpackage Router
- * @copyright  Copyright (c) 2005-2009 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: Abstract.php 16541 2009-07-07 06:59:03Z bkarwin $
+ * @version    $Id: Abstract.php 20096 2010-01-06 02:05:09Z bkarwin $
  */
 
 
 /** Zend_Controller_Router_Interface */
-// require_once 'Zend/Controller/Router/Interface.php';
+require_once 'Zend/Controller/Router/Interface.php';
 
 /**
  * Simple first implementation of a router, to be replaced
@@ -31,7 +31,7 @@
  * @category   Zend
  * @package    Zend_Controller
  * @subpackage Router
- * @copyright  Copyright (c) 2005-2009 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
 abstract class Zend_Controller_Router_Abstract implements Zend_Controller_Router_Interface
@@ -150,7 +150,7 @@ abstract class Zend_Controller_Router_Abstract implements Zend_Controller_Router
             return $this->_frontController;
         }
 
-        // require_once 'Zend/Controller/Front.php';
+        require_once 'Zend/Controller/Front.php';
         $this->_frontController = Zend_Controller_Front::getInstance();
         return $this->_frontController;
     }

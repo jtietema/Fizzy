@@ -14,16 +14,16 @@
  *
  * @category   Zend
  * @package    Zend_Controller
- * @copyright  Copyright (c) 2005-2009 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: Http.php 19077 2009-11-20 00:29:56Z matthew $
+ * @version    $Id: Http.php 20984 2010-02-08 16:25:08Z matthew $
  */
 
-/** Zend_Controller_Request_Abstract */
-// require_once 'Zend/Controller/Request/Abstract.php';
+/** @see Zend_Controller_Request_Abstract */
+require_once 'Zend/Controller/Request/Abstract.php';
 
-/** Zend_Uri */
-// require_once 'Zend/Uri.php';
+/** @see Zend_Uri */
+require_once 'Zend/Uri.php';
 
 /**
  * Zend_Controller_Request_Http
@@ -121,7 +121,7 @@ class Zend_Controller_Request_Http extends Zend_Controller_Request_Abstract
 
                 $this->setRequestUri($path);
             } else {
-                // require_once 'Zend/Controller/Request/Exception.php';
+                require_once 'Zend/Controller/Request/Exception.php';
                 throw new Zend_Controller_Request_Exception('Invalid URI provided to constructor');
             }
         } else {
@@ -186,7 +186,7 @@ class Zend_Controller_Request_Http extends Zend_Controller_Request_Abstract
      */
     public function __set($key, $value)
     {
-        // require_once 'Zend/Controller/Request/Exception.php';
+        require_once 'Zend/Controller/Request/Exception.php';
         throw new Zend_Controller_Request_Exception('Setting values in superglobals not allowed; please use setParam()');
     }
 
@@ -249,7 +249,7 @@ class Zend_Controller_Request_Http extends Zend_Controller_Request_Abstract
     public function setQuery($spec, $value = null)
     {
         if ((null === $value) && !is_array($spec)) {
-            // require_once 'Zend/Controller/Exception.php';
+            require_once 'Zend/Controller/Exception.php';
             throw new Zend_Controller_Exception('Invalid value passed to setQuery(); must be either array of values or key/value pair');
         }
         if ((null === $value) && is_array($spec)) {
@@ -291,7 +291,7 @@ class Zend_Controller_Request_Http extends Zend_Controller_Request_Abstract
     public function setPost($spec, $value = null)
     {
         if ((null === $value) && !is_array($spec)) {
-            // require_once 'Zend/Controller/Exception.php';
+            require_once 'Zend/Controller/Exception.php';
             throw new Zend_Controller_Exception('Invalid value passed to setPost(); must be either array of values or key/value pair');
         }
         if ((null === $value) && is_array($spec)) {
@@ -513,8 +513,13 @@ class Zend_Controller_Request_Http extends Zend_Controller_Request_Abstract
                 return $this;
             }
 
+            $truncatedRequestUri = $requestUri;
+            if (($pos = strpos($requestUri, '?')) !== false) {
+                $truncatedRequestUri = substr($requestUri, 0, $pos);
+            }
+
             $basename = basename($baseUrl);
-            if (empty($basename) || !strpos($requestUri, $basename)) {
+            if (empty($basename) || !strpos($truncatedRequestUri, $basename)) {
                 // no match whatsoever; set it blank
                 $this->_baseUrl = '';
                 return $this;
@@ -618,13 +623,17 @@ class Zend_Controller_Request_Http extends Zend_Controller_Request_Abstract
                 $requestUri = substr($requestUri, 0, $pos);
             }
 
-            if ((null !== $baseUrl)
-                && (false === ($pathInfo = substr($requestUri, strlen($baseUrl)))))
-            {
-                // If substr() returns false then PATH_INFO is set to an empty string
+            if (null !== $baseUrl
+                && ((!empty($baseUrl) && 0 === strpos($requestUri, $baseUrl)) 
+                    || empty($baseUrl))
+                    && false === ($pathInfo = substr($requestUri, strlen($baseUrl)))
+            ){ 
+                // If substr() returns false then PATH_INFO is set to an empty string 
                 $pathInfo = '';
-            } elseif (null === $baseUrl) {
-                $pathInfo = $requestUri;
+            } elseif (null === $baseUrl 
+                    || (!empty($baseUrl) && false === strpos($requestUri, $baseUrl))
+            ) { 
+                $pathInfo = $requestUri; 
             }
         }
 
@@ -915,7 +924,7 @@ class Zend_Controller_Request_Http extends Zend_Controller_Request_Abstract
     /**
      * Is this a Flash request?
      *
-     * @return bool
+     * @return boolean
      */
     public function isFlashRequest()
     {
@@ -964,7 +973,7 @@ class Zend_Controller_Request_Http extends Zend_Controller_Request_Abstract
     public function getHeader($header)
     {
         if (empty($header)) {
-            // require_once 'Zend/Controller/Request/Exception.php';
+            require_once 'Zend/Controller/Request/Exception.php';
             throw new Zend_Controller_Request_Exception('An HTTP header name is required');
         }
 
@@ -1026,6 +1035,7 @@ class Zend_Controller_Request_Http extends Zend_Controller_Request_Abstract
     /**
      * Get the client's IP addres
      *
+     * @param  boolean $checkProxy
      * @return string
      */
     public function getClientIp($checkProxy = true)

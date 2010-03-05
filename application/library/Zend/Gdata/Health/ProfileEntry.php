@@ -16,20 +16,20 @@
  * @category   Zend
  * @package    Zend_Gdata
  * @subpackage Health
- * @copyright  Copyright (c) 2005-2009 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: ProfileEntry.php 18951 2009-11-12 16:26:19Z alexander $
+ * @version    $Id: ProfileEntry.php 20096 2010-01-06 02:05:09Z bkarwin $
  */
 
 /**
  * @see Zend_Gdata_Entry
  */
-// require_once 'Zend/Gdata/Entry.php';
+require_once 'Zend/Gdata/Entry.php';
 
 /**
  * @see Zend_Gdata_Health_Extension_Ccr
  */
-// require_once 'Zend/Gdata/Health/Extension/Ccr.php';
+require_once 'Zend/Gdata/Health/Extension/Ccr.php';
 
 /**
  * Concrete class for working with Health profile entries.
@@ -39,7 +39,7 @@
  * @category   Zend
  * @package    Zend_Gdata
  * @subpackage Health
- * @copyright  Copyright (c) 2005-2009 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
 class Zend_Gdata_Health_ProfileEntry extends Zend_Gdata_Entry

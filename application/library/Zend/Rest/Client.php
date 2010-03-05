@@ -15,26 +15,26 @@
  * @category   Zend
  * @package    Zend_Rest
  * @subpackage Client
- * @copyright  Copyright (c) 2005-2009 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: Client.php 18173 2009-09-17 15:35:05Z padraic $
+ * @version    $Id: Client.php 20096 2010-01-06 02:05:09Z bkarwin $
  */
 
 
 /** Zend_Service_Abstract */
-// require_once 'Zend/Service/Abstract.php';
+require_once 'Zend/Service/Abstract.php';
 
 /** Zend_Rest_Client_Result */
-// require_once 'Zend/Rest/Client/Result.php';
+require_once 'Zend/Rest/Client/Result.php';
 
 /** Zend_Uri */
-// require_once 'Zend/Uri.php';
+require_once 'Zend/Uri.php';
 
 /**
  * @category   Zend
  * @package    Zend_Rest
  * @subpackage Client
- * @copyright  Copyright (c) 2005-2009 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
 class Zend_Rest_Client extends Zend_Service_Abstract
@@ -102,7 +102,7 @@ class Zend_Rest_Client extends Zend_Service_Abstract
     {
         // Get the URI object and configure it
         if (!$this->_uri instanceof Zend_Uri_Http) {
-            // require_once 'Zend/Rest/Client/Exception.php';
+            require_once 'Zend/Rest/Client/Exception.php';
             throw new Zend_Rest_Client_Exception('URI object must be set before performing call');
         }
 

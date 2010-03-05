@@ -14,15 +14,15 @@
  *
  * @category   Zend
  * @package    Zend_Json
- * @copyright  Copyright (c) 2005-2009 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: Error.php 18951 2009-11-12 16:26:19Z alexander $
+ * @version    $Id: Error.php 20096 2010-01-06 02:05:09Z bkarwin $
  */
 
 /**
  * @category   Zend
  * @package    Zend_Json
- * @copyright  Copyright (c) 2005-2009 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
 class Zend_Json_Server_Error
@@ -181,7 +181,7 @@ class Zend_Json_Server_Error
      */
     public function toJson()
     {
-        // require_once 'Zend/Json.php';
+        require_once 'Zend/Json.php';
         return Zend_Json::encode($this->toArray());
     }
 

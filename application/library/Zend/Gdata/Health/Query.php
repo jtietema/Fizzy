@@ -16,9 +16,9 @@
  * @category   Zend
  * @package    Zend_Gdata
  * @subpackage Health
- * @copyright  Copyright (c) 2005-2009 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: Query.php 18951 2009-11-12 16:26:19Z alexander $
+ * @version    $Id: Query.php 20096 2010-01-06 02:05:09Z bkarwin $
  */
 
 /**
@@ -34,7 +34,7 @@ require_once('Zend/Gdata/Query.php');
  * @category   Zend
  * @package    Zend_Gdata
  * @subpackage Health
- * @copyright  Copyright (c) 2005-2009 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
 class Zend_Gdata_Health_Query extends Zend_Gdata_Query
@@ -156,7 +156,7 @@ class Zend_Gdata_Health_Query extends Zend_Gdata_Query
     {
         if ($value !== null) {
             if ($value <= 0 || $this->getGrouped() !== 'true') {
-                // require_once 'Zend/Gdata/App/InvalidArgumentException.php';
+                require_once 'Zend/Gdata/App/InvalidArgumentException.php';
                 throw new Zend_Gdata_App_InvalidArgumentException(
                     'The max-results-group parameter must be set to a value
                     greater than 0 and can only be used if grouped=true');

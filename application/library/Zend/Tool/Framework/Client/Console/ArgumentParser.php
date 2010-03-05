@@ -15,20 +15,25 @@
  * @category   Zend
  * @package    Zend_Tool
  * @subpackage Framework
- * @copyright  Copyright (c) 2005-2009 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: ArgumentParser.php 18951 2009-11-12 16:26:19Z alexander $
+ * @version    $Id: ArgumentParser.php 20096 2010-01-06 02:05:09Z bkarwin $
  */
 
 /**
  * @see Zend_Console_GetOpt
  */
-// require_once 'Zend/Console/Getopt.php';
+require_once 'Zend/Console/Getopt.php';
+
+/**
+ * @see Zend_Tool_Framework_Registry_EnabledInterface
+ */
+require_once 'Zend/Tool/Framework/Registry/EnabledInterface.php';
 
 /**
  * @category   Zend
  * @package    Zend_Tool
- * @copyright  Copyright (c) 2005-2009 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
 class Zend_Tool_Framework_Client_Console_ArgumentParser implements Zend_Tool_Framework_Registry_EnabledInterface
@@ -105,7 +110,7 @@ class Zend_Tool_Framework_Client_Console_ArgumentParser implements Zend_Tool_Fra
     {
 
         if ($this->_request == null || $this->_response == null) {
-            // require_once 'Zend/Tool/Framework/Client/Exception.php';
+            require_once 'Zend/Tool/Framework/Client/Exception.php';
             throw new Zend_Tool_Framework_Client_Exception('The client registry must have both a request and response registered.');
         }
 
@@ -271,17 +276,27 @@ class Zend_Tool_Framework_Client_Console_ArgumentParser implements Zend_Tool_Fra
             return;
         }
 
-        // is the action name valid?
-        $actionMetadata = $this->_manifestRepository->getMetadata(array(
+        $actionSearchCriteria = array(
             'type'       => 'Tool',
             'name'       => 'actionName',
             'value'      => $consoleActionName,
             'clientName' => 'console'
-            ));
+            );
+        
+        // is the action name valid?
+        $actionMetadata = $this->_manifestRepository->getMetadata($actionSearchCriteria);
 
+        // check for normalized names as well (all lower, no separators)
+        if (!$actionMetadata) {
+            $actionSearchCriteria['name']  = 'normalizedActionName';
+            $actionSearchCriteria['value'] = strtolower(str_replace(array('-', '_'), '', $consoleActionName));
+            $actionSearchCriteria['clientName'] = 'all';
+            $actionMetadata = $this->_manifestRepository->getMetadata($actionSearchCriteria);
+        }
+        
         // if no action, handle error
         if (!$actionMetadata) {
-            // require_once 'Zend/Tool/Framework/Client/Exception.php';
+            require_once 'Zend/Tool/Framework/Client/Exception.php';
             throw new Zend_Tool_Framework_Client_Exception('Action \'' . $consoleActionName . '\' is not a valid action.');
         }
 
@@ -314,16 +329,26 @@ class Zend_Tool_Framework_Client_Console_ArgumentParser implements Zend_Tool_Fra
             return;
         }
 
-        // get the cli provider names from the manifest
-        $providerMetadata = $this->_manifestRepository->getMetadata(array(
+        $providerSearchCriteria = array(
             'type'       => 'Tool',
             'name'       => 'providerName',
             'value'      => $consoleProviderName,
             'clientName' => 'console'
-            ));
+            );
+        
+        // get the cli provider names from the manifest
+        $providerMetadata = $this->_manifestRepository->getMetadata($providerSearchCriteria);
 
+        // check for normalized names as well (all lower, no separators)
         if (!$providerMetadata) {
-            // require_once 'Zend/Tool/Framework/Client/Exception.php';
+            $providerSearchCriteria['name']  = 'normalizedProviderName';
+            $providerSearchCriteria['value'] = strtolower(str_replace(array('-', '_'), '', $consoleProviderName));
+            $providerSearchCriteria['clientName'] = 'all';
+            $providerMetadata = $this->_manifestRepository->getMetadata($providerSearchCriteria);
+        }
+            
+        if (!$providerMetadata) {
+            require_once 'Zend/Tool/Framework/Client/Exception.php';
             throw new Zend_Tool_Framework_Client_Exception(
                 'Provider \'' . $consoleProviderFull . '\' is not a valid provider.'
                 );
@@ -337,16 +362,25 @@ class Zend_Tool_Framework_Client_Console_ArgumentParser implements Zend_Tool_Fra
             return;
         }
 
-        $providerSpecialtyMetadata = $this->_manifestRepository->getMetadata(array(
+        $providerSpecialtySearchCriteria = array(
             'type'         => 'Tool',
             'name'         => 'specialtyName',
             'value'        => $consoleSpecialtyName,
             'providerName' => $providerMetadata->getProviderName(),
             'clientName'   => 'console'
-            ));
+            );
+        
+        $providerSpecialtyMetadata = $this->_manifestRepository->getMetadata($providerSpecialtySearchCriteria);
 
         if (!$providerSpecialtyMetadata) {
-            // require_once 'Zend/Tool/Framework/Client/Exception.php';
+            $providerSpecialtySearchCriteria['name'] = 'normalizedSpecialtyName';
+            $providerSpecialtySearchCriteria['value'] = strtolower(str_replace(array('-', '_'), '', $consoleSpecialtyName));
+            $providerSpecialtySearchCriteria['clientName'] = 'all';
+            $providerSpecialtyMetadata = $this->_manifestRepository->getMetadata($providerSpecialtySearchCriteria);
+        }
+        
+        if (!$providerSpecialtyMetadata) {
+            require_once 'Zend/Tool/Framework/Client/Exception.php';
             throw new Zend_Tool_Framework_Client_Exception(
                 'Provider \'' . $consoleSpecialtyName . '\' is not a valid specialty.'
                 );
@@ -428,7 +462,7 @@ class Zend_Tool_Framework_Client_Console_ArgumentParser implements Zend_Tool_Fra
 
         // if non-option arguments exist, attempt to process them before processing options
         $wordStack = array();
-        while ($wordOnTop = array_shift($this->_argumentsWorking)) {
+        while (($wordOnTop = array_shift($this->_argumentsWorking))) {
             if (substr($wordOnTop, 0, 1) != '-') {
                 array_push($wordStack, $wordOnTop);
             } else {
@@ -463,11 +497,6 @@ class Zend_Tool_Framework_Client_Console_ArgumentParser implements Zend_Tool_Fra
             $this->_request->setProviderParameter($providerParamOption, $value);
         }
 
-        /*
-        $this->_metadataProviderOptionsLong = $actionableMethodLongParamsMetadata;
-        $this->_metadataProviderOptionsShort = $actionableMethodShortParamsMetadata;
-        */
-
         $this->_argumentsWorking = $getoptParser->getRemainingArgs();
 
         return;
@@ -480,7 +509,7 @@ class Zend_Tool_Framework_Client_Console_ArgumentParser implements Zend_Tool_Fra
      */
     protected function _createHelpResponse($options = array())
     {
-        // require_once 'Zend/Tool/Framework/Client/Console/HelpSystem.php';
+        require_once 'Zend/Tool/Framework/Client/Console/HelpSystem.php';
         $helpSystem = new Zend_Tool_Framework_Client_Console_HelpSystem();
         $helpSystem->setRegistry($this->_registry);
 

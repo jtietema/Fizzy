@@ -15,16 +15,16 @@
  * @category   Zend
  * @package    Zend_Form
  * @subpackage Element
- * @copyright  Copyright (c) 2005-2009 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: Captcha.php 17616 2009-08-15 03:28:29Z yoshida@zend.co.jp $
+ * @version    $Id: Captcha.php 20096 2010-01-06 02:05:09Z bkarwin $
  */
 
 /** @see Zend_Form_Element_Xhtml */
-// require_once 'Zend/Form/Element/Xhtml.php';
+require_once 'Zend/Form/Element/Xhtml.php';
 
 /** @see Zend_Captcha_Adapter */
-// require_once 'Zend/Captcha/Adapter.php';
+require_once 'Zend/Captcha/Adapter.php';
 
 /**
  * Generic captcha element
@@ -38,7 +38,7 @@
  * @category   Zend
  * @package    Zend_Form
  * @subpackage Element
- * @copyright  Copyright (c) 2005-2009 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
 class Zend_Form_Element_Captcha extends Zend_Form_Element_Xhtml
@@ -154,6 +154,7 @@ class Zend_Form_Element_Captcha extends Zend_Form_Element_Xhtml
      */
     public function setOptions(array $options)
     {
+        parent::setOptions($options);
         if (array_key_exists('captcha', $options)) {
             if (array_key_exists('captchaOptions', $options)) {
                 $this->setCaptcha($options['captcha'], $options['captchaOptions']);
@@ -163,7 +164,7 @@ class Zend_Form_Element_Captcha extends Zend_Form_Element_Xhtml
             }
             unset($options['captcha']);
         }
-        return parent::setOptions($options);
+        return $this;
     }
 
     /**
@@ -208,7 +209,7 @@ class Zend_Form_Element_Captcha extends Zend_Form_Element_Xhtml
         $type = strtoupper($type);
         if ($type == self::CAPTCHA) {
             if (!isset($this->_loaders[$type])) {
-                // require_once 'Zend/Loader/PluginLoader.php';
+                require_once 'Zend/Loader/PluginLoader.php';
                 $this->_loaders[$type] = new Zend_Loader_PluginLoader(
                     array('Zend_Captcha' => 'Zend/Captcha/')
                 );

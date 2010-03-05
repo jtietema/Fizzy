@@ -16,25 +16,25 @@
  * @category   Zend
  * @package    Zend_Gdata
  * @subpackage Gdata
- * @copyright  Copyright (c) 2005-2009 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: OriginalEvent.php 16971 2009-07-22 18:05:45Z mikaelkael $
+ * @version    $Id: OriginalEvent.php 20096 2010-01-06 02:05:09Z bkarwin $
  */
 
 /**
  * @see Zend_Gdata_Extension
  */
-// require_once 'Zend/Gdata/Extension.php';
+require_once 'Zend/Gdata/Extension.php';
 
 /**
  * @see Zend_Gdata_Feed
  */
-// require_once 'Zend/Gdata/Feed.php';
+require_once 'Zend/Gdata/Feed.php';
 
 /**
  * @see Zend_Gdata_When
  */
-// require_once 'Zend/Gdata/Extension/When.php';
+require_once 'Zend/Gdata/Extension/When.php';
 
 /**
  * Represents the gd:originalEvent element
@@ -42,7 +42,7 @@
  * @category   Zend
  * @package    Zend_Gdata
  * @subpackage Gdata
- * @copyright  Copyright (c) 2005-2009 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
 class Zend_Gdata_Extension_OriginalEvent extends Zend_Gdata_Extension

@@ -14,12 +14,12 @@
  *
  * @category   Zend
  * @package    Zend_Form
- * @copyright  Copyright (c) 2005-2009 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
 
 /** Zend_Form_Element_Xhtml */
-// require_once 'Zend/Form/Element/Xhtml.php';
+require_once 'Zend/Form/Element/Xhtml.php';
 
 /**
  * Zend_Form_Element
@@ -27,14 +27,14 @@
  * @category   Zend
  * @package    Zend_Form
  * @subpackage Element
- * @copyright  Copyright (c) 2005-2009 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: File.php 16218 2009-06-21 19:44:04Z thomas $
+ * @version    $Id: File.php 20096 2010-01-06 02:05:09Z bkarwin $
  */
 class Zend_Form_Element_File extends Zend_Form_Element_Xhtml
 {
     /**
-     * @const string Plugin loader type
+     * Plugin loader type
      */
     const TRANSFER_ADAPTER = 'TRANSFER_ADAPTER';
 
@@ -83,7 +83,7 @@ class Zend_Form_Element_File extends Zend_Form_Element_Xhtml
         if (empty($decorators)) {
             $this->addDecorator('File')
                  ->addDecorator('Errors')
-                 ->addDecorator('Description')
+                 ->addDecorator('Description', array('tag' => 'p', 'class' => 'description'))
                  ->addDecorator('HtmlTag', array('tag' => 'dd'))
                  ->addDecorator('Label', array('tag' => 'dt'));
         }
@@ -123,7 +123,7 @@ class Zend_Form_Element_File extends Zend_Form_Element_Xhtml
         }
 
         if (!array_key_exists($type, $this->_loaders)) {
-            // require_once 'Zend/Loader/PluginLoader.php';
+            require_once 'Zend/Loader/PluginLoader.php';
             $loader = new Zend_Loader_PluginLoader(array(
                 'Zend_File_Transfer_Adapter' => 'Zend/File/Transfer/Adapter/',
             ));
@@ -176,7 +176,7 @@ class Zend_Form_Element_File extends Zend_Form_Element_Xhtml
             $class  = $loader->load($adapter);
             $this->_adapter = new $class;
         } else {
-            // require_once 'Zend/Form/Element/Exception.php';
+            require_once 'Zend/Form/Element/Exception.php';
             throw new Zend_Form_Element_Exception('Invalid adapter specified');
         }
 
@@ -747,8 +747,17 @@ class Zend_Form_Element_File extends Zend_Form_Element_Xhtml
      */
     public function getTranslator()
     {
-        $adapter = $this->getTransferAdapter();
-        return $adapter->getTranslator();
+        if ($this->translatorIsDisabled()) {
+            return null;
+        }
+
+        $translator = $this->getTransferAdapter()->getTranslator();
+        if (null === $translator) {
+            require_once 'Zend/Form.php';
+            return Zend_Form::getDefaultTranslator();
+        }
+
+        return $translator;
     }
 
     /**
@@ -861,7 +870,7 @@ class Zend_Form_Element_File extends Zend_Form_Element_Xhtml
         }
 
         if (!$marker) {
-            // require_once 'Zend/Form/Element/Exception.php';
+            require_once 'Zend/Form/Element/Exception.php';
             throw new Zend_Form_Element_Exception('No file decorator found... unable to render file element');
         }
 

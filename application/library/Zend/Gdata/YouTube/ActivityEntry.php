@@ -16,30 +16,30 @@
  * @category   Zend
  * @package    Zend_Gdata
  * @subpackage Health
- * @copyright  Copyright (c) 2005-2009 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: ActivityEntry.php 16971 2009-07-22 18:05:45Z mikaelkael $
+ * @version    $Id: ActivityEntry.php 20096 2010-01-06 02:05:09Z bkarwin $
  */
 
 /**
  * @see Zend_Gdata_Entry
  */
-// require_once 'Zend/Gdata/Entry.php';
+require_once 'Zend/Gdata/Entry.php';
 
 /**
  * @see Zend_Gdata_YouTube_Extension_VideoId
  */
-// require_once 'Zend/Gdata/YouTube/Extension/VideoId.php';
+require_once 'Zend/Gdata/YouTube/Extension/VideoId.php';
 
 /**
  * @see Zend_Gdata_YouTube_Extension_Username
  */
-// require_once 'Zend/Gdata/YouTube/Extension/Username.php';
+require_once 'Zend/Gdata/YouTube/Extension/Username.php';
 
 /**
  * @see Zend_Gdata_YouTube_Extension_Rating
  */
-// require_once 'Zend/Gdata/Extension/Rating.php';
+require_once 'Zend/Gdata/Extension/Rating.php';
 
 /**
  * A concrete class for working with YouTube user activity entries.
@@ -49,7 +49,7 @@
  * @category   Zend
  * @package    Zend_Gdata
  * @subpackage YouTube
- * @copyright  Copyright (c) 2005-2009 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
 class Zend_Gdata_YouTube_ActivityEntry extends Zend_Gdata_Entry

@@ -16,15 +16,15 @@
  * @category   Zend
  * @package    Zend_Gdata
  * @subpackage Gbase
- * @copyright  Copyright (c) 2005-2009 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: SnippetEntry.php 16971 2009-07-22 18:05:45Z mikaelkael $
+ * @version    $Id: SnippetEntry.php 20096 2010-01-06 02:05:09Z bkarwin $
  */
 
 /**
  * @see Zend_Gdata_Gbase_Entry
  */
-// require_once 'Zend/Gdata/Gbase/Entry.php';
+require_once 'Zend/Gdata/Gbase/Entry.php';
 
 /**
  * Concrete class for working with Snippet entries.
@@ -34,7 +34,7 @@
  * @category   Zend
  * @package    Zend_Gdata
  * @subpackage Gbase
- * @copyright  Copyright (c) 2005-2009 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
 class Zend_Gdata_Gbase_SnippetEntry extends Zend_Gdata_Gbase_Entry

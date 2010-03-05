@@ -15,40 +15,40 @@
  * @category   Zend
  * @package    Zend_Test
  * @subpackage PHPUnit
- * @copyright  Copyright (c) 2005-2009 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: SimpleTester.php 16607 2009-07-09 21:51:46Z beberlei $
+ * @version    $Id: SimpleTester.php 20096 2010-01-06 02:05:09Z bkarwin $
  */
 
 /**
  * @see PHPUnit_Extensions_Database_DefaultTester
  */
-// require_once "PHPUnit/Extensions/Database/DefaultTester.php";
+require_once "PHPUnit/Extensions/Database/DefaultTester.php";
 
 /**
  * @see PHPUnit_Extensions_Database_DB_IDatabaseConnection
  */
-// require_once "PHPUnit/Extensions/Database/DB/IDatabaseConnection.php";
+require_once "PHPUnit/Extensions/Database/DB/IDatabaseConnection.php";
 
 /**
  * @see Zend_Test_PHPUnit_Db_Operation_Truncate
  */
-// require_once "Zend/Test/PHPUnit/Db/Operation/Truncate.php";
+require_once "Zend/Test/PHPUnit/Db/Operation/Truncate.php";
 
 /**
  * @see Zend_Test_PHPUnit_Db_Operation_Insert
  */
-// require_once "Zend/Test/PHPUnit/Db/Operation/Insert.php";
+require_once "Zend/Test/PHPUnit/Db/Operation/Insert.php";
 
 /**
  * @see PHPUnit_Extensions_Database_Operation_Factory
  */
-// require_once "PHPUnit/Extensions/Database/Operation/Factory.php";
+require_once "PHPUnit/Extensions/Database/Operation/Factory.php";
 
 /**
  * @see PHPUnit_Extensions_Database_DataSet_IDataSet
  */
-// require_once "PHPUnit/Extensions/Database/DataSet/IDataSet.php";
+require_once "PHPUnit/Extensions/Database/DataSet/IDataSet.php";
 
 /**
  * Simple Tester for Database Tests when the Abstract Test Case cannot be used.
@@ -57,7 +57,7 @@
  * @category   Zend
  * @package    Zend_Test
  * @subpackage PHPUnit
- * @copyright  Copyright (c) 2005-2009 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
 class Zend_Test_PHPUnit_Db_SimpleTester extends PHPUnit_Extensions_Database_DefaultTester
@@ -70,7 +70,7 @@ class Zend_Test_PHPUnit_Db_SimpleTester extends PHPUnit_Extensions_Database_Defa
     public function __construct(PHPUnit_Extensions_Database_DB_IDatabaseConnection $connection)
     {
         if(!($connection instanceof Zend_Test_PHPUnit_Db_Connection)) {
-            // require_once "Zend/Test/PHPUnit/Db/Exception.php";
+            require_once "Zend/Test/PHPUnit/Db/Exception.php";
             throw new Zend_Test_PHPUnit_Db_Exception("Not a valid Zend_Test_PHPUnit_Db_Connection instance, ".get_class($connection)." given!");
         }
 

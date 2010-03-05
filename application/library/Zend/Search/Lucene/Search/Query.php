@@ -15,9 +15,9 @@
  * @category   Zend
  * @package    Zend_Search_Lucene
  * @subpackage Search
- * @copyright  Copyright (c) 2005-2009 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: Query.php 18954 2009-11-12 20:01:33Z alexander $
+ * @version    $Id: Query.php 20096 2010-01-06 02:05:09Z bkarwin $
  */
 
 
@@ -25,7 +25,7 @@
  * @category   Zend
  * @package    Zend_Search_Lucene
  * @subpackage Search
- * @copyright  Copyright (c) 2005-2009 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
 abstract class Zend_Search_Lucene_Search_Query
@@ -186,12 +186,12 @@ abstract class Zend_Search_Lucene_Search_Query
     public function highlightMatches($inputHTML, $defaultEncoding = '', $highlighter = null)
     {
         if ($highlighter === null) {
-            // require_once 'Zend/Search/Lucene/Search/Highlighter/Default.php';
+            require_once 'Zend/Search/Lucene/Search/Highlighter/Default.php';
             $highlighter = new Zend_Search_Lucene_Search_Highlighter_Default();
         }
 
         /** Zend_Search_Lucene_Document_Html */
-        // require_once 'Zend/Search/Lucene/Document/Html.php';
+        require_once 'Zend/Search/Lucene/Document/Html.php';
 
         $doc = Zend_Search_Lucene_Document_Html::loadHTML($inputHTML, false, $defaultEncoding);
         $highlighter->setDocument($doc);
@@ -212,7 +212,7 @@ abstract class Zend_Search_Lucene_Search_Query
     public function htmlFragmentHighlightMatches($inputHtmlFragment, $encoding = 'UTF-8', $highlighter = null)
     {
         if ($highlighter === null) {
-            // require_once 'Zend/Search/Lucene/Search/Highlighter/Default.php';
+            require_once 'Zend/Search/Lucene/Search/Highlighter/Default.php';
             $highlighter = new Zend_Search_Lucene_Search_Highlighter_Default();
         }
 
@@ -220,7 +220,7 @@ abstract class Zend_Search_Lucene_Search_Query
                    . iconv($encoding, 'UTF-8//IGNORE', $inputHtmlFragment) . '</body></html>';
 
         /** Zend_Search_Lucene_Document_Html */
-        // require_once 'Zend/Search/Lucene/Document/Html.php';
+        require_once 'Zend/Search/Lucene/Document/Html.php';
 
         $doc = Zend_Search_Lucene_Document_Html::loadHTML($inputHTML);
         $highlighter->setDocument($doc);

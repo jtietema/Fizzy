@@ -16,35 +16,35 @@
  * @category   Zend
  * @package    Zend_Gdata
  * @subpackage Health
- * @copyright  Copyright (c) 2005-2009 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: Health.php 18951 2009-11-12 16:26:19Z alexander $
+ * @version    $Id: Health.php 20096 2010-01-06 02:05:09Z bkarwin $
  */
 
 /**
  * @see Zend_Gdata
  */
-// require_once 'Zend/Gdata.php';
+require_once 'Zend/Gdata.php';
 
 /**
  * @see Zend_Gdata_Health_ProfileFeed
  */
-// require_once 'Zend/Gdata/Health/ProfileFeed.php';
+require_once 'Zend/Gdata/Health/ProfileFeed.php';
 
 /**
  * @see Zend_Gdata_Health_ProfileListFeed
  */
-// require_once 'Zend/Gdata/Health/ProfileListFeed.php';
+require_once 'Zend/Gdata/Health/ProfileListFeed.php';
 
 /**
  * @see Zend_Gdata_Health_ProfileListEntry
  */
-// require_once 'Zend/Gdata/Health/ProfileListEntry.php';
+require_once 'Zend/Gdata/Health/ProfileListEntry.php';
 
 /**
  * @see Zend_Gdata_Health_ProfileEntry
  */
-// require_once 'Zend/Gdata/Health/ProfileEntry.php';
+require_once 'Zend/Gdata/Health/ProfileEntry.php';
 
 /**
  * Service class for interacting with the Google Health Data API
@@ -54,7 +54,7 @@
  * @category   Zend
  * @package    Zend_Gdata
  * @subpackage Health
- * @copyright  Copyright (c) 2005-2009 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
 class Zend_Gdata_Health extends Zend_Gdata
@@ -155,7 +155,7 @@ class Zend_Gdata_Health extends Zend_Gdata
     public function getHealthProfileListFeed($query = null)
     {
         if ($this->_httpClient->getClientLoginToken() === null) {
-            // require_once 'Zend/Gdata/App/AuthException.php';
+            require_once 'Zend/Gdata/App/AuthException.php';
             throw new Zend_Gdata_App_AuthException(
                 'Profiles list feed is only available when using ClientLogin');
         }
@@ -188,7 +188,7 @@ class Zend_Gdata_Health extends Zend_Gdata
     {
         if ($this->_httpClient->getClientLoginToken() !== null &&
             $this->getProfileID() == null) {
-            // require_once 'Zend/Gdata/App/AuthException.php';
+            require_once 'Zend/Gdata/App/AuthException.php';
             throw new Zend_Gdata_App_AuthException(
                 'Profile ID must not be null. Did you call setProfileID()?');
         }
@@ -221,7 +221,7 @@ class Zend_Gdata_Health extends Zend_Gdata
     public function getHealthProfileEntry($query = null)
     {
         if ($query === null) {
-            // require_once 'Zend/Gdata/App/InvalidArgumentException.php';
+            require_once 'Zend/Gdata/App/InvalidArgumentException.php';
             throw new Zend_Gdata_App_InvalidArgumentException(
                 'Query must not be null');
         } else if ($query instanceof Zend_Gdata_Query) {
@@ -250,7 +250,7 @@ class Zend_Gdata_Health extends Zend_Gdata
             if ($profileID !== null) {
                 $uri = self::CLIENTLOGIN_REGISTER_FEED_URI . '/' . $profileID;
             } else {
-                // require_once 'Zend/Gdata/App/AuthException.php';
+                require_once 'Zend/Gdata/App/AuthException.php';
                 throw new Zend_Gdata_App_AuthException(
                     'Profile ID must not be null. Did you call setProfileID()?');
             }

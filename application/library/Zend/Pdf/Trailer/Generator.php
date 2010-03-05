@@ -14,20 +14,20 @@
  *
  * @category   Zend
  * @package    Zend_Pdf
- * @copyright  Copyright (c) 2005-2009 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: Generator.php 18993 2009-11-15 17:09:16Z alexander $
+ * @version    $Id: Generator.php 20096 2010-01-06 02:05:09Z bkarwin $
  */
 
 
 /** Zend_Pdf_Trailer */
-// require_once 'Zend/Pdf/Trailer.php';
+require_once 'Zend/Pdf/Trailer.php';
 
 /**
  * PDF file trailer generator (used for just created PDF)
  *
  * @package    Zend_Pdf
- * @copyright  Copyright (c) 2005-2009 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
 class Zend_Pdf_Trailer_Generator extends Zend_Pdf_Trailer
@@ -49,7 +49,7 @@ class Zend_Pdf_Trailer_Generator extends Zend_Pdf_Trailer
      */
     public function getPDFLength()
     {
-        // require_once 'Zend/Pdf.php';
+        require_once 'Zend/Pdf.php';
         return strlen(Zend_Pdf::PDF_HEADER);
     }
 
@@ -60,7 +60,7 @@ class Zend_Pdf_Trailer_Generator extends Zend_Pdf_Trailer
      */
     public function getPDFString()
     {
-        // require_once 'Zend/Pdf.php';
+        require_once 'Zend/Pdf.php';
         return Zend_Pdf::PDF_HEADER;
     }
 

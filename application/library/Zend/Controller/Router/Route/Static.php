@@ -15,13 +15,13 @@
  * @category   Zend
  * @package    Zend_Controller
  * @subpackage Router
- * @copyright  Copyright (c) 2005-2009 Zend Technologies USA Inc. (http://www.zend.com)
- * @version    $Id: Static.php 18951 2009-11-12 16:26:19Z alexander $
+ * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
+ * @version    $Id: Static.php 20096 2010-01-06 02:05:09Z bkarwin $
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
 
 /** Zend_Controller_Router_Route_Abstract */
-// require_once 'Zend/Controller/Router/Route/Abstract.php';
+require_once 'Zend/Controller/Router/Route/Abstract.php';
 
 /**
  * StaticRoute is used for managing static URIs.
@@ -30,7 +30,7 @@
  *
  * @package    Zend_Controller
  * @subpackage Router
- * @copyright  Copyright (c) 2005-2009 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
 class Zend_Controller_Router_Route_Static extends Zend_Controller_Router_Route_Abstract

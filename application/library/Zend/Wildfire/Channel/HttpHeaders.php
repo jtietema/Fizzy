@@ -15,13 +15,13 @@
  * @category   Zend
  * @package    Zend_Wildfire
  * @subpackage Channel
- * @copyright  Copyright (c) 2005-2009 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: HttpHeaders.php 18951 2009-11-12 16:26:19Z alexander $
+ * @version    $Id: HttpHeaders.php 20096 2010-01-06 02:05:09Z bkarwin $
  */
 
 /** Zend_Wildfire_Channel_Interface */
-// require_once 'Zend/Wildfire/Channel/Interface.php';
+require_once 'Zend/Wildfire/Channel/Interface.php';
 
 /** Zend_Controller_Request_Abstract */
 require_once('Zend/Controller/Request/Abstract.php');
@@ -30,13 +30,13 @@ require_once('Zend/Controller/Request/Abstract.php');
 require_once('Zend/Controller/Response/Abstract.php');
 
 /** Zend_Controller_Plugin_Abstract */
-// require_once 'Zend/Controller/Plugin/Abstract.php';
+require_once 'Zend/Controller/Plugin/Abstract.php';
 
 /** Zend_Wildfire_Protocol_JsonStream */
-// require_once 'Zend/Wildfire/Protocol/JsonStream.php';
+require_once 'Zend/Wildfire/Protocol/JsonStream.php';
 
 /** Zend_Controller_Front **/
-// require_once 'Zend/Controller/Front.php';
+require_once 'Zend/Controller/Front.php';
 
 /**
  * Implements communication via HTTP request and response headers for Wildfire Protocols.
@@ -44,7 +44,7 @@ require_once('Zend/Controller/Response/Abstract.php');
  * @category   Zend
  * @package    Zend_Wildfire
  * @subpackage Channel
- * @copyright  Copyright (c) 2005-2009 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
 class Zend_Wildfire_Channel_HttpHeaders extends Zend_Controller_Plugin_Abstract implements Zend_Wildfire_Channel_Interface
@@ -83,17 +83,17 @@ class Zend_Wildfire_Channel_HttpHeaders extends Zend_Controller_Plugin_Abstract 
     public static function init($class = null)
     {
         if (self::$_instance !== null) {
-            // require_once 'Zend/Wildfire/Exception.php';
+            require_once 'Zend/Wildfire/Exception.php';
             throw new Zend_Wildfire_Exception('Singleton instance of Zend_Wildfire_Channel_HttpHeaders already exists!');
         }
         if ($class !== null) {
             if (!is_string($class)) {
-                // require_once 'Zend/Wildfire/Exception.php';
+                require_once 'Zend/Wildfire/Exception.php';
                 throw new Zend_Wildfire_Exception('Third argument is not a class string');
             }
 
             if (!class_exists($class)) {
-                // require_once 'Zend/Loader.php';
+                require_once 'Zend/Loader.php';
                 Zend_Loader::loadClass($class);
             }
 
@@ -101,7 +101,7 @@ class Zend_Wildfire_Channel_HttpHeaders extends Zend_Controller_Plugin_Abstract 
 
             if (!self::$_instance instanceof Zend_Wildfire_Channel_HttpHeaders) {
                 self::$_instance = null;
-                // require_once 'Zend/Wildfire/Exception.php';
+                require_once 'Zend/Wildfire/Exception.php';
                 throw new Zend_Wildfire_Exception('Invalid class to third argument. Must be subclass of Zend_Wildfire_Channel_HttpHeaders.');
             }
         } else {
@@ -168,7 +168,7 @@ class Zend_Wildfire_Channel_HttpHeaders extends Zend_Controller_Plugin_Abstract 
             case Zend_Wildfire_Protocol_JsonStream::PROTOCOL_URI;
                 return new Zend_Wildfire_Protocol_JsonStream();
         }
-        // require_once 'Zend/Wildfire/Exception.php';
+        require_once 'Zend/Wildfire/Exception.php';
         throw new Zend_Wildfire_Exception('Tyring to initialize unknown protocol for URI "'.$uri.'".');
     }
 
@@ -307,7 +307,7 @@ class Zend_Wildfire_Channel_HttpHeaders extends Zend_Controller_Plugin_Abstract 
             $this->setRequest($controller->getRequest());
         }
         if (!$this->_request) {
-            // require_once 'Zend/Wildfire/Exception.php';
+            require_once 'Zend/Wildfire/Exception.php';
             throw new Zend_Wildfire_Exception('Request objects not initialized.');
         }
         return $this->_request;
@@ -328,7 +328,7 @@ class Zend_Wildfire_Channel_HttpHeaders extends Zend_Controller_Plugin_Abstract 
             }
         }
         if (!$this->_response) {
-            // require_once 'Zend/Wildfire/Exception.php';
+            require_once 'Zend/Wildfire/Exception.php';
             throw new Zend_Wildfire_Exception('Response objects not initialized.');
         }
         return $this->_response;

@@ -14,12 +14,12 @@
  *
  * @category   Zend
  * @package    Zend_Form
- * @copyright  Copyright (c) 2005-2009 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
 
 /** Zend_Form_Decorator_Abstract */
-// require_once 'Zend/Form/Decorator/Abstract.php';
+require_once 'Zend/Form/Decorator/Abstract.php';
 
 /**
  * Zend_Form_Decorator_ViewHelper
@@ -37,9 +37,9 @@
  * @category   Zend
  * @package    Zend_Form
  * @subpackage Decorator
- * @copyright  Copyright (c) 2005-2009 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: ViewHelper.php 18951 2009-11-12 16:26:19Z alexander $
+ * @version    $Id: ViewHelper.php 20096 2010-01-06 02:05:09Z bkarwin $
  */
 class Zend_Form_Decorator_ViewHelper extends Zend_Form_Decorator_Abstract
 {
@@ -222,7 +222,7 @@ class Zend_Form_Decorator_ViewHelper extends Zend_Form_Decorator_Abstract
 
         $view = $element->getView();
         if (null === $view) {
-            // require_once 'Zend/Form/Decorator/Exception.php';
+            require_once 'Zend/Form/Decorator/Exception.php';
             throw new Zend_Form_Decorator_Exception('ViewHelper decorator cannot render without a registered view object');
         }
 

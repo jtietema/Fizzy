@@ -14,9 +14,9 @@
  *
  * @category   Zend
  * @package    Zend_Pdf
- * @copyright  Copyright (c) 2005-2009 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: Resource.php 18993 2009-11-15 17:09:16Z alexander $
+ * @version    $Id: Resource.php 20096 2010-01-06 02:05:09Z bkarwin $
  */
 
 
@@ -24,7 +24,7 @@
  * PDF file Resource abstraction
  *
  * @package    Zend_Pdf
- * @copyright  Copyright (c) 2005-2009 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
 abstract class Zend_Pdf_Resource
@@ -66,7 +66,7 @@ abstract class Zend_Pdf_Resource
      */
     public function __construct($resource)
     {
-        // require_once 'Zend/Pdf/ElementFactory.php';
+        require_once 'Zend/Pdf/ElementFactory.php';
 
         $this->_objectFactory     = Zend_Pdf_ElementFactory::createFactory(1);
         if ($resource instanceof Zend_Pdf_Element) {

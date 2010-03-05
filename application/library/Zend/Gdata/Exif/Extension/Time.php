@@ -16,20 +16,20 @@
  * @category   Zend
  * @package    Zend_Gdata
  * @subpackage Exif
- * @copyright  Copyright (c) 2005-2009 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: Time.php 16971 2009-07-22 18:05:45Z mikaelkael $
+ * @version    $Id: Time.php 20096 2010-01-06 02:05:09Z bkarwin $
  */
 
 /**
  * @see Zend_Gdata_Extension
  */
-// require_once 'Zend/Gdata/Extension.php';
+require_once 'Zend/Gdata/Extension.php';
 
 /**
  * @see Zend_Gdata_Exif
  */
-// require_once 'Zend/Gdata/Exif.php';
+require_once 'Zend/Gdata/Exif.php';
 
 /**
  * Represents the exif:time element used by the Gdata Exif extensions.
@@ -37,7 +37,7 @@
  * @category   Zend
  * @package    Zend_Gdata
  * @subpackage Exif
- * @copyright  Copyright (c) 2005-2009 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
 class Zend_Gdata_Exif_Extension_Time extends Zend_Gdata_Extension

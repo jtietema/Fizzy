@@ -14,30 +14,30 @@
  *
  * @category   Zend
  * @package    Zend_Paginator
- * @copyright  Copyright (c) 2005-2009 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: DbSelect.php 16293 2009-06-25 20:58:08Z norm2782 $
+ * @version    $Id: DbSelect.php 20096 2010-01-06 02:05:09Z bkarwin $
  */
 
 /**
  * @see Zend_Paginator_Adapter_Interface
  */
-// require_once 'Zend/Paginator/Adapter/Interface.php';
+require_once 'Zend/Paginator/Adapter/Interface.php';
 
 /**
  * @see Zend_Db
  */
-// require_once 'Zend/Db.php';
+require_once 'Zend/Db.php';
 
 /**
  * @see Zend_Db_Select
  */
-// require_once 'Zend/Db/Select.php';
+require_once 'Zend/Db/Select.php';
 
 /**
  * @category   Zend
  * @package    Zend_Paginator
- * @copyright  Copyright (c) 2005-2009 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
 class Zend_Paginator_Adapter_DbSelect implements Zend_Paginator_Adapter_Interface
@@ -113,7 +113,7 @@ class Zend_Paginator_Adapter_DbSelect implements Zend_Paginator_Adapter_Interfac
                 /**
                  * @see Zend_Paginator_Exception
                  */
-                // require_once 'Zend/Paginator/Exception.php';
+                require_once 'Zend/Paginator/Exception.php';
 
                 throw new Zend_Paginator_Exception('Row count column not found');
             }
@@ -127,7 +127,7 @@ class Zend_Paginator_Adapter_DbSelect implements Zend_Paginator_Adapter_Interfac
             /**
              * @see Zend_Paginator_Exception
              */
-            // require_once 'Zend/Paginator/Exception.php';
+            require_once 'Zend/Paginator/Exception.php';
 
             throw new Zend_Paginator_Exception('Invalid row count');
         }

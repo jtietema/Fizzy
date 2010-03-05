@@ -15,15 +15,15 @@
  * @category   Zend
  * @package    Zend_Service
  * @subpackage Amazon_S3
- * @copyright  Copyright (c) 2005-2009 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: Stream.php 18951 2009-11-12 16:26:19Z alexander $
+ * @version    $Id: Stream.php 20096 2010-01-06 02:05:09Z bkarwin $
  */
 
 /**
  * @see Zend_Service_Amazon_S3
  */
-// require_once 'Zend/Service/Amazon/S3.php';
+require_once 'Zend/Service/Amazon/S3.php';
 
 /**
  * Amazon S3 PHP stream wrapper
@@ -31,7 +31,7 @@
  * @category   Zend
  * @package    Zend_Service
  * @subpackage Amazon_S3
- * @copyright  Copyright (c) 2005-2009 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
 class Zend_Service_Amazon_S3_Stream
@@ -86,7 +86,7 @@ class Zend_Service_Amazon_S3_Stream
                 /**
                  * @see Zend_Service_Amazon_S3_Exception
                  */
-                // require_once 'Zend/Service/Amazon/S3/Exception.php';
+                require_once 'Zend/Service/Amazon/S3/Exception.php';
                 throw new Zend_Service_Amazon_S3_Exception("Unable to parse URL $path");
             }
 
@@ -95,7 +95,7 @@ class Zend_Service_Amazon_S3_Stream
                 /**
                  * @see Zend_Service_Amazon_S3_Exception
                  */
-                // require_once 'Zend/Service/Amazon/S3/Exception.php';
+                require_once 'Zend/Service/Amazon/S3/Exception.php';
                 throw new Zend_Service_Amazon_S3_Exception("Unknown client for wrapper {$url[0]}");
             }
         }
@@ -410,8 +410,8 @@ class Zend_Service_Amazon_S3_Stream
             $this->_bucketList = $this->_getS3Client($path)->getBuckets();
         }
         else {
-            $url = parse_url($path);
-            $this->_bucketList = $this->_getS3Client($path)->getObjectsByBucket($url["host"]);
+            $host = parse_url($path, PHP_URL_HOST);
+            $this->_bucketList = $this->_getS3Client($path)->getObjectsByBucket($host);
         }
 
         return ($this->_bucketList !== false);
