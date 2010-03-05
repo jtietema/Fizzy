@@ -41,10 +41,20 @@
     <input type="text" name="width" id="width" />
 <label>Height</label>
     <input type="text" name="height" id="height" />
-<!--
+<label>Alignment</label>
+    <select name="position" id="position">
+        <option value="none">-- Not Set --</option>
+        <option value="left">Left</option>
+        <option value="right">Right</option>
+        <option value="baseline">Baseline</option>
+        <option value="top">Top</option>
+        <option value="middle">Middle</option>
+        <option value="bottom">Bottom</option>
+        <option value="text-top">Text top</option>
+        <option value="text-bottom">Text bottom</option>
+    </select>
 <label>Border</label>
     <input type="text" name="border" id="border" />
--->
 <div class="clear"></div>
     <input type="button" name="insert" value="{#insert}" onclick="FizzymediaDialog.insert();" />
     <input type="button" name="cancel" value="{#cancel}" onclick="tinyMCEPopup.close();" />

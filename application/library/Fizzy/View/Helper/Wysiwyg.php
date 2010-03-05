@@ -57,6 +57,8 @@ class Fizzy_View_Helper_Wysiwyg extends Zend_View_Helper_FormElement
      *
      * @param array $attribs Attributes for the element tag.
      *
+     * @param boolean
+     *
      * @return string The element XHTML.
      */
     public function wysiwyg($name, $value = null, $attribs = null, $enabled = true)
@@ -66,7 +68,7 @@ class Fizzy_View_Helper_Wysiwyg extends Zend_View_Helper_FormElement
 
         // is it disabled?
         $disabled = '';
-        if ($disable) {
+        if (!$enabled) {
             // disabled.
             $disabled = ' disabled="disabled"';
         }
