@@ -16,60 +16,60 @@
  * @category   Zend
  * @package    Zend_Gdata
  * @subpackage App
- * @copyright  Copyright (c) 2005-2009 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: FeedEntryParent.php 19870 2009-12-21 22:06:12Z tjohns $
+ * @version    $Id: FeedEntryParent.php 20096 2010-01-06 02:05:09Z bkarwin $
  */
 
 /**
  * @see Zend_Gdata_App_Extension_Element
 */
-// require_once 'Zend/Gdata/App/Extension/Element.php';
+require_once 'Zend/Gdata/App/Extension/Element.php';
 
 /**
  * @see Zend_Gdata_App_Extension_Author
 */
-// require_once 'Zend/Gdata/App/Extension/Author.php';
+require_once 'Zend/Gdata/App/Extension/Author.php';
 
 /**
  * @see Zend_Gdata_App_Extension_Category
 */
-// require_once 'Zend/Gdata/App/Extension/Category.php';
+require_once 'Zend/Gdata/App/Extension/Category.php';
 
 /**
  * @see Zend_Gdata_App_Extension_Contributor
 */
-// require_once 'Zend/Gdata/App/Extension/Contributor.php';
+require_once 'Zend/Gdata/App/Extension/Contributor.php';
 
 /**
  * @see Zend_Gdata_App_Extension_Id
  */
-// require_once 'Zend/Gdata/App/Extension/Id.php';
+require_once 'Zend/Gdata/App/Extension/Id.php';
 
 /**
  * @see Zend_Gdata_App_Extension_Link
  */
-// require_once 'Zend/Gdata/App/Extension/Link.php';
+require_once 'Zend/Gdata/App/Extension/Link.php';
 
 /**
  * @see Zend_Gdata_App_Extension_Rights
  */
-// require_once 'Zend/Gdata/App/Extension/Rights.php';
+require_once 'Zend/Gdata/App/Extension/Rights.php';
 
 /**
  * @see Zend_Gdata_App_Extension_Title
  */
-// require_once 'Zend/Gdata/App/Extension/Title.php';
+require_once 'Zend/Gdata/App/Extension/Title.php';
 
 /**
  * @see Zend_Gdata_App_Extension_Updated
  */
-// require_once 'Zend/Gdata/App/Extension/Updated.php';
+require_once 'Zend/Gdata/App/Extension/Updated.php';
 
 /**
  * Zend_Version
  */
-// require_once 'Zend/Version.php';
+require_once 'Zend/Version.php';
 
 /**
  * Abstract class for common functionality in entries and feeds
@@ -77,7 +77,7 @@
  * @category   Zend
  * @package    Zend_Gdata
  * @subpackage App
- * @copyright  Copyright (c) 2005-2009 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
 abstract class Zend_Gdata_App_FeedEntryParent extends Zend_Gdata_App_Base

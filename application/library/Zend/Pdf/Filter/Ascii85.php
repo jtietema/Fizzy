@@ -14,20 +14,20 @@
  *
  * @category   Zend
  * @package    Zend_Pdf
- * @copyright  Copyright (c) 2005-2009 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: Ascii85.php 19747 2009-12-18 16:05:13Z alexander $
+ * @version    $Id: Ascii85.php 20096 2010-01-06 02:05:09Z bkarwin $
  */
 
 
 /** Zend_Pdf_Filter_Interface */
-// require_once 'Zend/Pdf/Filter/Interface.php';
+require_once 'Zend/Pdf/Filter/Interface.php';
 
 /**
  * ASCII85 stream filter
  *
  * @package    Zend_Pdf
- * @copyright  Copyright (c) 2005-2009 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
 class Zend_Pdf_Filter_Ascii85 implements Zend_Pdf_Filter_Interface
@@ -120,7 +120,7 @@ class Zend_Pdf_Filter_Ascii85 implements Zend_Pdf_Filter_Interface
         $data = str_replace($whiteSpace, '', $data);
 
         if (substr($data, -2) != '~>') {
-            // require_once 'Zend/Pdf/Exception.php';
+            require_once 'Zend/Pdf/Exception.php';
             throw new Zend_Pdf_Exception('Invalid EOF marker');
             return '';
         }

@@ -16,22 +16,22 @@
  * @category   Zend
  * @package    Zend_Db
  * @subpackage Select
- * @copyright  Copyright (c) 2005-2009 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: Select.php 18951 2009-11-12 16:26:19Z alexander $
+ * @version    $Id: Select.php 20096 2010-01-06 02:05:09Z bkarwin $
  */
 
 
 /**
  * @see Zend_Db_Select
  */
-// require_once 'Zend/Db/Select.php';
+require_once 'Zend/Db/Select.php';
 
 
 /**
  * @see Zend_Db_Table_Abstract
  */
-// require_once 'Zend/Db/Table/Abstract.php';
+require_once 'Zend/Db/Table/Abstract.php';
 
 
 /**
@@ -40,7 +40,7 @@
  * @category   Zend
  * @package    Zend_Db
  * @subpackage Table
- * @copyright  Copyright (c) 2005-2009 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
 class Zend_Db_Table_Select extends Zend_Db_Select
@@ -211,7 +211,7 @@ class Zend_Db_Table_Select extends Zend_Db_Select
                     // Check each column to ensure it only references the primary table
                     if ($column) {
                         if (!isset($from[$table]) || $from[$table]['tableName'] != $primary) {
-                            // require_once 'Zend/Db/Table/Select/Exception.php';
+                            require_once 'Zend/Db/Table/Select/Exception.php';
                             throw new Zend_Db_Table_Select_Exception('Select query cannot join with another table');
                         }
                     }

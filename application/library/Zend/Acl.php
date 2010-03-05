@@ -14,34 +14,46 @@
  *
  * @category   Zend
  * @package    Zend_Acl
- * @copyright  Copyright (c) 2005-2009 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: Acl.php 18951 2009-11-12 16:26:19Z alexander $
+ * @version    $Id: Acl.php 20096 2010-01-06 02:05:09Z bkarwin $
  */
 
 
 /**
  * @see Zend_Acl_Resource_Interface
  */
-// require_once 'Zend/Acl/Resource/Interface.php';
+require_once 'Zend/Acl/Resource/Interface.php';
 
 
 /**
  * @see Zend_Acl_Role_Registry
  */
-// require_once 'Zend/Acl/Role/Registry.php';
+require_once 'Zend/Acl/Role/Registry.php';
 
 
 /**
  * @see Zend_Acl_Assert_Interface
  */
-// require_once 'Zend/Acl/Assert/Interface.php';
+require_once 'Zend/Acl/Assert/Interface.php';
+
+
+/**
+ * @see Zend_Acl_Role
+ */
+require_once 'Zend/Acl/Role.php';
+
+
+/**
+ * @see Zend_Acl_Resource
+ */
+require_once 'Zend/Acl/Resource.php';
 
 
 /**
  * @category   Zend
  * @package    Zend_Acl
- * @copyright  Copyright (c) 2005-2009 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
 class Zend_Acl
@@ -91,6 +103,11 @@ class Zend_Acl
     protected $_isAllowedResource = null;
 
     /**
+     * @var String
+     */
+    protected $_isAllowedPrivilege = null;
+
+    /**
      * ACL rules; whitelist (deny everything to all) by default
      *
      * @var array
@@ -135,7 +152,7 @@ class Zend_Acl
         }
 
         if (!$role instanceof Zend_Acl_Role_Interface) {
-            // require_once 'Zend/Acl/Exception.php';
+            require_once 'Zend/Acl/Exception.php';
             throw new Zend_Acl_Exception('addRole() expects $role to be of type Zend_Acl_Role_Interface');
         }
 
@@ -270,14 +287,14 @@ class Zend_Acl
         }
 
         if (!$resource instanceof Zend_Acl_Resource_Interface) {
-            // require_once 'Zend/Acl/Exception.php';
+            require_once 'Zend/Acl/Exception.php';
             throw new Zend_Acl_Exception('addResource() expects $resource to be of type Zend_Acl_Resource_Interface');
         }
 
         $resourceId = $resource->getResourceId();
 
         if ($this->has($resourceId)) {
-            // require_once 'Zend/Acl/Exception.php';
+            require_once 'Zend/Acl/Exception.php';
             throw new Zend_Acl_Exception("Resource id '$resourceId' already exists in the ACL");
         }
 
@@ -292,7 +309,7 @@ class Zend_Acl
                 }
                 $resourceParent = $this->get($resourceParentId);
             } catch (Zend_Acl_Exception $e) {
-                throw new Zend_Acl_Exception("Parent Resource id '$resourceParentId' does not exist");
+                throw new Zend_Acl_Exception("Parent Resource id '$resourceParentId' does not exist", 0, $e);
             }
             $this->_resources[$resourceParentId]['children'][$resourceId] = $resource;
         }
@@ -343,7 +360,7 @@ class Zend_Acl
         }
 
         if (!$this->has($resource)) {
-            // require_once 'Zend/Acl/Exception.php';
+            require_once 'Zend/Acl/Exception.php';
             throw new Zend_Acl_Exception("Resource '$resourceId' not found");
         }
 
@@ -390,7 +407,7 @@ class Zend_Acl
             $resourceId     = $this->get($resource)->getResourceId();
             $inheritId = $this->get($inherit)->getResourceId();
         } catch (Zend_Acl_Exception $e) {
-            throw $e;
+            throw new Zend_Acl_Exception($e->getMessage(), $e->getCode(), $e);
         }
 
         if (null !== $this->_resources[$resourceId]['parent']) {
@@ -428,7 +445,7 @@ class Zend_Acl
         try {
             $resourceId = $this->get($resource)->getResourceId();
         } catch (Zend_Acl_Exception $e) {
-            throw $e;
+            throw new Zend_Acl_Exception($e->getMessage(), $e->getCode(), $e);
         }
 
         $resourcesRemoved = array($resourceId);
@@ -589,7 +606,7 @@ class Zend_Acl
         // ensure that the rule type is valid; normalize input to uppercase
         $type = strtoupper($type);
         if (self::TYPE_ALLOW !== $type && self::TYPE_DENY !== $type) {
-            // require_once 'Zend/Acl/Exception.php';
+            require_once 'Zend/Acl/Exception.php';
             throw new Zend_Acl_Exception("Unsupported rule type; must be either '" . self::TYPE_ALLOW . "' or '"
                                        . self::TYPE_DENY . "'");
         }
@@ -679,13 +696,17 @@ class Zend_Acl
                                 }
                                 continue;
                             }
-                            if ($type === $rules['allPrivileges']['type']) {
+
+                            if (isset($rules['allPrivileges']['type']) &&
+                                $type === $rules['allPrivileges']['type'])
+                            {
                                 unset($rules['allPrivileges']);
                             }
                         } else {
                             foreach ($privileges as $privilege) {
                                 if (isset($rules['byPrivilegeId'][$privilege]) &&
-                                    $type === $rules['byPrivilegeId'][$privilege]['type']) {
+                                    $type === $rules['byPrivilegeId'][$privilege]['type'])
+                                {
                                     unset($rules['byPrivilegeId'][$privilege]);
                                 }
                             }
@@ -695,7 +716,7 @@ class Zend_Acl
                 break;
 
             default:
-                // require_once 'Zend/Acl/Exception.php';
+                require_once 'Zend/Acl/Exception.php';
                 throw new Zend_Acl_Exception("Unsupported operation; must be either '" . self::OP_ADD . "' or '"
                                            . self::OP_REMOVE . "'");
         }
@@ -734,7 +755,9 @@ class Zend_Acl
     public function isAllowed($role = null, $resource = null, $privilege = null)
     {
         // reset role & resource to null
-        $this->_isAllowedRole = $this->_isAllowedResource = null;
+        $this->_isAllowedRole = null;
+        $this->_isAllowedResource = null;
+        $this->_isAllowedPrivilege = null;
 
         if (null !== $role) {
             // keep track of originally called role
@@ -779,6 +802,7 @@ class Zend_Acl
 
             } while (true); // loop terminates at 'allResources' pseudo-parent
         } else {
+            $this->_isAllowedPrivilege = $privilege;
             // query on one privilege
             do {
                 // depth-first search on $role if it is not 'allRoles' pseudo-parent
@@ -870,7 +894,7 @@ class Zend_Acl
             /**
              * @see Zend_Acl_Exception
              */
-            // require_once 'Zend/Acl/Exception.php';
+            require_once 'Zend/Acl/Exception.php';
             throw new Zend_Acl_Exception('$dfs parameter may not be null');
         }
 
@@ -913,7 +937,7 @@ class Zend_Acl
             /**
              * @see Zend_Acl_Exception
              */
-            // require_once 'Zend/Acl/Exception.php';
+            require_once 'Zend/Acl/Exception.php';
             throw new Zend_Acl_Exception('$privilege parameter may not be null');
         }
 
@@ -959,7 +983,7 @@ class Zend_Acl
             /**
              * @see Zend_Acl_Exception
              */
-            // require_once 'Zend/Acl/Exception.php';
+            require_once 'Zend/Acl/Exception.php';
             throw new Zend_Acl_Exception('$privilege parameter may not be null');
         }
 
@@ -967,7 +991,7 @@ class Zend_Acl
             /**
              * @see Zend_Acl_Exception
              */
-            // require_once 'Zend/Acl/Exception.php';
+            require_once 'Zend/Acl/Exception.php';
             throw new Zend_Acl_Exception('$dfs parameter may not be null');
         }
 
@@ -1034,7 +1058,7 @@ class Zend_Acl
                 $this,
                 ($this->_isAllowedRole instanceof Zend_Acl_Role_Interface) ? $this->_isAllowedRole : $role,
                 ($this->_isAllowedResource instanceof Zend_Acl_Resource_Interface) ? $this->_isAllowedResource : $resource,
-                $privilege
+                $this->_isAllowedPrivilege
                 );
         }
 
@@ -1108,12 +1132,33 @@ class Zend_Acl
 
 
     /**
-     * @return array of registered roles
-     *
+     * @return array of registered roles (Deprecated)
+     * @deprecated Deprecated since version 1.10 (December 2009)
      */
     public function getRegisteredRoles()
     {
+        trigger_error('The method getRegisteredRoles() was deprecated as of '
+                    . 'version 1.0, and may be removed. You\'re encouraged '
+                    . 'to use getRoles() instead.');
+
         return $this->_getRoleRegistry()->getRoles();
     }
 
+    /**
+     * @return array of registered roles
+     */
+    public function getRoles()
+    {
+        return array_keys($this->_getRoleRegistry()->getRoles());
+    }
+
+    /**
+     * @return array of registered resources
+     */
+    public function getResources()
+    {
+        return array_keys($this->_resources);
+    }
+    
 }
+    

@@ -15,9 +15,9 @@
  * @category   Zend
  * @package    Zend_Crypt
  * @subpackage DiffieHellman
- * @copyright  Copyright (c) 2005-2009 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: DiffieHellman.php 16971 2009-07-22 18:05:45Z mikaelkael $
+ * @version    $Id: DiffieHellman.php 20096 2010-01-06 02:05:09Z bkarwin $
  */
 
 /**
@@ -27,7 +27,7 @@
  *
  * @category   Zend
  * @package    Zend_Crypt
- * @copyright  Copyright (c) 2005-2009 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
 class Zend_Crypt_DiffieHellman
@@ -171,7 +171,7 @@ class Zend_Crypt_DiffieHellman
     public function getPublicKey($type = self::NUMBER)
     {
         if (is_null($this->_publicKey)) {
-            // require_once 'Zend/Crypt/DiffieHellman/Exception.php';
+            require_once 'Zend/Crypt/DiffieHellman/Exception.php';
             throw new Zend_Crypt_DiffieHellman_Exception('A public key has not yet been generated using a prior call to generateKeys()');
         }
         if ($type == self::BINARY) {
@@ -358,7 +358,7 @@ class Zend_Crypt_DiffieHellman
         /**
          * @see Zend_Crypt_Math
          */
-        // require_once 'Zend/Crypt/Math.php';
+        require_once 'Zend/Crypt/Math.php';
         $this->_math = new Zend_Crypt_Math($extension);
     }
 

@@ -15,13 +15,16 @@
  * @category   Zend
  * @package    Zend_Amf
  * @subpackage Parse_Amf0
- * @copyright  Copyright (c) 2005-2009 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: Serializer.php 18951 2009-11-12 16:26:19Z alexander $
+ * @version    $Id: Serializer.php 20096 2010-01-06 02:05:09Z bkarwin $
  */
 
-/** Zend_Amf_Parse_Serializer */
-// require_once 'Zend/Amf/Parse/Serializer.php';
+/** Zend_Amf_Constants */
+require_once 'Zend/Amf/Constants.php';
+
+/** @see Zend_Amf_Parse_Serializer */
+require_once 'Zend/Amf/Parse/Serializer.php';
 
 /**
  * Serializer php misc types back to there corresponding AMF0 Type Marker.
@@ -29,7 +32,7 @@
  * @uses       Zend_Amf_Parse_Serializer
  * @package    Zend_Amf
  * @subpackage Parse_Amf0
- * @copyright  Copyright (c) 2005-2009 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
 class Zend_Amf_Parse_Amf0_Serializer extends Zend_Amf_Parse_Serializer
@@ -104,7 +107,7 @@ class Zend_Amf_Parse_Amf0_Serializer extends Zend_Amf_Parse_Serializer
                         $this->writeAmf3TypeMarker($data);
                         break;
                     default:
-                        // require_once 'Zend/Amf/Exception.php';
+                        require_once 'Zend/Amf/Exception.php';
                         throw new Zend_Amf_Exception("Unknown Type Marker: " . $markerType);
                 }
             }
@@ -166,7 +169,7 @@ class Zend_Amf_Parse_Amf0_Serializer extends Zend_Amf_Parse_Serializer
                     }
                     break;
                 default:
-                    // require_once 'Zend/Amf/Exception.php';
+                    require_once 'Zend/Amf/Exception.php';
                     throw new Zend_Amf_Exception('Unsupported data type: ' . gettype($data));
             }
 
@@ -213,7 +216,7 @@ class Zend_Amf_Parse_Amf0_Serializer extends Zend_Amf_Parse_Serializer
         // Loop each element and write the name of the property.
         foreach ($object as $key => $value) {
             // skip variables starting with an _ provate transient
-            if( $key[0] == "_")    continue;
+            if( $key[0] == "_") continue;
             $this->_stream->writeUTF($key);
             $this->writeTypeMarker($value);
         }
@@ -261,7 +264,7 @@ class Zend_Amf_Parse_Amf0_Serializer extends Zend_Amf_Parse_Serializer
         } elseif ($data instanceof Zend_Date) {
             $dateString = $data->toString('U');
         } else {
-            // require_once 'Zend/Amf/Exception.php';
+            require_once 'Zend/Amf/Exception.php';
             throw new Zend_Amf_Exception('Invalid date specified; must be a DateTime or Zend_Date object');
         }
         $dateString *= 1000;
@@ -297,7 +300,7 @@ class Zend_Amf_Parse_Amf0_Serializer extends Zend_Amf_Parse_Serializer
      */
     public function writeAmf3TypeMarker($data)
     {
-        // require_once 'Zend/Amf/Parse/Amf3/Serializer.php';
+        require_once 'Zend/Amf/Parse/Amf3/Serializer.php';
         $serializer = new Zend_Amf_Parse_Amf3_Serializer($this->_stream);
         $serializer->writeTypeMarker($data);
         return $this;
@@ -312,7 +315,7 @@ class Zend_Amf_Parse_Amf0_Serializer extends Zend_Amf_Parse_Serializer
      */
     protected function getClassName($object)
     {
-        // require_once 'Zend/Amf/Parse/TypeLoader.php';
+        require_once 'Zend/Amf/Parse/TypeLoader.php';
         //Check to see if the object is a typed object and we need to change
         $className = '';
         switch (true) {

@@ -16,23 +16,23 @@
  * @category   Zend
  * @package    Zend_Service
  * @subpackage Simpy
- * @copyright  Copyright (c) 2005-2009 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: Watchlist.php 16211 2009-06-21 19:23:55Z thomas $
+ * @version    $Id: Watchlist.php 20096 2010-01-06 02:05:09Z bkarwin $
  */
 
 
 /**
  * @see Zend_Service_Simpy_WatchlistFilterSet
  */
-// require_once 'Zend/Service/Simpy/WatchlistFilterSet.php';
+require_once 'Zend/Service/Simpy/WatchlistFilterSet.php';
 
 
 /**
  * @category   Zend
  * @package    Zend_Service
  * @subpackage Simpy
- * @copyright  Copyright (c) 2005-2009 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
 class Zend_Service_Simpy_Watchlist

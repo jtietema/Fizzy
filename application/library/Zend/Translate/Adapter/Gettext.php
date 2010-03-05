@@ -14,21 +14,21 @@
  *
  * @category   Zend
  * @package    Zend_Translate
- * @copyright  Copyright (c) 2005-2009 Zend Technologies USA Inc. (http://www.zend.com)
- * @version    $Id: Gettext.php 16971 2009-07-22 18:05:45Z mikaelkael $
+ * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
+ * @version    $Id: Gettext.php 20096 2010-01-06 02:05:09Z bkarwin $
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
 
 /** Zend_Locale */
-// require_once 'Zend/Locale.php';
+require_once 'Zend/Locale.php';
 
 /** Zend_Translate_Adapter */
-// require_once 'Zend/Translate/Adapter.php';
+require_once 'Zend/Translate/Adapter.php';
 
 /**
  * @category   Zend
  * @package    Zend_Translate
- * @copyright  Copyright (c) 2005-2009 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
 class Zend_Translate_Adapter_Gettext extends Zend_Translate_Adapter {
@@ -37,19 +37,6 @@ class Zend_Translate_Adapter_Gettext extends Zend_Translate_Adapter {
     private $_file        = false;
     private $_adapterInfo = array();
     private $_data        = array();
-
-    /**
-     * Generates the  adapter
-     *
-     * @param  string              $data     Translation data
-     * @param  string|Zend_Locale  $locale   OPTIONAL Locale/Language to set, identical with locale identifier,
-     *                                       see Zend_Locale for more information
-     * @param  array               $options  OPTIONAL Options to set
-     */
-    public function __construct($data, $locale = null, array $options = array())
-    {
-        parent::__construct($data, $locale, $options);
-    }
 
     /**
      * Read values from the MO file
@@ -81,11 +68,11 @@ class Zend_Translate_Adapter_Gettext extends Zend_Translate_Adapter {
         $this->_bigEndian = false;
         $this->_file      = @fopen($filename, 'rb');
         if (!$this->_file) {
-            // require_once 'Zend/Translate/Exception.php';
+            require_once 'Zend/Translate/Exception.php';
             throw new Zend_Translate_Exception('Error opening translation file \'' . $filename . '\'.');
         }
         if (@filesize($filename) < 10) {
-            // require_once 'Zend/Translate/Exception.php';
+            require_once 'Zend/Translate/Exception.php';
             throw new Zend_Translate_Exception('\'' . $filename . '\' is not a gettext file');
         }
 
@@ -96,7 +83,7 @@ class Zend_Translate_Adapter_Gettext extends Zend_Translate_Adapter {
         } else if (strtolower(substr(dechex($input[1]), -8)) == "de120495") {
             $this->_bigEndian = true;
         } else {
-            // require_once 'Zend/Translate/Exception.php';
+            require_once 'Zend/Translate/Exception.php';
             throw new Zend_Translate_Exception('\'' . $filename . '\' is not a gettext file');
         }
         // read revision - not supported for now

@@ -14,16 +14,16 @@
  *
  * @category   Zend
  * @package    Zend_View
- * @copyright  Copyright (c) 2005-2009 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: View.php 18951 2009-11-12 16:26:19Z alexander $
+ * @version    $Id: View.php 20096 2010-01-06 02:05:09Z bkarwin $
  */
 
 
 /**
  * Abstract master class for extension.
  */
-// require_once 'Zend/View/Abstract.php';
+require_once 'Zend/View/Abstract.php';
 
 
 /**
@@ -31,7 +31,7 @@
  *
  * @category   Zend
  * @package    Zend_View
- * @copyright  Copyright (c) 2005-2009 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
 class Zend_View extends Zend_View_Abstract
@@ -61,7 +61,7 @@ class Zend_View extends Zend_View_Abstract
         $this->_useViewStream = (bool) ini_get('short_open_tag') ? false : true;
         if ($this->_useViewStream) {
             if (!in_array('zend.view', stream_get_wrappers())) {
-                // require_once 'Zend/View/Stream.php';
+                require_once 'Zend/View/Stream.php';
                 stream_wrapper_register('zend.view', 'Zend_View_Stream');
             }
         }

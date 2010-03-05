@@ -14,27 +14,27 @@
  *
  * @category   Zend
  * @package    Zend_Filter
- * @copyright  Copyright (c) 2005-2009 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: Encrypt.php 16971 2009-07-22 18:05:45Z mikaelkael $
+ * @version    $Id: Encrypt.php 20096 2010-01-06 02:05:09Z bkarwin $
  */
 
 /**
  * @see Zend_Filter_Interface
  */
-// require_once 'Zend/Filter/Interface.php';
+require_once 'Zend/Filter/Interface.php';
 
 /**
  * @see Zend_Loader
  */
-// require_once 'Zend/Loader.php';
+require_once 'Zend/Loader.php';
 
 /**
  * Encrypts a given string
  *
  * @category   Zend
  * @package    Zend_Filter
- * @copyright  Copyright (c) 2005-2009 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
 class Zend_Filter_Encrypt implements Zend_Filter_Interface
@@ -51,6 +51,10 @@ class Zend_Filter_Encrypt implements Zend_Filter_Interface
      */
     public function __construct($options = null)
     {
+        if ($options instanceof Zend_Config) {
+            $options = $options->toArray();
+        }
+
         $this->setAdapter($options);
     }
 
@@ -95,7 +99,7 @@ class Zend_Filter_Encrypt implements Zend_Filter_Interface
 
         $this->_adapter = new $adapter($options);
         if (!$this->_adapter instanceof Zend_Filter_Encrypt_Interface) {
-            // require_once 'Zend/Filter/Exception.php';
+            require_once 'Zend/Filter/Exception.php';
             throw new Zend_Filter_Exception("Encoding adapter '" . $adapter . "' does not implement Zend_Filter_Encrypt_Interface");
         }
 
@@ -112,7 +116,7 @@ class Zend_Filter_Encrypt implements Zend_Filter_Interface
     {
         $part = substr($method, 0, 3);
         if ((($part != 'get') and ($part != 'set')) or !method_exists($this->_adapter, $method)) {
-            // require_once 'Zend/Filter/Exception.php';
+            require_once 'Zend/Filter/Exception.php';
             throw new Zend_Filter_Exception("Unknown method '{$method}'");
         }
 

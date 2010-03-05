@@ -15,26 +15,26 @@
  * @category   Zend
  * @package    Zend_View
  * @subpackage Helper
- * @copyright  Copyright (c) 2005-2009 Zend Technologies USA Inc. (http://www.zend.com)
- * @version    $Id: Json.php 16222 2009-06-21 19:55:20Z thomas $
+ * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
+ * @version    $Id: Json.php 20096 2010-01-06 02:05:09Z bkarwin $
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
 
 /** Zend_Json */
-// require_once 'Zend/Json.php';
+require_once 'Zend/Json.php';
 
 /** Zend_Controller_Front */
-// require_once 'Zend/Controller/Front.php';
+require_once 'Zend/Controller/Front.php';
 
 /** Zend_View_Helper_Abstract.php */
-// require_once 'Zend/View/Helper/Abstract.php';
+require_once 'Zend/View/Helper/Abstract.php';
 
 /**
  * Helper for simplifying JSON responses
  *
  * @package    Zend_View
  * @subpackage Helper
- * @copyright  Copyright (c) 2005-2009 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
 class Zend_View_Helper_Json extends Zend_View_Helper_Abstract
@@ -66,7 +66,7 @@ class Zend_View_Helper_Json extends Zend_View_Helper_Abstract
 
         $data = Zend_Json::encode($data, null, $options);
         if (!$keepLayouts) {
-            // require_once 'Zend/Layout.php';
+            require_once 'Zend/Layout.php';
             $layout = Zend_Layout::getMvcInstance();
             if ($layout instanceof Zend_Layout) {
                 $layout->disableLayout();

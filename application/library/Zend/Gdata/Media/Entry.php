@@ -16,25 +16,25 @@
  * @category   Zend
  * @package    Zend_Gdata
  * @subpackage Media
- * @copyright  Copyright (c) 2005-2009 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: Entry.php 16971 2009-07-22 18:05:45Z mikaelkael $
+ * @version    $Id: Entry.php 20096 2010-01-06 02:05:09Z bkarwin $
  */
 
 /**
  * @see Zend_Gdata_Entry
  */
-// require_once 'Zend/Gdata/Entry.php';
+require_once 'Zend/Gdata/Entry.php';
 
 /**
  * @see Zend_Gdata_Media
  */
-// require_once 'Zend/Gdata/Media.php';
+require_once 'Zend/Gdata/Media.php';
 
 /**
  * @see Zend_Gdata_Media_Extension_MediaGroup
  */
-// require_once 'Zend/Gdata/Media/Extension/MediaGroup.php';
+require_once 'Zend/Gdata/Media/Extension/MediaGroup.php';
 
 /**
  * Represents the Gdata flavor of an Atom entry
@@ -42,7 +42,7 @@
  * @category   Zend
  * @package    Zend_Gdata
  * @subpackage Media
- * @copyright  Copyright (c) 2005-2009 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
 class Zend_Gdata_Media_Entry extends Zend_Gdata_Entry

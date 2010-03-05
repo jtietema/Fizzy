@@ -14,30 +14,30 @@
  *
  * @category   Zend
  * @package    Zend_Reflection
- * @copyright  Copyright (c) 2005-2009 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: Method.php 18165 2009-09-17 13:24:09Z carlton $
+ * @version    $Id: Method.php 20096 2010-01-06 02:05:09Z bkarwin $
  */
 
 /**
  * @see Zend_Reflection_Class
  */
-// require_once 'Zend/Reflection/Class.php';
+require_once 'Zend/Reflection/Class.php';
 
 /**
  * @see Zend_Reflection_Docblock
  */
-// require_once 'Zend/Reflection/Docblock.php';
+require_once 'Zend/Reflection/Docblock.php';
 
 /**
  * @see Zend_Reflection_Parameter
  */
-// require_once 'Zend/Reflection/Parameter.php';
+require_once 'Zend/Reflection/Parameter.php';
 
 /**
  * @category   Zend
  * @package    Zend_Reflection
- * @copyright  Copyright (c) 2005-2009 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
 class Zend_Reflection_Method extends ReflectionMethod
@@ -51,13 +51,13 @@ class Zend_Reflection_Method extends ReflectionMethod
     public function getDocblock($reflectionClass = 'Zend_Reflection_Docblock')
     {
         if ('' == $this->getDocComment()) {
-            // require_once 'Zend/Reflection/Exception.php';
+            require_once 'Zend/Reflection/Exception.php';
             throw new Zend_Reflection_Exception($this->getName() . ' does not have a docblock');
         }
 
         $instance = new $reflectionClass($this);
         if (!$instance instanceof Zend_Reflection_Docblock) {
-            // require_once 'Zend/Reflection/Exception.php';
+            require_once 'Zend/Reflection/Exception.php';
             throw new Zend_Reflection_Exception('Invalid reflection class provided; must extend Zend_Reflection_Docblock');
         }
         return $instance;
@@ -91,7 +91,7 @@ class Zend_Reflection_Method extends ReflectionMethod
         $phpReflection  = parent::getDeclaringClass();
         $zendReflection = new $reflectionClass($phpReflection->getName());
         if (!$zendReflection instanceof Zend_Reflection_Class) {
-            // require_once 'Zend/Reflection/Exception.php';
+            require_once 'Zend/Reflection/Exception.php';
             throw new Zend_Reflection_Exception('Invalid reflection class provided; must extend Zend_Reflection_Class');
         }
         unset($phpReflection);
@@ -111,7 +111,7 @@ class Zend_Reflection_Method extends ReflectionMethod
         while ($phpReflections && ($phpReflection = array_shift($phpReflections))) {
             $instance = new $reflectionClass(array($this->getDeclaringClass()->getName(), $this->getName()), $phpReflection->getName());
             if (!$instance instanceof Zend_Reflection_Parameter) {
-                // require_once 'Zend/Reflection/Exception.php';
+                require_once 'Zend/Reflection/Exception.php';
                 throw new Zend_Reflection_Exception('Invalid reflection class provided; must extend Zend_Reflection_Parameter');
             }
             $zendReflections[] = $instance;

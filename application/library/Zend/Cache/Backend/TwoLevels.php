@@ -15,27 +15,27 @@
  * @category   Zend
  * @package    Zend_Cache
  * @subpackage Zend_Cache_Backend
- * @copyright  Copyright (c) 2005-2009 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: TwoLevels.php 19788 2009-12-19 16:40:07Z alexander $
+ * @version    $Id: TwoLevels.php 20096 2010-01-06 02:05:09Z bkarwin $
  */
 
 
 /**
  * @see Zend_Cache_Backend_ExtendedInterface
  */
-// require_once 'Zend/Cache/Backend/ExtendedInterface.php';
+require_once 'Zend/Cache/Backend/ExtendedInterface.php';
 
 /**
  * @see Zend_Cache_Backend
  */
-// require_once 'Zend/Cache/Backend.php';
+require_once 'Zend/Cache/Backend.php';
 
 
 /**
  * @package    Zend_Cache
  * @subpackage Zend_Cache_Backend
- * @copyright  Copyright (c) 2005-2009 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
 

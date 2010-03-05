@@ -15,21 +15,21 @@
  * @category   Zend
  * @package    Zend_View
  * @subpackage Helper
- * @copyright  Copyright (c) 2005-2009 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: HtmlElement.php 18951 2009-11-12 16:26:19Z alexander $
+ * @version    $Id: HtmlElement.php 20096 2010-01-06 02:05:09Z bkarwin $
  */
 
 /**
  * @see Zend_View_Helper_Abstract
  */
-// require_once 'Zend/View/Helper/Abstract.php';
+require_once 'Zend/View/Helper/Abstract.php';
 
 /**
  * @category   Zend
  * @package    Zend_View
  * @subpackage Helper
- * @copyright  Copyright (c) 2005-2009 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
 abstract class Zend_View_Helper_HtmlElement extends Zend_View_Helper_Abstract
@@ -95,7 +95,7 @@ abstract class Zend_View_Helper_HtmlElement extends Zend_View_Helper_Abstract
                 // Don't escape event attributes; _do_ substitute double quotes with singles
                 if (!is_scalar($val)) {
                     // non-scalar data should be cast to JSON first
-                    // require_once 'Zend/Json.php';
+                    require_once 'Zend/Json.php';
                     $val = Zend_Json::encode($val);
                 }
                 $val = preg_replace('/"([^"]*)":/', '$1:', $val);

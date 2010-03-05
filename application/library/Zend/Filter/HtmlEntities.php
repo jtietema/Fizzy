@@ -14,20 +14,20 @@
  *
  * @category   Zend
  * @package    Zend_Filter
- * @copyright  Copyright (c) 2005-2009 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: HtmlEntities.php 20105 2010-01-06 21:28:26Z matthew $
+ * @version    $Id: HtmlEntities.php 21061 2010-02-15 21:56:54Z thomas $
  */
 
 /**
  * @see Zend_Filter_Interface
  */
-// require_once 'Zend/Filter/Interface.php';
+require_once 'Zend/Filter/Interface.php';
 
 /**
  * @category   Zend
  * @package    Zend_Filter
- * @copyright  Copyright (c) 2005-2009 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
 class Zend_Filter_HtmlEntities implements Zend_Filter_Interface
@@ -62,8 +62,9 @@ class Zend_Filter_HtmlEntities implements Zend_Filter_Interface
      */
     public function __construct($options = array())
     {
-        if (!is_array($options)) {
-            trigger_error('Support for multiple arguments is deprecated in favor of a single options array', E_USER_NOTICE);
+        if ($options instanceof Zend_Config) {
+            $options = $options->toArray();
+        } else if (!is_array($options)) {
             $options = func_get_args();
             $temp['quotestyle'] = array_shift($options);
             if (!empty($options)) {

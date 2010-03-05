@@ -16,20 +16,20 @@
  * @category   Zend
  * @package    Zend_OpenId
  * @subpackage Zend_OpenId_Provider
- * @copyright  Copyright (c) 2005-2009 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: Provider.php 16212 2009-06-21 19:24:49Z thomas $
+ * @version    $Id: Provider.php 20096 2010-01-06 02:05:09Z bkarwin $
  */
 
 /**
  * @see Zend_OpenId
  */
-// require_once "Zend/OpenId.php";
+require_once "Zend/OpenId.php";
 
 /**
  * @see Zend_OpenId_Extension
  */
-// require_once "Zend/OpenId/Extension.php";
+require_once "Zend/OpenId/Extension.php";
 
 /**
  * OpenID provider (server) implementation
@@ -37,7 +37,7 @@
  * @category   Zend
  * @package    Zend_OpenId
  * @subpackage Zend_OpenId_Provider
- * @copyright  Copyright (c) 2005-2009 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
 class Zend_OpenId_Provider
@@ -123,13 +123,13 @@ class Zend_OpenId_Provider
         }
         $this->_trustUrl = $trustUrl;
         if ($user === null) {
-            // require_once "Zend/OpenId/Provider/User/Session.php";
+            require_once "Zend/OpenId/Provider/User/Session.php";
             $this->_user = new Zend_OpenId_Provider_User_Session();
         } else {
             $this->_user = $user;
         }
         if ($storage === null) {
-            // require_once "Zend/OpenId/Provider/Storage/File.php";
+            require_once "Zend/OpenId/Provider/Storage/File.php";
             $this->_storage = new Zend_OpenId_Provider_Storage_File();
         } else {
             $this->_storage = $storage;

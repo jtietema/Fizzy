@@ -14,15 +14,15 @@
  *
  * @category   Zend
  * @package    Zend_Paginator
- * @copyright  Copyright (c) 2005-2009 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: Jumping.php 18951 2009-11-12 16:26:19Z alexander $
+ * @version    $Id: Jumping.php 20096 2010-01-06 02:05:09Z bkarwin $
  */
 
 /**
  * @see Zend_Paginator_ScrollingStyle_Interface
  */
-// require_once 'Zend/Paginator/ScrollingStyle/Interface.php';
+require_once 'Zend/Paginator/ScrollingStyle/Interface.php';
 
 /**
  * A scrolling style in which the cursor advances to the upper bound
@@ -31,7 +31,7 @@
  *
  * @category   Zend
  * @package    Zend_Paginator
- * @copyright  Copyright (c) 2005-2009 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
 class Zend_Paginator_ScrollingStyle_Jumping implements Zend_Paginator_ScrollingStyle_Interface

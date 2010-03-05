@@ -14,15 +14,15 @@
  *
  * @category   Zend
  * @package    Zend_Cache
- * @copyright  Copyright (c) 2005-2009 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: Core.php 19781 2009-12-19 10:34:44Z mluiten $
+ * @version    $Id: Core.php 20930 2010-02-05 14:37:52Z padraic $
  */
 
 
 /**
  * @package    Zend_Cache
- * @copyright  Copyright (c) 2005-2009 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
 class Zend_Cache_Core
@@ -255,6 +255,9 @@ class Zend_Cache_Core
     {
         if (!is_string($name) || !array_key_exists($name, $this->_options)) {
             Zend_Cache::throwException("Incorrect option name : $name");
+        }
+        if ($name == 'lifetime' && empty($value)) {
+            $value = null;
         }
         $this->_options[$name] = $value;
     }
@@ -640,7 +643,7 @@ class Zend_Cache_Core
         }
 
         // Create a default logger to the standard output stream
-        // require_once 'Zend/Log/Writer/Stream.php';
+        require_once 'Zend/Log/Writer/Stream.php';
         $logger = new Zend_Log(new Zend_Log_Writer_Stream('php://output'));
         $this->_options['logger'] = $logger;
     }

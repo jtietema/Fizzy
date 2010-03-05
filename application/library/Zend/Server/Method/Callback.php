@@ -15,9 +15,9 @@
  * @category   Zend
  * @package    Zend_Server
  * @subpackage Method
- * @copyright  Copyright (c) 2005-2009 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: Callback.php 18951 2009-11-12 16:26:19Z alexander $
+ * @version    $Id: Callback.php 20096 2010-01-06 02:05:09Z bkarwin $
  */
 
 /**
@@ -26,7 +26,7 @@
  * @category   Zend
  * @package    Zend_Server
  * @subpackage Method
- * @copyright  Copyright (c) 2005-2009 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
 class Zend_Server_Method_Callback
@@ -166,7 +166,7 @@ class Zend_Server_Method_Callback
     public function setType($type)
     {
         if (!in_array($type, $this->_types)) {
-            // require_once 'Zend/Server/Exception.php';
+            require_once 'Zend/Server/Exception.php';
             throw new Zend_Server_Exception('Invalid method callback type  passed to ' . __CLASS__ . '::' . __METHOD__);
         }
         $this->_type = $type;

@@ -16,9 +16,9 @@
  * @category   Zend
  * @package    Zend_Service
  * @subpackage Yahoo
- * @copyright  Copyright (c) 2005-2009 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: Result.php 16211 2009-06-21 19:23:55Z thomas $
+ * @version    $Id: Result.php 20096 2010-01-06 02:05:09Z bkarwin $
  */
 
 
@@ -26,7 +26,7 @@
  * @category   Zend
  * @package    Zend_Service
  * @subpackage Yahoo
- * @copyright  Copyright (c) 2005-2009 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
 class Zend_Service_Yahoo_Result
@@ -117,7 +117,7 @@ class Zend_Service_Yahoo_Result
             /**
              * @see Zend_Service_Yahoo_Image
              */
-            // require_once 'Zend/Service/Yahoo/Image.php';
+            require_once 'Zend/Service/Yahoo/Image.php';
             $this->Thumbnail = new Zend_Service_Yahoo_Image($node->item(0), $this->_namespace);
         } else {
             $this->Thumbnail = null;

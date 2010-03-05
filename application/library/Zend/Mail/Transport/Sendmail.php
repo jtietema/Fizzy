@@ -15,16 +15,16 @@
  * @category   Zend
  * @package    Zend_Mail
  * @subpackage Transport
- * @copyright  Copyright (c) 2005-2009 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: Sendmail.php 19915 2009-12-24 10:24:20Z yoshida@zend.co.jp $
+ * @version    $Id: Sendmail.php 20816 2010-02-01 21:13:54Z freak $
  */
 
 
 /**
  * @see Zend_Mail_Transport_Abstract
  */
-// require_once 'Zend/Mail/Transport/Abstract.php';
+require_once 'Zend/Mail/Transport/Abstract.php';
 
 
 /**
@@ -33,7 +33,7 @@
  * @category   Zend
  * @package    Zend_Mail
  * @subpackage Transport
- * @copyright  Copyright (c) 2005-2009 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
 class Zend_Mail_Transport_Sendmail extends Zend_Mail_Transport_Abstract
@@ -69,11 +69,19 @@ class Zend_Mail_Transport_Sendmail extends Zend_Mail_Transport_Abstract
     /**
      * Constructor.
      *
-     * @param  string $parameters OPTIONAL (Default: null)
+     * @param  string|array|Zend_Config $parameters OPTIONAL (Default: null)
      * @return void
      */
     public function __construct($parameters = null)
     {
+		if ($parameters instanceof Zend_Config) { 
+			$parameters = $parameters->toArray(); 
+		}
+
+		if (is_array($parameters)) { 
+			$parameters = implode(' ', $parameters);
+		}
+		
         $this->parameters = $parameters;
     }
 
@@ -83,6 +91,8 @@ class Zend_Mail_Transport_Sendmail extends Zend_Mail_Transport_Abstract
      *
      * @access public
      * @return void
+     * @throws Zend_Mail_Transport_Exception if parameters is set
+     *         but not a string
      * @throws Zend_Mail_Transport_Exception on mail() failure
      */
     public function _sendMail()
@@ -95,6 +105,19 @@ class Zend_Mail_Transport_Sendmail extends Zend_Mail_Transport_Abstract
                 $this->body,
                 $this->header);
         } else {
+        	if(!is_string($this->parameters)) {
+	            /**
+	             * @see Zend_Mail_Transport_Exception
+	             * 
+	             * Exception is thrown here because
+	             * $parameters is a public property
+	             */
+                require_once 'Zend/Mail/Transport/Exception.php';
+                throw new Zend_Mail_Transport_Exception(
+                    'Parameters were set but are not a string'
+                );
+        	}
+
             $result = mail(
                 $this->recipients,
                 $this->_mail->getSubject(),
@@ -108,7 +131,7 @@ class Zend_Mail_Transport_Sendmail extends Zend_Mail_Transport_Abstract
             /**
              * @see Zend_Mail_Transport_Exception
              */
-            // require_once 'Zend/Mail/Transport/Exception.php';
+            require_once 'Zend/Mail/Transport/Exception.php';
             throw new Zend_Mail_Transport_Exception('Unable to send mail. ' . $this->_errstr);
         }
     }
@@ -132,7 +155,7 @@ class Zend_Mail_Transport_Sendmail extends Zend_Mail_Transport_Abstract
             /**
              * @see Zend_Mail_Transport_Exception
              */
-            // require_once 'Zend/Mail/Transport/Exception.php';
+            require_once 'Zend/Mail/Transport/Exception.php';
             throw new Zend_Mail_Transport_Exception('_prepareHeaders requires a registered Zend_Mail object');
         }
 
@@ -144,7 +167,7 @@ class Zend_Mail_Transport_Sendmail extends Zend_Mail_Transport_Abstract
                 /**
                  * @see Zend_Mail_Transport_Exception
                  */
-                // require_once 'Zend/Mail/Transport/Exception.php';
+                require_once 'Zend/Mail/Transport/Exception.php';
                 throw new Zend_Mail_Transport_Exception('Missing To addresses');
             }
         } else {
@@ -153,7 +176,7 @@ class Zend_Mail_Transport_Sendmail extends Zend_Mail_Transport_Abstract
                 /**
                  * @see Zend_Mail_Transport_Exception
                  */
-                // require_once 'Zend/Mail/Transport/Exception.php';
+                require_once 'Zend/Mail/Transport/Exception.php';
                 throw new Zend_Mail_Transport_Exception('Missing To header');
             }
 

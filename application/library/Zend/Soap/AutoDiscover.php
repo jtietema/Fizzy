@@ -15,16 +15,31 @@
  * @category   Zend
  * @package    Zend_Soap
  * @subpackage AutoDiscover
- * @copyright  Copyright (c) 2005-2009 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: AutoDiscover.php 16210 2009-06-21 19:22:17Z thomas $
+ * @version    $Id: AutoDiscover.php 20096 2010-01-06 02:05:09Z bkarwin $
  */
 
-// require_once 'Zend/Server/Interface.php';
-// require_once 'Zend/Soap/Wsdl.php';
-// require_once 'Zend/Server/Reflection.php';
-// require_once 'Zend/Server/Abstract.php';
-// require_once 'Zend/Uri.php';
+/**
+ * @see Zend_Server_Interface
+ */
+require_once 'Zend/Server/Interface.php';
+/**
+ * @see Zend_Soap_Wsdl
+ */
+require_once 'Zend/Soap/Wsdl.php';
+/**
+ * @see Zend_Server_Reflection
+ */
+require_once 'Zend/Server/Reflection.php';
+/**
+ * @see Zend_Server_Abstract
+ */
+require_once 'Zend/Server/Abstract.php';
+/**
+ * @see Zend_Uri
+ */
+require_once 'Zend/Uri.php';
 
 /**
  * Zend_Soap_AutoDiscover
@@ -33,7 +48,8 @@
  * @package    Zend_Soap
  * @subpackage AutoDiscover
  */
-class Zend_Soap_AutoDiscover implements Zend_Server_Interface {
+class Zend_Soap_AutoDiscover implements Zend_Server_Interface
+{
     /**
      * @var Zend_Soap_Wsdl
      */
@@ -102,7 +118,7 @@ class Zend_Soap_AutoDiscover implements Zend_Server_Interface {
     public function setUri($uri)
     {
         if(!is_string($uri) && !($uri instanceof Zend_Uri)) {
-            // require_once "Zend/Soap/AutoDiscover/Exception.php";
+            require_once "Zend/Soap/AutoDiscover/Exception.php";
             throw new Zend_Soap_AutoDiscover_Exception("No uri given to Zend_Soap_AutoDiscover::setUri as string or Zend_Uri instance.");
         }
         $this->_uri = $uri;
@@ -147,7 +163,7 @@ class Zend_Soap_AutoDiscover implements Zend_Server_Interface {
     public function setOperationBodyStyle(array $operationStyle=array())
     {
         if(!isset($operationStyle['use'])) {
-            // require_once "Zend/Soap/AutoDiscover/Exception.php";
+            require_once "Zend/Soap/AutoDiscover/Exception.php";
             throw new Zend_Soap_AutoDiscover_Exception("Key 'use' is required in Operation soap:body style.");
         }
         $this->_operationBodyStyle = $operationStyle;
@@ -334,7 +350,7 @@ class Zend_Soap_AutoDiscover implements Zend_Server_Interface {
             }
         }
         if ($prototype === null) {
-            // require_once "Zend/Soap/AutoDiscover/Exception.php";
+            require_once "Zend/Soap/AutoDiscover/Exception.php";
             throw new Zend_Soap_AutoDiscover_Exception("No prototypes could be found for the '" . $function->getName() . "' function");
         }
 
@@ -429,7 +445,7 @@ class Zend_Soap_AutoDiscover implements Zend_Server_Interface {
      */
     public function fault($fault = null, $code = null)
     {
-        // require_once "Zend/Soap/AutoDiscover/Exception.php";
+        require_once "Zend/Soap/AutoDiscover/Exception.php";
         throw new Zend_Soap_AutoDiscover_Exception("Function has no use in AutoDiscover.");
     }
 
@@ -459,7 +475,7 @@ class Zend_Soap_AutoDiscover implements Zend_Server_Interface {
             /**
              * @see Zend_Soap_AutoDiscover_Exception
              */
-            // require_once "Zend/Soap/AutoDiscover/Exception.php";
+            require_once "Zend/Soap/AutoDiscover/Exception.php";
             throw new Zend_Soap_AutoDiscover_Exception("Cannot dump autodiscovered contents, WSDL file has not been generated yet.");
         }
     }
@@ -475,7 +491,7 @@ class Zend_Soap_AutoDiscover implements Zend_Server_Interface {
             /**
              * @see Zend_Soap_AutoDiscover_Exception
              */
-            // require_once "Zend/Soap/AutoDiscover/Exception.php";
+            require_once "Zend/Soap/AutoDiscover/Exception.php";
             throw new Zend_Soap_AutoDiscover_Exception("Cannot return autodiscovered contents, WSDL file has not been generated yet.");
         }
     }
@@ -497,7 +513,7 @@ class Zend_Soap_AutoDiscover implements Zend_Server_Interface {
      */
     public function loadFunctions($definition)
     {
-        // require_once "Zend/Soap/AutoDiscover/Exception.php";
+        require_once "Zend/Soap/AutoDiscover/Exception.php";
         throw new Zend_Soap_AutoDiscover_Exception("Function has no use in AutoDiscover.");
     }
 
@@ -508,7 +524,7 @@ class Zend_Soap_AutoDiscover implements Zend_Server_Interface {
      */
     public function setPersistence($mode)
     {
-        // require_once "Zend/Soap/AutoDiscover/Exception.php";
+        require_once "Zend/Soap/AutoDiscover/Exception.php";
         throw new Zend_Soap_AutoDiscover_Exception("Function has no use in AutoDiscover.");
     }
 

@@ -15,9 +15,9 @@
  * @category   Zend
  * @package    Zend_Search_Lucene
  * @subpackage Analysis
- * @copyright  Copyright (c) 2005-2009 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: Common.php 18947 2009-11-12 11:57:17Z alexander $
+ * @version    $Id: Common.php 20096 2010-01-06 02:05:09Z bkarwin $
  */
 
 
@@ -27,13 +27,13 @@ define('ZEND_SEARCH_LUCENE_COMMON_ANALYZER_PROCESSED', true);
 
 
 /** Zend_Search_Lucene_Analysis_Analyzer */
-// require_once 'Zend/Search/Lucene/Analysis/Analyzer.php';
+require_once 'Zend/Search/Lucene/Analysis/Analyzer.php';
 
 /** Zend_Search_Lucene_Analysis_Token */
-// require_once 'Zend/Search/Lucene/Analysis/Token.php';
+require_once 'Zend/Search/Lucene/Analysis/Token.php';
 
 /** Zend_Search_Lucene_Analysis_TokenFilter */
-// require_once 'Zend/Search/Lucene/Analysis/TokenFilter.php';
+require_once 'Zend/Search/Lucene/Analysis/TokenFilter.php';
 
 
 /**
@@ -46,7 +46,7 @@ define('ZEND_SEARCH_LUCENE_COMMON_ANALYZER_PROCESSED', true);
  * @category   Zend
  * @package    Zend_Search_Lucene
  * @subpackage Analysis
- * @copyright  Copyright (c) 2005-2009 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
 abstract class Zend_Search_Lucene_Analysis_Analyzer_Common extends Zend_Search_Lucene_Analysis_Analyzer

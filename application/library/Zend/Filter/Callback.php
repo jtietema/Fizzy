@@ -14,20 +14,20 @@
  *
  * @category   Zend
  * @package    Zend_Filter
- * @copyright  Copyright (c) 2005-2009 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: Callback.php 18951 2009-11-12 16:26:19Z alexander $
+ * @version    $Id: Callback.php 20096 2010-01-06 02:05:09Z bkarwin $
  */
 
 /**
  * @see Zend_Filter_Interface
  */
-// require_once 'Zend/Filter/Interface.php';
+require_once 'Zend/Filter/Interface.php';
 
 /**
  * @category   Zend
  * @package    Zend_Filter
- * @copyright  Copyright (c) 2005-2009 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
 class Zend_Filter_Callback implements Zend_Filter_Interface
@@ -52,10 +52,29 @@ class Zend_Filter_Callback implements Zend_Filter_Interface
      * @param string|array $callback Callback in a call_user_func format
      * @param mixed        $options  (Optional) Default options for this filter
      */
-    public function __construct($callback, $options = null)
+    public function __construct($options)
     {
-        $this->setCallback($callback);
-        $this->setOptions($options);
+        if ($options instanceof Zend_Config) {
+            $options = $options->toArray();
+        } else if (!is_array($options) || !array_key_exists('callback', $options)) {
+            $options          = func_get_args();
+            $temp['callback'] = array_shift($options);
+            if (!empty($options)) {
+                $temp['options'] = array_shift($options);
+            }
+
+            $options = $temp;
+        }
+
+        if (!array_key_exists('callback', $options)) {
+            require_once 'Zend/Filter/Exception.php';
+            throw new Zend_Filter_Exception('Missing callback to use');
+        }
+
+        $this->setCallback($options['callback']);
+        if (array_key_exists('options', $options)) {
+            $this->setOptions($options['options']);
+        }
     }
 
     /**
@@ -77,7 +96,7 @@ class Zend_Filter_Callback implements Zend_Filter_Interface
     public function setCallback($callback, $options = null)
     {
         if (!is_callable($callback)) {
-            // require_once 'Zend/Filter/Exception.php';
+            require_once 'Zend/Filter/Exception.php';
             throw new Zend_Filter_Exception('Callback can not be accessed');
         }
 

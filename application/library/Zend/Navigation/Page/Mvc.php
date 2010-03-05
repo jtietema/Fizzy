@@ -15,27 +15,27 @@
  * @category   Zend
  * @package    Zend_Navigation
  * @subpackage Page
- * @copyright  Copyright (c) 2005-2009 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: Mvc.php 16971 2009-07-22 18:05:45Z mikaelkael $
+ * @version    $Id: Mvc.php 20096 2010-01-06 02:05:09Z bkarwin $
  */
 
 /**
  * @see Zend_Navigation_Page
  */
-// require_once 'Zend/Navigation/Page.php';
+require_once 'Zend/Navigation/Page.php';
 
 /**
  * @see Zend_Controller_Action_HelperBroker
  */
-// require_once 'Zend/Controller/Action/HelperBroker.php';
+require_once 'Zend/Controller/Action/HelperBroker.php';
 
 /**
  * Used to check if page is active
  *
  * @see Zend_Controller_Front
  */
-// require_once 'Zend/Controller/Front.php';
+require_once 'Zend/Controller/Front.php';
 
 /**
  * Represents a page that is defined using module, controller, action, route
@@ -44,7 +44,7 @@
  * @category   Zend
  * @package    Zend_Navigation
  * @subpackage Page
- * @copyright  Copyright (c) 2005-2009 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
 class Zend_Navigation_Page_Mvc extends Zend_Navigation_Page
@@ -218,7 +218,7 @@ class Zend_Navigation_Page_Mvc extends Zend_Navigation_Page
     public function setAction($action)
     {
         if (null !== $action && !is_string($action)) {
-            // require_once 'Zend/Navigation/Exception.php';
+            require_once 'Zend/Navigation/Exception.php';
             throw new Zend_Navigation_Exception(
                     'Invalid argument: $action must be a string or null');
         }
@@ -252,7 +252,7 @@ class Zend_Navigation_Page_Mvc extends Zend_Navigation_Page
     public function setController($controller)
     {
         if (null !== $controller && !is_string($controller)) {
-            // require_once 'Zend/Navigation/Exception.php';
+            require_once 'Zend/Navigation/Exception.php';
             throw new Zend_Navigation_Exception(
                     'Invalid argument: $controller must be a string or null');
         }
@@ -286,7 +286,7 @@ class Zend_Navigation_Page_Mvc extends Zend_Navigation_Page
     public function setModule($module)
     {
         if (null !== $module && !is_string($module)) {
-            // require_once 'Zend/Navigation/Exception.php';
+            require_once 'Zend/Navigation/Exception.php';
             throw new Zend_Navigation_Exception(
                     'Invalid argument: $module must be a string or null');
         }
@@ -354,7 +354,7 @@ class Zend_Navigation_Page_Mvc extends Zend_Navigation_Page
     public function setRoute($route)
     {
         if (null !== $route && (!is_string($route) || strlen($route) < 1)) {
-            // require_once 'Zend/Navigation/Exception.php';
+            require_once 'Zend/Navigation/Exception.php';
             throw new Zend_Navigation_Exception(
                  'Invalid argument: $route must be a non-empty string or null');
         }
