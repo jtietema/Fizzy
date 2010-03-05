@@ -20,8 +20,9 @@ class PagesController extends Fizzy_Controller
             $page = $query->fetchOne();
         }
 
-        if($page === null) {
-            # Log user exception viewable in the backend
+        if(!$page) {
+            $this->renderScript('error/404.phtml');
+            return;
         }
 
         $config = Zend_Registry::get('config');

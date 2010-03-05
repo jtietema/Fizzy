@@ -1,6 +1,6 @@
 <?php
 /**
- * Fizzy bootstrap file
+ * Fizzy public entry point
  * @package Fizzy
  *
  * LICENSE
@@ -17,15 +17,6 @@
  * @license http://www.voidwalkers.nl/license/new-bsd The New BSD License
  */
 
-# Set temporary include path
-define('ROOT_PATH', realpath(dirname(__FILE__) . DIRECTORY_SEPARATOR . '..'));
-set_include_path(realpath(dirname(__FILE__) . DIRECTORY_SEPARATOR . 'library'));
-
-$customConfig = implode(DIRECTORY_SEPARATOR, array(ROOT_PATH, 'configs', 'fizzy.ini'));
-
 # Bootstrap Fizzy
-require_once 'Fizzy.php';
-$fizzy = Fizzy::getInstance();
-$fizzy->addConfig($customConfig)
-      ->setEnvironment(ENVIRONMENT);
-$fizzy->bootstrap();
+define('ENVIRONMENT', 'development');
+require_once '../application/bootstrap.php';
