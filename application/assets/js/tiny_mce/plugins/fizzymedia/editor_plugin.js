@@ -37,7 +37,7 @@
             ed.addButton('fizzymedia', {
                 title : 'fizzymedia.desc',
                 cmd : 'fizzyMedia',
-                image : url + '/img/example.gif'
+                image : url + '/img/media.gif'
             });
 
             // Add a node change handler, selects the button in the UI when a image is selected

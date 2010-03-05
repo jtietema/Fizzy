@@ -24,11 +24,16 @@ var FizzymediaDialog = {
            instead of inserting a new one */
         if (n.nodeName == 'IMG'){
             // set the image properties
-            nl.width.value = dom.getAttrib(n, 'width');
-            nl.height.value = dom.getAttrib(n, 'height');
-            nl.alt.value = dom.getAttrib(n, 'alt');
-            nl.border.value = dom.getAttrib(n, 'border');
-            
+            nl.width.value          = dom.getAttrib(n, 'width');
+            nl.height.value         = dom.getAttrib(n, 'height');
+            nl.alt.value            = dom.getAttrib(n, 'alt');
+            // we use parseInt to strip the px part
+            nl.border.value         = parseInt(n.style.borderWidth);
+            nl.marginTop.value      = parseInt(n.style.marginTop);
+            nl.marginRight.value    = parseInt(n.style.marginRight);
+            nl.marginBottom.value   = parseInt(n.style.marginBottom);
+            nl.marginLeft.value     = parseInt(n.style.marginLeft);
+
             // determine which style attribute is the position
             var position = 'none';
             if (n.style.cssFloat == 'left' || n.style.cssFloat == 'right'){
@@ -60,9 +65,13 @@ var FizzymediaDialog = {
             return;
         }
         // Insert the contents from the input into the document
-        var width = document.getElementById('width').value;
-        var height = document.getElementById('height').value;
-        var border = document.getElementById('border').value;
+        var width           = document.getElementById('width').value;
+        var height          = document.getElementById('height').value;
+        var border          = document.getElementById('border').value;
+        var marginTop       = document.getElementById('marginTop').value;
+        var marginLeft      = document.getElementById('marginLeft').value;
+        var marginBottom    = document.getElementById('marginBottom').value;
+        var marginRight     = document.getElementById('marginRight').value;
         
         var description = document.getElementById('alt').value;
         var position = document.getElementById('position').value;
@@ -86,6 +95,18 @@ var FizzymediaDialog = {
             imageTag.style.borderStyle = 'solid';
             imageTag.style.borderColor = 'black';
             imageTag.style.borderWidth = border + 'px';
+        }
+        if (marginTop !== ''){
+            imageTag.style.marginTop = marginTop + 'px';
+        }
+        if (marginRight !== ''){
+            imageTag.style.marginRight = marginRight + 'px';
+        }
+        if (marginBottom !== ''){
+            imageTag.style.marginBottom = marginBottom + 'px';
+        }
+        if (marginLeft !== ''){
+            imageTag.style.marginLeft = marginLeft + 'px';
         }
 
         // convert domnode to string
