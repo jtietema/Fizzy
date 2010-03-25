@@ -230,10 +230,14 @@ class Fizzy_Json_Client
         }
         $this->setMethod($name);
         $this->setParams($args);
-        /**
-         * @todo Return the Response object or the result??
-         */
-        return $this->request();
+        
+        $response = $this->request();
+
+        if ($response->isError()) {
+            throw new Fizzy_Json_Client_Exception($response->getError());
+        }
+
+        return $response->getResult();
     }
 
 }
