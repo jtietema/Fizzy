@@ -1,4 +1,5 @@
 <?php
+require_once 'Fizzy/Geocode/Location.php';
 
 /**
  * Description of Response
