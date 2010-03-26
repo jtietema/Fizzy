@@ -13,7 +13,7 @@ class Fizzy_Layout_ControllerPlugin extends Zend_Controller_Plugin_Abstract
             $moduleName = 'default';
         }
 
-        $layoutPath = Fizzy::getInstance()->getPath('application') . '/modules/' . $moduleName . '/views/layouts/';
+        $layoutPath = APPLICATION_PATH . '/modules/' . $moduleName . '/views/layouts/';
 
         $layout = Zend_Layout::getMvcInstance();
         

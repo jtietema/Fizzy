@@ -18,5 +18,18 @@
  */
 
 # Bootstrap Fizzy
-define('ENVIRONMENT', 'development');
-require_once '../application/bootstrap.php';
+define('APPLICATION_ENV', 'development');
+define('APPLICATION_PATH', realpath(dirname(__FILE__) . '/../application'));
+
+set_include_path(APPLICATION_PATH . '/library' . PATH_SEPARATOR . get_include_path());
+
+/** Zend_Application */
+require_once 'Zend/Application.php';
+
+$application = new Zend_Application(
+    APPLICATION_ENV,
+    APPLICATION_PATH . '/../configs/fizzy.ini'
+);
+
+$application->bootstrap()
+            ->run();

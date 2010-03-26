@@ -21,8 +21,8 @@
 <html>
     <head>
         <?php 
-            $application = Fizzy::getInstance();
-            $title = $application->getTitle();
+            $config = Zend_Registry::get('config');
+            $title = $config->title;
          ?>
         <title><?= $title; ?></title>
         <link href="<?= $this->baseUrl("/css/default.css") ?>" rel="stylesheet" type="text/css" media="screen" />
