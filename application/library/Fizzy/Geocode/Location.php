@@ -1,5 +1,4 @@
 <?php
-require_once 'Fizzy/Geocode/Coordinate.php';
 
 /**
  * Description of Location
@@ -8,17 +7,37 @@ require_once 'Fizzy/Geocode/Coordinate.php';
  */
 class Fizzy_Geocode_Location
 {
-    protected $_coordinate = null;
+    /**
+     * Array with keys `lat` and `lng`
+     * @var array|null
+     */
+    protected $_lat = null;
+    protected $_lng = null;
+    
+    protected $_address = null;
+    protected $_zipcode = null;
+    protected $_city = null;
+    protected $_country = null;
 
     public function __construct(array $data = null)
     {
-        if (null !== $data) {
-            if (
-                array_key_exists('coordinate', $data) &&
-                $data['coordinate'] instanceof Fizzy_Geocode_Coordinate
-            ){
-                $this->_coordinate = $data['coordinate'];
-            }
+        if (isset($data['address'])){
+            $this->setAddress($data['address']);
+        }
+        if (isset($data['zipcode'])){
+            $this->setZipcode($data['zipcode']);
+        }
+        if (isset($data['city'])){
+            $this->setCity($data['city']);
+        }
+        if (isset($data['country'])){
+            $this->setCountry($data['country']);
+        }
+        if (isset($data['lat'])){
+            $this->setLat($data['lat']);
+        }
+        if (isset($data['lng'])){
+            $this->setLng($data['lng']);
         }
     }
 
@@ -27,9 +46,76 @@ class Fizzy_Geocode_Location
         return $this->_coordinates;
     }
 
-    public function setCoordinates(Fizzy_Geocode_Coordinate $coordinate)
+    public function setCoordinates($lat, $lng)
     {
-        $this->_coordinate = $coordinate;
+        $this->_lat = $lat;
+        $this->_lng = $lng;
+        return $this;
+    }
+
+    public function getLat()
+    {
+        return $this->_lat;
+    }
+
+    public function setLat($lat)
+    {
+        $this->_lat = $lat;
+        return $this;
+    }
+
+    public function getLng()
+    {
+        return $this->_lng;
+    }
+
+    public function setLng($lng)
+    {
+        $this->_lng = $lng;
+        return $this;
+    }
+
+    public function getAddress()
+    {
+        return $this->_address;
+    }
+
+    public function setAddress($address)
+    {
+        $this->_address = $address;
+        return $this;
+    }
+
+    public function getZipcode()
+    {
+        return $this->_zipcode;
+    }
+
+    public function setZipcode($zipcode)
+    {
+        $this->_zipcode = $zipcode;
+        return $this;
+    }
+
+    public function getCity()
+    {
+        return $this->_city;
+    }
+
+    public function setCity($city)
+    {
+        $this->_city = $city;
+        return $city;
+    }
+
+    public function getCountry()
+    {
+        return $this->_country;
+    }
+
+    public function setCountry($country)
+    {
+        $this->_country = $country;
         return $this;
     }
 }

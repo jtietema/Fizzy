@@ -3,8 +3,12 @@ require_once 'Zend/Http/Client.php';
 require_once 'Zend/Json.php';
 require_once 'Zend/Uri.php';
 
+require_once 'Fizzy/Geocode/Adapter/Interface.php';
+require_once 'Fizzy/Geocode/Response.php';
+require_once 'Fizzy/Geocode/Location.php';
+
 /**
- * Description of Google
+ * Adapter voor Google Maps Geocode server V3
  *
  * @author Jeroen Tietema <jeroen@voidwalkers.nl>
  */
@@ -15,19 +19,13 @@ class Fizzy_Geocode_Adapter_Google implements Fizzy_Geocode_Adapter_Interface
      * Base url for the geocode api
      * @var string
      */
-    protected $_apiUrl = 'http://maps.google.com/maps/geo';
+    protected $_apiUrl = 'http://maps.google.com/maps/api/geocode/';
 
     /**
      * Will be configurable in the future when moer output formats are supported.
      * @var string
      */
     protected $_output = 'json';
-
-    /**
-     * The Google maps API key
-     * @var string
-     */
-    protected $_apiKey = null;
 
     /**
      * The search query to look up the coordinates for
@@ -56,37 +54,6 @@ class Fizzy_Geocode_Adapter_Google implements Fizzy_Geocode_Adapter_Interface
     protected $_client = null;
 
     /** **/
-
-    /**
-     * Geocode constructor. Accepts the geocode API key as parameter.
-     * @param string $apiKey
-     */
-    public function __construct($apiKey = null)
-    {
-        if (null !== $apiKey) {
-            $this->setApiKey($apiKey);
-        }
-    }
-
-    /**
-     * Returns the API key.
-     * @return string
-     */
-    public function getApiKey()
-    {
-        return $this->_apiKey;
-    }
-
-    /**
-     * Set the Google Maps API key
-     *
-     * @param string $apiKey
-     */
-    public function setApiKey($apiKey)
-    {
-        $this->_apiKey = $apiKey;
-        return $this;
-    }
 
     /**
      * Return the Search query
@@ -168,7 +135,7 @@ class Fizzy_Geocode_Adapter_Google implements Fizzy_Geocode_Adapter_Interface
         return $this;
     }
 
-    public function location($query)
+    public function location($query = null)
     {
         if(null !== $query) {
             $this->setQuery($query);
@@ -176,9 +143,7 @@ class Fizzy_Geocode_Adapter_Google implements Fizzy_Geocode_Adapter_Interface
 
         // Build the request parameters
         $parameters = array (
-            'q' => $this->_query,
-            'key' => $this->_apiKey,
-            'output' => $this->_output,
+            'address' => $this->_query,
             'sensor' => ($this->_sensor ? 'true' : 'false')
         );
         if(null !== $this->_countryCode) {
@@ -186,20 +151,64 @@ class Fizzy_Geocode_Adapter_Google implements Fizzy_Geocode_Adapter_Interface
         }
 
         // Build the request URI
-        $uri = Zend_Uri::factory($this->_apiUrl);
+        $uri = Zend_Uri::factory($this->_apiUrl . $this->_output);
         $uri->setQuery($parameters);
 
         // Send the request
-        if  ($this->_client === null)
+        if  ($this->_client === null){
             $this->_client = new Zend_Http_Client($uri);
-        $response = $this->_client->request();
+        } else {
+            $this->_client->setUri($uri);
+        }
+        $httpResponse = $this->_client->request();
+        $json = $httpResponse->getBody();
+        
+        // parse the response into a Fizzy_Geocode_Response
+        $response = new Fizzy_Geocode_Response();
+        $responseArray = Zend_Json::decode($json);
+        
+        if ($responseArray['status'] != 'OK'){
+            $response->setErrors(array($responseArray['status']));
+        }
 
-        /*
-         * @todo parse the response into a Fizzy_Geocode_Response object
-         */
-        // Return only the response body
-        $json = $response->getBody();
+        foreach ($responseArray['results'] as $result){
+            $location = new Fizzy_Geocode_Location();
+            $location->setLat($result['geometry']['location']['lat']);
+            $location->setLng($result['geometry']['location']['lng']);
 
-        return Zend_Json::decode($json);
+            $address = array(
+                'number' => null,
+                'street' => null,
+                'city' => null,
+                'zipcode' => null,
+                'country' => null
+            );
+            foreach ($result['address_components'] as $component){
+                if (in_array('street_number', $component['types'])){
+                    $address['number'] = $component['long_name'];
+                }
+                if (in_array('route', $component['types'])){
+                    $address['street'] = $component['long_name'];
+                }
+                if (in_array('locality', $component['types'])){
+                    $address['city'] = $component['long_name'];
+                }
+                if (in_array('country', $component['types'])){
+                    $address['country'] = $component['long_name'];
+                }
+                if (in_array('postal_code', $component['types'])){
+                    $address['zipcode'] = $component['long_name'];
+                }
+            }
+
+            $location->setAddress($address['street'] . ' ' . $address['number']);
+            $location->setZipcode($address['zipcode']);
+            $location->setCity($address['city']);
+            $location->setCountry($address['country']);
+            
+            $response->addLocation($location);
+        }
+
+        return $response;
     }
 }
