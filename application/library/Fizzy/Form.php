@@ -38,5 +38,18 @@ class Fizzy_Form extends Zend_Form
         $this->addPrefixPath('Fizzy_Form', 'Fizzy/Form');
         $this->addElementPrefixPath('Fizzy_Validate', 'Fizzy/Validate', 'validate');
         $this->addElementPrefixPath('Fizzy_Filter', 'Fizzy/Filter', 'filter');
+
+        // Set defautl HtmlTag decorator to div
+        $this->setDecorators(array(
+            'FormElements',
+            array(array('formDiv' => 'HtmlTag'), array('tag' => 'div', 'class' => 'fizzy-form')),
+            'Form',
+        ));
+        $this->setElementDecorators(array(
+            array(array('viewHelper' => 'ViewHelper'), array('view' => $this->getView())),
+            'Label',
+            'Errors',
+            array(array('elementDiv' => 'HtmlTag'), array('tag' => 'div', 'class' => 'form-row')),
+        ));
     }
 }
