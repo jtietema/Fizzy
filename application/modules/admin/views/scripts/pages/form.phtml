@@ -1,5 +1,56 @@
 
-<h1 class="title">Page</h1>
-<div class="form-container">
-    <?= $this->form; ?>
-</div>
+<h2>Add Page</h2>
+
+<form action="" method="post" id="PageForm" name="PageForm">
+
+    <div class="form-panel">    
+        <?= $this->form->title; ?>
+        <?= $this->form->slug; ?>
+        
+        <?= $this->form->body; ?>
+    </div>
+
+    <div class="form-options-panel">
+        <h3 class="form-options-toggle">
+            <a href="#" id="PageFormOptionsToggle">
+                <img src="<?= $this->baseUrl('/fizzy_assets/images/icon/control_play.png'); ?>" alt="control expand button"/>
+                Options
+            </a>
+        </h3>
+        <div id="PageFormOptionsPanel" style="display: none;">
+            <div class="form-options-elements" >
+                <?= $this->form->template; ?>
+                <?= $this->form->layout; ?>
+
+                <div>
+                    <?= $this->form->homepage->setDecorators(array('ViewHelper', 'Errors')); ?>
+                    <label for="homepage" style="font-weight: normal; display: inline-block;">Do you want to set this page as the homepage?</label>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="form-control-panel">
+        <div class="form-control-submit">
+            <input type="submit" value="Save" />
+        </div>
+
+        <div class="form-control-back">
+            <a href="<?= $this->baseUrl('/fizzy/pages'); ?>">
+                back to pages
+                <img src="<?= $this->baseUrl('/fizzy_assets/images/icon/arrow_right.png'); ?>" />
+            </a>
+        </div>
+    </div>
+</form>
+
+<script type="text/javascript">
+
+    $(document).ready(function() {
+        $('#PageFormOptionsToggle').click(function() {
+            $('#PageFormOptionsPanel').toggle('slow');
+            return false;
+        });
+    });
+
+</script>

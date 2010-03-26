@@ -1,0 +1,54 @@
+
+
+.form-panel {
+    background-color: #ECEEEC;
+    padding: 10px 15px;
+    -moz-border-radius: 10px;
+}
+
+.form-panel label {
+    margin-bottom: .4em;
+}
+
+.form-panel input[type="text"], 
+.form-panel input[type="password"], 
+.form-panel input[type="email"],
+.form-panel textarea,
+.form-panel .wysiwyg
+{
+    margin-bottom: .7em;
+}
+
+
+.form-options-panel {
+    margin-top: 20px;
+    padding: 10px 15px;
+    -moz-border-radius: 10px;
+    background-color: #ECEEEC;
+}
+.form-options-panel .form-options-toggle {
+    margin: 0;
+    padding: 0;
+    border: 0;
+}
+.form-options-panel .form-options-toggle a, 
+.form-options-panel .form-options-toggle a:hover
+{
+    display: block;
+    width: 100%;
+    text-decoration: none;
+}
+.form-options-panel .form-options-elements {
+    margin: 10px;
+}
+
+.form-control-panel {
+    margin: 10px;
+}
+
+.form-control-panel .form-control-submit {
+    float: left;
+}
+.form-control-panel .form-control-back {
+    float: right;
+}

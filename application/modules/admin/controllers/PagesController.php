@@ -133,6 +133,7 @@ class Admin_PagesController extends Fizzy_SecuredController
                         'label' => 'Body',
                         'required' => true,
                         'value' => $page->body,
+                        'attribs' => array('style' => 'width: 100%;'),
                     )
                 ),
                 'template' => array (
@@ -142,6 +143,7 @@ class Admin_PagesController extends Fizzy_SecuredController
                         'required' => true,
                         'multiOptions' => $this->_fetchFiles($config->paths->templatePath),
                         'value' => $page->getTemplate(),
+                        'description' => 'You can select a different template to structure the text.'
                     )
                 ),
                 'layout' => array (
@@ -151,6 +153,7 @@ class Admin_PagesController extends Fizzy_SecuredController
                         'required' => true,
                         'multiOptions' => $this->_fetchFiles($config->paths->layoutPath, false),
                         'value' => $page->getLayout(),
+                        'description' => 'You can select a different layout to render the structured text in.'
                     )
                 ),
                 'homepage' => array (

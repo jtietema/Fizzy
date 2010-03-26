@@ -1,6 +1,6 @@
-<h1>Pages</h1>
+<h2>Pages</h2>
 <div>
-    <table class="data-table">
+    <table class="data" id="pages-table">
         <thead>
             <tr>
                 <td>Title</td>
@@ -21,9 +21,15 @@
             </tr>
             <?php endforeach; ?>
         </tbody>
+        <tfoot>
+            <tr>
+                <td colspan="3">
+                    <div class="data-buttons">
+                        <?= $this->link('/fizzy/pages/add', $this->img('/fizzy_assets/images/icon/add.png', array('alt' => 'add icon')) . ' Add Page'); ?>
+                    </div>
+                </td>
+            </tr>
+        </tfoot>
     </table>
 
-    <p>
-        <?= $this->link('/fizzy/pages/add', $this->img('/fizzy_assets/images/icon/add.png', array('alt' => 'add icon')) . ' Add Page'); ?>
-    </p>
 </div>

@@ -1,0 +1,156 @@
+/**
+ * Fizzy 2.0 Stylesheet
+ * @author Mattijs Hoitink <mattijs@voidwalkers.nl>
+ */
+
+html {
+    background-color: #F1EFE2;
+}
+body {
+    font: 85%/1.2 'Lucida Grande',Arial,Helvetica,sans-serif;
+}
+
+em { font-style: italic; }
+
+a {
+    color: #0088CC;
+    text-decoration: none;
+}
+a:hover {
+    color: #002E40;
+    text-decoration: underline;
+}
+
+h1 { font-size: 150%; }
+h2 { font-size: 140%; }
+h3 { font-size: 120%; }
+h4 { font-size: 110%; }
+h5 {}
+h6 {}
+
+h1 ,h2, h3, h4, h5, h6, strong {
+    font-weight:bold;
+}
+
+h2 {
+    margin-bottom: 1em;
+    border-bottom: 1px solid #E4E4E4;
+}
+
+h3 {
+    margin-bottom: .3em;
+    padding-bottom: .2em;
+    border-bottom: 1px solid #E4E4E4;
+}
+
+p { margin-bottom: 1em; }
+
+label { font-weight: bold; }
+
+.fleft { float: left; }
+.fright { float: right; }
+
+.tleft { text-align: left; }
+.tright { text-align: right; }
+
+.clr, .clear {
+    height: 1px;
+    line-height: 1px;
+    font-size: 0;
+    clear: both;
+}
+
+label {
+    display: block;
+    margin-bottom: .3em;
+}
+fieldset {
+    display: block;
+    padding: 10px;
+    border: 1px groove #E4E4E4;
+}
+legend { color: #918A8A; }
+
+input[type="text"], input[type="password"], input[type="email"], textarea {
+    width: 300px;
+    padding: 2px 4px;
+    border: 1px solid #918A8A;
+}
+
+/* Panels */
+
+#container {
+    background-color: #FFFFFF;
+}
+
+#header-panel {
+    position: relative;
+    background-color: #002E40;/*#507AAA*/
+    color: #F8F8F8;
+    height: 5.3em;
+    margin: 0;
+    padding: 15px 30px 0 30px;
+}
+
+#navigation-panel {
+    position: absolute;
+    bottom: -1px;
+}
+
+#navigation-panel ul li {
+    float: left;
+    list-style-type: none;
+    margin: 0 2px 0 0;
+    padding: 0; 
+    white-space: nowrap;
+}
+
+#navigation-panel ul li a {
+    color: #FFFFFF;
+    display: block;
+    font-weight: bold;
+    margin: 0;
+    padding: 4px 10px;
+    text-decoration: none;
+}
+
+#navigation-panel ul li.active a, #navigation-panel ul li.active a:hover {
+    background-color: #FFFFFF;
+    color: #555555;
+}
+
+#navigation-panel ul li a:hover {
+    color: #000000;
+    background-color: #D8F0FA/*#759FCF*/;
+}
+
+#sidebar-panel {
+    margin: 0;
+    min-height: 300px;
+    padding: 0;
+    position: absolute;
+    right: 0;
+    width: 300px;
+    z-index: 9;
+}
+
+#content-panel {
+    margin: 25px 310px 10px 30px;
+}
+
+#content-panel h2 {
+    margin-bottom: 1em;
+    border-bottom: 1px solid #E4E4E4;
+}
+
+#footer-panel {
+    height: 6em;
+    padding-top: 20px;
+    color: #999999;
+    background: #F1EFE2 url(../images/footerbg.png) repeat-x scroll 0 0
+}
+
+#copyright-panel {
+    float: right;
+    margin: 10px 20px;
+}

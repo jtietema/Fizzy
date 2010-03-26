@@ -1,0 +1,33 @@
+
+table.data {
+    width: 100%;
+}
+
+table.data td {
+    padding: 0.4em;
+}
+
+table.data thead td {
+    font-weight: bold;
+    background-color: #E4E4E4;
+    border-bottom: 1px solid #ADADAD;
+}
+
+table.data tbody td {}
+table.data tbody tr:hover {
+    background-color: #FFF8D4;
+}
+
+table.data tfoot td {
+    padding: 0;
+    border-top: 1px solid #ADADAD;
+}
+table.data tfoot .data-buttons {
+    float: left;
+    padding: 5px 7px;
+    background-color: #E4E4E4;
+    -moz-border-radius-bottomleft: 5px;
+    -webkit-border-bottom-left-radius: 5px;
+    -moz-border-radius-bottomright: 5px;
+    -webkit-border-bottom-right-radius: 5px;
+}
