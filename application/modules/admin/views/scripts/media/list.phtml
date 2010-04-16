@@ -29,8 +29,12 @@ $types = array(
         <tbody>
             <?php foreach($this->files as $fileInfo) : ?>
             <tr>
-                <td class="icon"><img src="<?= (array_key_exists($fileInfo->type, $types)) ? $types[$fileInfo->type] : $this->baseUrl('/images/icon/page.png'); ?>" alt="" /></td>
-                <td class="filename"><?= $fileInfo->basename; ?></td>
+                <td class="icon">
+                    <img src="<?= (array_key_exists($fileInfo->type, $types)) ? $types[$fileInfo->type] : $this->baseUrl('/images/icon/page.png'); ?>" alt="" />
+                </td>
+                <td class="filename">
+                    <?= $fileInfo->basename; ?>
+                </td>
                 <td class="size">
                 <?php if($fileInfo->size < 1024) : ?>
                 <?= round($fileInfo->size, 2); ?> b
