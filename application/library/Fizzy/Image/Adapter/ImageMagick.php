@@ -20,7 +20,85 @@
 /**
  * Fizzy_Image adapter for ImageMagick.
  */
-class FIzzy_Image_Adapter_ImageMagick extends Fizzy_Image_Adapter_Abstract
+class Fizzy_Image_Adapter_ImageMagick extends Fizzy_Image_Adapter_Abstract
 {
+
+    /**
+     * Raw iamge object
+     * @var Imagick
+     */
+    protected $_image = null;
+
+    /** **/
+    
+    /**
+     * @see Fizzy_Image_Adapter_Interface
+     */
+    public function load($sourcePath)
+    {
+        if(!is_file($sourcePath)) {
+            throw new Fizzy_Image_Exception("Path {$sourcePath} is not a file.");
+        }
+        else if(!is_readable($sourcePath)) {
+            throw new Fizzy_Image_Exception("File {$sourcePath} could not be read,");
+        }
+
+        $this->_image = new Imagick($sourcePath);
+
+        return $this;
+    }
+
+    /**
+     * @see Fizzy_Image_Adapter_Interface
+     */
+    public function save($destination)
+    {
+        //if(!is_writable($destination)) {
+        //    throw new Fizzy_Image_Exception("Destination '{$destination}' is not writable.");
+        //}
+        
+        $this->_image->writeImage($destination);
+
+        return $this;
+    }
+
+    /**
+     * @see Fizzy_Image_Adapter_Interface
+     */
+    public function getImageWidth()
+    {
+        return $this->_image->getImageWidth();
+    }
+
+    /**
+     * @see Fizzy_Image_Adapter_Interface
+     */
+    public function getImageHeight()
+    {
+        return $this->_image->getImageHeight();
+    }
+
+    /**
+     * @see Fizzy_Image_Adapter_Interface
+     */
+    public function resize($width, $height)
+    {
+        $original = $this->_image;
+        $image = $original->clone();
+        $image->setImageOpacity(1.0);
+
+        $image->resizeImage($width, $height, Imagick::FILTER_CUBIC, 0);
+
+        $original->destroy();
+        $this->_image = $image;
+    }
+
+    /**
+     * @see Fizzy_Image_Adapter_Interface
+     */
+    public function crop($startx, $starty, $width, $height)
+    {
+        
+    }
     
 }

@@ -1,6 +1,9 @@
-<h1 class="header">Users</h1>
+<h2>Users</h2>
+
+
+
 <div>
-    <table class="data-table">
+    <table class="data">
         <thead>
             <tr>
                 <td>Username</td>
@@ -18,9 +21,14 @@
             </tr>
             <?php endforeach; ?>
         </tbody>
+        <tfoot>
+            <tr>
+                <td colspan="2">
+                    <div class="data-buttons">
+                        <?= $this->link('/fizzy/user/add', $this->img('/fizzy_assets/images/icon/add.png', array('alt' => 'add icon')) . ' Add User'); ?>
+                    </div>
+                </td>
+            </tr>
+        </tfoot>
     </table>
-
-    <p>
-        <?= $this->link('/fizzy/user/add', $this->img('/fizzy_assets/images/icon/add.png', array('alt' => 'add icon')) . ' Add User'); ?>
-    </p>
 </div>

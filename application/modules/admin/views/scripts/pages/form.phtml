@@ -1,5 +1,40 @@
+<form action="" method="post" id="PageForm" name="PageForm">
+<div id="content-panel">
+    <div class="form-panel">
+        <h2 class="form-title">Add Page</h2>
 
-<h1 class="title">Page</h1>
-<div class="form-container">
-    <?= $this->form; ?>
+        <div class="form-body">
+            <?= $this->form->title; ?>
+            <?= $this->form->slug; ?>
+
+            <?= $this->form->body; ?>
+        </div>
+    </div>
 </div>
+<div id="sidebar-panel">
+
+    <h2>Actions</h2>
+
+    <div class="form-control-panel">
+        <input type="submit" value="Save" class="c3button green" />
+        <a class="c3button orange" style="height: 1em; line-height: 1em; " href="<?= $this->baseUrl('/fizzy/pages'); ?>">back to pages</a>
+    </div>
+
+    <h2>Options</h2>
+
+    <div class="form-options-panel">
+
+        <?= $this->form->template; ?>
+        <?= $this->form->layout; ?>
+
+        <div class="form-row" id="homepage-row">
+            <label for="homepage">Homepage</label>
+            <?= $this->form->homepage->setDecorators(array('ViewHelper', 'Errors')); ?>
+            <?= $this->form->homepage->getDescription(); ?>
+        </div>
+
+    </div>
+    
+</div>
+
+</form>

@@ -1,0 +1,68 @@
+/**
+ * Fizzy Forms stylesheet for theme 2.0
+ *
+ * @author Mattijs Hoitink <mattijs@voidwalkers.nl>
+ */
+
+
+/* ********************** */
+/*   STANDARD FORM        */
+
+/* main form panel */
+.form-panel .form-title, #content-panel .form-panel h2.form-title {
+    margin-bottom: 10px;
+    font-size: 24px;
+    padding-left: 15px;
+    border: 0;
+}
+
+.form-panel .form-body {
+    padding: 10px 15px;
+    background-color: #ECEEEC;
+    border: 1px solid #DEDEDE;
+}
+
+.form-panel label {
+    margin-bottom: .4em;
+}
+
+.form-panel input[type="text"], 
+.form-panel input[type="password"], 
+.form-panel input[type="email"],
+.form-panel textarea,
+.form-panel .wysiwyg
+{
+    margin-bottom: .7em;
+}
+
+/* form control */
+.form-control-panel {
+    margin: 0 0 20px 0;
+    padding: 5px 15px;
+}
+
+.form-control-panel input {
+    margin-right: 2.8em;
+    font-size: 20px;
+    color: #FFFFFF;
+}
+
+/* form options */
+.form-options-panel {
+    margin: 20px 0;
+    padding: 0px 15px;
+}
+
+.form-options-panel label {
+    border-bottom: 1px solid #ccc;
+}
+.form-options-panel select {
+    width: 100%;
+}
+.form-options-panel input[type="checkbox"] {
+    position: relative;
+    top: .2em;
+}
+
+/*   STANDARD FORM        */
+/* ********************** */
