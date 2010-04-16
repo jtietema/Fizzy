@@ -172,4 +172,29 @@ class Admin_MediaController extends Fizzy_SecuredController
         $this->_helper->layout->disableLayout();
     }
 
+    public function assetsAction()
+    {
+        $uploadFolder = ROOT_PATH . '/public/uploads/';
+
+        // Parse all files in the upload directory
+        $files = array();
+        foreach(new DirectoryIterator($uploadFolder) as $file)
+        {
+            if($file->isFile())
+            {
+                $fileInfo = array(
+                    'type' => substr(strrchr($file->getBaseName(), '.'), 1),
+                    'basename' => $file->getBaseName(),
+                    'path' => $file->getPath(),
+                    'size' => $file->getSize(),
+                );
+                $files[] = (object) $fileInfo;
+            }
+        }
+
+        // Render the view
+        $this->view->files = $files;
+        $this->_helper->layout->disableLayout();
+    }
+
 }
