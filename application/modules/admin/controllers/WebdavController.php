@@ -32,6 +32,12 @@ class Admin_WebdavController extends Zend_Controller_Action
         if (!isset($this->_config->resources->sabredav->enabled) ||
                 false == $this->_config->resources->sabredav->enbled) {
             // Render 404
+            $response = $this->getResponse();
+            $response->clearAllHeaders();
+            $response->clearBody();
+            $response->setHttpResponseCode(404);
+            $response->sendResponse();
+            return;
         }
         
         $baseUri = '/fizzy/webdav/';
