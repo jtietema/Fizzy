@@ -578,7 +578,7 @@ class Fizzy
      */
     public function isBootstrapped()
     {
-        return $this->_boolean;
+        return $this->_bootstrapped;
     }
 
     /**

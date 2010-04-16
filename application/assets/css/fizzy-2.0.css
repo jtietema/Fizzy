@@ -1,23 +1,29 @@
 /**
  * Fizzy 2.0 Stylesheet
+ *
+ * Scheme: http://colorschemedesigner.com/#3D11TpE--l2br
+ * Scheme: http://colorschemedesigner.com/#3z21NBR..v5g0
+ *
  * @author Mattijs Hoitink <mattijs@voidwalkers.nl>
  */
 
+/* ********************** */
+/*   HTML ELEMENTS        */
 html {
     background-color: #F1EFE2;
 }
 body {
-    font: 85%/1.2 'Lucida Grande',Arial,Helvetica,sans-serif;
+    font: 75%/1.2 'Lucida Grande',Arial,Helvetica,sans-serif;
 }
 
 em { font-style: italic; }
 
 a {
-    color: #0088CC;
+    color: #3581C5;
     text-decoration: none;
 }
 a:hover {
-    color: #002E40;
+    color: #033F75;
     text-decoration: underline;
 }
 
@@ -45,30 +51,17 @@ h3 {
 
 p { margin-bottom: 1em; }
 
-label { font-weight: bold; }
-
-.fleft { float: left; }
-.fright { float: right; }
-
-.tleft { text-align: left; }
-.tright { text-align: right; }
-
-.clr, .clear {
-    height: 1px;
-    line-height: 1px;
-    font-size: 0;
-    clear: both;
-}
-
 label {
     display: block;
     margin-bottom: .3em;
+    font-weight: bold;
 }
 fieldset {
     display: block;
     padding: 10px;
     border: 1px groove #E4E4E4;
 }
+
 legend { color: #918A8A; }
 
 input[type="text"], input[type="password"], input[type="email"], textarea {
@@ -77,15 +70,78 @@ input[type="text"], input[type="password"], input[type="email"], textarea {
     border: 1px solid #918A8A;
 }
 
-/* Panels */
+/*   HTML ELEMENTS        */
+/* ********************** */
+
+/* ********************** */
+/*   BUTTONS              */
+
+.c3button, a.c3button {
+    display: inline-block;
+    padding: 5px 10px;
+    background: #222 url('../images/button-overlay.png') repeat-x;
+    -moz-box-shadow: 0 1px 3px 1px rgba(0,0,0,0.2);
+    -webkit-box-shadow: 0 1px 3px rgba(0,0,0,0.2);
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    border: 1px solid rgba(0,0,0,0.25);
+    text-shadow: 0 -1px 1px #222;
+    text-shadow: 0 -1px 1px rgba(0,0,0,0.25);
+    cursor: pointer;
+    background-color: #EBEBEB;
+    color: #666666;
+}
+a.c3button:hover {
+    text-decoration: none;
+}
+.c3button.orange {
+    background-color: #FF5C00;
+    color: #FFFFFF;
+}
+.c3button.green {
+    background-color: #20C519;
+    color: #FFFFFF;
+}
+
+.c3button img {
+    position: relative;
+    top: 0.3em;
+}
+
+/*   BUTTONS              */
+/* ********************** */
+
+
+/* ********************** */
+/*   GENERAL CLASSES      */
+
+.fleft { float: left; }
+.fright { float: right; }
+
+.tleft { text-align: left; }
+.tright { text-align: right; }
+.tcenter { text-align: center; }
+
+.clr, .clear {
+    height: 1px;
+    line-height: 1px;
+    font-size: 0;
+    clear: both;
+}
 
 #container {
     background-color: #FFFFFF;
 }
 
+/*   GENERAL CLASSES      */
+/* ********************** */
+
+/* ********************** */
+/*   PANELS               */
+
 #header-panel {
     position: relative;
-    background-color: #002E40;/*#507AAA*/
+    background-color: #0A62B2;
     color: #F8F8F8;
     height: 5.3em;
     margin: 0;
@@ -97,50 +153,29 @@ input[type="text"], input[type="password"], input[type="email"], textarea {
     bottom: -1px;
 }
 
-#navigation-panel ul li {
-    float: left;
-    list-style-type: none;
-    margin: 0 2px 0 0;
-    padding: 0; 
-    white-space: nowrap;
+#main-panel {
+    position: relative;
+    min-height: 400px;
 }
 
-#navigation-panel ul li a {
-    color: #FFFFFF;
-    display: block;
-    font-weight: bold;
-    margin: 0;
-    padding: 4px 10px;
-    text-decoration: none;
-}
-
-#navigation-panel ul li.active a, #navigation-panel ul li.active a:hover {
-    background-color: #FFFFFF;
-    color: #555555;
-}
-
-#navigation-panel ul li a:hover {
-    color: #000000;
-    background-color: #D8F0FA/*#759FCF*/;
-}
-
-#sidebar-panel {
-    margin: 0;
-    min-height: 300px;
-    padding: 0;
-    position: absolute;
-    right: 0;
-    width: 300px;
-    z-index: 9;
+#messages-panel {
+    min-height: 25px;
+    line-height: 25px;
 }
 
 #content-panel {
-    margin: 25px 310px 10px 30px;
+    margin: 0px 345px 10px 30px;
 }
 
-#content-panel h2 {
-    margin-bottom: 1em;
-    border-bottom: 1px solid #E4E4E4;
+#sidebar-panel {
+    margin: 25px 30px 0 0;
+    min-height: 300px;
+    padding: 0;
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 300px;
+    z-index: 9;
 }
 
 #footer-panel {
@@ -154,3 +189,65 @@ input[type="text"], input[type="password"], input[type="email"], textarea {
     float: right;
     margin: 10px 20px;
 }
+
+/*   PANELS               */
+/* ********************** */
+
+/* ********************** */
+/*   NAVIGATION           */
+
+#navigation-panel ul li {
+    float: left;
+    list-style-type: none;
+    margin: 0 2px 0 0;
+    padding: 0;
+    white-space: nowrap;
+}
+
+#navigation-panel ul li a {
+    color: #FFFFFF;
+    display: block;
+    margin: 0;
+    padding: 4px 10px;
+    text-decoration: none;
+}
+
+#navigation-panel ul li.active a, #navigation-panel ul li.active a:hover {
+    background-color: #FFFFFF;
+    color: #555555;
+}
+
+#navigation-panel ul li a:hover {
+    color: #FFFFFF;
+    background-color: #3581C5;
+}
+
+/*   NAVIGATION           */
+/* ********************** */
+
+/* ********************** */
+/*   CONTENT              */
+
+#content-panel h2 {
+    margin-bottom: 1em;
+    border-bottom: 1px solid #E4E4E4;
+}
+
+/*   CONTENT              */
+/* ********************** */
+
+/* ********************** */
+/*   SIDEBAR              */
+
+#sidebar-panel .block {
+    display: block;
+    margin-bottom: 20px;
+}
+
+#sidebar-panel .block h2 {}
+#sidebar-panel .block p, #sidebar-panel .block .content {
+    margin: 1em;
+}
+
+/*   SIDEBAR              */
+/* ********************** */

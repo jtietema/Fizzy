@@ -1,35 +1,47 @@
-<h2>Pages</h2>
-<div>
-    <table class="data" id="pages-table">
-        <thead>
-            <tr>
-                <td>Title</td>
-                <td>Slug</td>
-                <td>&nbsp;</td>
-            </tr>
-        </thead>
-        <tbody>
-            <?php foreach($this->pages as $page) : ?>
-            <tr>
-                <td><?= $page['title'] ?></td>
-                <td><?= $page['slug'] ?></td>
-                <td style="width: 100px;">
-                    <?= $this->link("/pages/{$page['slug']}", $this->img('/fizzy_assets/images/icon/view.png', array('alt' => 'View icon')), array('target' => '_blanc')); ?>
-                    <?= $this->link("/fizzy/pages/edit/{$page['id']}", $this->img('/fizzy_assets/images/icon/edit.png', array('alt' => 'edit icon'))); ?>
-                    <?= $this->linkConfirm("/fizzy/pages/delete/{$page['id']}", $this->img('/fizzy_assets/images/icon/sign_remove.png', array('alt' => 'remove icon')), 'Are you sure?'); ?>
-                </td>
-            </tr>
-            <?php endforeach; ?>
-        </tbody>
-        <tfoot>
-            <tr>
-                <td colspan="3">
-                    <div class="data-buttons">
-                        <?= $this->link('/fizzy/pages/add', $this->img('/fizzy_assets/images/icon/add.png', array('alt' => 'add icon')) . ' Add Page'); ?>
-                    </div>
-                </td>
-            </tr>
-        </tfoot>
-    </table>
+<div id="content-panel">
 
+    <h2>Pages</h2>
+    <div>
+        <table class="data" id="pages-table">
+            <thead>
+                <tr>
+                    <td>Title</td>
+                    <td>Slug</td>
+                    <td>&nbsp;</td>
+                </tr>
+            </thead>
+            <tbody>
+                <?php foreach($this->pages as $page) : ?>
+                <tr>
+                    <td><?= $page['title'] ?></td>
+                    <td><?= $page['slug'] ?></td>
+                    <td style="width: 85px; text-align: right; padding-right: 15px;">
+                        <?= $this->link("/pages/{$page['slug']}", $this->img('/fizzy_assets/images/icon/view.png', array('alt' => 'View icon')), array('target' => '_blanc')); ?>
+                        <?= $this->link("/fizzy/pages/edit/{$page['id']}", $this->img('/fizzy_assets/images/icon/edit.png', array('alt' => 'edit icon'))); ?>
+                        <?= $this->linkConfirm("/fizzy/pages/delete/{$page['id']}", $this->img('/fizzy_assets/images/icon/sign_remove.png', array('alt' => 'remove icon')), 'Are you sure?'); ?>
+                    </td>
+                </tr>
+                <?php endforeach; ?>
+            </tbody>
+        </table>
+
+    </div>
+    
+</div>
+<div id="sidebar-panel">
+
+    <div class="block">
+        <h2>Actions</h2>
+
+        <p>
+            <?= $this->link('/fizzy/pages/add', 'Add page', array('class' => 'c3button green', 'style' => 'font-size: 20px; padding: 5px 10px;')); ?>
+        </p>
+    </div>
+
+    <div class="block">
+        <h2>About pages</h2>
+        <p>
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus laoreet fringilla eros in laoreet. Sed rhoncus aliquam accumsan. Nullam nec massa sed elit faucibus ultricies. Vivamus pharetra volutpat posuere. Aliquam a metus neque, et euismod odio. Suspendisse potenti. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Aenean eget metus lacus, quis rhoncus mauris. In sit amet aliquet felis. Aenean luctus ornare posuere. Fusce egestas, nisi nec mattis pretium, lorem lorem venenatis lectus, id ornare lacus justo in neque. Ut commodo risus eu justo vulputate a fringilla quam rhoncus. Curabitur fermentum neque in tellus adipiscing scelerisque.
+        </p>
+    </div>
 </div>

@@ -1,56 +1,72 @@
-
-<h2>Add Page</h2>
-
 <form action="" method="post" id="PageForm" name="PageForm">
+<div id="content-panel">
+    <div class="form-panel">
+        <h2 class="form-title">Add Page</h2>
 
-    <div class="form-panel">    
-        <?= $this->form->title; ?>
-        <?= $this->form->slug; ?>
-        
-        <?= $this->form->body; ?>
-    </div>
+        <div class="form-body">
+            <?= $this->form->title; ?>
+            <?= $this->form->slug; ?>
 
-    <div class="form-options-panel">
-        <h3 class="form-options-toggle">
-            <a href="#" id="PageFormOptionsToggle">
-                <img src="<?= $this->baseUrl('/fizzy_assets/images/icon/control_play.png'); ?>" alt="control expand button"/>
-                Options
-            </a>
-        </h3>
-        <div id="PageFormOptionsPanel" style="display: none;">
-            <div class="form-options-elements" >
-                <?= $this->form->template; ?>
-                <?= $this->form->layout; ?>
-
-                <div>
-                    <?= $this->form->homepage->setDecorators(array('ViewHelper', 'Errors')); ?>
-                    <label for="homepage" style="font-weight: normal; display: inline-block;">Do you want to set this page as the homepage?</label>
-                </div>
-            </div>
+            <?= $this->form->body; ?>
         </div>
     </div>
+</div>
+<div id="sidebar-panel">
+
+    <h2>Actions</h2>
 
     <div class="form-control-panel">
-        <div class="form-control-submit">
-            <input type="submit" value="Save" />
-        </div>
-
-        <div class="form-control-back">
-            <a href="<?= $this->baseUrl('/fizzy/pages'); ?>">
-                back to pages
-                <img src="<?= $this->baseUrl('/fizzy_assets/images/icon/arrow_right.png'); ?>" />
-            </a>
-        </div>
+        <input type="submit" value="Save" class="c3button green" /> or
+        <a class="c3button orange" style="height: 1em; line-height: 1em;" href="<?= $this->baseUrl('/fizzy/pages'); ?>">back to pages</a>
     </div>
+
+    <h2>Options</h2>
+
+    <div class="form-options-panel">
+
+        <table width="100%">
+            <tr>
+                <td width="100px;">
+                    <label for="template">Template</label>
+                </td>
+                <td>
+                    <?= $this->form->template->setDecorators(array('ViewHelper', 'Errors')); ?>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2">
+                    <span class="description">
+                        Specify the template to render the page content in.
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <label for="layout">Layout</label>
+                </td>
+                <td>
+                    <?= $this->form->layout->setDecorators(array('ViewHelper', 'Errors')); ?>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2">
+                    <span class="description">
+                        Specify the layout to render the page content in.
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <?= $this->form->homepage->setDecorators(array('ViewHelper', 'Errors')); ?>
+                </td>
+                <td>
+                    <label for="homepage">Do you want to set this page as the homepage?</label>
+                </td>
+            </tr>
+        </table>
+
+    </div>
+    
+</div>
+
 </form>
-
-<script type="text/javascript">
-
-    $(document).ready(function() {
-        $('#PageFormOptionsToggle').click(function() {
-            $('#PageFormOptionsPanel').toggle('slow');
-            return false;
-        });
-    });
-
-</script>
