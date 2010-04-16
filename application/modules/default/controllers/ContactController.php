@@ -12,8 +12,8 @@ class ContactController extends Zend_Controller_Action
                 $mail = new Zend_Mail();
                 $mail->setBodyText($form->feedback->getValue());
                 $mail->setFrom($form->email->getValue(), $form->name->getValue());
-                $application = Zend_Registry::get('config')->application->toArray();
-                $mail->addTo($application['contactEmail']);
+                $config = Zend_Registry::get('config');
+                $mail->addTo($config->contact->email);
                 $mail->send();
                 $this->renderScript('contact/thankyou.phtml');
                 return;

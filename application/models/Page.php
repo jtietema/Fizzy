@@ -16,8 +16,8 @@ class Page extends BasePage
     public function getTemplate()
     {
         if(empty($this->template)) {
-            $application = Zend_Registry::get('config')->application->toArray();
-            $this->template = $application['defaultTemplate'];
+            $pages = Zend_Registry::get('config')->pages;
+            $this->template = $pages->defaultTemplate;
         }
         
         return $this->template;
@@ -30,8 +30,8 @@ class Page extends BasePage
     public function getLayout()
     {
         if(empty($this->layout)) {
-            $application = Zend_Registry::get('config')->application->toArray();
-            $this->layout = $application['defaultLayout'];
+            $pages = Zend_Registry::get('config')->pages;
+            $this->layout = $pages->defaultLayout;
         }
 
         return $this->layout;

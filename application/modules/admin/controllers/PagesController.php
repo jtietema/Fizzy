@@ -94,7 +94,7 @@ class Admin_PagesController extends Fizzy_SecuredController
     protected function _getForm($action, $page)
     {
         $config = Zend_Registry::get('config');
-        
+
         $formConfig = array (
             'action' => $action,
             'elements' => array (

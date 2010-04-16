@@ -16,7 +16,7 @@ class Admin_IndexController extends Fizzy_SecuredController
 
     public function configurationAction()
     {
-        $this->view->config = Fizzy::getInstance()->getConfig()->toArray();
+        $this->view->config = Zend_Registry::get('config')->toArray();
         $this->renderScript('configuration.phtml');
     }
     
