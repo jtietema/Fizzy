@@ -37,11 +37,12 @@
 
 /* form control */
 .form-control-panel {
-    margin: 0 0 10px 0;
-    padding: 10px;
+    margin: 0 0 20px 0;
+    padding: 5px 15px;
 }
 
 .form-control-panel input {
+    margin-right: 2.8em;
     font-size: 20px;
     color: #FFFFFF;
 }
@@ -49,22 +50,18 @@
 /* form options */
 .form-options-panel {
     margin: 20px 0;
-    padding: 10px 15px;
+    padding: 0px 15px;
 }
-.form-options-panel .form-options-toggle {
-    margin: 0;
-    padding: 0;
-    border: 0;
+
+.form-options-panel label {
+    border-bottom: 1px solid #ccc;
 }
-.form-options-panel .form-options-toggle a, 
-.form-options-panel .form-options-toggle a:hover
-{
-    display: block;
+.form-options-panel select {
     width: 100%;
-    text-decoration: none;
 }
-.form-options-panel .form-options-elements {
-    margin: 10px;
+.form-options-panel input[type="checkbox"] {
+    position: relative;
+    top: .2em;
 }
 
 /*   STANDARD FORM        */

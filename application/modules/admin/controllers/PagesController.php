@@ -162,7 +162,8 @@ class Admin_PagesController extends Fizzy_SecuredController
                         'label' => 'Is Homepage',
                         'required' => false,
                         'value' => (int) $page->homepage,
-                        'checked' => ((boolean) $page->homepage) ? 'checked' : ''
+                        'checked' => ((boolean) $page->homepage) ? 'checked' : '',
+                        'description' => 'Check this box to make this page the default.'
                     )
                 ),
                 'submit' => array (
@@ -177,6 +178,10 @@ class Admin_PagesController extends Fizzy_SecuredController
 
         $form = new Fizzy_Form();
         $form->setOptions($formConfig);
+
+        $form->template->addDecorator('Description');
+        $form->layout->addDecorator('Description');
+
         return $form;
     }
 

@@ -16,54 +16,22 @@
     <h2>Actions</h2>
 
     <div class="form-control-panel">
-        <input type="submit" value="Save" class="c3button green" /> or
-        <a class="c3button orange" style="height: 1em; line-height: 1em;" href="<?= $this->baseUrl('/fizzy/pages'); ?>">back to pages</a>
+        <input type="submit" value="Save" class="c3button green" />
+        <a class="c3button orange" style="height: 1em; line-height: 1em; " href="<?= $this->baseUrl('/fizzy/pages'); ?>">back to pages</a>
     </div>
 
     <h2>Options</h2>
 
     <div class="form-options-panel">
 
-        <table width="100%">
-            <tr>
-                <td width="100px;">
-                    <label for="template">Template</label>
-                </td>
-                <td>
-                    <?= $this->form->template->setDecorators(array('ViewHelper', 'Errors')); ?>
-                </td>
-            </tr>
-            <tr>
-                <td colspan="2">
-                    <span class="description">
-                        Specify the template to render the page content in.
-                    </span>
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    <label for="layout">Layout</label>
-                </td>
-                <td>
-                    <?= $this->form->layout->setDecorators(array('ViewHelper', 'Errors')); ?>
-                </td>
-            </tr>
-            <tr>
-                <td colspan="2">
-                    <span class="description">
-                        Specify the layout to render the page content in.
-                    </span>
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    <?= $this->form->homepage->setDecorators(array('ViewHelper', 'Errors')); ?>
-                </td>
-                <td>
-                    <label for="homepage">Do you want to set this page as the homepage?</label>
-                </td>
-            </tr>
-        </table>
+        <?= $this->form->template; ?>
+        <?= $this->form->layout; ?>
+
+        <div class="form-row" id="homepage-row">
+            <label for="homepage">Homepage</label>
+            <?= $this->form->homepage->setDecorators(array('ViewHelper', 'Errors')); ?>
+            <?= $this->form->homepage->getDescription(); ?>
+        </div>
 
     </div>
     
