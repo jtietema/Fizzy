@@ -20,6 +20,7 @@ $types = array(
     'txt' => $this->baseUrl('/fizzy_assets/images/icon/page_white_text.png'),
 );
 ?>
+
 <div class="files-container">
     <?php foreach($this->files as $fileInfo) : ?>
     <div class="thumbnail">
@@ -34,7 +35,7 @@ $types = array(
         <?php else: ?>
             <img class="icon" src="<?= (array_key_exists($fileInfo->type, $types)) ? $types[$fileInfo->type] : $this->baseUrl('/fizzy_assets/images/icon/page.png'); ?>" alt="" />
         <?php endif; ?>
-        
+
         <div class="filename">
             <?php if (strlen($fileInfo->basename) > 14):?>
                 <?= substr($fileInfo->basename, 0, 14); ?>...
@@ -54,5 +55,5 @@ $types = array(
     </div>
     <?php endforeach; ?>
 
-    
+
 </div>

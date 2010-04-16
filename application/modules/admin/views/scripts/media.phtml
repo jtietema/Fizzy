@@ -1,42 +1,41 @@
-<h1 class="header">Media</h1>
+<div id="content-panel">
 
-<p>
-    On this page you find the media available within Fizzy. With the form on the
-    bottom of the page you are able to add files to Fizzy that you can use in
-    your pages.
-</p>
+    <h2>Media</h2>
 
-<div id="uploaded-files">
-    <h2>Files overview</h2>
-    <div class="files-menubar">
-        <ul>
-            <li><a href="<?= $this->baseUrl('/admin/media') ?>">List view</a></li>
-            <li><a href="<?= $this->baseUrl('/admin/media?type=thumbnail') ?>">Thumbnail view</a></li>
-        </ul>
-        <div class="clear"></div>
+    <div id="uploaded-files">
+        <div class="files-menubar">
+            <ul>
+                <li><a href="<?= $this->baseUrl('/admin/media') ?>">List view</a></li>
+                <li><a href="<?= $this->baseUrl('/admin/media?type=thumbnail') ?>">Thumbnail view</a></li>
+            </ul>
+            <div class="clear"></div>
+        </div>
+        <?= $this->action('display', 'media', 'admin', array('type' => $this->type)); ?>
+
     </div>
-    <?= $this->action('display', 'media', 'admin', array('type' => $this->type)); ?>
-    
+
 </div>
 
-<div id="upload-form" class="form-container">
-    <h2 class="header">Upload</h2>
+<div id="sidebar-panel">
+    <div id="upload-form" class="form-container">
+        <h2 class="header">Upload</h2>
 
-    <p>
-        Upload a new file by selecting it on your machine. Check the box if
-        you want to overwrite a file that already exists with the same name.
-        <br />
-
-    </p>
-    <?php if(is_writable($this->uploadFolder)) : ?>
-    <?= $this->form; ?>
-    <?php else : ?>
-    <div class="message notice">
         <p>
-            The upload directory found in the Fizzy configuration is not
-            writable. Upload functionality will be disabled until it is made
-            writable.
+            Upload a new file by selecting it on your machine. Check the box if
+            you want to overwrite a file that already exists with the same name.
+            <br />
+
         </p>
+        <?php if(is_writable($this->uploadFolder)) : ?>
+        <?= $this->form; ?>
+        <?php else : ?>
+        <div class="message notice">
+            <p>
+                The upload directory found in the Fizzy configuration is not
+                writable. Upload functionality will be disabled until it is made
+                writable.
+            </p>
+        </div>
+        <?php endif; ?>
     </div>
-    <?php endif; ?>
 </div>

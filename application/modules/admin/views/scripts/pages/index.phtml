@@ -6,19 +6,17 @@
             <thead>
                 <tr>
                     <td>&nbsp;</td>
-                    <td>Title</td>
                     <td>Slug</td>
+                    <td>Title</td>
                 </tr>
             </thead>
             <tbody>
                 <?php foreach($this->pages as $page) : ?>
                 <tr>
                     <td class="controls">
-                        <?= $this->link("/pages/{$page['slug']}", $this->img('/fizzy_assets/images/icon/view.png', array('alt' => 'View icon')), array('target' => '_blanc')); ?>
-                        <?= $this->link("/fizzy/pages/edit/{$page['id']}", $this->img('/fizzy_assets/images/icon/edit.png', array('alt' => 'edit icon'))); ?>
-                        <?= $this->linkConfirm("/fizzy/pages/delete/{$page['id']}", $this->img('/fizzy_assets/images/icon/sign_remove.png', array('alt' => 'remove icon')), 'Are you sure?'); ?>
+                        <?= $this->link("/fizzy/pages/edit/{$page['id']}", $this->img('/fizzy_assets/images/icon/page_white_edit.png', array('alt' => 'edit icon')), array('title' => 'edit page')); ?>
                     </td>
-                    <td><?= $page['slug'] ?></td>
+                    <td style="width: 200px;"><?= $page['slug'] ?></td>
                     <td><?= $page['title'] ?></td>
                 </tr>
                 <?php endforeach; ?>
