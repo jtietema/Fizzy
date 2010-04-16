@@ -28,9 +28,8 @@ class Admin_WebdavController extends Zend_Controller_Action
      */
     public function requestAction()
     {
-
         if (!isset($this->_config->resources->sabredav->enabled) ||
-                false == $this->_config->resources->sabredav->enbled) {
+                0 == $this->_config->resources->sabredav->enabled) {
             // Render 404
             $response = $this->getResponse();
             $response->clearAllHeaders();
