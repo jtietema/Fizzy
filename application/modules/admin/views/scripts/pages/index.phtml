@@ -14,7 +14,7 @@
                 <?php foreach($this->pages as $page) : ?>
                 <tr>
                     <td class="controls">
-                        <?= $this->link("/fizzy/pages/edit/{$page['id']}", $this->img('/fizzy_assets/images/icon/page_white_edit.png', array('alt' => 'edit icon')), array('title' => 'edit page')); ?>
+                        <?= $this->link("/fizzy/pages/edit/{$page['id']}", $this->img('/fizzy_assets/images/icon/document--pencil.png', array('alt' => 'edit icon')), array('title' => 'edit page')); ?>
                     </td>
                     <td style="width: 200px;"><?= $page['slug'] ?></td>
                     <td><?= $page['title'] ?></td>

@@ -2,16 +2,22 @@
 
     <h2>Media</h2>
 
-    <div id="uploaded-files">
-        <div class="files-menubar">
+    <div id="media-panel">
+        <div id="media-tabs-panel">
+            <?php
+                $activeTab = isset($_GET['type']) ? $_GET['type'] : null;
+            ?>
             <ul>
-                <li><a href="<?= $this->baseUrl('/admin/media') ?>">List view</a></li>
-                <li><a href="<?= $this->baseUrl('/admin/media?type=thumbnail') ?>">Thumbnail view</a></li>
+                <li>
+                    Show as:
+                </li>
+                <li><a class="<?= 'thumbnail' != strtolower($_GET['type']) ? 'active' : ''; ?>" href="<?= $this->baseUrl('/admin/media') ?>">List</a></li>
+                <li>&nbsp;|&nbsp;</li>
+                <li><a class="<?= 'thumbnail' == strtolower($_GET['type']) ? 'active' : ''; ?>" href="<?= $this->baseUrl('/admin/media?type=thumbnail') ?>">Thumbnail</a></li>
             </ul>
             <div class="clear"></div>
         </div>
         <?= $this->action('display', 'media', 'admin', array('type' => $this->type)); ?>
-
     </div>
 
 </div>
