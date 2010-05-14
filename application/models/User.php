@@ -16,6 +16,7 @@ class User extends BaseUser
     {
         $this->username = $array['username'];
         $this->password = $array['password'];
+        $this->displayname = $array['displayname'];
         $this->encryption = $array['encryption'];
         return $this;
     }

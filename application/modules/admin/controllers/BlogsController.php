@@ -141,6 +141,7 @@ class Admin_BlogsController extends Fizzy_SecuredController
 
         $form->addElement(new Fizzy_Form_Element_Wysiwyg('body', array(
             'label' => 'Body',
+            'attribs' => array('style' => 'width: 100%;'),
         )));
 
         $form->addElement(new Zend_Form_Element_Select('author', array(
@@ -157,7 +158,7 @@ class Admin_BlogsController extends Fizzy_SecuredController
 
         $array = array();
         foreach ($users as $user){
-            $array[$user->id] = $user->username;
+            $array[$user->id] = $user->displayname;
         }
         
         return $array;

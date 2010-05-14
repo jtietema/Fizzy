@@ -1,34 +1,32 @@
 User:
-    columns:
-        id:
-            type: integer(4)
-            primary: true
-            autoincrement: true
-        username:
-            type: string(150)
-        password:
-            type: string(150)
-        encryption:
-            type: string(10)
+  columns:
+    id:
+      type: integer(4)
+      primary: true
+      autoincrement: true
+    username: string(150)
+    displayname: string(255)
+    password: string(150)
+    encryption: string(10)
 
 Page:
-    columns:
-        id:
-            type: integer(4)
-            primary: true
-            autoincrement: true
-        title:
-            type: string(255)
-        slug:
-            type: string(255)
-        body:
-            type: string
-        homepage:
-            type: boolean
-        layout:
-            type: string(150)
-        template:
-            type: string(150)
+  columns:
+    id:
+      type: integer(4)
+      primary: true
+      autoincrement: true
+    title:
+      type: string(255)
+    slug:
+      type: string(255)
+    body:
+      type: string
+    homepage:
+      type: boolean
+    layout:
+      type: string(150)
+    template:
+      type: string(150)
 
 Blog:
   columns:

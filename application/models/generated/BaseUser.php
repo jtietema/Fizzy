@@ -7,6 +7,7 @@
  * 
  * @property integer $id
  * @property string $username
+ * @property string $displayname
  * @property string $password
  * @property string $encryption
  * @property Doctrine_Collection $BlogPosts
@@ -30,6 +31,10 @@ abstract class BaseUser extends Doctrine_Record
         $this->hasColumn('username', 'string', 150, array(
              'type' => 'string',
              'length' => '150',
+             ));
+        $this->hasColumn('displayname', 'string', 255, array(
+             'type' => 'string',
+             'length' => '255',
              ));
         $this->hasColumn('password', 'string', 150, array(
              'type' => 'string',
