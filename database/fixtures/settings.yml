@@ -1,0 +1,43 @@
+Setting:
+  website_title:
+    component: application
+    key: title
+    value: Fizzy
+    label: "Application title"
+    description: "This is used as the base for the application title in the browser window"
+  page_template:
+    component: page
+    key: default_template
+    value: "default.phtml"
+    label: "Default Page template"
+    description: "The default template that is used for pages"
+  page_layout:
+    component: page
+    key: default_layout
+    value: "default"
+    label: "Default Page layout"
+    description: "The default layout that is used for pages"
+  webdav:
+    component: media
+    key: webdav_enabled
+    value: true
+    label: "Enable webdav upload"
+    description: "If WebDAV upload for the media library should be enabled"
+  webdav_browser:
+    component: media
+    key: webdav_browser
+    value: true
+    label: "WebDAV browser"
+    description: "If the media library should be browsable through WebDAV"
+  contact_log:
+    component: contact
+    key: log
+    value: true
+    label: "Contact log"
+    description: "If contact requests send throught the contact form should be logged and browsable"
+  contact_email:
+    component: contact
+    key: address
+    value: contact@website.tld
+    label: "Contact Email"
+    description: "The email address contact requests from the contact form are send to"
