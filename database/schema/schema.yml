@@ -30,6 +30,8 @@ Post:
     body: string
     date: timestamp
     author: integer(4)
+    status: integer(1)
+    comments: boolean
     blog_id: integer(4)
   relations:
     User:

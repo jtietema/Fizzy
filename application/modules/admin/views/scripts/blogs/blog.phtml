@@ -8,11 +8,13 @@
                     <td>&nbsp;</td>
                     <td>Title</td>
                     <td>Date</td>
+                    <td>Status</td>
                     <td>Author</td>
                 </tr>
             </thead>
             <tbody>
-                <?php foreach ($this->blog->Posts as $post): ?>
+                <?php $items = $this->paginator->getCurrentItems();
+                foreach ($items as $post): ?>
                 <tr>
                     <td class="controls">
                         <?= $this->link('/fizzy/post/' . $post->id . '/edit', $this->img('/fizzy_assets/images/icon/document--pencil.png', array('alt' => 'edit icon')), array('title' => 'edit page')); ?>
@@ -24,12 +26,22 @@
                         <?= $post->date ?>
                     </td>
                     <td>
+                        <?php if ($post->status == Post::PUBLISHED): ?>
+                        Published
+                        <?php elseif ($post->status == Post::PENDING_REVIEW): ?>
+                        Pending review
+                        <?php else: ?>
+                        Draft
+                        <?php endif; ?>
+                    </td>
+                    <td>
                         <?= $post->User->displayname ?>
                     </td>
                 </tr>
                 <?php endforeach; ?>
             </tbody>
         </table>
+        <?= $this->paginationControl($this->paginator, 'All', 'blogs/_pagination.phtml') ?>
     </div>
 </div>
 

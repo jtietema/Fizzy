@@ -8,5 +8,8 @@ Post:
   Test:
     title: Test post
     body: dit is een test post
+    date: now
+    comments: true
+    status: 2
     author: 1
     blog_id: 1
