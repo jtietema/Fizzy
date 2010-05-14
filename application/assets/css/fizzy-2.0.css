@@ -213,6 +213,10 @@ a.c3button:hover {
     float: right;
     margin: 10px 20px;
 }
+#version-panel {
+    text-align: center;
+    margin-top: 25px;
+}
 
 /*   PANELS               */
 /* ********************** */
