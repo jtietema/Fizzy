@@ -64,3 +64,11 @@ Setting:
     value: string
     label: string(255)
     description: string
+
+Contact:
+  columns:
+    id: { type: integer(4), primary: true, autoincrement: true }
+    name: string(255)
+    email: string(255)
+    body: string
+    date: datetime

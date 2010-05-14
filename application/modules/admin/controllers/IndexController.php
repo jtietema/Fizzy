@@ -31,6 +31,7 @@ class Admin_IndexController extends Fizzy_SecuredController
     public function navigationAction() {
         $items = array();
 
+        // Blog
         $items[] = new Zend_Navigation_Page_Mvc(array(
             'label' => 'Blogs',
             'route' => 'admin_blogs',
@@ -64,6 +65,7 @@ class Admin_IndexController extends Fizzy_SecuredController
             )
         ));
 
+        // Pages
         $items[] = new Zend_Navigation_Page_Mvc(array(
             'label' => 'Pages',
             'route' => 'admin_pages',
@@ -88,6 +90,7 @@ class Admin_IndexController extends Fizzy_SecuredController
             )
         ));
 
+        // Media
         $items[] = new Zend_Navigation_Page_Mvc(array(
             'label' => 'Media',
             'route' => 'admin_media',
@@ -97,6 +100,27 @@ class Admin_IndexController extends Fizzy_SecuredController
             'pages' => array ()
         ));
 
+        // Contact
+        if (null !== Setting::getKey('log', 'contact') && 0 < Setting::getKey('log', 'contact')) {
+            $items[] = new Zend_Navigation_Page_Mvc(array(
+                'label' => 'Contact',
+                'route' => 'admin_contact',
+                'module' => 'admin',
+                'controller' => 'contact',
+                'action' => 'index',
+                'pages' => array (
+                    new Zend_Navigation_Page_Mvc(array(
+                        'label' => 'Contact show',
+                        'route' => 'admin_contact_show',
+                        'module' => 'admin',
+                        'controller' => 'contact',
+                        'action' => 'show',
+                    ))
+                )
+            ));
+        }
+
+        // Users
         $items[] = new Zend_Navigation_Page_Mvc(array(
             'label' => 'Users',
             'route' => 'admin_users',
@@ -121,6 +145,17 @@ class Admin_IndexController extends Fizzy_SecuredController
             )
         ));
 
+        // Settings
+        $items[] = new Zend_Navigation_Page_Mvc(array(
+            'label' => 'Settings',
+            'route' => 'admin_settings',
+            'module' => 'admin',
+            'controller' => 'settings',
+            'action' => 'index',
+            'pages' => array ()
+        ));
+
+        // Logout
         $items[] = new Zend_Navigation_Page_Mvc(array(
             'label' => 'Logout',
             'route' => 'admin_logout',
