@@ -1,0 +1,11 @@
+<table>
+    <tbody>
+        <?php foreach ($this->blogs as $blog) : ?>
+        <tr>
+            <td><a href="<?= $this->baseUrl('/fizzy/blog/' . $blog->id) ?>"><?= $blog->name ?></a></td>
+            <td><?= $blog->slug ?></td>
+            <td><?= $blog->group_slug ?></td>
+        </tr>
+        <?php endforeach; ?>
+    </tbody>
+</table>

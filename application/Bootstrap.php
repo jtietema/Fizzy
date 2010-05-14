@@ -18,6 +18,10 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
         $viewRenderer = new Zend_Controller_Action_Helper_ViewRenderer();
         $viewRenderer->setView($view);
         Zend_Controller_Action_HelperBroker::addHelper($viewRenderer);
+        $view->addHelperPath(
+            realpath(implode(DIRECTORY_SEPARATOR,
+                    array(ROOT_PATH, 'library', 'ZendX', 'JQuery', 'View', 'Helper')
+            )), 'ZendX_JQuery_View_Helper');
 
         return $view;
     }

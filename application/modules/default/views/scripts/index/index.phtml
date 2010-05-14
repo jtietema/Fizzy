@@ -1,0 +1,11 @@
+<?php foreach ($this->posts as $post): ?>
+<div>
+    <div><?= $post->title ?></div>
+    <div><?= $post->date ?> - <?= $post->User->username ?></div>
+    <div><?= $post->body ?></div>
+    <?php foreach ($post->Comments as $comment): ?>
+    <div><?= $comment->name ?> - <?= $comment->date ?></div>
+    <div><?= $comment->body ?></div>
+    <?php endforeach; ?>
+</div>
+<?php endforeach; ?>

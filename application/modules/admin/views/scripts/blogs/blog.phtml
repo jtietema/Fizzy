@@ -1,0 +1,13 @@
+<h1><?= $this->blog->name ?></h1>
+
+<table>
+    <tbody>
+        <?php foreach ($this->blog->Posts as $post): ?>
+        <tr>
+            <td><a href="<?= $this->baseUrl('/fizzy/post/' . $post->id . '/edit') ?>"><?= $post->title ?></a></td>
+        </tr>
+        <?php endforeach; ?>
+    </tbody>
+</table>
+
+<a href="<?= $this->baseUrl('/fizzy/blog/' . $this->blog->id . '/add') ?>">Add post</a>
