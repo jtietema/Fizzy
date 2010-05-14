@@ -1,4 +1,4 @@
-<form action="<?= $this->form->getAction(); ?>" name="UserForm" id="UserForm">
+<form action="<?= $this->form->getAction(); ?>" name="UserForm" id="UserForm" method="post">
 
 <div id="content-panel">
 
@@ -6,7 +6,7 @@
         <?= $this->user->isNew() ? 'Add user' : 'Edit user'; ?>
     </h2>
 
-    <div class="form-container">
+    <div class="form-panel">
         <?= $this->form->username; ?>
         <?= $this->form->password; ?>
         <?= $this->form->password_confirm; ?>
