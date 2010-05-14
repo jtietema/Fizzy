@@ -1,5 +1,49 @@
-<h1 class="header">User</h1>
+<form action="<?= $this->form->getAction(); ?>" name="UserForm" id="UserForm">
 
-<div class="form-container">
-    <?= $this->form; ?>
+<div id="content-panel">
+
+    <h2>
+        <?= $this->user->isNew() ? 'Add user' : 'Edit user'; ?>
+    </h2>
+
+    <div class="form-container">
+        <?= $this->form->username; ?>
+        <?= $this->form->password; ?>
+        <?= $this->form->password_confirm; ?>
+    </div>
+    
 </div>
+
+<div id="sidebar-panel">
+
+    <h2>Actions</h2>
+
+    <ul class="actions">
+        <li class="last">
+            <input type="submit" value="Save" />
+        </li>
+    </ul>
+
+    <hr />
+
+    <ul class="actions">
+        <?php if (!$this->user->isNew()) : ?>
+        <li class="no-bg right">
+            <?= $this->linkConfirm(
+                    '/fizzy/user/delete/' . $this->user->id,
+                    $this->img('fizzy_assets/images/icon/user--minus.png') . ' delete user',
+                    'Are you sure you want to delete this user?',
+                    array('class' => 'delete')
+            ); ?>
+        </li>
+        <?php endif; ?>
+        <li class="no-bg right last">
+            <?= $this->link(
+                '/fizzy/users',
+                $this->img('/fizzy_assets/images/icon/edit-list.png') . ' back to users'
+            ); ?>
+        </li>
+    </ul>
+</div>
+
+</form>

@@ -34,6 +34,7 @@ class Admin_PagesController extends Fizzy_SecuredController
             }
         }
 
+        $this->view->page = $page;
         $this->view->form = $form;
         $this->renderScript('pages/form.phtml');
     }
@@ -63,6 +64,7 @@ class Admin_PagesController extends Fizzy_SecuredController
             }
         }
 
+        $this->view->page = $page;
         $this->view->form = $form;
         $this->renderScript('pages/form.phtml');
     }

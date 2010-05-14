@@ -52,4 +52,9 @@ class Page extends BasePage
         return $this;
     }
 
+    public function isNew()
+    {
+        return empty($this->id);
+    }
+
 }

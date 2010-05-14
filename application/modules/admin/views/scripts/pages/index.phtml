@@ -26,16 +26,19 @@
     </div>
     
 </div>
+
 <div id="sidebar-panel">
 
-    <div class="block">
-        <h2>Actions</h2>
+    <h2>Actions</h2>
 
-        <p>
-            <?= $this->link('/fizzy/pages/add', 'Add page', array('class' => 'c3button green', 'style' => 'font-size: 20px; padding: 5px 10px;')); ?>
-        </p>
-    </div>
+    <ul class="actions">
+        <li class="last">
+            <?= $this->link('/fizzy/pages/add', $this->img('/fizzy_assets/images/icon/document--plus.png') . ' Add page', array()); ?>
+        </li>
+    </ul>
 
+    <hr />
+    
     <div class="block">
         <h2>About pages</h2>
         <p>

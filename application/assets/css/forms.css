@@ -9,6 +9,12 @@
 /*   STANDARD FORM        */
 
 /* main form panel */
+.form-panel {
+    padding: 10px 15px;
+    background-color: #ECEEEC;
+    border: 1px solid #DEDEDE;
+}
+
 .form-panel .form-title, #content-panel .form-panel h2.form-title {
     margin-bottom: 10px;
     font-size: 24px;
@@ -16,23 +22,32 @@
     border: 0;
 }
 
-.form-panel .form-body {
-    padding: 10px 15px;
-    background-color: #ECEEEC;
-    border: 1px solid #DEDEDE;
-}
-
 .form-panel label {
+    margin-right: 1em;
     margin-bottom: .4em;
 }
 
-.form-panel input[type="text"], 
-.form-panel input[type="password"], 
+.form-panel input[type="text"],
+.form-panel input[type="password"],
 .form-panel input[type="email"],
 .form-panel textarea,
+.form-panel select,
 .form-panel .wysiwyg
 {
     margin-bottom: .7em;
+}
+
+.form-panel input[type="text"],
+.form-panel input[type="password"],
+.form-panel input[type="email"],
+.form-panel textarea
+{
+    padding: .4em .4em;
+}
+
+.form-panel select {
+    margin-top: 0.4em;
+    margin-bottom: 0.4em;
 }
 
 /* form control */

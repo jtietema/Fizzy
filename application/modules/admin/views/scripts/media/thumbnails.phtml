@@ -36,7 +36,7 @@ $types = array(
             </span>
             <?php if(is_writable($this->uploadFolder)) : ?>
             <span class="remove">
-                <?= $this->linkConfirm('/fizzy_assets/media/delete/' . urlencode($fileInfo->basename), $this->img('/fizzy_assets/images/icon/minus-button.png'), "Are you sure you want to delete {$fileInfo->basename}?", array('title' => 'Delete file')); ?>
+                <?= $this->linkConfirm('/fizzy_assets/media/delete/' . urlencode($fileInfo->basename), $this->img('/fizzy_assets/images/icon/cross-small.png'), "Are you sure you want to delete {$fileInfo->basename}?", array('title' => 'Delete file')); ?>
             </span>
             <?php endif; ?>
             <div class="clear"></div>

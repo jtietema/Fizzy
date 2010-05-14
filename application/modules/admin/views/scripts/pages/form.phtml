@@ -1,24 +1,48 @@
-<form action="" method="post" id="PageForm" name="PageForm">
-<div id="content-panel">
-    <div class="form-panel">
-        <h2 class="form-title">Add Page</h2>
+<form action="<?= $this->form->getAction(); ?>" method="post" id="PageForm" name="PageForm">
 
-        <div class="form-body">
+<div id="content-panel">
+
+    <h2>
+        <?= $this->img('/fizzy_assets/images/icon/document.png'); ?>
+        <?= ($this->page->isNew()) ? 'Add page' : 'Edit page'; ?>
+    </h2>
+    
+    <div class="form-panel">
             <?= $this->form->title; ?>
             <?= $this->form->slug; ?>
-
             <?= $this->form->body; ?>
-        </div>
     </div>
 </div>
 <div id="sidebar-panel">
 
     <h2>Actions</h2>
 
-    <div class="form-control-panel">
-        <input type="submit" value="Save" class="c3button green" />
-        <a class="c3button orange" style="height: 1em; line-height: 1em; " href="<?= $this->baseUrl('/fizzy/pages'); ?>">back to pages</a>
-    </div>
+    <ul class="actions">
+        <li class="last">
+            <input type="submit" value="Save" />
+        </li>
+    </ul>
+
+    <hr />
+
+    <ul class="actions">
+        <?php if(!$this->page->isNew()) : ?>
+        <li class="no-bg right">
+            <?= $this->linkConfirm(
+                    '/fizzy/pages/delete/' . $this->page->id,
+                    $this->img('fizzy_assets/images/icon/document--minus.png') . ' delete page',
+                    'Are you sure you want to delete this page?',
+                    array('class' => 'delete')
+            ); ?>
+        </li>
+        <?php endif; ?>
+        <li class="no-bg right last">
+            <?= $this->link(
+                '/fizzy/pages',
+                $this->img('/fizzy_assets/images/icon/edit-list.png') . ' back to pages'
+            ); ?>
+        </li>
+    </ul>
 
     <h2>Options</h2>
 

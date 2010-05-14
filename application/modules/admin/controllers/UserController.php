@@ -27,7 +27,8 @@ class Admin_UserController extends Fizzy_SecuredController
                 $this->_redirect('/fizzy/users', array('prependBase' => true));
             }
         }
-        
+
+        $this->view->user = $user;
         $this->view->form = $form;
         $this->renderScript('/user/form.phtml');
     }
@@ -57,6 +58,7 @@ class Admin_UserController extends Fizzy_SecuredController
             }
         }
 
+        $this->view->user = $user;
         $this->view->form = $form;
         $this->renderScript('user/form.phtml');
     }
