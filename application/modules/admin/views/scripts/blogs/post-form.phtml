@@ -1,0 +1,56 @@
+<form action="<?= $this->form->getAction(); ?>" method="post" id="PageForm" name="PageForm">
+
+    <div id="content-panel">
+        <h2>
+            <?= $this->img('/fizzy_assets/images/icon/document.png'); ?>
+            <?= ($this->post->isNew()) ? 'Add post' : 'Edit post'; ?>
+        </h2>
+
+        <div class="form-panel">
+                <?= $this->form->title; ?>
+                <?= $this->form->body; ?>
+        </div>
+
+    </div>
+
+    <div id="sidebar-panel">
+        <h2>Actions</h2>
+
+        <ul class="actions">
+            <li class="last">
+                <input type="submit" value="Save" />
+            </li>
+        </ul>
+
+        <hr />
+
+        <ul class="actions">
+            <?php if(!$this->post->isNew()) : ?>
+            <li class="no-bg right">
+                <?= $this->linkConfirm(
+                        '/fizzy/post/' . $this->post->id . '/delete',
+                        $this->img('fizzy_assets/images/icon/document--minus.png') . ' delete page',
+                        'Are you sure you want to delete this page?',
+                        array('class' => 'delete')
+                ); ?>
+            </li>
+            <?php endif; ?>
+            <li class="no-bg right last">
+                <?= $this->link(
+                    '/fizzy/blog/' . $this->post->Blog->id,
+                    $this->img('/fizzy_assets/images/icon/edit-list.png') . ' back to ' . $this->post->Blog->name
+                ); ?>
+            </li>
+        </ul>
+
+        <h2>Options</h2>
+
+        <div class="form-options-panel">
+
+            <?= $this->form->author; ?>
+            <?= $this->form->date; ?>
+
+        </div>
+
+    </div>
+</form>

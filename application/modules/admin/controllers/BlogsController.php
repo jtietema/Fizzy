@@ -52,8 +52,9 @@ class Admin_BlogsController extends Fizzy_SecuredController
             'ignore' => true
         )));
 
+        $this->view->post = $post = new Post();
+
         if ($this->_request->isPost() && $form->isValid($_POST)){
-            $post = new Post();
             $post->title = $form->title->getValue();
             $post->body = $form->body->getValue();
             $post->author = $form->author->getValue();
@@ -63,6 +64,8 @@ class Admin_BlogsController extends Fizzy_SecuredController
 
             $this->_redirect('/fizzy/blog/' . $blogId);
         }
+        
+        $this->renderScript('blogs/post-form.phtml');
     }
 
     public function editPostAction()
@@ -100,6 +103,25 @@ class Admin_BlogsController extends Fizzy_SecuredController
 
         $this->view->form = $form;
         $this->view->post = $post;
+        $this->renderScript('blogs/post-form.phtml');
+    }
+
+    public function deletePostAction()
+    {
+        $postId = $this->_getParam('post_id', null);
+        if (null === $postId){
+            return $this->renderScript('blogs/postNotFound.phtml');
+        }
+
+        $post = Doctrine_Query::create()->from('Post')->where('id = ?', $postId)->fetchOne();
+
+        if (null == $post){
+            return $this->renderScript('blogs/postNotFound.phtml');
+        }
+
+        $post->delete();
+
+        $this->_redirect('fizzy/blog/' . $post->Blog->id);
     }
 
     protected function _getPostForm()
