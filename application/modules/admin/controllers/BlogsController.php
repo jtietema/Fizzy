@@ -14,6 +14,8 @@ class Admin_BlogsController extends Fizzy_SecuredController
     public function blogAction()
     {
         $id = $this->_getParam('id', null);
+        $pageNumber = $this->_getParam('page', 1);
+
         if (null === $id){
             return $this->renderScript('blogs/blogNotFound.phtml');
         }
@@ -24,7 +26,15 @@ class Admin_BlogsController extends Fizzy_SecuredController
             return $this->renderScript('blogs/blogNotFound.phtml');
         }
 
+        $query = Doctrine_Query::create()->from('Post')
+                ->where('blog_id = ?', $id);
+
+        $paginator = new Zend_Paginator(new Fizzy_Paginator_Adapter_DoctrineQuery($query));
+        $paginator->setItemCountPerPage(10);
+        $paginator->setCurrentPageNumber($pageNumber);
+
         $this->view->blog = $blog;
+        $this->view->paginator = $paginator;
     }
 
     public function addPostAction()
@@ -88,12 +98,18 @@ class Admin_BlogsController extends Fizzy_SecuredController
             $post->body = $form->body->getValue();
             $post->author = $form->author->getValue();
             $post->date = $form->date->getValue();
+            $post->comments = $form->comments->getValue();
+            $post->status = $form->status->getValue();
             $post->save();
+            $this->addSuccessMessage("Post \"<strong>{$post->title}</strong>\" was successfully saved.");
+            $this->_redirect('fizzy/post/' . $postId . '/edit');
         } else {
             $form->title->setValue($post->title);
             $form->body->setValue($post->body);
             $form->author->setValue($post->author);
             $form->date->setValue($post->date);
+            $form->comments->setValue($post->comments);
+            $form->status->setValue($post->status);
         }
         
         $form->addElement(new Zend_Form_Element_Submit('submit', array(
@@ -135,9 +151,11 @@ class Admin_BlogsController extends Fizzy_SecuredController
         $form->addElement(new ZendX_JQuery_Form_Element_DatePicker('date', array(
             'label' => 'Date',
             'required' => true,
+            'description' => 'The published date of this post.'
         )));
         $form->date->setJQueryParam('changeMonth', true);
         $form->date->setJQueryParam('changeYear', true);
+        $form->date->setJQueryParam('dateFormat', 'yy-mm-dd');
 
         $form->addElement(new Fizzy_Form_Element_Wysiwyg('body', array(
             'label' => 'Body',
@@ -146,7 +164,24 @@ class Admin_BlogsController extends Fizzy_SecuredController
 
         $form->addElement(new Zend_Form_Element_Select('author', array(
             'label' => 'Author',
-            'multiOptions' => $this->_getUsers()
+            'multiOptions' => $this->_getUsers(),
+            'description' => 'The author of this post.'
+        )));
+
+        $form->addElement(new Zend_Form_Element_Checkbox('comments', array(
+            'label' => 'Allow comments',
+            'value' => true,
+            'description' => 'Are visitors allowed to comment on this post?'
+        )));
+
+        $form->addElement(new Zend_Form_Element_Select('status', array(
+            'label' => 'Status',
+            'multiOptions' => array(
+                0 => 'Draft',
+                1 => 'Pending review',
+                2 => 'Published'
+            ),
+            'description' => 'Only published posts will show up on the website.'
         )));
 
         return $form;

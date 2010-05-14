@@ -12,6 +12,10 @@
  */
 class Post extends BasePost
 {
+    const PUBLISHED = 2;
+    const PENDING_REVIEW = 1;
+    const DRAFT = 0;
+
     public function isNew()
     {
         return empty($this->id);

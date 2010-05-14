@@ -1,0 +1,21 @@
+<?php if (isset($this->previous)): ?>
+  <a href="?page=<?= $this->previous ?>">
+    &lt;&lt; prev
+  </a>
+<?php else: ?>
+  &lt;&lt; prev
+<?php endif; ?>
+
+<?php foreach ($this->pagesInRange as $page): ?>
+    <a href="?page=<?= $page ?>">
+        <?= $page; ?>
+    </a>
+<?php endforeach; ?>
+  
+<?php if (isset($this->next)): ?>
+  <a href="?page=<?= $this->next ?>">
+      next &gt;&gt;
+  </a>
+<?php else: ?>
+  next &gt;&gt;
+<?php endif; ?>

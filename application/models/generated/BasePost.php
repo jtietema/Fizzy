@@ -10,6 +10,8 @@
  * @property string $body
  * @property timestamp $date
  * @property integer $author
+ * @property integer $status
+ * @property boolean $comments
  * @property integer $blog_id
  * @property User $User
  * @property Blog $Blog
@@ -44,6 +46,13 @@ abstract class BasePost extends Doctrine_Record
         $this->hasColumn('author', 'integer', 4, array(
              'type' => 'integer',
              'length' => '4',
+             ));
+        $this->hasColumn('status', 'integer', 1, array(
+             'type' => 'integer',
+             'length' => '1',
+             ));
+        $this->hasColumn('comments', 'boolean', null, array(
+             'type' => 'boolean',
              ));
         $this->hasColumn('blog_id', 'integer', 4, array(
              'type' => 'integer',

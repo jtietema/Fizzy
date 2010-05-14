@@ -17,4 +17,14 @@ class Blog extends BaseBlog
         return empty($this->id);
     }
 
+    public function publishedPosts()
+    {
+        $posts = array();
+        foreach ($this->Posts as $post){
+            if ($post->status == 2){
+                $posts[] = $post;
+            }
+        }
+        return $posts;
+    }
 }
