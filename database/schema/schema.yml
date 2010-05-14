@@ -15,14 +15,6 @@ Page:
     layout: string(150)
     template: string(150)
 
-Setting:
-  columns:
-    id: { type: integer(4), primary: true, autoincrement: true }
-    component: string(50)
-    key: string(50)
-    value: string(255)
-    label: string(150)
-    description: text
 Blog:
   columns:
     id: { type: integer(4), primary: true, autoincrement: true }
@@ -62,3 +54,12 @@ Comments:
       local: post_id
       foreign: id
       foreignAlias: Comments
+
+Setting:
+  columns:
+    id: { type: integer(4), primary: true, autoincrement: true }
+    component: string(50)
+    setting_key: string(50)
+    value: string
+    label: string(255)
+    description: string
