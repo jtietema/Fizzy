@@ -32,6 +32,39 @@ class Admin_IndexController extends Fizzy_SecuredController
         $items = array();
 
         $items[] = new Zend_Navigation_Page_Mvc(array(
+            'label' => 'Blogs',
+            'route' => 'admin_blogs',
+            'module' => 'admin',
+            'controller' => 'blogs',
+            'action' => 'index',
+            'pages' => array(
+                new Zend_Navigation_Page_Mvc(array(
+                    'label' => 'Blog',
+                    'route' => 'admin_blog',
+                    'module' => 'admin',
+                    'controller' => 'blogs',
+                    'action' => 'blog',
+                    'pages' => array(
+                        new Zend_Navigation_Page_Mvc(array(
+                            'label' => 'Edit Post',
+                            'route' => 'admin_blog_post_edit',
+                            'module' => 'admin',
+                            'controller' => 'blogs',
+                            'action' => 'edit-post'
+                        )),
+                        new Zend_Navigation_Page_Mvc(array(
+                            'label' => 'Add Post',
+                            'route' => 'admin_blog_post_add',
+                            'module' => 'admin',
+                            'controller' => 'blogs',
+                            'action' => 'add-post'
+                        ))
+                    )
+                ))
+            )
+        ));
+
+        $items[] = new Zend_Navigation_Page_Mvc(array(
             'label' => 'Pages',
             'route' => 'admin_pages',
             'module' => 'admin',

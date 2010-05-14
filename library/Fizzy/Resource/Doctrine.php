@@ -37,6 +37,7 @@ class Fizzy_Resource_Doctrine extends Zend_Application_Resource_ResourceAbstract
         require_once 'Doctrine.php';
         $autoloader = Zend_Loader_Autoloader::getInstance();
         $autoloader->pushAutoloader(array('Doctrine', 'autoload'));
+        $autoloader->pushAutoloader(array('Doctrine_Core', 'modelsAutoload'));
 
         // Initialize the Doctrine Manager
         $this->_manager = Doctrine_Manager::getInstance();

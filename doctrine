@@ -2,23 +2,24 @@
 <?php
 
 define('APPLICATION_PATH', realpath(dirname(__FILE__) . '/application'));
-define('LIBRARY_PATH', realpath(APPLICATION_PATH . '/library'));
+define('LIBRARY_PATH', realpath(dirname(__FILE__) . '/library'));
 
-set_include_path(LIBRARY_PATH . PATH_SEPARATOR . APPLICATION_PATH . '/models/doctrine/generated' . PATH_SEPARATOR . get_include_path());
+set_include_path(LIBRARY_PATH . PATH_SEPARATOR . get_include_path());
 
 require_once 'Doctrine.php';
 spl_autoload_register(array('Doctrine', 'autoload'));
+spl_autoload_register(array('Doctrine_Core', 'modelsAutoload'));
 
 require_once 'Zend/Loader/Autoloader.php';
 $autoloader = Zend_Loader_Autoloader::getInstance();
 
-$config = new Zend_Config_Ini('configs/fizzy.ini', 'storage');
+$config = new Zend_Config_Ini('configs/application.ini', 'development');
 
 $manager = Doctrine_Manager::getInstance();
 
-Doctrine_Manager::connection($config->dsn, 'doctrine');
+Doctrine_Manager::connection($config->resources->doctrine->connections->default->dsn, 'doctrine');
 
-$manager->setAttribute('model_loading', 'conservative');
+$manager->setAttribute(Doctrine::ATTR_MODEL_LOADING, Doctrine::MODEL_LOADING_CONSERVATIVE);
 
 $cli_config = array(
     'models_path' => APPLICATION_PATH . '/models',
@@ -27,5 +28,8 @@ $cli_config = array(
     'migrations_path' => APPLICATION_PATH . '/../database/migrations',
     'data_fixtures_path' => APPLICATION_PATH . '/../database/fixtures'
 );
+
+Doctrine::loadModels($cli_config['models_path']);
+
 $cli = new Doctrine_Cli($cli_config);
 $cli->run($_SERVER['argv']);

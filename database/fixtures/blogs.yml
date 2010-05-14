@@ -1,0 +1,12 @@
+Blog:
+  Default:
+    name: Default Blog
+    slug: default
+    group_slug: default
+
+Post:
+  Test:
+    title: Test post
+    body: dit is een test post
+    author: 1
+    blog_id: 1

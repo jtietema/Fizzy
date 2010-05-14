@@ -9,6 +9,7 @@
  * @property string $username
  * @property string $password
  * @property string $encryption
+ * @property Doctrine_Collection $BlogPosts
  * 
  * @package    ##PACKAGE##
  * @subpackage ##SUBPACKAGE##
@@ -43,6 +44,8 @@ abstract class BaseUser extends Doctrine_Record
     public function setUp()
     {
         parent::setUp();
-        
+        $this->hasMany('Post as BlogPosts', array(
+             'local' => 'id',
+             'foreign' => 'author'));
     }
 }

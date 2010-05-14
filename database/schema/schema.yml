@@ -23,3 +23,42 @@ Setting:
     value: string(255)
     label: string(150)
     description: text
+Blog:
+  columns:
+    id: { type: integer(4), primary: true, autoincrement: true }
+    name: string(255)
+    slug: string(255)
+    group_slug: string(255)
+
+Post:
+  columns:
+    id: { type: integer(4), primary: true, autoincrement: true }
+    title: string(255)
+    body: string
+    date: timestamp
+    author: integer(4)
+    blog_id: integer(4)
+  relations:
+    User:
+      local: author
+      foreign: id
+      foreignAlias: BlogPosts
+    Blog:
+      local: blog_id
+      foreign: id
+      foreignAlias: Posts
+
+Comments:
+  columns:
+    id: { type: integer(4), primary: true, autoincrement: true }
+    post_id: integer(4)
+    body: string
+    name: string(255)
+    email: string(255)
+    website: string(255)
+    date: timestamp
+  relations:
+    Post:
+      local: post_id
+      foreign: id
+      foreignAlias: Comments

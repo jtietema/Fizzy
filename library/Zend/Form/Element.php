@@ -27,6 +27,9 @@ require_once 'Zend/Form.php';
 /** @see Zend_Validate_Interface */
 require_once 'Zend/Validate/Interface.php';
 
+/** @see Zend_Validate_Abstract */
+require_once 'Zend/Validate/Abstract.php';
+
 /**
  * Zend_Form_Element
  *
@@ -35,7 +38,7 @@ require_once 'Zend/Validate/Interface.php';
  * @subpackage Element
  * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: Element.php 20813 2010-02-01 20:02:23Z yoshida@zend.co.jp $
+ * @version    $Id: Element.php 21894 2010-04-16 19:41:12Z matthew $
  */
 class Zend_Form_Element implements Zend_Validate_Interface
 {
@@ -412,6 +415,16 @@ class Zend_Form_Element implements Zend_Validate_Interface
             return Zend_Form::getDefaultTranslator();
         }
         return $this->_translator;
+    }
+
+    /**
+     * Does this element have its own specific translator?
+     *
+     * @return bool
+     */
+    public function hasTranslator()
+    {
+        return (bool)$this->_translator;
     }
 
     /**
@@ -1323,13 +1336,34 @@ class Zend_Form_Element implements Zend_Validate_Interface
             $this->setValidators($validators);
         }
 
+        // Find the correct translator. Zend_Validate_Abstract::getDefaultTranslator()
+        // will get either the static translator attached to Zend_Validate_Abstract
+        // or the 'Zend_Translate' from Zend_Registry.
+        if (Zend_Validate_Abstract::hasDefaultTranslator() &&
+            !Zend_Form::hasDefaultTranslator())
+        {
+            $translator = Zend_Validate_Abstract::getDefaultTranslator();
+            if ($this->hasTranslator()) {
+                // only pick up this element's translator if it was attached directly.
+                $translator = $this->getTranslator();
+            }
+        } else {
+            $translator = $this->getTranslator();
+        }
+
         $this->_messages = array();
         $this->_errors   = array();
         $result          = true;
         $isArray         = $this->isArray();
         foreach ($this->getValidators() as $key => $validator) {
             if (method_exists($validator, 'setTranslator')) {
-                $validator->setTranslator($this->getTranslator());
+                if (method_exists($validator, 'hasTranslator')) {
+                    if (!$validator->hasTranslator()) {
+                        $validator->setTranslator($translator);
+                    }
+                } else {
+                    $validator->setTranslator($translator);
+                }
             }
 
             if (method_exists($validator, 'setDisableTranslator')) {
@@ -2068,7 +2102,7 @@ class Zend_Form_Element implements Zend_Validate_Interface
         }
 
         $messages = false;
-        if (isset($validator['options']['messages'])) {
+        if (isset($validator['options']) && array_key_exists('messages', (array)$validator['options'])) {
             $messages = $validator['options']['messages'];
             unset($validator['options']['messages']);
         }
