@@ -1,0 +1,30 @@
+<div id="content-panel">
+    <h2>Contact request</h2>
+
+    <p>
+        From: <?= $this->message->name; ?> &lt;<a href="mailto:<?= $this->message->email; ?>"><?= $this->message->email; ?></a>&gt;<br />
+        On:   <?= $this->message->date; ?>
+    </p>
+
+    <p>
+        <?= nl2br($this->message->body); ?>
+    </p>
+</div>
+
+<div id="sidebar-panel">
+    <h2>Actions</h2>
+
+    <ul class="actions">
+        <li class="no-bg right">
+            <?= $this->linkConfirm(
+                    '/fizzy/contact/delete/' . $this->message->id,
+                    $this->img('/fizzy_assets/images/icon/mail--minus.png') . 'delete message',
+                    'Are you sure you want to delete this message?',
+                    array('class' => 'delete')
+            ); ?>
+        </li>
+        <li class="no-bg right last">
+            <?= $this->link('/fizzy/contact', $this->img('/fizzy_assets/images/icon/edit-list.png') . ' contact list'); ?>
+        </li>
+    </ul>
+</div>

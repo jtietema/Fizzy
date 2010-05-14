@@ -9,12 +9,18 @@ class ContactController extends Zend_Controller_Action
         $form = $this->_getForm();
         if ($this->_request->isPost()) {
             if ($form->isValid($_POST)) {
-                $mail = new Zend_Mail();
-                $mail->setBodyText($form->feedback->getValue());
-                $mail->setFrom($form->email->getValue(), $form->name->getValue());
-                $config = Zend_Registry::get('config');
-                $mail->addTo($config->contact->email);
-                $mail->send();
+                
+                $contact = new Contact();
+                $contact->name = $form->name->getValue();
+                $contact->email = $form->email->getValue();
+                $contact->body = $form->body->getValue();
+                $contact->date = date('Y/m/d H:i:s', time());
+
+                if (Setting::getKey('contact_log', 'contact')) {
+                    $contact->save();
+                }
+                $contact->send();
+
                 $this->renderScript('contact/thankyou.phtml');
                 return;
             }
@@ -34,7 +40,7 @@ class ContactController extends Zend_Controller_Action
             'label' => 'E-mail',
             'required' => true
         )));
-        $form->addElement(new Zend_Form_Element_Textarea('feedback', array(
+        $form->addElement(new Zend_Form_Element_Textarea('body', array(
             'label' => 'Question / feedback',
             'required' => true
         )));

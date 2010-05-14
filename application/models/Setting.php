@@ -20,19 +20,52 @@ class Setting extends BaseSetting
         if (null === self::$_settings || $reload) {
             $settings = array();
             foreach (Doctrine_Core::getTable('Setting')->findAll() as $setting) {
-                $settings[$setting->setting_key] = $setting;
+                if (!isset($settings[$setting->component])) {
+                    $settings[$setting->component] = array();
+                }
+                $settings[$setting->component][$setting->setting_key] = $setting;
             }
+            
             self::$_settings = $settings;
         }
 
         return self::$_settings;
     }
 
-    public static function getKey($key, $reload = false)
+    /**
+     * Returns one or more settings for a given key. When no component is specified
+     * an array with settings will be returned.
+     * @param string $key
+     * @param string $component
+     * @param boolean $reload
+     * @return string|array
+     */
+    public static function getKey($key, $component = null, $reload = false)
     {
         $settings = self::getAll($reload);
 
-        return isset($settings[$key]) ? $settings[$key] : null;
+        if (null === $component) {
+            $matched = array();
+
+            foreach ($settings as $componentSettings) {
+                foreach ($componentSettings as $setting) {
+                    if ($key === $setting->setting_key) {
+                        $matched[] = $setting;
+                    }
+                }
+            }
+
+            return $matched;
+        }
+        else {
+            if (!isset($settings[$component]) || empty($settings[$component])) {
+                return null;
+            }
+
+            return isset($settings[$component][$key]) ? $settings[$component][$key] : null;
+        }
+
+        return null;
     }
 
     public function isNew()
