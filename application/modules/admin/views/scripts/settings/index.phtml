@@ -1,0 +1,34 @@
+<div id="content-panel">
+    <h2>
+        <?= $this->img('/fizzy_assets/images/icon/gear.png', array('alt' => 'Settings Icon')); ?>
+        Settings
+    </h2>
+
+    <table class="settings" id="settings-table">
+        <tbody>
+            <?php foreach($this->settings as $component => $settings) : ?>
+                <tr>
+                    <th colspan="2"><?= ucfirst($component); ?></td>
+                </tr>
+                <?php foreach($settings as $setting) : ?>
+                <tr>
+                    <td class="label">
+                        <?= $setting->label; ?>
+                    </td>
+                    <td>
+                        <span class="editable text"><?= $setting->value; ?></span><br />
+                        <small><?= $setting->description; ?></small>
+                    </td>
+                </tr>
+                <?php endforeach; ?>
+
+            <?php endforeach; ?>
+        </tbody>
+    </table>
+
+</div>
+
+<div id="sidebar-panel">
+
+    <h2>Actions</h2>
+</div>

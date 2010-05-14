@@ -1,9 +1,6 @@
 User:
   columns:
-    id:
-      type: integer(4)
-      primary: true
-      autoincrement: true
+    id: { type: integer(4), primary: true, autoincrement: true }
     username: string(150)
     displayname: string(255)
     password: string(150)
@@ -11,39 +8,24 @@ User:
 
 Page:
   columns:
-    id:
-      type: integer(4)
-      primary: true
-      autoincrement: true
-    title:
-      type: string(255)
-    slug:
-      type: string(255)
-    body:
-      type: string
-    homepage:
-      type: boolean
-    layout:
-      type: string(150)
-    template:
-      type: string(150)
+    id: { type: integer(4), primary: true, autoincrement: true }
+    title: string(255)
+    slug: string(255)
+    body: string
+    homepage: boolean
+    layout: string(150)
+    template: string(150)
 
 Blog:
   columns:
-    id:
-      type: integer(4)
-      primary: true
-      autoincrement: true
+    id: { type: integer(4), primary: true, autoincrement: true }
     name: string(255)
     slug: string(255)
     group_slug: string(255)
 
 Post:
   columns:
-    id:
-      type: integer(4)
-      primary: true
-      autoincrement: true
+    id: { type: integer(4), primary: true, autoincrement: true }
     title: string(255)
     body: string
     date: timestamp
@@ -61,10 +43,7 @@ Post:
 
 Comments:
   columns:
-    id:
-      type: integer(4)
-      primary: true
-      autoincrement: true
+    id: { type: integer(4), primary: true, autoincrement: true }
     post_id: integer(4)
     body: string
     name: string(255)
@@ -76,3 +55,12 @@ Comments:
       local: post_id
       foreign: id
       foreignAlias: Comments
+
+Setting:
+  columns:
+    id: { type: integer(4), primary: true, autoincrement: true }
+    component: string(50)
+    setting_key: string(50)
+    value: string
+    label: string(255)
+    description: string
