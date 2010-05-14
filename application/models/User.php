@@ -19,4 +19,9 @@ class User extends BaseUser
         $this->encryption = $array['encryption'];
         return $this;
     }
+
+    public function isNew()
+    {
+        return empty($this->id);
+    }
 }

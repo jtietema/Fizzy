@@ -4,55 +4,68 @@
 $images = array('png', 'jpg', 'jpeg', 'bmp', 'gif');
 
 $types = array(
-    'png' => $this->baseUrl('/fizzy_assets/images/icon/page_white_picture.png'),
-    'jpg' => $this->baseUrl('/fizzy_assets/images/icon/page_white_picture.png'),
-    'jpeg' => $this->baseUrl('/fizzy_assets/images/icon/page_white_picture.png'),
-    'bmp' => $this->baseUrl('/fizzy_assets/images/icon/page_white_picture.png'),
-    'gif' => $this->baseUrl('/fizzy_assets/images/icon/page_white_picture.png'),
-    'doc' => $this->baseUrl('/fizzy_assets/images/icon/page_white_word.png'),
-    'docx' => $this->baseUrl('/fizzy_assets/images/icon/page_white_word.png'),
-    'xls' => $this->baseUrl('/fizzy_assets/images/icon/page_white_excel.png'),
-    'ppt' => $this->baseUrl('/fizzy_assets/images/icon/page_white_powerpoint.png'),
-    'pdf' => $this->baseUrl('/fizzy_assets/images/icon/page_white_text.png'),
-    'flv' => $this->baseUrl('/fizzy_assets/images/icon/page_white_flash.png'),
-    'zip' => $this->baseUrl('/fizzy_assets/images/icon/page_white_zip.png'),
-    'rar' => $this->baseUrl('/fizzy_assets/images/icon/page_white_zip.png'),
-    'txt' => $this->baseUrl('/fizzy_assets/images/icon/page_white_text.png'),
+    'png' => $this->baseUrl('/fizzy_assets/images/mimetypes/png.png'),
+    'jpg' => $this->baseUrl('/fizzy_assets/images/mimetypes/jpg.png'),
+    'jpeg' => $this->baseUrl('/fizzy_assets/images/mimetypes/jpg.png'),
+    'bmp' => $this->baseUrl('/fizzy_assets/images/mimetypes/bmp.png'),
+    'gif' => $this->baseUrl('/fizzy_assets/images/mimetypes/gif.png'),
+    'doc' => $this->baseUrl('/fizzy_assets/images/mimetypes/doc.png'),
+    'docx' => $this->baseUrl('/fizzy_assets/images/mimetypes/doc.png'),
+    'xls' => $this->baseUrl('/fizzy_assets/images/mimetypes/xls.png'),
+    'ppt' => $this->baseUrl('/fizzy_assets/images/mimetypes/ppt.png'),
+    'pdf' => $this->baseUrl('/fizzy_assets/images/mimetypes/pdf.png'),
+    'flv' => $this->baseUrl('/fizzy_assets/images/mimetypes/flv.png'),
+    'zip' => $this->baseUrl('/fizzy_assets/images/mimetypes/zip.png'),
+    'rar' => $this->baseUrl('/fizzy_assets/images/mimetypes/rar.png'),
+    'txt' => $this->baseUrl('/fizzy_assets/images/mimetypes/txt.png'),
 );
 ?>
-<div class="files-container">
+
+<div class="media-container">
+    
     <?php foreach($this->files as $fileInfo) : ?>
     <div class="thumbnail">
-        <div class="controls">
-            <a href="<?= $this->baseUrl('/uploads/' . $fileInfo->basename); ?>" target="_blank" title="View file"><?= $this->img('/fizzy_assets/images/icon/view.png'); ?></a>
+
+        <div class="head">
+            <span class="filename">
+                <?php if (strlen($fileInfo->basename) > 14):?>
+                    <?= substr($fileInfo->basename, 0, 14); ?>...
+                <?php else: ?>
+                    <?= $fileInfo->basename ?>
+                <?php endif; ?>
+            </span>
             <?php if(is_writable($this->uploadFolder)) : ?>
-            <?= $this->linkConfirm('/fizzy_assets/media/delete/' . urlencode($fileInfo->basename), $this->img('/fizzy_assets/images/icon/delete.png'), "Are you sure you want to delete {$fileInfo->basename}?", array('title' => 'Delete file')); ?>
+            <span class="remove">
+                <?= $this->linkConfirm('/fizzy_assets/media/delete/' . urlencode($fileInfo->basename), $this->img('/fizzy_assets/images/icon/cross-small.png'), "Are you sure you want to delete {$fileInfo->basename}?", array('title' => 'Delete file')); ?>
+            </span>
             <?php endif; ?>
+            <div class="clear"></div>
         </div>
-        <?php if (in_array($fileInfo->type, $images)): ?>
-            <img class="thumbnail" src="<?= $this->baseUrl('/uploads/' . $fileInfo->basename); ?>" alt="<?= $fileInfo->basename ?>" />
-        <?php else: ?>
-            <img class="icon" src="<?= (array_key_exists($fileInfo->type, $types)) ? $types[$fileInfo->type] : $this->baseUrl('/fizzy_assets/images/icon/page.png'); ?>" alt="" />
-        <?php endif; ?>
-        
-        <div class="filename">
-            <?php if (strlen($fileInfo->basename) > 14):?>
-                <?= substr($fileInfo->basename, 0, 14); ?>...
+
+        <div class="body">
+            <a href="<?= $this->baseUrl('/uploads/' . $fileInfo->basename); ?>" target="_blank" title="View file">
+            <?php if (in_array($fileInfo->type, $images)): ?>
+                <img class="source" src="<?= $this->baseUrl('/uploads/' . $fileInfo->basename); ?>" alt="<?= $fileInfo->basename ?>" />
             <?php else: ?>
-                <?= $fileInfo->basename ?>
+                <img class="icon" width="48px" height="48px" src="<?= (array_key_exists($fileInfo->type, $types)) ? $types[$fileInfo->type] : $this->baseUrl('/fizzy_assets/images/icon/page.png'); ?>" alt="" />
             <?php endif; ?>
+            </a>
         </div>
-        <div class="size">
-            <?php if($fileInfo->size < 1024) : ?>
-            <?= round($fileInfo->size, 2); ?> b
-            <?php elseif((1024*1024) > $fileInfo->size) : ?>
-            <?= round($fileInfo->size / 1024, 2); ?> KB
-            <?php else : ?>
-            <?= round($fileInfo->size / (1024*1024), 2); ?> MB
-            <?php endif; ?>
+        
+        <div class="foot">
+            <span class="size">
+                <?php if($fileInfo->size < 1024) : ?>
+                <?= round($fileInfo->size, 2); ?> b
+                <?php elseif((1024*1024) > $fileInfo->size) : ?>
+                <?= round($fileInfo->size / 1024, 2); ?> KB
+                <?php else : ?>
+                <?= round($fileInfo->size / (1024*1024), 2); ?> MB
+                <?php endif; ?>
+            </span>
+
+            <div class="clear"></div>
         </div>
     </div>
     <?php endforeach; ?>
-
-    
+    <div class="clear"></div>
 </div>

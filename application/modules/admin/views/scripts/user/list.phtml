@@ -1,34 +1,39 @@
-<h2>Users</h2>
-
-
-
-<div>
+<div id="content-panel">
+    <h2>Users</h2>
+    
     <table class="data">
         <thead>
             <tr>
-                <td>Username</td>
                 <td>&nbsp;</td>
+                <td>Username</td>
             </tr>
         </thead>
         <tbody>
             <?php foreach($this->users as $user) : ?>
             <tr>
-                <td><?= $user['username'] ?></td>
-                <td style="width: 100px;">
-                    <?= $this->link("/fizzy/user/edit/{$user['id']}", $this->img('/fizzy_assets/images/icon/edit.png', array('alt' => 'edit icon'))); ?>
-                    <?= $this->linkConfirm("/fizzy/user/delete/{$user['id']}", $this->img('/fizzy_assets/images/icon/sign_remove.png', array('alt' => 'remove icon')), 'Are you sure you want to delete user ' . $user['username'] .'?'); ?>
+                <td class="controls">
+                    <?= $this->link(
+                            "/fizzy/user/edit/{$user['id']}",
+                            $this->img('/fizzy_assets/images/icon/user--pencil.png',
+                            array('alt' => 'edit icon'))
+                    ); ?>
                 </td>
+                <td><?= $user['username'] ?></td>
             </tr>
             <?php endforeach; ?>
         </tbody>
-        <tfoot>
-            <tr>
-                <td colspan="2">
-                    <div class="data-buttons">
-                        <?= $this->link('/fizzy/user/add', $this->img('/fizzy_assets/images/icon/add.png', array('alt' => 'add icon')) . ' Add User'); ?>
-                    </div>
-                </td>
-            </tr>
-        </tfoot>
     </table>
+</div>
+
+<div id="sidebar-panel">
+
+    <h2>Actions</h2>
+
+    <ul class="actions">
+        <li class="last">
+            <?= $this->link('/fizzy/user/add', $this->img('/fizzy_assets/images/icon/user--plus.png') . ' Add user', array()); ?>
+        </li>
+    </ul>
+
+
 </div>

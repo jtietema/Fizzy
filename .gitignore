@@ -2,4 +2,7 @@ configs/fizzy.ini
 data/*.xml
 data/docs
 *.swp
-
+application/assets/images/mimetypes/gion
+application/assets/images/mimetypes/humanity
+application/assets/images/mimetypes/micho
+public/uploads/*

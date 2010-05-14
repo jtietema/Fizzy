@@ -9,7 +9,7 @@ class Zend_View_Helper_LinkConfirm extends Zend_View_Helper_HtmlElement
 
         $attributes = $this->_htmlAttribs($attribs);
 
-        return sprintf($html, $this->view->baseUrl($url), $confirm, $attribs, $text);
+        return sprintf($html, $this->view->baseUrl($url), $confirm, $attributes, $text);
     }
     
 }
