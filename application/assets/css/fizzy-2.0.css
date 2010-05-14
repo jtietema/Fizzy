@@ -70,6 +70,12 @@ input[type="text"], input[type="password"], input[type="email"], textarea {
     padding: 2px 4px;
     border: 1px solid #918A8A;
 }
+input[type="text"].hasDatepicker {
+    width: auto;
+}
+#ui-datepicker-div {
+    z-index: 1000;
+}
 
 /*   HTML ELEMENTS        */
 /* ********************** */

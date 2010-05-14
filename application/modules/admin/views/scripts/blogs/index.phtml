@@ -1,11 +1,25 @@
-<table>
-    <tbody>
-        <?php foreach ($this->blogs as $blog) : ?>
-        <tr>
-            <td><a href="<?= $this->baseUrl('/fizzy/blog/' . $blog->id) ?>"><?= $blog->name ?></a></td>
-            <td><?= $blog->slug ?></td>
-            <td><?= $blog->group_slug ?></td>
-        </tr>
-        <?php endforeach; ?>
-    </tbody>
-</table>
+<div id="content-panel">
+    <h2>Blogs</h2>
+    <div>
+        <table class="data">
+            <thead>
+                <tr>
+                    <td>Blog name</td>
+                    <td>Slug</td>
+                    <td>Group slug</td>
+                </tr>
+            </thead>
+            <tbody>
+                <?php foreach ($this->blogs as $blog) : ?>
+                <tr>
+                    <td><a href="<?= $this->baseUrl('/fizzy/blog/' . $blog->id) ?>"><?= $blog->name ?></a></td>
+                    <td><?= $blog->slug ?></td>
+                    <td><?= $blog->group_slug ?></td>
+                </tr>
+                <?php endforeach; ?>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<div id="sidebar-panel"></div>

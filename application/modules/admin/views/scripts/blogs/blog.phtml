@@ -1,13 +1,44 @@
-<h1><?= $this->blog->name ?></h1>
+<div id="content-panel">
+    <h2><?= $this->blog->name ?></h2>
 
-<table>
-    <tbody>
-        <?php foreach ($this->blog->Posts as $post): ?>
-        <tr>
-            <td><a href="<?= $this->baseUrl('/fizzy/post/' . $post->id . '/edit') ?>"><?= $post->title ?></a></td>
-        </tr>
-        <?php endforeach; ?>
-    </tbody>
-</table>
+    <div>
+        <table class="data">
+            <thead>
+                <tr>
+                    <td>&nbsp;</td>
+                    <td>Title</td>
+                    <td>Date</td>
+                    <td>Author</td>
+                </tr>
+            </thead>
+            <tbody>
+                <?php foreach ($this->blog->Posts as $post): ?>
+                <tr>
+                    <td class="controls">
+                        <?= $this->link('/fizzy/post/' . $post->id . '/edit', $this->img('/fizzy_assets/images/icon/document--pencil.png', array('alt' => 'edit icon')), array('title' => 'edit page')); ?>
+                    </td>
+                    <td>
+                        <?= $post->title ?>
+                    </td>
+                    <td>
+                        <?= $post->date ?>
+                    </td>
+                    <td>
+                        <?= $post->User->username ?>
+                    </td>
+                </tr>
+                <?php endforeach; ?>
+            </tbody>
+        </table>
+    </div>
+</div>
 
-<a href="<?= $this->baseUrl('/fizzy/blog/' . $this->blog->id . '/add') ?>">Add post</a>
+<div id="sidebar-panel">
+    <h2>Actions</h2>
+
+    <ul class="actions">
+        <li class="last">
+            <?= $this->link('/fizzy/blog/' . $this->blog->id . '/add', $this->img('/fizzy_assets/images/icon/document--plus.png') . ' Add post', array()); ?>
+        </li>
+    </ul>
+</div>
