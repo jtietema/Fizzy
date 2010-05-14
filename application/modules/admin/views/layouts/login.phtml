@@ -24,31 +24,34 @@
     <head>
         <title>Fizzy</title>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-        <link href="<?= $this->baseUrl("/fizzy_assets/css/fizzy.css"); ?>" rel="stylesheet" type="text/css" media="screen" />
+        <link href="<?= $this->baseUrl("/fizzy_assets/css/reset-min.css") ?>" rel="stylesheet" type="text/css" media="screen, presentation" />
+        <link href="<?= $this->baseUrl("/fizzy_assets/css/fonts-min.css") ?>" rel="stylesheet" type="text/css" media="screen, presentation" />
+        <link href="<?= $this->baseUrl("/fizzy_assets/css/fizzy-2.0.css") ?>" rel="stylesheet" type="text/css" media="screen, presentation" />
+        <link href="<?= $this->baseUrl("/fizzy_assets/css/tables.css") ?>" rel="stylesheet" type="text/css" media="screen, presentation" />
+        <link href="<?= $this->baseUrl("/fizzy_assets/css/forms.css") ?>" rel="stylesheet" type="text/css" media="screen, presentation" />
+        <script type="text/javascript" src="<?= $this->baseUrl("/fizzy_assets/js/jquery-1.3.2.min.js"); ?>"></script>
     </head>
     <body>
-        <div id="header">
-        </div>
 
-        <div class="container">
+        <div id="container">
+            <div id="login-panel">
 
-            <div id="messages" class="span-24 last">
-                <div class="message">
+                <h1>Fizzy login</h1>
+
+                <div id="message-panel">
                     <?= $this->fizzyMessages(); ?>
                 </div>
+
+                <?= $this->layout()->content; ?>
+
+                <div class="clear"></div>
+
             </div>
 
-            <div id="content" class="span-24 last content-container">
-                <div id="content-wrapper">
-                    <?= $this->layout()->content; ?>
-                </div>
-            </div>
-
-            <div id="footer" class="span-24 last">
+            <div style="position: absolute; width: 500px; top: 280px; left: 50%; margin-left: -250px; padding: 10px; text-align: right;">
                 (c) 2009-<?= date('Y'); ?> Voidwalkers - <a href="http://www.voidwalkers.nl/license/new-bsd">license</a>
             </div>
         </div>
 
-        <div class="clear"></div>
     </body>
 </html>

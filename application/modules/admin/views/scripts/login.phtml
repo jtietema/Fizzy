@@ -1,4 +1,7 @@
-<h1 class="header">Login</h1>
-<div class="form-container">
-    <?= $this->form; ?>
+<div class="form-panel">
+    <form action="<?= $this->form->getAction(); ?>" id="Loginform" name="LoginForm" method="post">
+        <?= $this->form->username; ?>
+        <?= $this->form->password; ?>
+        <input type="submit" value="Login" />
+    </form>
 </div>
