@@ -12,5 +12,9 @@
  */
 class Post extends BasePost
 {
+    public function isNew()
+    {
+        return empty($this->id);
+    }
 
 }

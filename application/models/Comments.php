@@ -12,5 +12,9 @@
  */
 class Comments extends BaseComments
 {
+    public function isNew()
+    {
+        return empty($this->id);
+    }
 
 }

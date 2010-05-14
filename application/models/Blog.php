@@ -12,5 +12,9 @@
  */
 class Blog extends BaseBlog
 {
+    public function isNew()
+    {
+        return empty($this->id);
+    }
 
 }
