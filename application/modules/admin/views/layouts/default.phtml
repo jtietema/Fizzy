@@ -40,14 +40,7 @@
                 <h1>Fizzy</h1>
 
                 <div id="navigation-panel">
-                    <ul>
-                        <li class="active"><a href="<?= $this->baseUrl("/fizzy/pages") ?>">Pages</a></li>
-                        <li><a href="<?= $this->baseUrl("/fizzy/media") ?>">Media</a></li>
-                        <li><a href="<?= $this->baseUrl("/fizzy/users") ?>">Users</a></li>
-                        <li><a href="<?= $this->baseUrl("/fizzy/configuration") ?>">Configuration</a></li>
-                        <li class="link-logout"><a href="<?= $this->baseUrl("/fizzy/logout") ?>">Logout</a></li>
-                    </ul>
-                    <div class="clear"></div>
+                    <?= $this->action('navigation', 'index', 'admin'); ?>
                 </div>
 
             </div>
