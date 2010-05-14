@@ -105,6 +105,14 @@ class Admin_UserController extends Fizzy_SecuredController
                         )
                     )
                 ),
+                'displayname' => array(
+                    'type' => 'text',
+                    'options' => array(
+                        'label' => 'Display name',
+                        'required' => true,
+                        'value' => $user->displayname
+                    )
+                ),
                 'password' => array (
                     'type' => 'password',
                     'options' => array (

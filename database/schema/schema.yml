@@ -2,6 +2,7 @@ User:
   columns:
     id: { type: integer(4), primary: true, autoincrement: true }
     username: string(150)
+    displayname: string(255)
     password: string(150)
     encryption: string(10)
 
