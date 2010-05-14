@@ -16,7 +16,7 @@
  * @package   Zend_Measure
  * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
  * @license   http://framework.zend.com/license/new-bsd     New BSD License
- * @version   $Id: Abstract.php 21179 2010-02-23 21:59:42Z matthew $
+ * @version   $Id: Abstract.php 21330 2010-03-04 22:07:38Z thomas $
  */
 
 /**
@@ -288,7 +288,7 @@ abstract class Zend_Measure_Abstract
 
             $slength = strlen($value);
             $length  = 0;
-            for($i = 1; $i <= 25; ++$i) {
+            for($i = 1; $i <= $slength; ++$i) {
                 if ($value[$slength - $i] != '0') {
                     $length = 26 - $i;
                     break;
