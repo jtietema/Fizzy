@@ -138,6 +138,7 @@ class Admin_BlogsController extends Fizzy_SecuredController
         )));
         $form->date->setJQueryParam('changeMonth', true);
         $form->date->setJQueryParam('changeYear', true);
+        $form->date->setJQueryParam('dateFormat', 'yy-mm-dd');
 
         $form->addElement(new Fizzy_Form_Element_Wysiwyg('body', array(
             'label' => 'Body',
