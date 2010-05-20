@@ -32,16 +32,7 @@ class Admin_SettingsController extends Fizzy_SecuredController
     public function indexAction()
     {
         $settings = Setting::getAll();
-        $settingsByComponent = array();
-
-        foreach ($settings as $setting) {
-            if (isset($settingsByComponent[component])) {
-                $settingsByComponent[$setting->component] = array();
-            }
-            $settingsByComponent[$setting->component][] = $setting;
-        }
-
-        $this->view->settings = $settingsByComponent;
+        $this->view->settings = $settings;
     }
     
 }
