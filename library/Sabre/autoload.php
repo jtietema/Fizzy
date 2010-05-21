@@ -8,22 +8,20 @@
  *
  * @package Sabre
  * @subpackage DAV
- * @version $Id$
  * @copyright Copyright (C) 2007-2010 Rooftop Solutions. All rights reserved.
  * @author Evert Pot (http://www.rooftopsolutions.nl/) 
  * @license http://code.google.com/p/sabredav/wiki/License Modified BSD License
  */
 
-function Sabre_DAV_autoload($className) {
+function Sabre_autoload($className) {
 
     if(strpos($className,'Sabre_')===0) {
 
-        include dirname(__FILE__) . '/' . str_replace('_','/',$className) . '.php';
+        include dirname(__FILE__) . '/' . str_replace('_','/',substr($className,6)) . '.php';
 
     }
 
 }
 
-spl_autoload_register('Sabre_DAV_autoload');
+spl_autoload_register('Sabre_autoload');
 
-?>

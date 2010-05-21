@@ -5,7 +5,6 @@
  * 
  * @package Sabre
  * @subpackage HTTP 
- * @version $Id$
  * @copyright Copyright (C) 2007-2010 Rooftop Solutions. All rights reserved.
  * @author Evert Pot (http://www.rooftopsolutions.nl/) 
  * @license http://code.google.com/p/sabredav/wiki/License Modified BSD License
@@ -31,6 +30,7 @@ class Sabre_HTTP_Response {
             205 => 'Reset Content',
             206 => 'Partial Content',
             207 => 'Multi-Status', // RFC 4918
+            208 => 'Already Reported', // RFC 5842
             300 => 'Multiple Choices',
             301 => 'Moved Permanently',
             302 => 'Found',
@@ -67,6 +67,7 @@ class Sabre_HTTP_Response {
             504 => 'Gateway Timeout',
             505 => 'HTTP Version not supported',
             507 => 'Unsufficient Storage', // RFC 4918
+            508 => 'Loop Detected', // RFC 5842
        ); 
 
        return 'HTTP/1.1 ' . $code . ' ' . $msg[$code];
@@ -81,7 +82,9 @@ class Sabre_HTTP_Response {
      */
     public function sendStatus($code) {
 
-        header($this->getStatusMessage($code));
+        if (!headers_sent()) 
+            return header($this->getStatusMessage($code));
+        else return false;
 
     }
 
@@ -95,7 +98,24 @@ class Sabre_HTTP_Response {
     public function setHeader($name, $value, $replace = true) {
 
         $value = str_replace(array("\r","\n"),array('\r','\n'),$value);
-        header($name . ': ' . $value, $replace);
+        if (!headers_sent()) 
+            return header($name . ': ' . $value, $replace);
+        else return false;
+
+    }
+
+    /**
+     * Sets a bunch of HTTP Headers
+     *
+     * headersnames are specified as keys, value in the array value
+     * 
+     * @param array $headers 
+     * @return void
+     */
+    public function setHeaders(array $headers) {
+
+        foreach($headers as $key=>$value)
+            $this->setHeader($key, $value);
 
     }
 

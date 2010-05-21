@@ -12,7 +12,6 @@
  * 
  * @package Sabre
  * @subpackage DAV
- * @version $Id$
  * @copyright Copyright (C) 2007-2010 Rooftop Solutions. All rights reserved.
  * @author Evert Pot (http://www.rooftopsolutions.nl/) 
  * @license http://code.google.com/p/sabredav/wiki/License Modified BSD License
@@ -75,9 +74,9 @@ class Sabre_DAV_Locks_Plugin extends Sabre_DAV_ServerPlugin {
 
         switch($method) { 
 
-            case 'LOCK'   : $this->httpLock(); return false; break;
-            case 'UNLOCK' : $this->httpUnlock(); return false; break;
-            default       : return true;
+            case 'LOCK'   : $this->httpLock(); return false; 
+            case 'UNLOCK' : $this->httpUnlock(); return false; 
+
         }
 
     }
@@ -165,17 +164,24 @@ class Sabre_DAV_Locks_Plugin extends Sabre_DAV_ServerPlugin {
 
     }
 
+
     /**
-     * New HTTP methods defined by this plugin
+     * Use this method to tell the server this plugin defines additional
+     * HTTP methods.
      *
-     * This list is only used for the Allow: header in the HTTP OPTIONS
-     * request.
-     * 
+     * This method is passed a uri. It should only return HTTP methods that are 
+     * available for the specified uri.
+     *
+     * @param string $uri
      * @return array 
      */
-    public function getHTTPMethods() {
+    public function getHTTPMethods($uri) {
 
-        return array('lock','unlock');
+        if ($this->locksBackend ||
+            $this->server->tree->getNodeForPath($uri) instanceof Sabre_DAV_ILocks) {
+            return array('LOCK','UNLOCK');
+        }
+        return array();
 
     }
 
@@ -269,7 +275,7 @@ class Sabre_DAV_Locks_Plugin extends Sabre_DAV_ServerPlugin {
         if ($body = $this->server->httpRequest->getBody(true)) {
             // This is a new lock request
             $lockInfo = $this->parseLockRequest($body);
-            $lockInfo->depth = $this->server->getHTTPDepth(0); 
+            $lockInfo->depth = $this->server->getHTTPDepth(); 
             $lockInfo->uri = $uri;
             if($lastLock && $lockInfo->scope != Sabre_DAV_Locks_LockInfo::SHARED) throw new Sabre_DAV_Exception_ConflictingLock($lastLock);
 
@@ -277,6 +283,9 @@ class Sabre_DAV_Locks_Plugin extends Sabre_DAV_ServerPlugin {
 
             // This must have been a lock refresh
             $lockInfo = $lastLock;
+
+            // The resource could have been locked through another uri. 
+            if ($uri!=$lockInfo->uri) $uri = $lockInfo->uri;
 
         } else {
             
@@ -374,7 +383,7 @@ class Sabre_DAV_Locks_Plugin extends Sabre_DAV_ServerPlugin {
             // In case the node didn't exist, this could be a lock-null request
         }
         if ($this->locksBackend) return $this->locksBackend->lock($uri,$lockInfo);
-        throw new Sabre_DAV_Exception_NotImplemented('Locking support not implemented for this resource. No Locking backend was found so if you didn\'t expect this error, please check your configuration.');
+        throw new Sabre_DAV_Exception_MethodNotAllowed('Locking support is not enabled for this resource. No Locking backend was found so if you didn\'t expect this error, please check your configuration.');
 
     }
 
