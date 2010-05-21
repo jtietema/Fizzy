@@ -80,9 +80,24 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
     protected function _initRoutes()
     {
         $this->bootstrap('FrontController');
+
+        $options = $this->getOptions();
+        $backendSwitch = isset($options['backendSwitch']) ? strtolower((string) $options['backendSwitch']) : 'fizzy';
+
         $router = $this->getContainer()->frontcontroller->getRouter();
         $config = new Zend_Config_Ini(ROOT_PATH . '/configs/routes.ini');
-        $router->addConfig($config->{$this->getEnvironment()});
+
+        $routes = $config->{$this->getEnvironment()}->toArray();
+
+        // Parse all routes and replace the backend switch
+        foreach ($routes as &$route) {
+            if (false !== strpos($route['route'], '{backend}')) {
+                $route['route'] = str_replace('{backend}', $backendSwitch, $route['route']);
+            }
+        }
+
+        // Load parsed routes into the router
+        $router->addConfig(new Zend_Config($routes));
         return $router;
     }
 
