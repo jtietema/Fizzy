@@ -12,6 +12,11 @@
  * @property string $email
  * @property string $website
  * @property timestamp $date
+ * @property boolean $spam
+ * @property boolean $approved
+ * @property string $ip
+ * @property string $user_agent
+ * @property string $referrer
  * 
  * @package    ##PACKAGE##
  * @subpackage ##SUBPACKAGE##
@@ -50,6 +55,24 @@ abstract class BaseComments extends Doctrine_Record
              ));
         $this->hasColumn('date', 'timestamp', null, array(
              'type' => 'timestamp',
+             ));
+        $this->hasColumn('spam', 'boolean', null, array(
+             'type' => 'boolean',
+             ));
+        $this->hasColumn('approved', 'boolean', null, array(
+             'type' => 'boolean',
+             ));
+        $this->hasColumn('ip', 'string', 100, array(
+             'type' => 'string',
+             'length' => '100',
+             ));
+        $this->hasColumn('user_agent', 'string', 255, array(
+             'type' => 'string',
+             'length' => '255',
+             ));
+        $this->hasColumn('referrer', 'string', 255, array(
+             'type' => 'string',
+             'length' => '255',
              ));
 
 

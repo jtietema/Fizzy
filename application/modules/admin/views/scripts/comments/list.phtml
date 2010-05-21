@@ -1,0 +1,32 @@
+<div id="content-panel">
+
+    <h2>Discussions</h2>
+    <div>
+        <table class="data" id="pages-table">
+            <thead>
+                <tr>
+                    <td>&nbsp;</td>
+                    <td>Title</td>
+                    <td>Number comments</td>
+                </tr>
+            </thead>
+            <tbody>
+                <?php foreach ($this->topics as $topic): ?>
+                <tr>
+                    <td class="controls">
+                        
+                    </td>
+                    <td><a href="<?= $this->baseUrl('/fizzy/comments/topic/' . $topic->post_id) ?>"><?= $topic->getThreadModel()->label() ?></a></td>
+                    <td><?= $topic->getNumberTopicComments() ?></td>
+                </tr>
+                <?php endforeach; ?>
+            </tbody>
+        </table>
+
+    </div>
+
+</div>
+
+<div id="sidebar-panel">
+
+</div>

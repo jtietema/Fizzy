@@ -82,4 +82,22 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
         return $router;
     }
 
+    protected function _initTypes()
+    {
+        $config = new ZendL_Config_Yaml(ROOT_PATH . '/configs/types.yml');
+        $types = Fizzy_Types::initialize($config);
+        return $types;
+    }
+
+    /**
+     * @todo make adapter class configurable
+     */
+    protected function _initSpam()
+    {
+        $this->bootstrap('Config');
+        $config = $this->getContainer()->config;
+        $adapter = new Fizzy_Spam_Adapter_Akismet($config->spam->akismetKey, $config->spam->siteUrl);
+        Fizzy_Spam::setDefaultAdapter($adapter);
+    }
+
 }

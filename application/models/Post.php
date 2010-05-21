@@ -24,8 +24,13 @@ class Post extends BasePost
     public function comments()
     {
         $query = Doctrine_Query::create()->from('Comments')
-                ->where('post_id = ?', 'blog:'.$this->id)->orderBy('id DESC');
+                ->where('post_id = ?', 'post:'.$this->id)->orderBy('id DESC');
         $comments = $query->execute();
         return $comments;
+    }
+
+    public function label()
+    {
+        return $this->title;
     }
 }

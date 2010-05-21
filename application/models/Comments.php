@@ -17,4 +17,61 @@ class Comments extends BaseComments
         return empty($this->id);
     }
 
+    /**
+     * Returns the model where the comments are attached to.
+     * It uses the post_id field, which follows the convention <type>:<id>
+     * The type references a model in the config and the id, well an id.
+     *
+     * @return Doctrine_Record|null
+     */
+    public function getThreadModel()
+    {
+        if (false === strpos($this->post_id, ':')){
+            return null;
+        }
+        list($type, $id) = explode(':', $this->post_id);
+        $types = Fizzy_Types::getInstance();
+
+        if (!$types->hasType($type) && null === $types->getTypeModel($type)){
+            return null;
+        }
+        $modelName = $types->getTypeModel($type);
+
+        $query = Doctrine_Query::create()->from($modelName)
+                ->where('id = ?', $id);
+        $model = $query->fetchOne();
+        return $model;
+    }
+
+    public function getNumberTopicComments()
+    {
+        $query = Doctrine_Query::create()->from('Comments')
+                ->where('post_id = ?', $this->post_id);
+        return $query->count();
+    }
+
+    public function isSpam()
+    {
+        return (boolean) $this->spam;
+    }
+
+    public function verifyIsSpam()
+    {
+        $fizzySpam = new Fizzy_Spam();
+        $fizzySpam->isSpam($this->getSpamDocument());
+    }
+
+    public function getSpamDocument()
+    {
+        return new Fizzy_Spam_Document(
+            $this->body,
+            $this->name,
+            $this->email,
+            $this->website,
+            $this->ip,
+            $this->user_agent,
+            $this->referrer
+        );
+    }
+
 }

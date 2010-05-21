@@ -52,6 +52,11 @@ Comments:
     email: string(255)
     website: string(255)
     date: timestamp
+    spam: boolean
+    approved: boolean
+    ip: string(100)
+    user_agent: string(255)
+    referrer: string(255)
   indexes:
     post_id_index:
       fields: [post_id]
