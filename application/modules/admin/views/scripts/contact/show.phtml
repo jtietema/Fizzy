@@ -16,15 +16,18 @@
 
     <ul class="actions">
         <li class="no-bg right">
-            <?= $this->linkConfirm(
+            <?= $this->link(
                     '/fizzy/contact/delete/' . $this->message->id,
-                    $this->img('/fizzy_assets/images/icon/mail--minus.png') . 'delete message',
-                    'Are you sure you want to delete this message?',
-                    array('class' => 'delete')
+                    $this->image('/fizzy_assets/images/icon/mail--minus.png') . 'delete message',
+                    array(
+                        'class' => 'delete',
+                        'confirm' => 'Are you sure you want to delete this message?',
+                        'escape' => false
+                    )
             ); ?>
         </li>
         <li class="no-bg right last">
-            <?= $this->link('/fizzy/contact', $this->img('/fizzy_assets/images/icon/edit-list.png') . ' contact list'); ?>
+            <?= $this->link('/fizzy/contact', $this->image('/fizzy_assets/images/icon/edit-list.png') . ' contact list', array('escape' => false)); ?>
         </li>
     </ul>
 </div>

@@ -13,9 +13,16 @@
             <?php foreach($this->messages as $message) : ?>
             <tr>
                 <td class="controls" style="width: 55px;">
-                    <?= $this->link('/fizzy/contact/show/' . $message->id, $this->img('/fizzy_assets/images/icon/mail-open.png')); ?>
+                    <?= $this->link('/fizzy/contact/show/' . $message->id, $this->image('/fizzy_assets/images/icon/mail-open.png'), array('escape' => false)); ?>
                     &nbsp;
-                    <?= $this->linkConfirm('/fizzy/contact/delete/' . $message->id, $this->img('/fizzy_assets/images/icon/mail--minus.png'), 'Are you sure you want to delete this contact request?'); ?>
+                    <?= $this->link(
+                        '/fizzy/contact/delete/' . $message->id,
+                        $this->image('/fizzy_assets/images/icon/mail--minus.png'),
+                        array (
+                            'confirm' => 'Are you sure you want to delete this contact request?',
+                            'escape' => false
+                        )
+                    ); ?>
                 </td>
                 <td style="width: 150px;"><?= $message->date; ?></td>
                 <td style="max-width: 300px;"><?= $message->name; ?> &lt;<a href="mailto:<?= $message->email; ?>"><?= $message->email; ?></a>&gt;</td>

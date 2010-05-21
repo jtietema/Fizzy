@@ -41,7 +41,15 @@ $types = array(
                 <?php endif; ?>
                 <td class="controls">
                     <?php if(is_writable($this->uploadFolder)) : ?>
-                    <?= $this->linkConfirm('/fizzy/media/delete/' . urlencode($fileInfo->basename), $this->img('/fizzy_assets/images/icon/minus-small.png'), "Are you sure you want to delete {$fileInfo->basename}?", array('title' => 'Delete file')); ?>
+                    <?= $this->link(
+                        '/fizzy/media/delete/' . urlencode($fileInfo->basename),
+                        $this->image('/fizzy_assets/images/icon/minus-small.png'),
+                        array (
+                            'confirm' => "Are you sure you want to delete {$fileInfo->basename}?",
+                            'title' => 'Delete file',
+                            'escape' => false,
+                        )
+                    ); ?>
                     <?php endif; ?>
                 </td>
             </tr>

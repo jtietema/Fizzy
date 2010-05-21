@@ -38,6 +38,10 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
         Zend_Controller_Action_HelperBroker::addHelper($viewRenderer);
         $view->addHelperPath(
             realpath(implode(DIRECTORY_SEPARATOR,
+                    array(ROOT_PATH, 'library', 'Fizzy', 'View', 'Helper')
+            )), 'Fizzy_View_Helper');
+        $view->addHelperPath(
+            realpath(implode(DIRECTORY_SEPARATOR,
                     array(ROOT_PATH, 'library', 'ZendX', 'JQuery', 'View', 'Helper')
             )), 'ZendX_JQuery_View_Helper');
 
