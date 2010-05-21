@@ -77,6 +77,13 @@ input[type="text"].hasDatepicker {
     z-index: 1000;
 }
 
+.hover-edit {
+    background-color: #FFF6C1;
+    background-image: url('../images/icon/pencil-small.png');
+    background-repeat: no-repeat;
+    background-position: right;
+}
+
 /*   HTML ELEMENTS        */
 /* ********************** */
 
