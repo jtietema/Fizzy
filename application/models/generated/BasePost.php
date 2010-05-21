@@ -15,7 +15,6 @@
  * @property integer $blog_id
  * @property User $User
  * @property Blog $Blog
- * @property Doctrine_Collection $Comments
  * 
  * @package    ##PACKAGE##
  * @subpackage ##SUBPACKAGE##
@@ -70,9 +69,5 @@ abstract class BasePost extends Doctrine_Record
         $this->hasOne('Blog', array(
              'local' => 'blog_id',
              'foreign' => 'id'));
-
-        $this->hasMany('Comments', array(
-             'local' => 'id',
-             'foreign' => 'post_id'));
     }
 }
