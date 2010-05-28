@@ -87,6 +87,7 @@
                             data: JSON.stringify(settingData),
                             contentType: 'application/json',
                             error: function(data, textStatus, XMLHttpRequest) {
+                                self.value = oldValue;
                                 self.error();
                             },
                             success: function(data, textStatus, XMLHttpRequest) {
