@@ -6,3 +6,5 @@ application/assets/images/mimetypes/gion
 application/assets/images/mimetypes/humanity
 application/assets/images/mimetypes/micho
 public/uploads/*
+.DS_Store
+._*

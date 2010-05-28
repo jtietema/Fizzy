@@ -15,8 +15,8 @@
                     <td class="label">
                         <?= $setting->label; ?>
                     </td>
-                    <td>
-                        <div id="<?= $setting->setting_key; ?>" class="editable text"><?= $setting->value; ?></div>
+                    <td class="setting editable">
+                        <div id="<?= $setting->component; ?>:<?= $setting->setting_key; ?>" class="value text"><?= $setting->value; ?></div>
                         <small><?= $setting->description; ?></small>
                     </td>
                 </tr>
@@ -25,6 +25,7 @@
             <?php endforeach; ?>
         </tbody>
     </table>
+    <?php $this->jQuery()->uiEnable(); ?>
     <script type="text/javascript">
 
         (function($) {
@@ -32,6 +33,9 @@
             $.fn.inlineEdit = function(options) {
                 options = $.extend({
                     hoverClass: 'hover-edit',
+                    savingClass: 'saving',
+                    successClass: 'settings-success',
+                    errorClass: 'settings-error',
                     value: '',
                     save: ''
                 }, options);
@@ -42,73 +46,138 @@
             }
 
             $.inlineEdit = function(object, options) {
-                // Define self
+                // Define self, this is the table cell
                 var self = $(object);
+                // Register the container with the setting value
+                self.valueContainer = self.children('.value');
+                // Get the initial value
+                self.value = $.trim(self.valueContainer.text()) || options.value;
 
-                // create a value property to keep track of current value
-                self.value = $.trim(self.text()) || options.value;
-                self.settingKey = self.attr('id');
-                self.settingType = self.hasClass('boolean') ? 'boolean' : 'text';
+                // Get the component and key for the setting
+                var parts = self.valueContainer.attr('id').split(':');
+                self.settingKey = parts.pop();
+                self.settingComponent = parts.pop();
                 
+                /**
+                 * Save function. Executes an AJAX function to save the setting
+                 * if it changed.
+                 * @param newValue
+                 */
                 self.save = function(newValue) {
                     var oldValue = self.value;
                     // Save new value
                     self.value = newValue;
                     // Reset the input
-                    self.html(self.value);
+                    self.reset();
                     // Only save if new value was different from the old value
                     if (newValue != oldValue) {
-                        window.location = 'http://www.fizzy.dev/fizzy/settings/save/' + escape(self.settingKey) + '/' + self.value;
+                        self.removeClass('editing')
+                            .removeClass(options.successClass)
+                            .removeClass(options.errorClass)
+                            .addClass(options.savingClass);
+                        var settingData = {
+                            'component': self.settingComponent,
+                            'settingKey': self.settingKey,
+                            'value': self.value
+                        };
+                        $.ajax({
+                            url: '<?= $this->baseUrl('/fizzy/settings/update'); ?>',
+                            type: 'POST',
+                            processData: false,
+                            data: JSON.stringify(settingData),
+                            contentType: 'application/json',
+                            error: function(data, textStatus, XMLHttpRequest) {
+                                self.error();
+                            },
+                            success: function(data, textStatus, XMLHttpRequest) {
+                                console.log(data);
+                                self.success();
+                            }
+                        });
                     }
                 }
 
-                self.reset = function() {
-                    self.html(self.value);
+                /**
+                 * Renders the success class over the table cell.
+                 * This is called after the ajax callback ended successfully.
+                 */
+                self.success = function() {
+                    self.removeClass(options.savingClass)
+                        .addClass(options.successClass);
+                    
+                    self.delay(5000).animate({ backgroundColor: "#FFFFFF" }, 2500, function() {
+                        $(this).removeClass(options.successClass).attr('style', '');
+                    });
+                        
                 }
 
+                /**
+                 * Renders the error class over the table cell.
+                 * This is called after the ajax callback ended successfully.
+                 */
+                self.error = function() {
+                    self.removeClass(options.savingClass)
+                        .addClass(options.errorClass);
+                    self.delay(5000).animate({ backgroundColor: "#FFFFFF" }, 2500, function() {
+                        $(this).removeClass(options.errorClass).attr('style', '');
+                    });
+                }
+
+                /**
+                 * Reset the table cell
+                 */
+                self.reset = function() {
+                    self.removeClass('editing').addClass('editable');
+                    self.valueContainer.removeClass('form').addClass('value');
+                    self.valueContainer.html(self.value);
+                }
+
+                /**
+                 * Update the table cell class on hover
+                 */
                 self.hover(function() {
-                    if (0 == self.children().size()) {
-                        self.parent().addClass(options.hoverClass);
+                    if (!self.hasClass('editing') && !self.hasClass(options.savingClass)) {
+                        self.addClass(options.hoverClass);
                     }
                 }, function() {
-                    self.parent().removeClass(options.hoverClass);
-                })
-                .click(function(event) {
-                    var $this = $(event.target);
-                    $this.parent().removeClass(options.hoverClass);
-
-                    self.parent().blur(function() {
-                        console.log('resetting');
-                        //self.reset();
-                    });
-
-                    if ($this.is(self[0].tagName)) {
+                    self.removeClass(options.hoverClass);
+                });
+                /**
+                 * OnClick convert the value container to a form.
+                 */
+                self.click(function(event) {
+                    var target = $(event.target);
+                    self.removeClass(options.hoverClass);
+                    
+                    if (target.is(self[0].tagName) || target.parent().is(self[0].tagName)) {
                         if (null != $.inlineEdit.lastOpened) {
                             $.inlineEdit.lastOpened.reset();
                         }
                         $.inlineEdit.lastOpened = self;
+                        self.removeClass('editable').addClass('editing');
+                        self.valueContainer.removeClass('value').addClass('form');
 
+                        // Input field
                         var tinput = $(document.createElement('input'))
                             .attr('type', 'text')
                             .val(self.value);
-                        
+                        // Save button
                         var saveBtn = $(document.createElement('button'))
                             .attr('id', 'editable-save')
                             .html('Save')
                             .click(function() {
-                                console.log('Saving');
                                 self.save($(this).parent().find('input').val());
                             });
+                        // Cancel button
                         var cancelBtn = $(document.createElement('button'))
                             .attr('id', 'editable-cancel')
                             .html('Cancel')
                             .click(function() {
-                                console.log('Canceling');
                                 self.reset();
                             });
 
                         // Replace container contents
-                        self.html(tinput)
+                        self.valueContainer.html(tinput)
                             .append(saveBtn)
                             .append(cancelBtn)
                             .find('input')
@@ -127,6 +196,5 @@
 </div>
 
 <div id="sidebar-panel">
-
     <h2>Actions</h2>
 </div>

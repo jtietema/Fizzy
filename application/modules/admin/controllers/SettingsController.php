@@ -34,5 +34,58 @@ class Admin_SettingsController extends Fizzy_SecuredController
         $settings = Setting::getAll();
         $this->view->settings = $settings;
     }
+
+    /**
+     * Update setting action called through an ajax request
+     */
+    public function ajaxUpdateAction()
+    {
+        // Disable view & layout output
+        $this->_disableDisplay();
+        // Alwasy set response type to json
+        $this->_response->setHeader('Content-Type', 'application/json', true);
+
+        // Try to get the data from the request body
+        try {
+            $data = Zend_Json::decode($this->_request->getRawBody(), Zend_Json::TYPE_OBJECT);
+        } catch(Zend_Json_Exception $exception) {
+            $this->_response->setHttpResponseCode(500);
+            $this->_response->setBody(Zend_Json::encode(array(
+                'status' => 'error',
+                'message' => 'data decoding failed'
+            )));
+            return;
+        }
+
+        // Retrieve the setting
+        $setting = Setting::getKey($data->settingKey, $data->component);
+        if (null === $setting) {
+            $this->_response->setHttpResponseCode(404);
+            $this->_response->setBody(Zend_Json::encode(array(
+                'status' => 'error',
+                'message' => 'setting key/component pair not found'
+            )));
+            return;
+        }
+
+        // Update the setting
+        $setting->value = $data->value;
+        $success = $setting->trySave();
+        if (false === $success) {
+            $this->_response->setHttpResponseCode(500);
+            $this->_response->setBody(Zend_Json::encode(array(
+                'status' => 'error',
+                'message' => 'saving failed due to validation errors'
+            )));
+            return;
+        }
+
+        // Return success response
+        $this->_response->setHttpResponseCode(200);
+        $this->_response->setBody(Zend_Json::encode(array(
+            'status' => 'success',
+            'message' => 'setting saved'
+        )));
+    }
     
 }
