@@ -46,7 +46,7 @@ class Comments extends BaseComments
     public function getNumberTopicComments()
     {
         $query = Doctrine_Query::create()->from('Comments')
-                ->where('post_id = ?', $this->post_id);
+                ->where('post_id = ?', $this->post_id)->andWhere('spam = 0');
         return $query->count();
     }
 

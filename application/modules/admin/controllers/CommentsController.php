@@ -72,7 +72,7 @@ class Admin_CommentsController extends Fizzy_SecuredController
         }
 
         $query = Doctrine_Query::create()->from('Comments')
-                ->where('post_id = ?', $id)->where('spam = 0')->orderBy('id DESC');
+                ->where('post_id = ?', $id)->andWhere('spam = 0')->orderBy('id DESC');
 
         $paginator = new Zend_Paginator(new Fizzy_Paginator_Adapter_DoctrineQuery($query));
         $paginator->setItemCountPerPage(10);

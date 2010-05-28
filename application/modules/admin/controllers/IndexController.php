@@ -91,7 +91,40 @@ class Admin_IndexController extends Fizzy_SecuredController
             'module' => 'admin',
             'controller' => 'comments',
             'action' => 'index',
-            'pages' => array()
+            'pages' => array(
+                new Zend_Navigation_Page_Mvc(array(
+                    'label' => 'Thread list',
+                    'route' => 'admin_comments_list',
+                    'module' => 'admin',
+                    'controller' => 'comments',
+                    'action' => 'list',
+                    'pages' => array(
+                        new Zend_Navigation_Page_Mvc(array(
+                            'label' => 'Show thread',
+                            'route' => 'admin_comments_topic',
+                            'module' => 'admin',
+                            'controller' => 'comments',
+                            'action' => 'topic',
+                            'pages' => array()
+                        ))
+                    )
+                )),
+                new Zend_Navigation_Page_Mvc(array(
+                    'label' => 'Spambox',
+                    'route' => 'admin_comments_spambox',
+                    'module' => 'admin',
+                    'controller' => 'comments',
+                    'action' => 'spambox',
+                    'pages' => array()
+                )),
+                new Zend_Navigation_Page_Mvc(array(
+                    'label' => 'Edit comment',
+                    'route' => 'admin_comments_edit',
+                    'module' => 'admin',
+                    'controller' => 'comments',
+                    'action' => 'edit'
+                ))
+            )
         ));
 
         // Pages
