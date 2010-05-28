@@ -52,7 +52,9 @@ Comments:
     email: string(255)
     website: string(255)
     date: timestamp
-    spam: boolean
+    spam:
+      type: boolean
+      default: 0
     approved: boolean
     ip: string(100)
     user_agent: string(255)

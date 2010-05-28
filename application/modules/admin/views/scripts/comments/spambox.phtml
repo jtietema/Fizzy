@@ -1,5 +1,5 @@
 <div id="content-panel">
-    <h2><?= $this->threadModel->label() ?></h2>
+    <h2>Spambox</h2>
 
     <?php foreach ($this->paginator->getCurrentItems() as $comment): ?>
     <div class="comment">
@@ -15,16 +15,16 @@
             </div>
             <div class="actions">
                 <ul>
-                    <li><a href="<?= $this->baseUrl('/fizzy/comment/edit/' . $comment->id . '?back=topic') ?>">Edit</a></li>
+                    <li><a href="<?= $this->baseUrl('/fizzy/comment/edit/' . $comment->id . '?back=spambox') ?>">Edit</a></li>
                     <li>
                             <?php if ($comment->isSpam()) : ?>
-                        <a href="<?= $this->baseUrl('/fizzy/comment/ham/' . $comment->id . '?back=topic') ?>">Not spam</a>
+                        <a href="<?= $this->baseUrl('/fizzy/comment/ham/' . $comment->id . '?back=spambox') ?>">Not spam</a>
                             <?php else: ?>
-                        <a href="<?= $this->baseUrl('/fizzy/comment/spam/' . $comment->id . '?back=topic') ?>">Spam</a>
+                        <a href="<?= $this->baseUrl('/fizzy/comment/spam/' . $comment->id . '?back=spambox') ?>">Spam</a>
                             <?php endif; ?>
                     </li>
                     <li><?= $this->linkConfirm(
-                                    '/fizzy/comment/delete/' . $comment->id . '?back=topic',
+                                    '/fizzy/comment/delete/' . $comment->id . '?back=spambox',
                                     'Delete',
                                     'Are you sure you want to delete this comment?',
                                     array('class' => 'delete')
@@ -36,7 +36,7 @@
         <div class="clear"></div>
     </div>
     <?php endforeach; ?>
-    
+
     <?= $this->paginationControl($this->paginator, 'All', '_pagination.phtml') ?>
 
 </div>

@@ -87,10 +87,10 @@ class Admin_IndexController extends Fizzy_SecuredController
         // Comments
         $items[] = new Zend_Navigation_Page_Mvc(array(
             'label' => 'Comments',
-            'route' => 'admin_comments_list',
+            'route' => 'admin_comments',
             'module' => 'admin',
             'controller' => 'comments',
-            'action' => 'list',
+            'action' => 'index',
             'pages' => array()
         ));
 

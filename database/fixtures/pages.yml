@@ -46,3 +46,5 @@ Page:
                 The dependencies for Fizzy are kept to a minimum, but can be extended by any PHP programmer. In it's most basic form Fizzy does not require a database and stores all its data in <a href="http://en.wikipedia.org/wiki/XML">XML</a> files.
             </p>
         homepage: false
+
+    

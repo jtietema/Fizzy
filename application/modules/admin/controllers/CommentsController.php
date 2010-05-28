@@ -33,7 +33,19 @@ class Admin_CommentsController extends Fizzy_SecuredController
      */
     public function indexAction()
     {
+        $pageNumber = $this->_getParam('page', 1);
         
+        $query = Doctrine_Query::create()->from('Comments')->where('spam = 0')->orderBy('id DESC');
+
+        $this->view->totalComments = $query->count();
+
+        $paginator = new Zend_Paginator(new Fizzy_Paginator_Adapter_DoctrineQuery($query));
+        $paginator->setItemCountPerPage(10);
+        $paginator->setCurrentPageNumber($pageNumber);
+
+        $spamQuery = Doctrine_Query::create()->from('Comments')->where('spam = 1');
+        $this->view->spamComments = $spamQuery->count();
+        $this->view->paginator = $paginator;
     }
 
     /**
@@ -53,6 +65,7 @@ class Admin_CommentsController extends Fizzy_SecuredController
     public function topicAction()
     {
         $id = $this->_getParam('id', null);
+        $pageNumber = $this->_getParam('page', 1);
 
         if (null === $id){
             return $this->renderScript('comments/topic-not-found.phtml');
@@ -60,13 +73,14 @@ class Admin_CommentsController extends Fizzy_SecuredController
 
         $query = Doctrine_Query::create()->from('Comments')
                 ->where('post_id = ?', $id)->orderBy('id DESC');
-        $comments = $query->execute();
-        if (count($comments) < 1){
-            return $this->renderScript('comments/topic-not-found.phtml');
-        }
 
-        $this->view->threadModel = $comments[0]->getThreadModel();
-        $this->view->comments = $comments;
+        $paginator = new Zend_Paginator(new Fizzy_Paginator_Adapter_DoctrineQuery($query));
+        $paginator->setItemCountPerPage(10);
+        $paginator->setCurrentPageNumber($pageNumber);
+
+        $tempModel = $query->fetchOne();
+        $this->view->threadModel = $tempModel->getThreadModel();
+        $this->view->paginator = $paginator;
     }
 
     /**
@@ -99,6 +113,9 @@ class Admin_CommentsController extends Fizzy_SecuredController
         switch($redirect){
             case 'topic':
                 $this->_redirect('/fizzy/comments/topic/' . $comment->post_id);
+            break;
+            case 'spambox':
+                $this->_redirect('/fizzy/comments/spam');
             break;
             default:
                 $this->_redirect('/fizzy/comments');
@@ -136,6 +153,9 @@ class Admin_CommentsController extends Fizzy_SecuredController
         switch($redirect){
             case 'topic':
                 $this->_redirect('/fizzy/comments/topic/' . $comment->post_id);
+            break;
+            case 'spambox':
+                $this->_redirect('/fizzy/comments/spam');
             break;
             default:
                 $this->_redirect('/fizzy/comments');
@@ -194,6 +214,9 @@ class Admin_CommentsController extends Fizzy_SecuredController
                 case 'topic':
                     $this->_redirect('/fizzy/comments/topic/' . $comment->post_id);
                 break;
+                case 'spambox':
+                    $this->_redirect('/fizzy/comments/spam');
+                break;
                 default:
                     $this->_redirect('/fizzy/comments');
                 break;
@@ -237,6 +260,9 @@ class Admin_CommentsController extends Fizzy_SecuredController
             case 'topic':
                 $this->_redirect('/fizzy/comments/topic/' . $comment->post_id);
             break;
+            case 'spambox':
+                $this->_redirect('/fizzy/comments/spam');
+            break;
             default:
                 $this->_redirect('/fizzy/comments');
             break;
@@ -264,6 +290,14 @@ class Admin_CommentsController extends Fizzy_SecuredController
      */
     public function spamboxAction()
     {
+        $pageNumber = $this->_getParam('page', 1);
         
+        $query = Doctrine_Query::create()->from('Comments')->where('spam = ?', 1);
+
+        $paginator = new Zend_Paginator(new Fizzy_Paginator_Adapter_DoctrineQuery($query));
+        $paginator->setItemCountPerPage(10);
+        $paginator->setCurrentPageNumber($pageNumber);
+
+        $this->view->paginator = $paginator;
     }
 }

@@ -1,0 +1,7 @@
+## YAML Template.
+---
+Types:
+  page:
+    model: Page
+  post:
+    model: Post

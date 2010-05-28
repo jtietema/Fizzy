@@ -13,3 +13,26 @@ Post:
     status: 2
     author: 1
     blog_id: 1
+
+Comments:
+  test_comment1:
+    post_id: 'post:1'
+    body: Some random body
+    name: Jeroen
+    email: jeroen@example.org
+    date: 2010-05-20
+  about_comment:
+    post_id: 'page:3'
+    body: Awesome about page
+    name: Jeroen
+    email: jeroen@example.org
+  about_comment2:
+    post_id: 'page:3'
+    body: Awesome about page comment number 2
+    name: Jeroen
+    email: jeroen@example.org
+  about_comment3:
+    post_id: 'page:3'
+    body: Awesome about page comment number 3
+    name: Jeroen
+    email: jeroen@example.org

@@ -58,6 +58,7 @@ abstract class BaseComments extends Doctrine_Record
              ));
         $this->hasColumn('spam', 'boolean', null, array(
              'type' => 'boolean',
+             'default' => 0,
              ));
         $this->hasColumn('approved', 'boolean', null, array(
              'type' => 'boolean',
