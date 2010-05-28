@@ -485,3 +485,36 @@ a.c3button:hover {
 
 /*   MEDIA                */
 /* ********************** */
+
+/* ********************** */
+/*   COMMENTS             */
+
+.comment {
+    position: relative;
+    border: solid 1px gray;
+    margin-bottom:10px;
+}
+
+.comment .avatar {
+    float: left;
+    padding: 10px;
+}
+
+.comment .content {
+    float:left;
+    padding: 10px;
+}
+
+.comment .content .author-info {
+    margin-bottom: 5px;
+}
+
+.comment .content .actions {
+    margin-top: 5px;
+}
+
+.comment .content .actions li {
+    display: inline;
+    list-style-type: none;
+    padding-right: 20px;
+}

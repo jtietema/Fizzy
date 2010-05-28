@@ -46,17 +46,22 @@ Post:
 Comments:
   columns:
     id: { type: integer(4), primary: true, autoincrement: true }
-    post_id: integer(4)
+    post_id: string(100)
     body: string
     name: string(255)
     email: string(255)
     website: string(255)
     date: timestamp
-  relations:
-    Post:
-      local: post_id
-      foreign: id
-      foreignAlias: Comments
+    spam:
+      type: boolean
+      default: 0
+    approved: boolean
+    ip: string(100)
+    user_agent: string(255)
+    referrer: string(255)
+  indexes:
+    post_id_index:
+      fields: [post_id]
 
 Setting:
   columns:

@@ -5,7 +5,7 @@
     <div><?= $post->body ?></div>
     <div>
         <div>Comments:</div>
-        <?php foreach ($post->Comments as $comment): ?>
+        <?php foreach ($post->comments() as $comment): ?>
         <div><?= $comment->name ?> - <?= $comment->date ?></div>
         <div><?= $comment->body ?></div>
         <?php endforeach; ?>

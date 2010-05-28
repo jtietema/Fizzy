@@ -56,4 +56,9 @@ class Page extends BasePage
         return empty($this->id);
     }
 
+    public function label()
+    {
+        return $this->title;
+    }
+
 }
