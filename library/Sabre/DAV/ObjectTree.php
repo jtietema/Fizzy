@@ -7,7 +7,6 @@
  * 
  * @package Sabre
  * @subpackage DAV
- * @version $Id$
  * @copyright Copyright (C) 2007-2010 Rooftop Solutions. All rights reserved.
  * @author Evert Pot (http://www.rooftopsolutions.nl/) 
  * @license http://code.google.com/p/sabredav/wiki/License Modified BSD License
@@ -17,7 +16,7 @@ class Sabre_DAV_ObjectTree extends Sabre_DAV_Tree {
     /**
      * The root node 
      * 
-     * @var Sabre_DAV_ICollection 
+     * @var Sabre_DAV_ICollection
      */
     protected $rootNode;
 
@@ -54,6 +53,9 @@ class Sabre_DAV_ObjectTree extends Sabre_DAV_Tree {
 
             // If this part of the path is just a dot, it actually means we can skip it
             if ($pathPart=='.' || $pathPart=='') continue;
+
+            if (!($currentNode instanceof Sabre_DAV_ICollection))
+                throw new Sabre_DAV_Exception_FileNotFound('Could not find node at path: ' . $path);
 
             $currentNode = $currentNode->getChild($pathPart); 
 

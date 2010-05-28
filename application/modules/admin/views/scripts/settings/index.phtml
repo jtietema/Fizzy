@@ -1,6 +1,6 @@
 <div id="content-panel">
     <h2>
-        <?= $this->img('/fizzy_assets/images/icon/gear.png', array('alt' => 'Settings Icon')); ?>
+        <?= $this->image('/fizzy_assets/images/icon/gear.png', array('alt' => 'Settings Icon')); ?>
         Settings
     </h2>
 
@@ -8,7 +8,7 @@
         <tbody>
             <?php foreach($this->settings as $component => $settings) : ?>
                 <tr>
-                    <th colspan="2"><?= ucfirst($component); ?></td>
+                    <th colspan="2"><?= ucfirst($component); ?></th>
                 </tr>
                 <?php foreach($settings as $setting) : ?>
                 <tr>
@@ -16,7 +16,7 @@
                         <?= $setting->label; ?>
                     </td>
                     <td>
-                        <span class="editable text"><?= $setting->value; ?></span><br />
+                        <div id="<?= $setting->setting_key; ?>" class="editable text"><?= $setting->value; ?></div>
                         <small><?= $setting->description; ?></small>
                     </td>
                 </tr>
@@ -25,7 +25,105 @@
             <?php endforeach; ?>
         </tbody>
     </table>
+    <script type="text/javascript">
 
+        (function($) {
+
+            $.fn.inlineEdit = function(options) {
+                options = $.extend({
+                    hoverClass: 'hover-edit',
+                    value: '',
+                    save: ''
+                }, options);
+
+                return $.each(this, function() {
+                    $.inlineEdit(this, options);
+                });
+            }
+
+            $.inlineEdit = function(object, options) {
+                // Define self
+                var self = $(object);
+
+                // create a value property to keep track of current value
+                self.value = $.trim(self.text()) || options.value;
+                self.settingKey = self.attr('id');
+                self.settingType = self.hasClass('boolean') ? 'boolean' : 'text';
+                
+                self.save = function(newValue) {
+                    var oldValue = self.value;
+                    // Save new value
+                    self.value = newValue;
+                    // Reset the input
+                    self.html(self.value);
+                    // Only save if new value was different from the old value
+                    if (newValue != oldValue) {
+                        window.location = 'http://www.fizzy.dev/fizzy/settings/save/' + escape(self.settingKey) + '/' + self.value;
+                    }
+                }
+
+                self.reset = function() {
+                    self.html(self.value);
+                }
+
+                self.hover(function() {
+                    if (0 == self.children().size()) {
+                        self.parent().addClass(options.hoverClass);
+                    }
+                }, function() {
+                    self.parent().removeClass(options.hoverClass);
+                })
+                .click(function(event) {
+                    var $this = $(event.target);
+                    $this.parent().removeClass(options.hoverClass);
+
+                    self.parent().blur(function() {
+                        console.log('resetting');
+                        //self.reset();
+                    });
+
+                    if ($this.is(self[0].tagName)) {
+                        if (null != $.inlineEdit.lastOpened) {
+                            $.inlineEdit.lastOpened.reset();
+                        }
+                        $.inlineEdit.lastOpened = self;
+
+                        var tinput = $(document.createElement('input'))
+                            .attr('type', 'text')
+                            .val(self.value);
+                        
+                        var saveBtn = $(document.createElement('button'))
+                            .attr('id', 'editable-save')
+                            .html('Save')
+                            .click(function() {
+                                console.log('Saving');
+                                self.save($(this).parent().find('input').val());
+                            });
+                        var cancelBtn = $(document.createElement('button'))
+                            .attr('id', 'editable-cancel')
+                            .html('Cancel')
+                            .click(function() {
+                                console.log('Canceling');
+                                self.reset();
+                            });
+
+                        // Replace container contents
+                        self.html(tinput)
+                            .append(saveBtn)
+                            .append(cancelBtn)
+                            .find('input')
+                            .focus();
+                    }
+                });
+            }
+            $.inlineEdit.lastOpened = null;
+        })(jQuery);
+
+        $(document).ready(function() {
+            $('.editable').inlineEdit();
+        });
+
+    </script>
 </div>
 
 <div id="sidebar-panel">

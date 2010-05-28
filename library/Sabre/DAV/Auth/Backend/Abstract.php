@@ -5,7 +5,6 @@
  *
  * @package Sabre
  * @subpackage DAV
- * @version $Id$
  * @copyright Copyright (C) 2007-2010 Rooftop Solutions. All rights reserved.
  * @author Evert Pot (http://www.rooftopsolutions.nl/) 
  * @license http://code.google.com/p/sabredav/wiki/License Modified BSD License
@@ -13,35 +12,30 @@
 abstract class Sabre_DAV_Auth_Backend_Abstract {
 
     /**
-     * Returns the HTTP Digest hash for a username
+     * Authenticates the user based on the current request.
      *
-     * This must be the A1 part of the digest hash
-     * 
-     * @param string $username 
-     * @return string 
+     * If authentication is succesful, true must be returned.
+     * If authentication fails, an exception must be thrown.
+     *
+     * @return bool 
      */
-    abstract public function getDigestHash($username);
+    abstract public function authenticate(Sabre_DAV_Server $server,$realm); 
 
     /**
-     * Returns a userid for a username
+     * Returns information about the currently logged in user.
      *
-     * The result may be any string, or simply a number.
-     * By default the username is just returned, but it is
-     * possible for backends to supply a different type of userid.
+     * If nobody is currently logged in, this method should return null.
      * 
-     * @param mixed $username 
-     * @return void
+     * @return array|null
      */
-    public function getUserId($username) {
-
-        return $username;
-
-    }
+    abstract public function getCurrentUser();
 
     /**
      * Returns the full list of users.
      *
-     * This method must at least return a userId for each user.
+     * This method must at least return a uri for each user.
+     *
+     * It is optional to implement this.
      * 
      * @return array 
      */
@@ -53,4 +47,3 @@ abstract class Sabre_DAV_Auth_Backend_Abstract {
 
 }
 
-?>

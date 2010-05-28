@@ -8,7 +8,6 @@
  * 
  * @package Sabre
  * @subpackage DAV
- * @version $Id: FS.php 535 2009-08-07 17:35:17Z evertpot $
  * @copyright Copyright (C) 2007-2010 Rooftop Solutions. All rights reserved.
  * @author Evert Pot (http://www.rooftopsolutions.nl/) 
  * @license http://code.google.com/p/sabredav/wiki/License Modified BSD License
@@ -42,8 +41,7 @@ class Sabre_DAV_Locks_Backend_PDO extends Sabre_DAV_Locks_Backend_Abstract {
         // NOTE: the following 10 lines or so could be easily replaced by 
         // pure sql. MySQL's non-standard string concatination prevents us
         // from doing this though.
-
-        $query = 'SELECT owner, token, timeout, created, scope, depth, uri FROM locks WHERE (created + timeout > ?) AND ((uri = ?)';
+        $query = 'SELECT owner, token, timeout, created, scope, depth, uri FROM locks WHERE ((created + timeout) > CAST(? AS UNSIGNED INTEGER)) AND ((uri = ?)';
         $params = array(time(),$uri);
 
         // We need to check locks for every part in the uri.
@@ -60,7 +58,7 @@ class Sabre_DAV_Locks_Backend_PDO extends Sabre_DAV_Locks_Backend_Abstract {
             $currentPath.=$part;
 
             $query.=' OR (depth!=0 AND uri = ?)';
-            $params[] = $part;
+            $params[] = $currentPath;
 
         }
 
@@ -99,7 +97,7 @@ class Sabre_DAV_Locks_Backend_PDO extends Sabre_DAV_Locks_Backend_Abstract {
     public function lock($uri,Sabre_DAV_Locks_LockInfo $lockInfo) {
 
         // We're making the lock timeout 30 minutes
-        $lockInfo->timeout = 30;
+        $lockInfo->timeout = 30*60;
         $lockInfo->created = time();
         $lockInfo->uri = $uri;
 
@@ -110,11 +108,11 @@ class Sabre_DAV_Locks_Backend_PDO extends Sabre_DAV_Locks_Backend_Abstract {
         }
         
         if ($exists) {
-            $stmt = $this->pdo->prepare('UPDATE locks SET owner = ?, timeout = ?, scope = ?, depth = ?, uri = ? WHERE token = ?');
-            $stmt->execture($lockInfo->owner,$lockInfo->timeout,$lockInfo->scope,$lockInfo->depth,$uri,$lockInfo->token);
+            $stmt = $this->pdo->prepare('UPDATE locks SET owner = ?, timeout = ?, scope = ?, depth = ?, uri = ?, created = ? WHERE token = ?');
+            $stmt->execute(array($lockInfo->owner,$lockInfo->timeout,$lockInfo->scope,$lockInfo->depth,$uri,$lockInfo->created,$lockInfo->token));
         } else {
-            $stmt = $this->pdo->prepare('INSERT INTO locks (owner,timeout,scope,depth,uri,token) VALUES (?,?,?,?,?,?)');
-            $stmt->execture($lockInfo->owner,$lockInfo->timeout,$lockInfo->scope,$lockInfo->depth,$uri,$lockInfo->token);
+            $stmt = $this->pdo->prepare('INSERT INTO locks (owner,timeout,scope,depth,uri,created,token) VALUES (?,?,?,?,?,?,?)');
+            $stmt->execute(array($lockInfo->owner,$lockInfo->timeout,$lockInfo->scope,$lockInfo->depth,$uri,$lockInfo->created,$lockInfo->token));
         }
 
         return true;
@@ -133,7 +131,9 @@ class Sabre_DAV_Locks_Backend_PDO extends Sabre_DAV_Locks_Backend_Abstract {
     public function unlock($uri,Sabre_DAV_Locks_LockInfo $lockInfo) {
 
         $stmt = $this->pdo->prepare('DELETE FROM locks WHERE uri = ? AND token = ?');
-        $stmt->execure(array($uri,$lockInfo->token));
+        $stmt->execute(array($uri,$lockInfo->token));
+
+        return $stmt->rowCount()===1;
 
     }
 

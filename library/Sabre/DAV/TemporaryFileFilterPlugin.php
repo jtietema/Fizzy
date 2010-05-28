@@ -19,7 +19,6 @@
  *
  * @package Sabre
  * @subpackage DAV
- * @version $Id$
  * @copyright Copyright (C) 2007-2010 Rooftop Solutions. All rights reserved.
  * @author Evert Pot (http://www.rooftopsolutions.nl/) 
  * @license http://code.google.com/p/sabredav/wiki/License Modified BSD License
@@ -256,7 +255,7 @@ class Sabre_DAV_TemporaryFileFilterPlugin extends Sabre_DAV_ServerPlugin {
                 '{DAV:}getlastmodified' => new Sabre_DAV_Property_GetLastModified(filemtime($tempLocation)),
                 '{DAV:}getcontentlength' => filesize($tempLocation),
                 '{DAV:}resourcetype' => new Sabre_DAV_Property_ResourceType(null),
-                '{http://www.rooftopsolutions.nl/NS/sabredav}tempFile' => true, 
+                '{'.Sabre_DAV_Server::NS_SABREDAV.'}tempFile' => true, 
 
             ),
          );

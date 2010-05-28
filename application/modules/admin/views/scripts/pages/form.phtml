@@ -28,18 +28,22 @@
     <ul class="actions">
         <?php if(!$this->page->isNew()) : ?>
         <li class="no-bg right">
-            <?= $this->linkConfirm(
+            <?= $this->link(
                     '/fizzy/pages/delete/' . $this->page->id,
-                    $this->img('fizzy_assets/images/icon/document--minus.png') . ' delete page',
-                    'Are you sure you want to delete this page?',
-                    array('class' => 'delete')
+                    $this->image('fizzy_assets/images/icon/document--minus.png') . ' delete page',
+                    array(
+                        'class' => 'delete',
+                        'confirm' => 'Are you sure you want to delete this page?',
+                        'escape' => false
+                    )
             ); ?>
         </li>
         <?php endif; ?>
         <li class="no-bg right last">
             <?= $this->link(
                 '/fizzy/pages',
-                $this->img('/fizzy_assets/images/icon/edit-list.png') . ' back to pages'
+                $this->image('/fizzy_assets/images/icon/edit-list.png') . ' back to pages',
+                array('escape' => false)
             ); ?>
         </li>
     </ul>

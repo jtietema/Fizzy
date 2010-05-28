@@ -7,7 +7,6 @@
  * 
  * @package Sabre
  * @subpackage DAV
- * @version $Id$
  * @copyright Copyright (C) 2007-2010 Rooftop Solutions. All rights reserved.
  * @author Evert Pot (http://www.rooftopsolutions.nl/) 
  * @license http://code.google.com/p/sabredav/wiki/License Modified BSD License
@@ -42,12 +41,16 @@ abstract class Sabre_DAV_ServerPlugin {
     }
 
     /**
-     * If plugin implements more HTTP methods, it should tell 
-     * the server which those are, for the Allow: response header.
-     * 
+     * Use this method to tell the server this plugin defines additional
+     * HTTP methods.
+     *
+     * This method is passed a uri. It should only return HTTP methods that are 
+     * available for the specified uri.
+     *
+     * @param string $uri
      * @return array 
      */
-    public function getHTTPMethods() {
+    public function getHTTPMethods($uri) {
 
         return array();
 
@@ -55,4 +58,3 @@ abstract class Sabre_DAV_ServerPlugin {
 
 }
 
-?>

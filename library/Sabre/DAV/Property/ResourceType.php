@@ -8,7 +8,6 @@
  * 
  * @package Sabre
  * @subpackage DAV
- * @version $Id$
  * @copyright Copyright (C) 2007-2010 Rooftop Solutions. All rights reserved.
  * @author Evert Pot (http://www.rooftopsolutions.nl/)
  * @license http://code.google.com/p/sabredav/wiki/License Modified BSD License
@@ -20,7 +19,7 @@ class Sabre_DAV_Property_ResourceType extends Sabre_DAV_Property {
      * 
      * @var string 
      */
-    public $resourceType;
+    public $resourceType = null;
 
     /**
      * __construct 
@@ -28,11 +27,11 @@ class Sabre_DAV_Property_ResourceType extends Sabre_DAV_Property {
      * @param mixed $resourceType 
      * @return void
      */
-    public function __construct($resourceType) {
+    public function __construct($resourceType = null) {
 
-        if ($resourceType == Sabre_DAV_Server::NODE_FILE)
+        if ($resourceType === Sabre_DAV_Server::NODE_FILE)
             $this->resourceType = null;
-        elseif ($resourceType == Sabre_DAV_Server::NODE_DIRECTORY)
+        elseif ($resourceType === Sabre_DAV_Server::NODE_DIRECTORY)
             $this->resourceType = '{DAV:}collection';
         else 
             $this->resourceType = $resourceType;
@@ -53,8 +52,12 @@ class Sabre_DAV_Property_ResourceType extends Sabre_DAV_Property {
         
         foreach($rt as $resourceType) {
             if (preg_match('/^{([^}]*)}(.*)$/',$resourceType,$propName)) { 
-         
-                $prop->appendChild($prop->ownerDocument->createElementNS($propName[1],'d:' . $propName[2]));
+       
+                if (isset($server->xmlNamespaces[$propName[1]])) {
+                    $prop->appendChild($prop->ownerDocument->createElement($server->xmlNamespaces[$propName[1]] . ':' . $propName[2]));
+                } else {
+                    $prop->appendChild($prop->ownerDocument->createElementNS($propName[1],'custom:' . $propName[2]));
+                }
             
             }
         }

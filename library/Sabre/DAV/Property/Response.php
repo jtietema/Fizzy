@@ -9,12 +9,11 @@
  *
  * @package Sabre
  * @subpackage DAV
- * @version $Id$
  * @copyright Copyright (C) 2007-2010 Rooftop Solutions. All rights reserved.
  * @author Evert Pot (http://www.rooftopsolutions.nl/) 
  * @license http://code.google.com/p/sabredav/wiki/License Modified BSD License
  */
-class Sabre_DAV_Property_Response extends Sabre_DAV_Property  {
+class Sabre_DAV_Property_Response extends Sabre_DAV_Property implements Sabre_DAV_Property_IHref {
 
     /**
      * Url for the response 
@@ -79,18 +78,15 @@ class Sabre_DAV_Property_Response extends Sabre_DAV_Property  {
         $document = $dom->ownerDocument;
         $properties = $this->responseProperties;
         
-        $xresponse = $document->createElementNS('DAV:','d:response');
+        $xresponse = $document->createElement('d:response');
         $dom->appendChild($xresponse); 
 
         $uri = Sabre_DAV_URLUtil::encodePath($this->href);
 
-        // TODO: we need a better way to do this
-        if ($uri!='' && isset($properties[200]['{DAV:}resourcetype']) && $properties[200]['{DAV:}resourcetype']->getValue()=='{DAV:}collection') $uri .='/';
-
         // Adding the baseurl to the beginning of the url
         $uri = $server->getBaseUri() . $uri;
 
-        $xresponse->appendChild($document->createElementNS('DAV:','d:href',$uri));
+        $xresponse->appendChild($document->createElement('d:href',$uri));
        
         // The properties variable is an array containing properties, grouped by
         // HTTP status
@@ -103,10 +99,10 @@ class Sabre_DAV_Property_Response extends Sabre_DAV_Property  {
             // If there are no properties in this group, we can also just carry on
             if (!count($propertyGroup)) continue;
 
-            $xpropstat = $document->createElementNS('DAV:','d:propstat');
+            $xpropstat = $document->createElement('d:propstat');
             $xresponse->appendChild($xpropstat);
 
-            $xprop = $document->createElementNS('DAV:','d:prop');
+            $xprop = $document->createElement('d:prop');
             $xpropstat->appendChild($xprop);
 
             $nsList = $server->xmlNamespaces;
@@ -141,7 +137,8 @@ class Sabre_DAV_Property_Response extends Sabre_DAV_Property  {
                 }
 
                 if (is_scalar($propertyValue)) {
-                    $currentProperty->appendChild($document->createTextNode($propertyValue));
+                    $text = $document->createTextNode($propertyValue);
+                    $currentProperty->appendChild($text);
                 } elseif ($propertyValue instanceof Sabre_DAV_Property) {
                     $propertyValue->serialize($server,$currentProperty);
                 } elseif (!is_null($propertyValue)) {
@@ -150,7 +147,7 @@ class Sabre_DAV_Property_Response extends Sabre_DAV_Property  {
 
             }
 
-            $xpropstat->appendChild($document->createElementNS('DAV:','d:status',$server->httpResponse->getStatusMessage($httpStatus)));
+            $xpropstat->appendChild($document->createElement('d:status',$server->httpResponse->getStatusMessage($httpStatus)));
 
         }
 

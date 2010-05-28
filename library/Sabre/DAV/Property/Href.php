@@ -8,12 +8,11 @@
  * 
  * @package Sabre
  * @subpackage DAV
- * @version $Id$
  * @copyright Copyright (C) 2007-2010 Rooftop Solutions. All rights reserved.
  * @author Evert Pot (http://www.rooftopsolutions.nl/) 
  * @license http://code.google.com/p/sabredav/wiki/License Modified BSD License
  */
-class Sabre_DAV_Property_Href extends Sabre_DAV_Property  {
+class Sabre_DAV_Property_Href extends Sabre_DAV_Property implements Sabre_DAV_Property_IHref {
 
     /**
      * href 
@@ -23,14 +22,22 @@ class Sabre_DAV_Property_Href extends Sabre_DAV_Property  {
     private $href;
 
     /**
+     * Automatically prefix the url with the server base directory 
+     * 
+     * @var bool 
+     */
+    private $autoPrefix = true;
+
+    /**
      * __construct 
      * 
      * @param string $href 
      * @return void
      */
-    public function __construct($href) {
+    public function __construct($href, $autoPrefix = true) {
 
         $this->href = $href;
+        $this->autoPrefix = $autoPrefix;
 
     }
 
@@ -56,10 +63,29 @@ class Sabre_DAV_Property_Href extends Sabre_DAV_Property  {
      */
     public function serialize(Sabre_DAV_Server $server,DOMElement $dom) {
 
-        $elem = $dom->ownerDocument->createElementNS('DAV:','d:href');
-        $elem->nodeValue = $server->getBaseUri() . $this->href;
+        $prefix = $server->xmlNamespaces['DAV:'];
+
+        $elem = $dom->ownerDocument->createElement($prefix . ':href');
+        $elem->nodeValue = ($this->autoPrefix?$server->getBaseUri():'') . $this->href;
         $dom->appendChild($elem);
 
     }
+
+    /**
+     * Unserializes this property from a DOM Element 
+     *
+     * This method returns an instance of this class.
+     * It will only decode {DAV:}href values. For non-compatible elements null will be returned.
+     *
+     * @param DOMElement $dom 
+     * @return Sabre_DAV_Property_Href 
+     */
+    static function unserialize(DOMElement $dom) {
+
+        if (Sabre_DAV_XMLUtil::toClarkNotation($dom->firstChild)==='{DAV:}href') {
+            return new self($dom->firstChild->textContent,false);
+        }
+
+    } 
 
 }

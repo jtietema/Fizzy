@@ -5,7 +5,6 @@
  * 
  * @package Sabre
  * @subpackage DAV
- * @version $Id$
  * @copyright Copyright (C) 2007-2010 Rooftop Solutions. All rights reserved.
  * @author Evert Pot (http://www.rooftopsolutions.nl/) 
  * @license http://code.google.com/p/sabredav/wiki/License Modified BSD License
@@ -103,15 +102,7 @@ abstract class Sabre_DAV_Tree {
         if ($source instanceof Sabre_DAV_IProperties && $destination instanceof Sabre_DAV_IProperties) {
 
             $props = $source->getProperties(array());
-            $newProps = array();
-            foreach($props as $k=>$v) {
-                $newProps[] = array(
-                    Sabre_DAV_Server::PROP_SET,
-                    $k,
-                    $v
-                );
-            }
-            $destination->updateProperties($newProps);
+            $destination->updateProperties($props);
 
         }
 

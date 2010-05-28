@@ -2,7 +2,7 @@
 
     <div id="content-panel">
         <h2>
-            <?= $this->img('/fizzy_assets/images/icon/document.png'); ?>
+            <?= $this->image('/fizzy_assets/images/icon/document.png'); ?>
             <?= ($this->post->isNew()) ? 'Add post' : 'Edit post'; ?>
         </h2>
 
@@ -27,18 +27,22 @@
         <ul class="actions">
             <?php if(!$this->post->isNew()) : ?>
             <li class="no-bg right">
-                <?= $this->linkConfirm(
+                <?= $this->link(
                         '/fizzy/post/' . $this->post->id . '/delete',
-                        $this->img('fizzy_assets/images/icon/document--minus.png') . ' delete page',
-                        'Are you sure you want to delete this page?',
-                        array('class' => 'delete')
+                        $this->image('fizzy_assets/images/icon/document--minus.png') . ' delete page',
+                        array(
+                            'class' => 'delete',
+                            'Are you sure you want to delete this page?',
+                            'escape' => false
+                       )
                 ); ?>
             </li>
             <?php endif; ?>
             <li class="no-bg right last">
                 <?= $this->link(
                     '/fizzy/blog/' . $this->post->Blog->id,
-                    $this->img('/fizzy_assets/images/icon/edit-list.png') . ' back to ' . $this->post->Blog->name
+                    $this->image('/fizzy_assets/images/icon/edit-list.png') . ' back to ' . $this->post->Blog->name,
+                    array('escape' => false)
                 ); ?>
             </li>
         </ul>

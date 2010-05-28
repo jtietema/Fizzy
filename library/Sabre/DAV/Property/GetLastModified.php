@@ -11,7 +11,6 @@
  *
  * @package Sabre
  * @subpackage DAV
- * @version $Id$
  * @copyright Copyright (C) 2007-2010 Rooftop Solutions. All rights reserved.
  * @author Evert Pot (http://www.rooftopsolutions.nl/) 
  * @license http://code.google.com/p/sabredav/wiki/License Modified BSD License
@@ -28,13 +27,21 @@ class Sabre_DAV_Property_GetLastModified extends Sabre_DAV_Property {
     /**
      * __construct 
      * 
-     * @param int $time 
+     * @param int|DateTime $time 
      * @return void
      */
-    function __construct($time) {
+    public function __construct($time) {
 
-        if (!(int)$time) $time = strtotime($time);
-        $this->time = $time;
+        if ($time instanceof DateTime) {
+            $this->time = $time;
+        } elseif (is_int($time) || ctype_digit($time)) {
+            $this->time = new DateTime('@' . $time);
+        } else {
+            $this->time = new DateTime($time);
+        }
+
+        // Setting timezone to UTC
+        $this->time->setTimezone(new DateTimeZone('UTC'));
 
     }
 
@@ -49,15 +56,14 @@ class Sabre_DAV_Property_GetLastModified extends Sabre_DAV_Property {
         $doc = $prop->ownerDocument;
         $prop->setAttribute('xmlns:b','urn:uuid:c2f41010-65b3-11d1-a29f-00aa00c14882/');
         $prop->setAttribute('b:dt','dateTime.rfc1123');
-        $date = new DateTime('@'.$this->time,new DateTimeZone('UTC'));
-        $prop->nodeValue = $date->format(DATE_RFC1123);
+        $prop->nodeValue = $this->time->format(DateTime::RFC1123);
 
     }
 
     /**
      * getTime 
      * 
-     * @return int 
+     * @return DateTime 
      */
     public function getTime() {
 
@@ -67,4 +73,3 @@ class Sabre_DAV_Property_GetLastModified extends Sabre_DAV_Property {
 
 }
 
-?>
