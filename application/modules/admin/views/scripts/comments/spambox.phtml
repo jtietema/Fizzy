@@ -23,11 +23,13 @@
                         <a href="<?= $this->baseUrl('/fizzy/comment/spam/' . $comment->id . '?back=spambox') ?>">Spam</a>
                             <?php endif; ?>
                     </li>
-                    <li><?= $this->linkConfirm(
+                    <li><?= $this->link(
                                     '/fizzy/comment/delete/' . $comment->id . '?back=spambox',
                                     'Delete',
-                                    'Are you sure you want to delete this comment?',
-                                    array('class' => 'delete')
+                                    array(
+                                        'class' => 'delete',
+                                        'confirm' => 'Are you sure you want to delete this comment?',
+                                    )
                             ); ?>
                     </li>
                 </ul>
