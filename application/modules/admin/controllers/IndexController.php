@@ -30,6 +30,8 @@ class Admin_IndexController extends Fizzy_SecuredController
     protected $_sessionNamespace = 'fizzy';
     protected $_redirect = '/fizzy/login';
 
+    protected $_navigation = null;
+
     /**
      * Default action redirects to Pages overview.
      */
@@ -47,7 +49,35 @@ class Admin_IndexController extends Fizzy_SecuredController
     /**
      * Renders navigation for the admin section.
      */
-    public function navigationAction() {
+    public function navigationAction()
+    {
+        if (null === $this->_navigation){
+            $this->_navigation = $this->_createNavigation();
+        }
+
+        $this->view->items = $this->_navigation->getPages();
+        $this->renderScript('navigation.phtml');
+    }
+
+    public function subnavigationAction()
+    {
+        if (null === $this->_navigation){
+            $this->_navigation = $this->_createNavigation();
+        }
+
+        $this->view->items = array();
+        foreach ($this->_navigation->getPages() as $page){
+            if ($page->isActive(true)){
+                $this->view->items = $page->getPages();
+                break;
+            }
+        }
+
+        $this->renderScript('subnavigation.phtml');
+    }
+
+    protected  function _createNavigation()
+    {
         $items = array();
 
         // Blog
@@ -56,7 +86,6 @@ class Admin_IndexController extends Fizzy_SecuredController
             'route' => 'admin_blogs',
             'pages' => array(
                 new Fizzy_Navigation_Page_Route(array(
-                    'label' => 'Blog',
                     'route' => 'admin_blog',
                     'pages' => array(
                         new Fizzy_Navigation_Page_Route(array(
@@ -84,17 +113,14 @@ class Admin_IndexController extends Fizzy_SecuredController
                         new Fizzy_Navigation_Page_Route(array(
                             'label' => 'Show thread',
                             'route' => 'admin_comments_topic',
-                            'pages' => array()
                         ))
                     )
                 )),
                 new Fizzy_Navigation_Page_Route(array(
                     'label' => 'Spambox',
                     'route' => 'admin_comments_spambox',
-                    'pages' => array()
                 )),
                 new Fizzy_Navigation_Page_Route(array(
-                    'label' => 'Edit comment',
                     'route' => 'admin_comments_edit',
                 ))
             )
@@ -106,11 +132,10 @@ class Admin_IndexController extends Fizzy_SecuredController
             'route' => 'admin_pages',
             'pages' => array(
                 new Fizzy_Navigation_Page_Route(array(
-                    'label' => 'Add',
+                    'label' => 'Add page',
                     'route' => 'admin_pages_add',
                 )),
                 new Fizzy_Navigation_Page_Route(array(
-                    'label' => 'Edit',
                     'route' => 'admin_pages_edit',
                 )),
             )
@@ -120,24 +145,16 @@ class Admin_IndexController extends Fizzy_SecuredController
         $items[] = new Fizzy_Navigation_Page_Route(array(
             'label' => 'Media',
             'route' => 'admin_media',
-            'pages' => array ()
         ));
 
         // Contact
         if (null !== Setting::getKey('log', 'contact') && 0 < Setting::getKey('log', 'contact')->value) {
-            $items[] = new Zend_Navigation_Page_Mvc(array(
+            $items[] = new Fizzy_Navigation_Page_Route(array(
                 'label' => 'Contact',
                 'route' => 'admin_contact',
-                'module' => 'admin',
-                'controller' => 'contact',
-                'action' => 'index',
                 'pages' => array (
-                    new Zend_Navigation_Page_Mvc(array(
-                        'label' => 'Contact show',
+                    new Fizzy_Navigation_Page_Route(array(
                         'route' => 'admin_contact_show',
-                        'module' => 'admin',
-                        'controller' => 'contact',
-                        'action' => 'show',
                     ))
                 )
             ));
@@ -149,11 +166,10 @@ class Admin_IndexController extends Fizzy_SecuredController
             'route' => 'admin_users',
             'pages' => array (
                 new Fizzy_Navigation_Page_Route(array(
-                    'label' => 'Add',
+                    'label' => 'Add user',
                     'route' => 'admin_users_add',
                 )),
                 new Fizzy_Navigation_Page_Route(array(
-                    'label' => 'Edit',
                     'route' => 'admin_users_edit',
                 )),
             )
@@ -170,9 +186,8 @@ class Admin_IndexController extends Fizzy_SecuredController
             'label' => 'Logout',
             'route' => 'admin_logout',
         ));
-
-        $this->view->items = $items;
-        $this->renderScript('navigation.phtml');
+        
+        return new Zend_Navigation($items);
     }
     
 }

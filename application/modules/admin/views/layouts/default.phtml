@@ -45,6 +45,10 @@
 
             </div>
 
+            <div id="sub-navigation-panel">
+                <?= $this->action('subnavigation', 'index', 'admin'); ?>
+            </div>
+            
             <div id="messages-panel">
                 <?= $this->render('flashMessages.phtml'); ?>
             </div>

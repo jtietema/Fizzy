@@ -1,0 +1,11 @@
+<ul>
+    <?php foreach($this->items as $page) : ?>
+    <li<?= ($page->isActive(true)) ? ' class="active"' : ''; ?>>
+        <?php $label = $page->getLabel();
+        if (!empty($label)): ?>
+        <a href="<?= $page->getHref(); ?>"><?= $page->getLabel(); ?></a>
+        <?php endif; ?>
+    </li>
+    <?php endforeach; ?>
+</ul>
+<div class="clear"></div>
