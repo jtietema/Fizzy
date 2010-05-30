@@ -148,7 +148,8 @@ class Admin_IndexController extends Fizzy_SecuredController
         ));
 
         // Contact
-        if (null !== Setting::getKey('log', 'contact') && 0 < Setting::getKey('log', 'contact')->value) {
+        $contactLogSetting = Setting::getKey('log', 'contact');
+        if (null !== $contactLogSetting && 1 == $contactLogSetting->value) {
             $items[] = new Fizzy_Navigation_Page_Route(array(
                 'label' => 'Contact',
                 'route' => 'admin_contact',

@@ -68,6 +68,23 @@ class Setting extends BaseSetting
         return null;
     }
 
+    /**
+     * Get the value for a settings key.
+     * @param string $key
+     * @param string $component
+     * @param boolean $reload
+     */
+    public static function getValue($key, $component, $reload = false)
+    {
+        $setting = self::getKey($key, $component, $reload);
+
+        if (null === $setting) {
+            return null;
+        }
+
+        return $setting->value;
+    }
+
     public function isNew()
     {
         return empty($this->id);
