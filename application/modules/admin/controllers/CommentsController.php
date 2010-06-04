@@ -53,10 +53,16 @@ class Admin_CommentsController extends Fizzy_SecuredController
      */
     public function listAction()
     {
+        $pageNumber = $this->_getParam('page', 1);
+        
         $query = Doctrine_Query::create()->from('Comments')
                 ->groupBy('post_id')->orderBy('id DESC');
-        $topics = $query->execute();
-        $this->view->topics = $topics;
+
+        $paginator = new Zend_Paginator(new Fizzy_Paginator_Adapter_DoctrineQuery($query));
+        $paginator->setItemCountPerPage(1);
+        $paginator->setCurrentPageNumber($pageNumber);
+        
+        $this->view->paginator = $paginator;
     }
 
     /**

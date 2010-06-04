@@ -11,7 +11,7 @@
                 </tr>
             </thead>
             <tbody>
-                <?php foreach ($this->topics as $topic): ?>
+                <?php foreach ($this->paginator->getCurrentItems() as $topic): ?>
                 <tr>
                     <td class="controls">
                         
@@ -22,6 +22,8 @@
                 <?php endforeach; ?>
             </tbody>
         </table>
+
+        <?= $this->paginationControl($this->paginator, 'All', '_pagination.phtml') ?>
 
     </div>
 

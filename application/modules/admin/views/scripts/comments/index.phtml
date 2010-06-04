@@ -1,22 +1,5 @@
 <div id="content-panel">
 
-    <h2>Comments overview</h2>
-
-    <table class="data" style="width: 400px;">
-        <tbody>
-            <tr>
-                <td><a href="<?= $this->baseUrl('/fizzy/comments/list') ?>">Total comments</a></td>
-                <td><?= $this->totalComments ?></td>
-            </tr>
-            <tr>
-                <td><a href="<?= $this->baseUrl('/fizzy/comments/spam') ?>">Spam</a></td>
-                <td><?= $this->spamComments ?></td>
-            </tr>
-        </tbody>
-    </table>
-
-    <br>
-
     <h2>Latest comments</h2>
 
     <?php foreach ($this->paginator->getCurrentItems() as $comment): ?>
@@ -62,5 +45,18 @@
 </div>
 
 <div id="sidebar-panel">
+    <h2>Comments overview</h2>
 
+    <table class="data">
+        <tbody>
+            <tr>
+                <td><a href="<?= $this->baseUrl('/fizzy/comments/list') ?>">Total comments</a></td>
+                <td><?= $this->totalComments ?></td>
+            </tr>
+            <tr>
+                <td><a href="<?= $this->baseUrl('/fizzy/comments/spam') ?>">Spam</a></td>
+                <td><?= $this->spamComments ?></td>
+            </tr>
+        </tbody>
+    </table>
 </div>
