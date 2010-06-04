@@ -107,6 +107,10 @@ class Admin_IndexController extends Fizzy_SecuredController
             'route' => 'admin_comments',
             'pages' => array(
                 new Fizzy_Navigation_Page_Route(array(
+                    'label' => 'Dashboard',
+                    'route' => 'admin_comments'
+                )),
+                new Fizzy_Navigation_Page_Route(array(
                     'label' => 'Thread list',
                     'route' => 'admin_comments_list',
                     'pages' => array(
@@ -132,7 +136,6 @@ class Admin_IndexController extends Fizzy_SecuredController
             'route' => 'admin_pages',
             'pages' => array(
                 new Fizzy_Navigation_Page_Route(array(
-                    'label' => 'Add page',
                     'route' => 'admin_pages_add',
                 )),
                 new Fizzy_Navigation_Page_Route(array(

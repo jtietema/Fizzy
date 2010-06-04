@@ -22,8 +22,7 @@
 require_once 'Zend/Validate/Abstract.php';
 
 /**
- * Form validator to check if a page slug is unique. Advises the Fizzy_Storage
- * to check this.
+ * Form validator to check if a page slug is unique.
  *
  * @author Mattijs Hoitink <mattijs@voidwalkers.nl>
  */
@@ -38,7 +37,8 @@ class Fizzy_Validate_SlugUnique extends Zend_Validate_Abstract
     /** **/
 
     /**
-     * Check if a username is valid (unique).
+     * Check if a slug is unique.
+     *
      * @param string $value
      * @return boolean
      */
@@ -55,7 +55,7 @@ class Fizzy_Validate_SlugUnique extends Zend_Validate_Abstract
             $this->_error(self::NOT_UNIQUE);
             return false;
         }
-        
+
         // check if the found slug belongs to the current document. If not return false.
         if (count($pages) === 1 && $context['id'] !== $pages[0]['id']) {
             $this->_error(self::NOT_UNIQUE);

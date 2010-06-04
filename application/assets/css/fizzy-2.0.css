@@ -272,10 +272,12 @@ a.c3button:hover {
     background-color: #3581C5;
 }
 
-#sub-navigation-panel ul {
+#sub-navigation-panel {
     margin-left: 20px;
+    margin-right: 20px;
     margin-top: 10px;
     padding-bottom: 5px;
+    height: 16px;
     border-bottom: 1px solid #E4E4E4;
 }
 
@@ -284,6 +286,10 @@ a.c3button:hover {
     list-style-type: none;
     padding-right: 20px;
     font-weight: bold;
+}
+
+#sub-navigation-panel ul li.active a {
+    text-decoration: underline;
 }
 
 /*   NAVIGATION           */
