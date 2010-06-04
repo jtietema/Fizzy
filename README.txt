@@ -3,11 +3,9 @@ Welcome to Fizzy!
 
 Introduction
 ------------
-Fizzy is a small PHP 5 Content Management System. It is designed to be portable.
-It addition to MySQL it supports XML and SQLite. This makes it is ideal for 
-small shared hosting accounts or low memory VPS systems. It's flexible MVC 
-architecture allows for quick development and it storage backend ensures you 
-don't have to worry about SQL queries and alike.
+Fizzy is a PHP 5 Content Management System build with the Zend Framework and 
+Doctrine. It is designed to be flexible in development and is aimed at sites that
+require a large amout of customization. 
 
 For more information, see http://project.voidwalkers.nl/projects/show/fizzy
 
@@ -17,8 +15,6 @@ Requirements
 To get Fizzy running you need the following:
 - Apache mod_rewrite support (or equivalent)
 - PHP 5.2+
-- DOM XML extension
-- SimpleXML extension
 
 If you want to use the SQLite backend, the following PHP extensions are required:
 - PDO
@@ -31,8 +27,8 @@ For MySQL you need:
 
 Getting started
 ---------------
-First copy configs/fizzy.xml.default to configs/fizzy.xml and modify the xml 
-path. 
+First configure the database settings in the application.ini file located in
+the configs folder.
 
 Then copy all the files to your webserver and you are good to go. It is
 recommended not to copy Fizzy to your web root. Only the files from the public
@@ -63,5 +59,8 @@ If you discover any bugs, please report them here:
 
 License
 -------
-The files in this archive are released under the new BSD license.
-You can find a copy of this license in LICENSE.txt.
+Doctrine and TinyMCE are LGPL Licensed.
+You can find a copy of this license in LICENSE-LGPL.txt.
+
+Zend Framework, SabreDAV and Fizzy itself are released under the new BSD license.
+You can find a copy of this license in LICENSE-BSD.txt.
