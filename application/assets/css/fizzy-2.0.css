@@ -80,6 +80,11 @@ input[type="text"].hasDatepicker {
 /*   HTML ELEMENTS        */
 /* ********************** */
 
+.gray1 {
+    color: gray;
+}
+
+
 /* ********************** */
 /*   BUTTONS              */
 
@@ -516,7 +521,7 @@ a.c3button:hover {
 
 .comment {
     position: relative;
-    border: solid 1px gray;
+    border: solid 1px #E4E4E4;
     margin-bottom:10px;
 }
 

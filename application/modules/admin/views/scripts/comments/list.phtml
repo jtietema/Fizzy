@@ -16,7 +16,7 @@
                     <td class="controls">
                         
                     </td>
-                    <td><a href="<?= $this->baseUrl('/fizzy/comments/topic/' . $topic->post_id) ?>"><?= $topic->getThreadModel()->label() ?></a></td>
+                    <td><?= $this->link('@admin_comments_topic?id=' . $topic->post_id, $topic->getThreadModel()->label()) ?></td>
                     <td><?= $topic->getNumberTopicComments() ?></td>
                 </tr>
                 <?php endforeach; ?>

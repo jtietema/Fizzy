@@ -8,7 +8,9 @@ $thread = $comment->getThreadModel();
     </div>
     <div class="content">
         <div class="author-info">
-            From <?= $comment->name ?> <?= (!empty($thread)) ? 'on '.$thread->label() : '' ?>
+            <span class="gray1">From</span> <?= $comment->name ?>
+            <?= (!empty($thread)) ? '<span class="gray1">on</span> '.
+            $this->link('@admin_comments_topic?id=' . $comment->post_id,$thread->label()) : '' ?>
         </div>
         <div class="comment-body">
                 <?= $comment->body ?>
