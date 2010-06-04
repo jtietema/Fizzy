@@ -17,11 +17,11 @@
     <table class="data">
         <tbody>
             <tr>
-                <td><a href="<?= $this->baseUrl('/fizzy/comments/list') ?>">Total comments</a></td>
+                <td><?= $this->link('@admin_comments_list', 'Total comments') ?></td>
                 <td><?= $this->totalComments ?></td>
             </tr>
             <tr>
-                <td><a href="<?= $this->baseUrl('/fizzy/comments/spam') ?>">Spam</a></td>
+                <td><?= $this->link('@admin_comments_spambox', 'Spam') ?></td>
                 <td><?= $this->spamComments ?></td>
             </tr>
         </tbody>

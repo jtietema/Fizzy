@@ -85,6 +85,9 @@ class Admin_CommentsController extends Fizzy_SecuredController
         $paginator->setCurrentPageNumber($pageNumber);
 
         $tempModel = $query->fetchOne();
+        if (null == $tempModel){
+            return $this->renderScript('comments/topic-not-found.phtml');
+        }
         $this->view->threadModel = $tempModel->getThreadModel();
         $this->view->paginator = $paginator;
     }

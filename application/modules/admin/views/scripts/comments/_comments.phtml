@@ -18,23 +18,23 @@ $thread = $comment->getThreadModel();
         <div class="actions">
             <ul>
                 <li>
-                    <?= $this->link('/fizzy/comment/edit/' . $comment->id . '?back=' . $this->back, 'Edit', array(
+                    <?= $this->link('@admin_comments_edit?id=' . $comment->id . '&back=' . $this->back, 'Edit', array(
                         'class' => 'c3button'
                     )) ?>
                 </li>
                 <li>
                     <?php if ($comment->isSpam()) : ?>
-                        <?= $this->link('/fizzy/comment/ham/' . $comment->id . '?back=' . $this->back, 'Not spam', array(
+                        <?= $this->link('@admin_comments_ham?id=' . $comment->id . '&back=' . $this->back, 'Not spam', array(
                             'class' => 'c3button'
                         )) ?>
                     <?php else: ?>
-                        <?= $this->link('/fizzy/comment/spam/' . $comment->id . '?back=' . $this->back, 'Spam', array(
+                        <?= $this->link('@admin_comments_spam?id=' . $comment->id . '&back=' . $this->back, 'Spam', array(
                             'class' => 'c3button'
                         )) ?>
                     <?php endif; ?>
                 </li>
                 <li><?= $this->link(
-                                '/fizzy/comment/delete/' . $comment->id . '?back=' . $this->back,
+                                '@admin_comments_delete?id=' . $comment->id . '&back=' . $this->back,
                                 'Delete',
                                 array(
                                 'class' => 'delete c3button',

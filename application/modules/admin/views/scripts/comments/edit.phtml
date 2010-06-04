@@ -28,7 +28,7 @@
     <ul class="actions">
         <li class="no-bg right">
             <?= $this->link(
-                    '/fizzy/comment/delete/' . $this->comment->id,
+                    '@admin_comments_delete?id=' . $this->comment->id,
                     $this->image('fizzy_assets/images/icon/document--minus.png') . ' delete comment',
                     array(
                         'class' => 'delete',
@@ -39,7 +39,7 @@
         </li>
         <li class="no-bg right last">
             <?= $this->link(
-                '/fizzy/comments/topic/' . $this->comment->post_id,
+                '@admin_comments_topic?id=' . $this->comment->post_id,
                 $this->image('/fizzy_assets/images/icon/edit-list.png') . ' back to comments',
                 array(
                     'escape' => false
