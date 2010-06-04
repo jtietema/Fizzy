@@ -35,6 +35,8 @@ class Admin_UserController extends Fizzy_SecuredController
     {
         $user = new User();
         $form = $this->_getForm($this->view->baseUrl('/fizzy/user/add'), $user);
+        $form->password->setRequired(true);
+        $form->password_confirm->setRequired(true);
 
         if($this->_request->isPost()) {
             if($form->isValid($_POST)) {
@@ -135,7 +137,6 @@ class Admin_UserController extends Fizzy_SecuredController
                     'type' => 'password',
                     'options' => array (
                         'label' => 'Password',
-                        'required' => true,
                         'validators' => array (
                             $passwordConfirm
                         )
@@ -145,7 +146,6 @@ class Admin_UserController extends Fizzy_SecuredController
                     'type' => 'password',
                     'options' => array (
                         'label' => 'Confirm password',
-                        'required' => true,
                         'ignore' => true,
                     )
                 ),
