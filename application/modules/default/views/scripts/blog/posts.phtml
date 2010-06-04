@@ -1,0 +1,5 @@
+<div class="posts">
+    <?php foreach ($this->posts as $post) : ?>
+    <?= $this->partial('blog/post-list-entry.phtml', array ('post' => $post)); ?>
+    <?php endforeach; ?>
+</div>

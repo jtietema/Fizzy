@@ -1,0 +1,28 @@
+<div class="stream">
+    <?php foreach ($this->comments as $comment) : ?>
+    <div class="comment">
+        <?php if ($this->options['gravatar_enabled']) : ?>
+        <div class="comment-avatar">
+            <img src="http://www.gravatar.com/avatar/<?= md5(trim(strtolower($comment->email))) ?>?s=80" alt="<?= $comment->name ?>" />
+        </div>
+        <?php endif; ?>
+        
+        <div class="comment-content">
+            <div class="comment-meta">
+                <?= date('d-m-Y H:i:s', strtotime($comment->date)); ?>
+                by
+                <?php if (!empty($comment->website)) : ?>
+                    <?= $this->link($comment->website, $comment->name, array('target' => '_blank')); ?>
+                <?php else : ?>
+                <?= $comment->name ?>
+                <?php endif; ?>
+            </div>
+            <div class="comment-body">
+               <?= $comment->body ?>
+            </div>
+        </div>
+        
+        <div class="clear"></div>
+    </div>
+    <?php endforeach; ?>
+</div>

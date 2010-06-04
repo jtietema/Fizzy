@@ -1,0 +1,39 @@
+<div class="post">
+    <h3>
+        <?= $this->link(
+                '@blog_post?blog_slug=' . $this->post->Blog->slug . '&post_slug=' . $this->post->slug,
+                $this->post->title
+        ); ?>
+    </h3>
+    <div class="post-meta-top">
+        on <?= date('d-m-Y', strtotime($this->post->date)); ?>
+        by <?= $this->link('@user_posts?username=' . $this->post->User->username,$this->post->User->displayname); ?>
+        in <?= $this->link('@blog_posts?blog_slug=' . $this->post->Blog->slug, $this->post->Blog->name); ?>
+    </div>
+
+    <div class="post-intro">
+        <?= $this->post->intro; ?>
+    </div>
+
+    <div class="post-meta-bottom">
+        <span class="post-meta-more">
+            <?= $this->link(
+                '@blog_post?blog_slug=' . $this->post->Blog->slug . '&post_slug=' . $this->post->slug,
+                'read more &raquo;',
+                array(
+                    'escape' => false
+                )
+            ); ?>
+        </span>&nbsp;|&nbsp;
+        <span class="post-meta-comments">
+            <?= count($this->post->comments()) . ' ' . $this->link(
+                '@blog_post?blog_slug=' . $this->post->Blog->slug . '&post_slug=' . $this->post->slug . '#comments',
+                'comments',
+                array(
+                    'title' => 'View comments for this post'
+                )
+            ); ?>
+        </span>
+    </div>
+    
+</div>

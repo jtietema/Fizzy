@@ -39,28 +39,33 @@ h6 {
 
 /* HEADER */
 
-#header {
-    
+#header-panel {
+    position: relative;
+    height: 5.3em;
+    margin: 0;
+    padding: 15px 30px 0;
+    background-color: #0A62B2;
+    -moz-box-shadow: 0 -8px 6px -4px rgba(0, 0, 0, 0.2) inset;
 }
-#header h1 {
+#header-panel h1 {
     color: #191a1a;
     font-weight: bold;
     margin-bottom: 0.5em;
 }
 
-#header h1 a {
+#header-panel h1 a {
     width:750px;
     height: 200px;
     background: transparent;
 }
 
-#header h1 a:link,
-#header h1 a:visited {
+#header-panel h1 a:link,
+#header-panel h1 a:visited {
 	color: #333333;
 }
 
-#header h1 a:hover,
-#header h1 a:active {
+#header-panel h1 a:hover,
+#header-panel h1 a:active {
 	color: #000000;
 	background-color: transparent;
 }

@@ -7,6 +7,8 @@
  * 
  * @property integer $id
  * @property string $title
+ * @property string $slug
+ * @property string $intro
  * @property string $body
  * @property timestamp $date
  * @property integer $author
@@ -35,6 +37,13 @@ abstract class BasePost extends Doctrine_Record
         $this->hasColumn('title', 'string', 255, array(
              'type' => 'string',
              'length' => '255',
+             ));
+        $this->hasColumn('slug', 'string', 100, array(
+             'type' => 'string',
+             'length' => '100',
+             ));
+        $this->hasColumn('intro', 'string', null, array(
+             'type' => 'string',
              ));
         $this->hasColumn('body', 'string', null, array(
              'type' => 'string',

@@ -7,6 +7,8 @@ Blog:
 Post:
   Test:
     title: Test post
+    slug: "test-post"
+    intro: "Dit is de intro van de test post"
     body: dit is een test post
     date: now
     comments: true

@@ -44,8 +44,7 @@ class Fizzy_View_Helper_Link extends Zend_View_Helper_HtmlElement
      */
     public function link($url, $value, $options = array())
     {
-        $defaults = array('prependBase' => true, 'escape' => true);
-        $options += $defaults;
+        $options += array('prependBase' => true, 'escape' => true);
 
         if (null === $this->view) {
             $view = new Zend_View();
@@ -55,41 +54,11 @@ class Fizzy_View_Helper_Link extends Zend_View_Helper_HtmlElement
         // Remove the escape option so it doesn't appear as an html attribute
         unset($options['escape']);
 
-        // Check if the url was passed as a route name
-        if (0 === strpos($url, '@')) {
+        // Parse the URL with Fizzy_View_Helper_Url
+        $urlHelper = new Fizzy_View_Helper_Url();
+        $urlHelper->setView($this->view);
+        $url = $urlHelper->url($url, $options);
 
-            $routeName = substr($url, 1);
-            $params = array();
-
-            // Check for route parameters
-            if (false !== strpos($routeName, '?')) {
-                list($routeName, $paramString) = explode('?', $routeName);
-                if (empty($paramString)) {
-                    break;
-                }
-                
-                $paramPairs = explode('&', $paramString);
-                foreach ($paramPairs as $pair) {
-                    if (false !== strpos($pair, '=')) {
-                        list($pairKey, $pairValue) = explode('=', $pair);
-                        $params[$pairKey] = $pairValue;
-                    } else {
-                        $params[$pairKey] = null;
-                    }
-                }
-            }
-
-            $router = Zend_Controller_Front::getInstance()->getRouter();
-            $route = $router->getRoute($routeName);
-
-            // Build the url with route and parameters
-            $url = $route->assemble($params);
-        }
-
-        // Add base url if prependBase is true
-        if ((boolean) $options['prependBase']) {
-            $url = $this->view->baseUrl($url);
-        }
         // Remove the prependBase option so it doesn't appear as an html attribute
         unset($options['prependBase']);
 

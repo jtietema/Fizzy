@@ -1,0 +1,6 @@
+<div class="blog">
+    <h2>Posts in blog <?= $this->blog->name; ?></h2>
+
+    <?= $this->partial('blog/posts.phtml', array('posts' => $this->posts)); ?>
+
+</div>

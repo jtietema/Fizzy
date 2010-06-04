@@ -27,6 +27,8 @@ Post:
   columns:
     id: { type: integer(4), primary: true, autoincrement: true }
     title: string(255)
+    slug: string(100)
+    intro: string
     body: string
     date: timestamp
     author: integer(4)

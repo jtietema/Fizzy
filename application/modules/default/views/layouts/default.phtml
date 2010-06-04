@@ -25,39 +25,49 @@
             $title = $config->title;
          ?>
         <title><?= $title; ?></title>
-        <link href="<?= $this->baseUrl("/css/default.css") ?>" rel="stylesheet" type="text/css" media="screen" />
+        <link href="<?= $this->assetUrl("/css/reset-min.css") ?>" rel="stylesheet" type="text/css" media="screen, presentation" />
+        <link href="<?= $this->baseUrl("/fizzy_assets/css/fonts-min.css") ?>" rel="stylesheet" type="text/css" media="screen, presentation" />
+        <link href="<?= $this->baseUrl("/css/fizzy.css") ?>" rel="stylesheet" type="text/css" media="screen" />
     </head>
     <body>
 
         <div class="container">
 
             <!-- HEADER -->
-            <div id="header" class="span-24 last">
+            <div id="header-panel" class="span-24 last">
                 <h1>Fizzy<span>CMS</span></h1>
-            </div>
 
-            <!-- NAVIGATION -->
-            <div id="navigation" class="span-24 last">
-                <ul>
-                    <li><a href="<?= $this->baseUrl('/') ?>">Home</a></li>
-                    <li><a href="<?= $this->baseUrl('/about'); ?>">About</a></li>
-                    <li><a href="<?= $this->baseUrl('/configuration'); ?>">Configuration</a></li>
-                    <li><a href="http://project.voidwalkers.nl/projects/show/fizzy" target="_blanc">More</a></li>
-               </ul>
+                <!-- NAVIGATION -->
+                <div id="navigation-panel">
+                    <ul>
+                        <li><a href="<?= $this->baseUrl('/') ?>" title="Website home">Home</a></li>
+                        <li><a href="<?= $this->baseUrl('/blog') ?>" title="The blog">Blog</a></li>
+                        <li><a href="<?= $this->baseUrl('/about'); ?>" title="About this site">About</a></li>
+                        <li><a href="<?= $this->baseUrl('/configuration'); ?>" title="How to configure Fizzy">Configuration</a></li>
+                        <li><a href="http://project.voidwalkers.nl/projects/show/fizzy" target="_blank" title="Learn more about the fizzy project (opens in a new window)">More</a></li>
+                    </ul>
+                    <div class="clear"></div>
+                </div>
+                <!-- NAVIGATION -->
             </div>
 
             <!-- CONTENT -->
-            <div id="main-wrapper" class="span-24 last">
-                <div id="content" class="span-24">
-                    <div class="content-block">
-                        <?= $this->layout()->content; ?>
-                    </div>
+            <div id="main-panel" class="span-24 last">
+                <div id="content-panel">
+                    <?= $this->layout()->content; ?>
                 </div>
             </div>
 
             <!-- FOOTER -->
-            <div id="footer" class="span-24 last">
-                (c) 2009 <a href="http://www.voidwalkers.nl" title="The Voidwalkers">Voidwalkers</a> - <a href="http://www.voidwalkers.nl/license/bsd-license" title="Fizzy license">license</a>
+            <div id="footer-panel" class="span-24 last">
+                <p>
+                This site is powered by Fizzy <?= Fizzy_Version::VERSION ?>
+                running on Zend Framework <?= Zend_Version::VERSION ?>
+                and Doctrine <?= Doctrine::VERSION ?>
+                </p>
+                <p>
+                    (c) 2009-<?= date('Y'); ?> Voidwalkers - <a href="http://www.voidwalkers.nl/license/new-bsd">license</a><br />
+                </p>
             </div>
 
         </div>
