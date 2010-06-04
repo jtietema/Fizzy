@@ -89,7 +89,6 @@ class Admin_CommentsController extends Fizzy_SecuredController
     public function spamAction()
     {
         $id = $this->_getParam('id', null);
-        $redirect = $this->_getParam('back', 'dashboard');
 
         if (null === $id){
             return $this->renderScript('comments/comment-not-found.phtml');
@@ -110,17 +109,7 @@ class Admin_CommentsController extends Fizzy_SecuredController
          * @todo pass to the spam backend
          */
 
-        switch($redirect){
-            case 'topic':
-                $this->_redirect('/fizzy/comments/topic/' . $comment->post_id);
-            break;
-            case 'spambox':
-                $this->_redirect('/fizzy/comments/spam');
-            break;
-            default:
-                $this->_redirect('/fizzy/comments');
-            break;
-        }
+        $this->_redirectBack($comment);
     }
 
     /**
@@ -129,7 +118,6 @@ class Admin_CommentsController extends Fizzy_SecuredController
     public function hamAction()
     {
         $id = $this->_getParam('id', null);
-        $redirect = $this->_getParam('back', 'dashboard');
 
         if (null === $id){
             return $this->renderScript('comments/comment-not-found.phtml');
@@ -150,17 +138,7 @@ class Admin_CommentsController extends Fizzy_SecuredController
          * @todo pass to the Spam backend
          */
 
-        switch($redirect){
-            case 'topic':
-                $this->_redirect('/fizzy/comments/topic/' . $comment->post_id);
-            break;
-            case 'spambox':
-                $this->_redirect('/fizzy/comments/spam');
-            break;
-            default:
-                $this->_redirect('/fizzy/comments');
-            break;
-        }
+        $this->_redirectBack($comment);
     }
 
     /**
@@ -210,17 +188,7 @@ class Admin_CommentsController extends Fizzy_SecuredController
             $comment->body = $form->body->getValue();
             $comment->save();
 
-            switch($redirect){
-                case 'topic':
-                    $this->_redirect('/fizzy/comments/topic/' . $comment->post_id);
-                break;
-                case 'spambox':
-                    $this->_redirect('/fizzy/comments/spam');
-                break;
-                default:
-                    $this->_redirect('/fizzy/comments');
-                break;
-            }
+            $this->_redirectBack($comment);
         }
 
         $form->name->setValue($comment->name);
@@ -239,7 +207,6 @@ class Admin_CommentsController extends Fizzy_SecuredController
     public function deleteAction()
     {
         $id = $this->_getParam('id', null);
-        $redirect = $this->_getParam('back', 'dashboard');
         
         if (null === $id){
             return $this->renderScript('comments/comment-not-found.phtml');
@@ -256,17 +223,7 @@ class Admin_CommentsController extends Fizzy_SecuredController
 
         $comment->delete();
 
-        switch($redirect){
-            case 'topic':
-                $this->_redirect('/fizzy/comments/topic/' . $comment->post_id);
-            break;
-            case 'spambox':
-                $this->_redirect('/fizzy/comments/spam');
-            break;
-            default:
-                $this->_redirect('/fizzy/comments');
-            break;
-        }
+        $this->_redirectBack($comment);
     }
 
     /**
@@ -299,5 +256,25 @@ class Admin_CommentsController extends Fizzy_SecuredController
         $paginator->setCurrentPageNumber($pageNumber);
 
         $this->view->paginator = $paginator;
+    }
+
+    protected function _redirectBack(Comments $comment = null)
+    {
+        $redirect = $this->_getParam('back', 'dashboard');
+
+        switch($redirect){
+            case 'topic':
+                $this->_redirect('/fizzy/comments/topic/' . $comment->post_id);
+            break;
+            case 'spambox':
+                $this->_redirect('/fizzy/comments/spam');
+            break;
+            case 'post':
+                $postId = (int) substr($comment->post_id, 5);
+                $this->_redirect('/fizzy/post/' . $postId . '/edit');
+            default:
+                $this->_redirect('/fizzy/comments');
+            break;
+        }
     }
 }

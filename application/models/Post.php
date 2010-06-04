@@ -24,7 +24,7 @@ class Post extends BasePost
     public function comments()
     {
         $query = Doctrine_Query::create()->from('Comments')
-                ->where('post_id = ?', 'post:'.$this->id)->orderBy('id DESC');
+                ->where('post_id = ?', 'post:'.$this->id)->andWhere('spam = 0')->orderBy('id DESC');
         $comments = $query->execute();
         return $comments;
     }

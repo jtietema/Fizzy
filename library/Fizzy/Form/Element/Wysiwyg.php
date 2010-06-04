@@ -2,7 +2,7 @@
 /**
  * Class Fizzy_Form_Element_Wysiwyg
  * @category Fizzy
- * @package Fizzy_Form_Element_Wysiwig
+ * @package Fizzy_Form_Element_Wysiwyg
  *
  * LICENSE
  *

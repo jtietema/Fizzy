@@ -503,6 +503,11 @@ a.c3button:hover {
 /* ********************** */
 /*   COMMENTS             */
 
+.comments {
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
 .comment {
     position: relative;
     border: solid 1px gray;

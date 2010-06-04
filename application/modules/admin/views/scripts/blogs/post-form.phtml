@@ -11,6 +11,13 @@
                 <?= $this->form->body; ?>
         </div>
 
+        <div class="comments">
+            <?= $this->partial('comments/_comments.phtml', array(
+                'comments' => $this->post->Comments(),
+                'back' => 'post'
+            )) ?>
+        </div>
+
     </div>
 
     <div id="sidebar-panel">
