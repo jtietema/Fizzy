@@ -11,6 +11,11 @@
                 <?= $this->form->body; ?>
         </div>
 
+        <h2>
+            <?= $this->image('/fizzy_assets/images/icon/balloons.png'); ?>
+            Comments on this post
+        </h2>
+
         <div class="comments">
             <?= $this->partial('comments/_comments.phtml', array(
                 'comments' => $this->post->Comments(),

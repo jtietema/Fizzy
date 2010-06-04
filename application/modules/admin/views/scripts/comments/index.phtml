@@ -2,43 +2,10 @@
 
     <h2>Latest comments</h2>
 
-    <?php foreach ($this->paginator->getCurrentItems() as $comment): ?>
-    <div class="comment">
-        <div class="avatar">
-            <img src="http://www.gravatar.com/avatar/<?= md5(trim(strtolower($comment->email))) ?>?s=80" alt="<?= $comment->name ?>" />
-        </div>
-        <div class="content">
-            <div class="author-info">
-                From <?= $comment->name ?>
-            </div>
-            <div class="comment-body">
-                    <?= $comment->body ?>
-            </div>
-            <div class="actions">
-                <ul>
-                    <li><a href="<?= $this->baseUrl('/fizzy/comment/edit/' . $comment->id . '?back=dashboard') ?>">Edit</a></li>
-                    <li>
-                            <?php if ($comment->isSpam()) : ?>
-                        <a href="<?= $this->baseUrl('/fizzy/comment/ham/' . $comment->id . '?back=dashboard') ?>">Not spam</a>
-                            <?php else: ?>
-                        <a href="<?= $this->baseUrl('/fizzy/comment/spam/' . $comment->id . '?back=dashboard') ?>">Spam</a>
-                            <?php endif; ?>
-                    </li>
-                    <li><?= $this->link(
-                                    '/fizzy/comment/delete/' . $comment->id . '?back=dashboard',
-                                    'Delete',
-                                    array(
-                                        'class' => 'delete',
-                                        'confirm' => 'Are you sure you want to delete this comment?',
-                                        )
-                            ); ?>
-                    </li>
-                </ul>
-            </div>
-        </div>
-        <div class="clear"></div>
-    </div>
-    <?php endforeach; ?>
+    <?= $this->partial('comments/_comments.phtml', array(
+        'comments' => $this->paginator->getCurrentItems(),
+        'back' => 'dashboard'
+    )) ?>
 
     <?= $this->paginationControl($this->paginator, 'All', '_pagination.phtml') ?>
 
