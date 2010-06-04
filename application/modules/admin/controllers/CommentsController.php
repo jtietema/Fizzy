@@ -59,7 +59,7 @@ class Admin_CommentsController extends Fizzy_SecuredController
                 ->groupBy('post_id')->orderBy('id DESC');
 
         $paginator = new Zend_Paginator(new Fizzy_Paginator_Adapter_DoctrineQuery($query));
-        $paginator->setItemCountPerPage(1);
+        $paginator->setItemCountPerPage(10);
         $paginator->setCurrentPageNumber($pageNumber);
         
         $this->view->paginator = $paginator;
