@@ -20,8 +20,6 @@
 
 class Admin_UserController extends Fizzy_SecuredController
 {
-    protected $_sessionNamespace = 'fizzy';
-    protected $_redirect = '/fizzy/login';
 
     public function indexAction()
     {
@@ -34,7 +32,7 @@ class Admin_UserController extends Fizzy_SecuredController
     public function addAction()
     {
         $user = new User();
-        $form = $this->_getForm($this->view->baseUrl('/fizzy/user/add'), $user);
+        $form = $this->_getForm($this->view->url('@admin_users_add'), $user);
         $form->password->setRequired(true);
         $form->password_confirm->setRequired(true);
 
@@ -44,7 +42,7 @@ class Admin_UserController extends Fizzy_SecuredController
                 $user->save();
 
                 $this->addSuccessMessage("User {$user->username} was successfully saved.");
-                $this->_redirect('/fizzy/users', array('prependBase' => true));
+                $this->_redirect('@admin_users');
             }
         }
 
@@ -57,16 +55,16 @@ class Admin_UserController extends Fizzy_SecuredController
     {
         $id = $this->_getParam('id', null);
         if(null === $id) {
-            $this->_redirect('/fizzy/users', array('prependBase' => true));
+            $this->_redirect('@admin_users');
         }
 
         $query = Doctrine_Query::create()->from('User')->where('id = ?', $id);
         $user = $query->fetchOne();
         if(null === $user) {
             $this->addErrorMessage("User with ID {$id} could not be found.");
-            $this->_redirect('/fizzy/users', array('prependBase' => true));
+            $this->_redirect('@admin_users');
         }
-        $form = $this->_getForm($this->view->baseUrl('/fizzy/user/edit/' . $user->id), $user);
+        $form = $this->_getForm($this->view->url('@admin_users_edit?id=' . $user->id), $user);
 
         if($this->_request->isPost()) {
             if($form->isValid($_POST)) {
@@ -74,7 +72,7 @@ class Admin_UserController extends Fizzy_SecuredController
                 $user->save();
 
                 $this->addSuccessMessage("User <strong>{$user->username}</strong> was successfully saved.");
-                $this->_redirect('/fizzy/users', array('prependBase' => true));
+                $this->_redirect('@admin_users');
             }
         }
 
@@ -94,7 +92,7 @@ class Admin_UserController extends Fizzy_SecuredController
                 $this->addSuccessMessage("User {$user->username} was successfully deleted.");
             }
             
-            $this->_redirect('/fizzy/users', array('prependBase' => true));
+            $this->_redirect('@admin_users');
         }
     }
 

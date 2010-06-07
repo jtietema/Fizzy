@@ -25,8 +25,6 @@
  */
 class Admin_CommentsController extends Fizzy_SecuredController
 {
-    protected $_sessionNamespace = 'fizzy';
-    protected $_redirect = '/fizzy/login';
 
     /**
      * Dashboard. Shows latest comments and total numbers of comments, spam, etc.
@@ -172,7 +170,7 @@ class Admin_CommentsController extends Fizzy_SecuredController
         }
 
         $form = new Zend_Form();
-        $form->setAction($this->view->baseUrl('/fizzy/comment/edit/' . $comment->id . '?back=' . $redirect));
+        $form->setAction($this->view->url('@admin_comments_edit?id=' . $comment->id) . '&back=' . $redirect);
         
         $form->addElement(new Zend_Form_Element_Text('name', array(
             'label' => 'Author name'
@@ -273,16 +271,16 @@ class Admin_CommentsController extends Fizzy_SecuredController
 
         switch($redirect){
             case 'topic':
-                $this->_redirect('/fizzy/comments/topic/' . $comment->post_id);
+                $this->_redirect('@admin_comments_topic', array('id' => $comment->post_id));
             break;
             case 'spambox':
-                $this->_redirect('/fizzy/comments/spam');
+                $this->_redirect('@admin_comments_spam');
             break;
             case 'post':
                 $postId = (int) substr($comment->post_id, 5);
-                $this->_redirect('/fizzy/post/' . $postId . '/edit');
+                $this->_redirect('@admin_blog_post_edit', array('id' => $postId));
             default:
-                $this->_redirect('/fizzy/comments');
+                $this->_redirect('@admin_comments');
             break;
         }
     }

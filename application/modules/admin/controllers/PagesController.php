@@ -20,9 +20,6 @@
 
 class Admin_PagesController extends Fizzy_SecuredController
 {
-    protected $_sessionNamespace = 'fizzy';
-    protected $_redirect = '/fizzy/login';
-
     /**
      * Shows a list of pages managed by Fizzy.
      */
@@ -40,7 +37,7 @@ class Admin_PagesController extends Fizzy_SecuredController
     public function addAction()
     {
         $page = new Page();
-        $form = $this->_getForm($this->view->baseUrl('/fizzy/pages/add'), $page);
+        $form = $this->_getForm($this->view->url('@admin_pages_add'), $page);
 
         if($this->_request->isPost()) {
             if($form->isValid($_POST)) {
@@ -48,7 +45,7 @@ class Admin_PagesController extends Fizzy_SecuredController
                 $page->save();
 
                 $this->addSuccessMessage("Page {$page->title} was saved successfully.");
-                $this->_redirect('/fizzy/pages', array('prependBase' => true));
+                $this->_redirect('@admin_pages');
             }
         }
 
@@ -61,16 +58,16 @@ class Admin_PagesController extends Fizzy_SecuredController
     {
         $id = $this->_getParam('id', null);
         if(null === $id) {
-            $this->_redirect('/fizzy/pages', array('prependBase' => true));
+            $this->_redirect('@admin_pages');
         }
 
         $query = Doctrine_Query::create()->from('Page')->where('id = ?', $id);
         $page = $query->fetchOne();
         if(null === $page) {
             $this->addErrorMessage("Page with ID {$id} could not be found.");
-            $this->_redirect('/fizzy/pages', array('prependBase' => true));
+            $this->_redirect('@admin_pages');
         }
-        $form = $this->_getForm($this->view->baseUrl('/fizzy/pages/edit/' . $page['id']), $page);
+        $form = $this->_getForm($this->view->url('@admin_pages_edit?id=' . $page['id']), $page);
 
         if($this->_request->isPost()) {
             if($form->isValid($_POST)) {
@@ -78,7 +75,7 @@ class Admin_PagesController extends Fizzy_SecuredController
                 $page->save();
 
                 $this->addSuccessMessage("Page \"<strong>{$page->title}</strong>\" was successfully saved.");
-                $this->_redirect('/fizzy/pages', array('prependBase' => true));
+                $this->_redirect('@admin_pages');
             }
         }
 
@@ -102,7 +99,7 @@ class Admin_PagesController extends Fizzy_SecuredController
             }
         }
 
-        $this->_redirect('/fizzy/pages', array('prependBase' => true));
+        $this->_redirect('@admin_pages');
     }
 
     /**

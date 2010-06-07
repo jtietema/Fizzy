@@ -57,7 +57,7 @@ class Admin_WebdavController extends Zend_Controller_Action
             return;
         }
         
-        $baseUri = '/fizzy/webdav/';
+        $baseUri = $this->view->url('@admin_webdav');
         $publicDir = ROOT_PATH . '/public/uploads';
         $tmpDir = ROOT_PATH . '/data/tmp';
 

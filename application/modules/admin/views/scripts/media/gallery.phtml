@@ -2,9 +2,9 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
     <title>{#fizzymedia_dlg.title}</title>
-    <link href="<?= $this->baseUrl("/fizzy_assets/css/fizzy.css") ?>" rel="stylesheet" type="text/css" media="screen" />
-    <script type="text/javascript" src="<?= $this->baseUrl('/fizzy_assets/js/tiny_mce/tiny_mce_popup.js') ?>"></script>
-    <script type="text/javascript" src="<?= $this->baseUrl('/fizzy_assets/js/tiny_mce/plugins/fizzymedia/js/dialog.js') ?>"></script>
+    <link href="<?= $this->assetUrl("/css/fizzy.css") ?>" rel="stylesheet" type="text/css" media="screen" />
+    <script type="text/javascript" src="<?= $this->assetUrl('/js/tiny_mce/tiny_mce_popup.js') ?>"></script>
+    <script type="text/javascript" src="<?= $this->assetUrl('/js/tiny_mce/plugins/fizzymedia/js/dialog.js') ?>"></script>
 </head>
 <body>
 
@@ -69,7 +69,7 @@
                 </tr>
                 <tr>
                     <td><input type="text" name="marginLeft" id="marginLeft" /></td>
-                    <td class="center"><img src="<?= $this->baseUrl('/fizzy_assets/js/tiny_mce/plugins/fizzymedia/img/flower.png');?>" alt="flower"  /></td>
+                    <td class="center"><img src="<?= $this->assetUrl('/js/tiny_mce/plugins/fizzymedia/img/flower.png');?>" alt="flower"  /></td>
                     <td><input type="text" name="marginRight" id="marginRight" /></td>
                 </tr>
                 <tr>

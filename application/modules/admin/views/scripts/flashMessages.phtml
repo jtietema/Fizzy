@@ -7,7 +7,7 @@
                 var button = $("<a></a>").attr('href','#').attr('class', 'message-close');
                 // Add close image to the button
                 var i = new Image();
-                $(i).attr('src', "<?= $this->baseUrl('/fizzy_assets/images/icon/cross.png'); ?>");
+                $(i).attr('src', "<?= $this->assetUrl('/images/icon/cross.png'); ?>");
                 button.html(i);
                 // fade on click
                 button.click(function() {

@@ -20,9 +20,6 @@
 
 class Admin_ContactController extends Fizzy_SecuredController
 {
-    protected $_sessionNamespace = 'fizzy';
-    protected $_redirect = '/fizzy/login';
-
     public function indexAction()
     {
         $this->view->messages = Doctrine_Core::getTable('Contact')->findAll();
@@ -32,14 +29,14 @@ class Admin_ContactController extends Fizzy_SecuredController
     {
         $id = $this->_getParam('id', null);
         if(null === $id) {
-            $this->_redirect('/fizzy/contact', array('prependBase' => true));
+            $this->_redirect('@admin_contact');
         }
 
         $query = Doctrine_Query::create()->from('Contact')->where('id = ?', $id);
         $message = $query->fetchOne();
         if(null === $message) {
             $this->addErrorMessage("Message with ID {$id} could not be found.");
-            $this->_redirect('/fizzy/contact', array('prependBase' => true));
+            $this->_redirect('@admin_contact');
         }
 
         $this->view->message = $message;
@@ -49,14 +46,14 @@ class Admin_ContactController extends Fizzy_SecuredController
     {
         $id = $this->_getParam('id', null);
         if(null === $id) {
-            $this->_redirect('/fizzy/contact', array('prependBase' => true));
+            $this->_redirect('@admin_contact');
         }
 
         $query = Doctrine_Query::create()->from('Contact')->where('id = ?', $id);
         $message = $query->fetchOne();
         if(null === $message) {
             $this->addErrorMessage("Message with ID {$id} could not be found.");
-            $this->_redirect('/fizzy/contact', array('prependBase' => true));
+            $this->_redirect('@admin_contact');
         }
 
         $success = $message->delete();
@@ -66,7 +63,7 @@ class Admin_ContactController extends Fizzy_SecuredController
             $this->addErrorMessage("Message with ID {$id} could not be deleted.");
         }
 
-        $this->_redirect('/fizzy/contact', array('prependBase' => true));
+        $this->_redirect('@admin_contact');
     }
     
 }

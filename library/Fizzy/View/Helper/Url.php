@@ -91,6 +91,9 @@ class Fizzy_View_Helper_Url extends Zend_View_Helper_Abstract
 
         // Add base url if prependBase is true
         if ((boolean) $options['prependBase']) {
+            if (null === $this->view) {
+                    $this->view = new Zend_View();
+            }
             $url = $this->view->baseUrl($url);
         }
 

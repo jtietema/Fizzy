@@ -32,8 +32,8 @@
         <?php if (!$this->user->isNew()) : ?>
         <li class="no-bg right">
             <?= $this->link(
-                    '/fizzy/user/delete/' . $this->user->id,
-                    $this->image('fizzy_assets/images/icon/user--minus.png') . ' delete user',
+                    '@admin_users_delete?id=' . $this->user->id,
+                    $this->image($this->assetUrl('/images/icon/user--minus.png')) . ' delete user',
                     array(
                         'class' => 'delete',
                         'confirm' => 'Are you sure you want to delete this user?',
@@ -44,8 +44,8 @@
         <?php endif; ?>
         <li class="no-bg right last">
             <?= $this->link(
-                '/fizzy/users',
-                $this->image('/fizzy_assets/images/icon/edit-list.png') . ' back to users',
+                '@admin_users',
+                $this->image($this->assetUrl('/images/icon/edit-list.png')) . ' back to users',
                 array (
                     'escape' => false
                 )

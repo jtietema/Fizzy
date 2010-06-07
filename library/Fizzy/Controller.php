@@ -110,4 +110,23 @@ class Fizzy_Controller extends Zend_Controller_Action
         return $this->_flashMessenger;
     }
 
+    /**
+     * Overrides Zend Framework default redirect function to allow redirecting
+     * to route names. Route names start with an '@'.
+     * @param string $url the url or route name
+     * @param array $options the route parameters
+     */
+    protected function _redirect($url, $options = array())
+    {
+        if (false !== strpos($url, '@') && 0 === strpos($url, '@')) {
+            // A routename is specified
+            $url = trim($url, '@');
+            $this->_helper->redirector->gotoRoute($options, $url);
+        }
+        else {
+            // Assume an url is passed in
+            parent::_redirect($url, $options);
+        }
+    }
+
 }

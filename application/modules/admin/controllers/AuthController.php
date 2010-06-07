@@ -32,12 +32,13 @@ class Admin_AuthController extends Fizzy_Controller
                 $auth = Zend_Auth::getInstance();
                 $auth->setStorage(new Zend_Auth_Storage_Session('fizzy'));
                 $result = $auth->authenticate($authAdapter);
+
                 if($result->isValid()) {
-                    $this->_redirect('/fizzy', array('prependBase' => true));
+                    $this->_redirect('@admin');
                 }
                 $messages = $result->getMessages();
                 $this->addErrorMessage(array_shift($messages));
-                $this->_redirect('/fizzy/login', array('prependBase' => true));
+                $this->_redirect('@admin_login');
             }
         }
         $this->view->form = $form;
@@ -49,7 +50,7 @@ class Admin_AuthController extends Fizzy_Controller
         $auth = Zend_Auth::getInstance();
         $auth->setStorage(new Zend_Auth_Storage_Session('fizzy'));
         $auth->clearIdentity();
-        $this->_redirect('/fizzy', array('prependBase' => true));
+        $this->_redirect('@admin');
     }
 
     protected function _getForm()

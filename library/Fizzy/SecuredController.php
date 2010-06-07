@@ -32,13 +32,13 @@ class Fizzy_SecuredController extends Fizzy_Controller
      * The session namespace used for the security credentials
      * @var string
      */
-    protected $_sessionNamespace = null;
+    protected $_sessionNamespace = 'fizzy';
 
     /**
-     * Url to redirect to when not logged in
+     * Route or url to redirect to when not logged in
      * @var string
      */
-    protected $_redirect = null;
+    protected $_redirect = '@admin_login';
     /** **/
     
     /**
@@ -51,8 +51,10 @@ class Fizzy_SecuredController extends Fizzy_Controller
         }
         $auth = Zend_Auth::getInstance();
         $auth->setStorage(new Zend_Auth_Storage_Session($this->_sessionNamespace));
+
+        // Redirect when no identity is present
         if (!$auth->hasIdentity()) {
-            $this->_redirect($this->_redirect, array('prependBase' => true));
+            $this->_redirect($this->_redirect);
         }
 
         $this->_identity = Zend_Auth::getInstance()->getIdentity();

@@ -20,8 +20,6 @@
 
 class Admin_BlogsController extends Fizzy_SecuredController
 {
-    protected $_sessionNamespace = 'fizzy';
-    protected $_redirect = '/fizzy/login';
     
     public function indexAction()
     {
@@ -90,7 +88,7 @@ class Admin_BlogsController extends Fizzy_SecuredController
             $post->blog_id = $blogId;
             $post->save();
 
-            $this->_redirect('/fizzy/blog/' . $blogId);
+            $this->_redirect('@admin_blog', array('id' => $blogId));
         }
         
         $this->renderScript('blogs/post-form.phtml');
@@ -120,7 +118,7 @@ class Admin_BlogsController extends Fizzy_SecuredController
             $post->status = $form->status->getValue();
             $post->save();
             $this->addSuccessMessage("Post \"<strong>{$post->title}</strong>\" was successfully saved.");
-            $this->_redirect('fizzy/post/' . $postId . '/edit');
+            $this->_redirect('@admin_post_edit', array('id' => $postId));
         } else {
             $form->title->setValue($post->title);
             $form->body->setValue($post->body);
@@ -155,7 +153,7 @@ class Admin_BlogsController extends Fizzy_SecuredController
 
         $post->delete();
 
-        $this->_redirect('fizzy/blog/' . $post->Blog->id);
+        $this->_redirect('@admin_blog', array('id' => $post->Blog->id));
     }
 
     protected function _getPostForm()

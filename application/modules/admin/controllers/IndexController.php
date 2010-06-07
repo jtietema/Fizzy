@@ -27,9 +27,6 @@
 class Admin_IndexController extends Fizzy_SecuredController
 {
 
-    protected $_sessionNamespace = 'fizzy';
-    protected $_redirect = '/fizzy/login';
-
     protected $_navigation = null;
 
     /**
@@ -37,7 +34,7 @@ class Admin_IndexController extends Fizzy_SecuredController
      */
     public function indexAction()
     {
-        $this->_redirect('/fizzy/pages');
+        $this->_redirect('@admin_pages');
     }
 
     public function configurationAction()

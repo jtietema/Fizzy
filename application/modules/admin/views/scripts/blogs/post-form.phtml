@@ -2,7 +2,7 @@
 
     <div id="content-panel">
         <h2>
-            <?= $this->image('/fizzy_assets/images/icon/document.png'); ?>
+            <?= $this->image($this->assetUrl('/images/icon/document.png')); ?>
             <?= ($this->post->isNew()) ? 'Add post' : 'Edit post'; ?>
         </h2>
 
@@ -12,7 +12,7 @@
         </div>
 
         <h2>
-            <?= $this->image('/fizzy_assets/images/icon/balloons.png'); ?>
+            <?= $this->image($this->assetUrl('/images/icon/balloons.png')); ?>
             Comments on this post
         </h2>
 
@@ -40,11 +40,11 @@
             <?php if(!$this->post->isNew()) : ?>
             <li class="no-bg right">
                 <?= $this->link(
-                        '/fizzy/post/' . $this->post->id . '/delete',
-                        $this->image('fizzy_assets/images/icon/document--minus.png') . ' delete page',
+                        '@admin_blog_post_delete?post_id=' . $this->post->id,
+                        $this->image($this->assetUrl('/images/icon/document--minus.png')) . ' delete page',
                         array(
                             'class' => 'delete',
-                            'Are you sure you want to delete this page?',
+                            'confirm' => 'Are you sure you want to delete this page?',
                             'escape' => false
                        )
                 ); ?>
@@ -52,8 +52,8 @@
             <?php endif; ?>
             <li class="no-bg right last">
                 <?= $this->link(
-                    '/fizzy/blog/' . $this->post->Blog->id,
-                    $this->image('/fizzy_assets/images/icon/edit-list.png') . ' back to ' . $this->post->Blog->name,
+                    '@admin_blog?id=' . $this->post->Blog->id,
+                    $this->image($this->assetUrl('/images/icon/edit-list.png')) . ' back to ' . $this->post->Blog->name,
                     array('escape' => false)
                 ); ?>
             </li>

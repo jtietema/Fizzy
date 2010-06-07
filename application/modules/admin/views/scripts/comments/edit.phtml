@@ -29,7 +29,7 @@
         <li class="no-bg right">
             <?= $this->link(
                     '@admin_comments_delete?id=' . $this->comment->id,
-                    $this->image('fizzy_assets/images/icon/document--minus.png') . ' delete comment',
+                    $this->image($this->assetUrl('/images/icon/document--minus.png')) . ' delete comment',
                     array(
                         'class' => 'delete',
                         'confirm' => 'Are you sure you want to delete this comment?',
@@ -40,7 +40,7 @@
         <li class="no-bg right last">
             <?= $this->link(
                 '@admin_comments_topic?id=' . $this->comment->post_id,
-                $this->image('/fizzy_assets/images/icon/edit-list.png') . ' back to comments',
+                $this->image($this->assetUrl('/images/icon/edit-list.png')) . ' back to comments',
                 array(
                     'escape' => false
                 )

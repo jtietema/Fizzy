@@ -17,8 +17,8 @@
     <ul class="actions">
         <li class="no-bg right">
             <?= $this->link(
-                    '/fizzy/contact/delete/' . $this->message->id,
-                    $this->image('/fizzy_assets/images/icon/mail--minus.png') . 'delete message',
+                    '@admin_contact_delete?id=' . $this->message->id,
+                    $this->image($this->assetUrl('/images/icon/mail--minus.png')) . 'delete message',
                     array(
                         'class' => 'delete',
                         'confirm' => 'Are you sure you want to delete this message?',
@@ -27,7 +27,7 @@
             ); ?>
         </li>
         <li class="no-bg right last">
-            <?= $this->link('/fizzy/contact', $this->image('/fizzy_assets/images/icon/edit-list.png') . ' contact list', array('escape' => false)); ?>
+            <?= $this->link('@admin_contact', $this->image($this->assetUrl('/images/icon/edit-list.png')) . ' contact list', array('escape' => false)); ?>
         </li>
     </ul>
 </div>

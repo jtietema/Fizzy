@@ -7,7 +7,7 @@
         
     </p>
     <?php if(is_writable($this->uploadFolder)) : ?>
-    <form action="<?= $this->url('/admin/media'); ?>" method="post" enctype="multipart/form-data">
+    <form action="<?= $this->url('@admin_media'); ?>" method="post" enctype="multipart/form-data">
         <?php if(isset($this->messages) && !empty($this->messages)) : ?>
         <div class="message error">
             <ul>

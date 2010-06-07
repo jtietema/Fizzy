@@ -25,9 +25,6 @@
  */
 class Admin_MediaController extends Fizzy_SecuredController
 {
-    protected $_sessionNamespace = 'fizzy';
-    protected $_redirect = '/fizzy/login';
-
     /**
      * @todo implement overwrite checkbox
      */
@@ -46,7 +43,7 @@ class Admin_MediaController extends Fizzy_SecuredController
                     $this->addErrorMessage($message);
                 }
             }
-            $this->_redirect('/fizzy/media');
+            $this->_redirect('@admin_media');
         }
 
         # Parse all files in the upload directory
@@ -115,7 +112,7 @@ class Admin_MediaController extends Fizzy_SecuredController
             }
         }
 
-        $this->_redirect($this->view->baseUrl('/fizzy/media'));
+        $this->_redirect('@admin_media');
     }
 
     /**
@@ -126,7 +123,7 @@ class Admin_MediaController extends Fizzy_SecuredController
     protected function _getForm($uploadFolder)
     {
         $formConfig = array (
-            'action' => $this->view->baseUrl('/fizzy/media'),
+            'action' => $this->view->url('@admin_media'),
             'enctype' => 'multipart/form-data',
             'elements' => array(
                 'file' => array (

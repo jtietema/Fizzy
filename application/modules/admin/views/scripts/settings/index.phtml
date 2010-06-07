@@ -81,7 +81,7 @@
                             'value': self.value
                         };
                         $.ajax({
-                            url: '<?= $this->baseUrl('/fizzy/settings/update'); ?>',
+                            url: '<?= $this->url('@admin_settings_update'); ?>',
                             type: 'POST',
                             processData: false,
                             data: JSON.stringify(settingData),

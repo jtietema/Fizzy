@@ -3,7 +3,7 @@
 <div id="content-panel">
 
     <h2>
-        <?= $this->image('/fizzy_assets/images/icon/document.png'); ?>
+        <?= $this->image($this->assetUrl('/images/icon/document.png')); ?>
         <?= ($this->page->isNew()) ? 'Add page' : 'Edit page'; ?>
     </h2>
     
@@ -30,8 +30,8 @@
         <?php if(!$this->page->isNew()) : ?>
         <li class="no-bg right">
             <?= $this->link(
-                    '/fizzy/pages/delete/' . $this->page->id,
-                    $this->image('fizzy_assets/images/icon/document--minus.png') . ' delete page',
+                    '@admin_pages_delete?id=' . $this->page->id,
+                    $this->image($this->assetUrl('/images/icon/document--minus.png')) . ' delete page',
                     array(
                         'class' => 'delete',
                         'confirm' => 'Are you sure you want to delete this page?',
@@ -42,8 +42,8 @@
         <?php endif; ?>
         <li class="no-bg right last">
             <?= $this->link(
-                '/fizzy/pages',
-                $this->image('/fizzy_assets/images/icon/edit-list.png') . ' back to pages',
+                '@admin_pages',
+                $this->image($this->assetUrl('/images/icon/edit-list.png')) . ' back to pages',
                 array('escape' => false)
             ); ?>
         </li>

@@ -13,8 +13,8 @@
             <tr>
                 <td class="controls">
                     <?= $this->link(
-                        "/fizzy/user/edit/{$user['id']}",
-                        $this->image('/fizzy_assets/images/icon/user--pencil.png', array('alt' => 'edit icon')),
+                        '@admin_users_edit?id=' . $user['id'],
+                        $this->image($this->assetUrl('/images/icon/user--pencil.png'), array('alt' => 'edit icon')),
                         array (
                             'escape' => false
                         )
@@ -33,7 +33,7 @@
 
     <ul class="actions">
         <li class="last">
-            <?= $this->link('/fizzy/user/add', $this->image('/fizzy_assets/images/icon/user--plus.png') . ' Add user', array('escape' => false)); ?>
+            <?= $this->link('@admin_users_add', $this->image($this->assetUrl('/images/icon/user--plus.png')) . ' Add user', array('escape' => false)); ?>
         </li>
     </ul>
 
