@@ -1,4 +1,22 @@
 <?php
+/**
+ * Class Fizzy_Geocode_Adapter_Yahoo
+ * @package Fizzy_Geocode
+ *
+ * LICENSE
+ *
+ * This source file is subject to the new BSD license that is bundled
+ * with this package in the file LICENSE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://www.voidwalkers.nl/license/new-bsd
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to license@voidwalkers.nl so we can send you a copy immediately.
+ *
+ * @copyright Copyright (c) 2009-2010 Voidwalkers (http://www.voidwalkers.nl)
+ * @license http://www.voidwalkers.nl/license/new-bsd The New BSD License
+ */
+
 require_once 'Zend/Uri.php';
 require_once 'Zend/Http/Client.php';
 
@@ -8,9 +26,9 @@ require_once 'Fizzy/Geocode/Response.php';
 require_once 'Fizzy/Geocode/Location.php';
 
 /**
- * Description of Yahoo
+ * Adapter for the Yahoo Maps Geocode service
  *
- * @author jeroen
+ * @author Jeroen Tietema <jeroen@voidwalkers.nl>
  */
 class Fizzy_Geocode_Adapter_Yahoo implements Fizzy_Geocode_Adapter_Interface
 {
