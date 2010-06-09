@@ -1,19 +1,19 @@
 <?php
 $types = array(
-    'png' => $this->assetUrl('/images/icon/page_white_picture.png'),
-    'jpg' => $this->assetUrl('/images/icon/page_white_picture.png'),
-    'jpeg' => $this->assetUrl('/images/icon/page_white_picture.png'),
-    'bmp' => $this->assetUrl('/images/icon/page_white_picture.png'),
-    'gif' => $this->assetUrl('/images/icon/page_white_picture.png'),
-    'doc' => $this->assetUrl('/images/icon/page_white_word.png'),
-    'docx' => $this->assetUrl('/images/icon/page_white_word.png'),
-    'xls' => $this->assetUrl('/images/icon/page_white_excel.png'),
-    'ppt' => $this->assetUrl('/images/icon/page_white_powerpoint.png'),
-    'pdf' => $this->assetUrl('/images/icon/page_white_text.png'),
-    'flv' => $this->assetUrl('/images/icon/page_white_flash.png'),
-    'zip' => $this->assetUrl('/images/icon/page_white_zip.png'),
-    'rar' => $this->assetUrl('/images/icon/page_white_zip.png'),
-    'txt' => $this->assetUrl('/images/icon/page_white_text.png'),
+    'png'  => $this->assetUrl('/images/icon/document-image.png'),
+    'jpg'  => $this->assetUrl('/images/icon/document-image.png'),
+    'jpeg' => $this->assetUrl('/images/icon/document-image.png'),
+    'bmp'  => $this->assetUrl('/images/icon/document-image.png'),
+    'gif'  => $this->assetUrl('/images/icon/document-image.png'),
+    'doc'  => $this->assetUrl('/images/icon/document-word.png'),
+    'docx' => $this->assetUrl('/images/icon/document-word.png'),
+    'xls'  => $this->assetUrl('/images/icon/document-excel.png'),
+    'ppt'  => $this->assetUrl('/images/icon/document-powerpoint.png'),
+    'pdf'  => $this->assetUrl('/images/icon/document-pdf.png'),
+    'flv'  => $this->assetUrl('/images/icon/document-flash-movie.png'),
+    'zip'  => $this->assetUrl('/images/icon/document-zipper.png'),
+    'rar'  => $this->assetUrl('/images/icon/document-zipper.png'),
+    'txt'  => $this->assetUrl('/images/icon/document-text.png'),
 );
 ?>
 
@@ -24,7 +24,7 @@ $types = array(
             <?php $row = 0; foreach($this->files as $fileInfo) : ?>
             <tr class="<?= (++$row % 2) === 0 ? 'even' : 'odd'; ?>">
                 <td class="icon">
-                    <img src="<?= (array_key_exists($fileInfo->type, $types)) ? $types[$fileInfo->type] : $this->baseUrl('/images/icon/page.png'); ?>" alt="" />
+                    <img src="<?= (array_key_exists($fileInfo->type, $types)) ? $types[$fileInfo->type] : $this->assetUrl('/images/icon/document.png'); ?>" alt="" />
                 </td>
                 <td class="filename">
                     <a href="<?= $this->baseUrl('/uploads/' . $fileInfo->basename); ?>" target="_blank" title="View file">
@@ -43,7 +43,7 @@ $types = array(
                     <?php if(is_writable($this->uploadFolder)) : ?>
                     <?= $this->link(
                         '@admin_media_delete?name=' . urlencode($fileInfo->basename),
-                        $this->image($this->assetUrl('/images/icon/minus-small.png')),
+                        $this->image($this->assetUrl('/images/icon/minus-small.png', false)),
                         array (
                             'confirm' => "Are you sure you want to delete {$fileInfo->basename}?",
                             'title' => 'Delete file',

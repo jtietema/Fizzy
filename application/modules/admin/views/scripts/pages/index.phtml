@@ -14,7 +14,7 @@
                 <?php foreach($this->pages as $page) : ?>
                 <tr>
                     <td class="controls">
-                        <?= $this->link('@admin_pages_edit?id=' . $page['id'], $this->image($this->assetUrl('/images/icon/document--pencil.png'), array('alt' => 'edit icon')), array('title' => 'edit page', 'escape' => false)); ?>
+                        <?= $this->link('@admin_pages_edit?id=' . $page['id'], $this->image($this->assetUrl('/images/icon/document--pencil.png', false), array('alt' => 'edit icon')), array('title' => 'edit page', 'escape' => false)); ?>
                     </td>
                     <td style="width: 200px;"><?= $page['slug'] ?></td>
                     <td><?= $page['title'] ?></td>
@@ -33,7 +33,7 @@
 
     <ul class="actions">
         <li class="last">
-            <?= $this->link('@admin_pages_add', $this->image($this->assetUrl('/images/icon/document--plus.png')) . ' Add page', array('escape' => false)); ?>
+            <?= $this->link('@admin_pages_add', $this->image($this->assetUrl('/images/icon/document--plus.png', false)) . ' Add page', array('escape' => false)); ?>
         </li>
     </ul>
 

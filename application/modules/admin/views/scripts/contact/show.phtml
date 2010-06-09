@@ -18,7 +18,7 @@
         <li class="no-bg right">
             <?= $this->link(
                     '@admin_contact_delete?id=' . $this->message->id,
-                    $this->image($this->assetUrl('/images/icon/mail--minus.png')) . 'delete message',
+                    $this->image($this->assetUrl('/images/icon/mail--minus.png', false)) . 'delete message',
                     array(
                         'class' => 'delete',
                         'confirm' => 'Are you sure you want to delete this message?',
@@ -27,7 +27,7 @@
             ); ?>
         </li>
         <li class="no-bg right last">
-            <?= $this->link('@admin_contact', $this->image($this->assetUrl('/images/icon/edit-list.png')) . ' contact list', array('escape' => false)); ?>
+            <?= $this->link('@admin_contact', $this->image($this->assetUrl('/images/icon/edit-list.png', false)) . ' contact list', array('escape' => false)); ?>
         </li>
     </ul>
 </div>

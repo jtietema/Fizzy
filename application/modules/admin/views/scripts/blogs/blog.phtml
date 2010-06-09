@@ -17,7 +17,7 @@
                 foreach ($items as $post): ?>
                 <tr>
                     <td class="controls">
-                        <?= $this->link('@admin_blog_post_edit?post_id=' . $post->id, $this->image($this->assetUrl('/images/icon/document--pencil.png'), array('alt' => 'edit icon')), array('title' => 'edit page', 'escape' => false)); ?>
+                        <?= $this->link('@admin_blog_post_edit?post_id=' . $post->id, $this->image($this->assetUrl('/images/icon/document--pencil.png', false), array('alt' => 'edit icon')), array('title' => 'edit page', 'escape' => false)); ?>
                     </td>
                     <td>
                         <?= $post->title ?>
@@ -50,7 +50,7 @@
 
     <ul class="actions">
         <li class="last">
-            <?= $this->link('@admin_blog_post_add?blog_id=' . $this->blog->id, $this->image($this->assetUrl('/images/icon/document--plus.png')) . ' Add post', array('escape' => false)); ?>
+            <?= $this->link('@admin_blog_post_add?blog_id=' . $this->blog->id, $this->image($this->assetUrl('/images/icon/document--plus.png', false)) . ' Add post', array('escape' => false)); ?>
         </li>
     </ul>
 </div>

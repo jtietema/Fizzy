@@ -3,7 +3,7 @@
 <div id="content-panel">
 
     <h2>
-        <?= $this->image($this->assetUrl('/images/icon/document.png')); ?>
+        <?= $this->image($this->assetUrl('/images/icon/document.png', false)); ?>
         <?= ($this->page->isNew()) ? 'Add page' : 'Edit page'; ?>
     </h2>
     
@@ -31,7 +31,7 @@
         <li class="no-bg right">
             <?= $this->link(
                     '@admin_pages_delete?id=' . $this->page->id,
-                    $this->image($this->assetUrl('/images/icon/document--minus.png')) . ' delete page',
+                    $this->image($this->assetUrl('/images/icon/document--minus.png', false)) . ' delete page',
                     array(
                         'class' => 'delete',
                         'confirm' => 'Are you sure you want to delete this page?',
@@ -43,7 +43,7 @@
         <li class="no-bg right last">
             <?= $this->link(
                 '@admin_pages',
-                $this->image($this->assetUrl('/images/icon/edit-list.png')) . ' back to pages',
+                $this->image($this->assetUrl('/images/icon/edit-list.png', false)) . ' back to pages',
                 array('escape' => false)
             ); ?>
         </li>

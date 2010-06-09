@@ -13,11 +13,11 @@
             <?php foreach($this->messages as $message) : ?>
             <tr>
                 <td class="controls" style="width: 55px;">
-                    <?= $this->link('@admin_contact_show?id=' . $message->id, $this->image($this->assetUrl('/images/icon/mail-open.png')), array('escape' => false)); ?>
+                    <?= $this->link('@admin_contact_show?id=' . $message->id, $this->image($this->assetUrl('/images/icon/mail-open.png', false)), array('escape' => false)); ?>
                     &nbsp;
                     <?= $this->link(
                         '@admin_contact_delete?id=' . $message->id,
-                        $this->image($this->assetUrl('/images/icon/mail--minus.png')),
+                        $this->image($this->assetUrl('/images/icon/mail--minus.png', false)),
                         array (
                             'confirm' => 'Are you sure you want to delete this contact request?',
                             'escape' => false
