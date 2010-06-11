@@ -58,7 +58,7 @@ class Comments extends BaseComments
     public function verifyIsSpam()
     {
         $fizzySpam = new Fizzy_Spam();
-        $fizzySpam->isSpam($this->getSpamDocument());
+        return $fizzySpam->isSpam($this->getSpamDocument());
     }
 
     public function getSpamDocument()
