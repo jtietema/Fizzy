@@ -1,6 +1,19 @@
 Running the testsuite
 =====================
 
-run "phpunit ." from the tests directory. (Make sure you have phpunit installed)
+The testsuite requires that you have PHPUnit 3.4 or higher installed.
 
-Works with phpunit 3.4.x
+To run all test:
+run "phpunit ." from the tests directory.
+
+If you want to run only certain tests:
+run "phpunit Validate/"
+This will run all tests in the validate folder.
+
+run "phpunit Validate/YoutubeVideoTest.php"
+to only run the Youtube Video tests.
+
+It is important to always call phpunit from the root of the tests folder because
+otherwise the tests won't find the bootstrap file needed for setting up the
+environment.
+
