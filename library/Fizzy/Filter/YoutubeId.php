@@ -34,6 +34,7 @@ class Fizzy_Filter_YoutubeId implements Zend_Filter_Interface
     /**
      * Filters the YouTube video id from a URL and returns the id. Return an
      * empty string on an invalid URL.
+     * 
      * @param string $value
      * @return string
      */
@@ -45,15 +46,9 @@ class Fizzy_Filter_YoutubeId implements Zend_Filter_Interface
                 $query = $uri->getQueryAsArray();
                 if (isset($query['v'])) {
                     return $query['v'];
-                } else {
-                    return '';
                 }
             }
-            else {
-                return '';
-            }
-        } catch (Zend_Uri_Exception $e) {
-            return '';
-        }
+        } catch (Zend_Uri_Exception $e) {}
+        return '';
     }
 }

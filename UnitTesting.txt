@@ -1,0 +1,6 @@
+Running the testsuite
+=====================
+
+run "phpunit ." from the tests directory. (Make sure you have phpunit installed)
+
+Works with phpunit 3.4.x

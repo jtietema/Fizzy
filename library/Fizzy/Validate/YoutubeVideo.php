@@ -39,20 +39,19 @@ class Fizzy_Validate_YoutubeVideo extends Zend_Validate_Abstract
 {
 
     const API_URL = 'http://gdata.youtube.com/feeds/api/videos/';
-    const INVALID_URI = 'invalidUri';
     const INVALID_VIDEO = 'notAVideo';
 
     /**
      * @see Zend_Validate_Abstract
      */
     protected $_messageTemplates = array(
-        self::INVALID_URI => "'%value%' is not a valid url",
         self::INVALID_VIDEO => "'%value%' is not a valid Youtube video"
     );
 
     /**
-     * Checks if a YouTube video exists
-     * @param string $value
+     * Checks if a YouTube video exists with the given ID
+     * 
+     * @param string $value - The Youtube video ID
      * @return boolean
      */
     public function isValid($value)
@@ -60,20 +59,7 @@ class Fizzy_Validate_YoutubeVideo extends Zend_Validate_Abstract
         $value = (string) $value;
         $this->_setValue($value);
         
-        try {
-            $uri = Zend_Uri_Http::factory($value);
-        } catch (Zend_Uri_Exception $e) {
-            $this->_error(self::INVALID_URI);
-            return false;
-        }
-
-        $query = $uri->getQueryAsArray();
-        if(!isset($query['v'])) {
-            $this->_error(self::INVALID_URI);
-            return false;
-        }
-        
-        $valid = $this->_checkYoutubeApi($query['v']);
+        $valid = $this->_checkYoutubeApi($value);
         if(false === $valid) {
             $this->_error(self::INVALID_VIDEO);
             return false;
@@ -91,14 +77,23 @@ class Fizzy_Validate_YoutubeVideo extends Zend_Validate_Abstract
     {
         try {
             $uri = Zend_Uri_Http::factory(self::API_URL . $id);
+
+            $httpClient = new Zend_Http_Client($uri);
+            $response = $httpClient->request();
         } catch (Zend_Uri_Exception $e) {
+            // the id is malformed
             return false;
+        } catch (Zend_Http_Client_Adapter_Exception $e){
+            /**
+             * Catch the timeout
+             *
+             * We do not know if the video is valid and are unable to check
+             * so we assume it is OK.
+             */
+            return true;
         }
-        
-        $httpClient = new Zend_Http_Client($uri);
-        $response = $httpClient->request();
-        
-        return ((boolean) $response->getStatus() == '200');
+
+        return $response->getStatus() == '200';
     }
 
 
