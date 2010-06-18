@@ -121,5 +121,62 @@ class BlogController extends Fizzy_Controller
         $this->view->post = $post;
         $this->render('post-entry');
     }
+
+    public function rssAction()
+    {
+        $feed = $this->_feed();
+        $feed->setFeedLink('http://www.example.com/blog/rss', 'rss');
+
+        $this->view->rss = $feed->export('rss');
+    }
+
+    public function atomAction()
+    {
+        $feed = $this->_feed();
+        $feed->setFeedLink('http://www.example.com/blog/atom', 'atom');
+
+        $this->view->atom = $feed->export('atom');
+        
+    }
+
+    protected function _feed()
+    {
+        $this->_helper->layout->disableLayout();
+        $this->_response->setHeader('Content-Type', 'text/xml');
+
+        $feed = new Zend_Feed_Writer_Feed();
+        $feed->setTitle('Fizzy Example Blog');
+        $feed->setLink('http://www.example.com');
+        $feed->setDescription('Example of a Rss feed from the Fizzy Blog module');
+        
+        $feed->addAuthor(array(
+            'name'  => 'Paddy',
+            'email' => 'paddy@example.com',
+            'uri'   => 'http://www.example.com',
+        ));
+        $feed->setDateModified(time());
+
+        $posts = Doctrine_Query::create()
+                    ->from('Post')
+                    ->where('status = ?', Post::PUBLISHED)
+                    ->orderBy('date DESC')
+                    ->limit(10)
+                    ->execute();
+
+        foreach ($posts as $post){
+            $entry = $feed->createEntry();
+            $entry->setTitle($post->title);
+            $entry->setLink('http://www.example.com/all-your-base-are-belong-to-us');
+            $entry->addAuthor(array(
+                'name'  => $post->User->displayname,
+            ));
+            $entry->setDateModified(new Zend_Date($post->date));
+            $entry->setDateCreated(new Zend_Date($post->date));
+            $entry->setContent($post->body);
+            $feed->addEntry($entry);
+        }
+
+        return $feed;
+    }
     
 }
