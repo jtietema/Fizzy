@@ -119,4 +119,12 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
         Fizzy_Spam::setDefaultAdapter($adapter);
     }
 
+    protected function _initModuleErrorHandler()
+    {
+        $this->bootstrap('FrontController');
+
+        $front = Zend_Controller_Front::getInstance();
+        $front->registerPlugin(new Fizzy_Controller_Plugin_ErrorHandlerModuleSelector());
+    }
+
 }
