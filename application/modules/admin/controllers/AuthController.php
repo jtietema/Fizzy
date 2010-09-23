@@ -42,7 +42,20 @@ class Admin_AuthController extends Fizzy_Controller
             }
         }
         $this->view->form = $form;
+        $this->view->langForm = $this->_getLangForm();
         $this->renderScript('login.phtml');
+    }
+
+    public function languageAction()
+    {
+        $form = $this->_getLangForm();
+        if($this->_request->isPost()) {
+            if ($form->isValid($_POST)){
+                $session = new Zend_Session_Namespace('Lang');
+                $session->language = $form->language->getValue();
+            }
+        }
+        $this->_redirect('@login');
     }
 
     public function logoutAction()
@@ -82,6 +95,26 @@ class Admin_AuthController extends Fizzy_Controller
         );
 
         return new Fizzy_Form(new Zend_Config($formConfig));
+    }
+
+    protected function _getLangForm()
+    {
+        return new Zend_Form(array(
+            'action' => $this->view->url('@admin_login_lang'),
+            'elements' => array(
+                'language' => array(
+                    'type' => 'select',
+                    'options' => array(
+                        'label' => 'Language',
+                        'multiOptions' => array(
+                            'nl' => 'Nederlands',
+                            'en' => 'English'
+                        ),
+                        'onChange' => 'this.form.submit();'
+                    )
+                )
+            )
+        ));
     }
 
     public function postDispatch()

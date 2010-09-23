@@ -136,6 +136,14 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
             'locale' => 'nl'
             )
         );
+
+        $session = new Zend_Session_Namespace('Lang');
+        if (isset($session->language)){
+            $translate->setLocale($session->language);
+        } else {
+            $session->language = $translate->getLocale();
+        }
+
         Zend_Registry::set('Zend_Translate', $translate);
         return $translate;
     }
