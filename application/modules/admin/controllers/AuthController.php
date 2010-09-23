@@ -99,7 +99,7 @@ class Admin_AuthController extends Fizzy_Controller
 
     protected function _getLangForm()
     {
-        return new Zend_Form(array(
+        $form = new Zend_Form(array(
             'action' => $this->view->url('@admin_login_lang'),
             'elements' => array(
                 'language' => array(
@@ -115,6 +115,9 @@ class Admin_AuthController extends Fizzy_Controller
                 )
             )
         ));
+        $translate = Zend_Registry::get('Zend_Translate');
+        $form->language->setValue($translate->getLocale());
+        return $form;
     }
 
     public function postDispatch()
