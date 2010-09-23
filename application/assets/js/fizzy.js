@@ -1,21 +1,24 @@
 var Fizzy = function(){
     var _editors = [];
+    var _language = 'en';
     
     return {
         "wysiwyg" : {
-            "count" : function(){
+            count : function(){
                 return _editors.length;
             },
-            "register" : function(id){
+            register : function(id, language){
                 _editors.push(id);
+                _language = language;
             },
-            "editors" : function(){
+            editors : function(){
                 return _editors;
             },
-            "init" : function() {
+            init : function() {
                 // init all the editors
                 var editors = fizzy.wysiwyg.editors().join(",");
                 tinyMCE.init({
+                    language: _language,
                     mode : "exact",
                     elements: editors,
                     theme : "advanced",

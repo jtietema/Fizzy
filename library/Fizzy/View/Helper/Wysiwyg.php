@@ -86,7 +86,7 @@ class Fizzy_View_Helper_Wysiwyg extends Zend_View_Helper_FormElement
         if (empty($attribs['cols'])) {
             $attribs['cols'] = (int) $this->cols;
         }
-
+        $language = $this->getTranslator()->getLocale();
         // build the element
         $xhtml = '<div class="wysiwyg">'
                 . '<div class="wysiwyg-editor">'
@@ -98,7 +98,7 @@ class Fizzy_View_Helper_Wysiwyg extends Zend_View_Helper_FormElement
                 . '</div>'
                 . '<div class="wysiwyg-toggle"></div>'
                 . '<script type="text/javascript">'
-                . 'fizzy.wysiwyg.register("'.$this->view->escape($id).'");'
+                . 'fizzy.wysiwyg.register("'.$this->view->escape($id).'", "'. $language .'");'
                 . '</script>'
                 . '</div>';
         

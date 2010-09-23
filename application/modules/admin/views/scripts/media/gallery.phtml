@@ -37,30 +37,30 @@
 <form onsubmit="FizzymediaDialog.insert();return false;" action="#">
 <div>
     <div class="form-left">
-        <label>Description:</label>
+        <label>{#fizzymedia_dlg.description}</label>
             <input type="text" name="alt" id="alt" />
-        <label>Width</label>
+        <label>{#fizzymedia_dlg.width}</label>
             <input type="text" name="width" id="width" class="small" /> px
-        <label>Height</label>
+        <label>{#fizzymedia_dlg.height}</label>
             <input type="text" name="height" id="height" class="small" /> px
-        <label>Alignment</label>
+        <label>{#fizzymedia_dlg.alignment}</label>
             <select name="position" id="position">
-                <option value="none">-- Not Set --</option>
-                <option value="left">Left</option>
-                <option value="right">Right</option>
-                <option value="baseline">Baseline</option>
-                <option value="top">Top</option>
-                <option value="middle">Middle</option>
-                <option value="bottom">Bottom</option>
-                <option value="text-top">Text top</option>
-                <option value="text-bottom">Text bottom</option>
+                <option value="none">-- {#fizzymedia_dlg.none} --</option>
+                <option value="left">{#fizzymedia_dlg.left}</option>
+                <option value="right">{#fizzymedia_dlg.right}</option>
+                <option value="baseline">{#fizzymedia_dlg.baseline}</option>
+                <option value="top">{#fizzymedia_dlg.top}</option>
+                <option value="middle">{#fizzymedia_dlg.middle}</option>
+                <option value="bottom">{#fizzymedia_dlg.bottom}</option>
+                <option value="text-top">{#fizzymedia_dlg.text_top}</option>
+                <option value="text-bottom">{#fizzymedia_dlg.text_bottom}</option>
             </select>
 
-        <label>Border</label>
+        <label>{#fizzymedia_dlg.border}</label>
             <input type="text" name="border" id="border" class="small" /> px
     </div>
     <div class="form-right">
-        <label>Margins</label>
+        <label>{#fizzymedia_dlg.margins}</label>
             <table>
                 <tr>
                     <td></td>
@@ -78,7 +78,7 @@
                     <td></td>
                 </tr>
             </table>
-        <p>You can specify the margins around the picture above.</p>
+        <p>{#fizzymedia_dlg.margins_desc}</p>
     </div>
     
 <div class="clear"></div>
