@@ -4,7 +4,7 @@
 
     <h2>
         <?= $this->image($this->assetUrl('/images/icon/document.png', false)); ?>
-        <?= ($this->page->isNew()) ? 'Add page' : 'Edit page'; ?>
+        <?= $this->translate(($this->page->isNew()) ? 'Add page' : 'Edit page') ?>
     </h2>
     
     <div class="form-panel">
@@ -16,11 +16,11 @@
 </div>
 <div id="sidebar-panel">
 
-    <h2>Actions</h2>
+    <h2><?= $this->translate('Actions') ?></h2>
 
     <ul class="actions">
         <li class="last">
-            <input type="submit" value="Save" />
+            <input type="submit" value="<?= $this->translate('Save') ?>" />
         </li>
     </ul>
 
@@ -31,10 +31,10 @@
         <li class="no-bg right">
             <?= $this->link(
                     '@admin_pages_delete?id=' . $this->page->id,
-                    $this->image($this->assetUrl('/images/icon/document--minus.png', false)) . ' delete page',
+                    $this->image($this->assetUrl('/images/icon/document--minus.png', false)) . ' '.$this->translate('delete page'),
                     array(
                         'class' => 'delete',
-                        'confirm' => 'Are you sure you want to delete this page?',
+                        'confirm' => $this->translate('Are you sure you want to delete this page?'),
                         'escape' => false
                     )
             ); ?>
@@ -43,13 +43,13 @@
         <li class="no-bg right last">
             <?= $this->link(
                 '@admin_pages',
-                $this->image($this->assetUrl('/images/icon/edit-list.png', false)) . ' back to pages',
+                $this->image($this->assetUrl('/images/icon/edit-list.png', false)) . ' '.$this->translate('back to pages'),
                 array('escape' => false)
             ); ?>
         </li>
     </ul>
 
-    <h2>Options</h2>
+    <h2><?= $this->translate('Options') ?></h2>
 
     <div class="form-options-panel">
 
@@ -57,9 +57,9 @@
         <?= $this->form->layout; ?>
 
         <div class="form-row" id="homepage-row">
-            <label for="homepage">Homepage</label>
+            <label for="homepage"><?= $this->translate('Homepage') ?></label>
             <?= $this->form->homepage->setDecorators(array('ViewHelper', 'Errors')); ?>
-            <?= $this->form->homepage->getDescription(); ?>
+            <?= $this->translate($this->form->homepage->getDescription()) ?>
         </div>
 
     </div>

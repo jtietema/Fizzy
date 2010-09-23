@@ -1,7 +1,7 @@
 <ul>
     <?php foreach($this->items as $page) : ?>
     <li<?= ($page->isActive(true)) ? ' class="active"' : ''; ?>>
-        <a href="<?= $page->getHref(); ?>"><?= $page->getLabel(); ?></a>
+        <a href="<?= $page->getHref(); ?>"><?= $this->navigation()->getTranslator()->translate($page->getLabel()) ?></a>
     </li>
     <?php endforeach; ?>
 </ul>

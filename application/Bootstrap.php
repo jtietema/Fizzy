@@ -127,4 +127,17 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
         $front->registerPlugin(new Fizzy_Controller_Plugin_ErrorHandlerModuleSelector());
     }
 
+    protected function _initTranslate()
+    {
+        $translate = new Zend_Translate(
+        array(
+            'adapter' => 'array',
+            'content' => ROOT_PATH . '/languages/admin_nl.php',
+            'locale' => 'nl'
+            )
+        );
+        Zend_Registry::set('Zend_Translate', $translate);
+        return $translate;
+    }
+
 }

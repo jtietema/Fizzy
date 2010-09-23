@@ -6,10 +6,10 @@
             <thead>
                 <tr>
                     <td>&nbsp;</td>
-                    <td>Title</td>
-                    <td>Date</td>
-                    <td>Status</td>
-                    <td>Author</td>
+                    <td><?= $this->translate('Title') ?></td>
+                    <td><?= $this->translate('Date') ?></td>
+                    <td><?= $this->translate('Status') ?></td>
+                    <td><?= $this->translate('Author') ?></td>
                 </tr>
             </thead>
             <tbody>
@@ -17,7 +17,7 @@
                 foreach ($items as $post): ?>
                 <tr>
                     <td class="controls">
-                        <?= $this->link('@admin_blog_post_edit?post_id=' . $post->id, $this->image($this->assetUrl('/images/icon/document--pencil.png', false), array('alt' => 'edit icon')), array('title' => 'edit page', 'escape' => false)); ?>
+                        <?= $this->link('@admin_blog_post_edit?post_id=' . $post->id, $this->image($this->assetUrl('/images/icon/document--pencil.png', false), array('alt' => 'edit icon')), array('title' => $this->translate('edit page'), 'escape' => false)); ?>
                     </td>
                     <td>
                         <?= $post->title ?>
@@ -27,11 +27,11 @@
                     </td>
                     <td>
                         <?php if ($post->status == Post::PUBLISHED): ?>
-                        Published
+                        <?= $this->translate('Published') ?>
                         <?php elseif ($post->status == Post::PENDING_REVIEW): ?>
-                        Pending review
+                        <?= $this->translate('Pending review') ?>
                         <?php else: ?>
-                        Draft
+                        <?= $this->translate('Draft') ?>
                         <?php endif; ?>
                     </td>
                     <td>
@@ -46,11 +46,11 @@
 </div>
 
 <div id="sidebar-panel">
-    <h2>Actions</h2>
+    <h2><?= $this->translate('Actions') ?></h2>
 
     <ul class="actions">
         <li class="last">
-            <?= $this->link('@admin_blog_post_add?blog_id=' . $this->blog->id, $this->image($this->assetUrl('/images/icon/document--plus.png', false)) . ' Add post', array('escape' => false)); ?>
+            <?= $this->link('@admin_blog_post_add?blog_id=' . $this->blog->id, $this->image($this->assetUrl('/images/icon/document--plus.png', false)) . ' '.$this->translate('Add post'), array('escape' => false)); ?>
         </li>
     </ul>
 </div>

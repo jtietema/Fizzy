@@ -1,20 +1,20 @@
 <div id="content-panel">
 
-    <h2>Pages</h2>
+    <h2><?= $this->translate('Pages') ?></h2>
     <div>
         <table class="data" id="pages-table">
             <thead>
                 <tr>
                     <td>&nbsp;</td>
-                    <td>Slug</td>
-                    <td>Title</td>
+                    <td><?= $this->translate('Slug') ?></td>
+                    <td><?= $this->translate('Title') ?></td>
                 </tr>
             </thead>
             <tbody>
                 <?php foreach($this->pages as $page) : ?>
                 <tr>
                     <td class="controls">
-                        <?= $this->link('@admin_pages_edit?id=' . $page['id'], $this->image($this->assetUrl('/images/icon/document--pencil.png', false), array('alt' => 'edit icon')), array('title' => 'edit page', 'escape' => false)); ?>
+                        <?= $this->link('@admin_pages_edit?id=' . $page['id'], $this->image($this->assetUrl('/images/icon/document--pencil.png', false), array('alt' => 'edit icon')), array('title' => $this->translate('edit page'), 'escape' => false)); ?>
                     </td>
                     <td style="width: 200px;"><?= $page['slug'] ?></td>
                     <td><?= $page['title'] ?></td>
@@ -29,18 +29,18 @@
 
 <div id="sidebar-panel">
 
-    <h2>Actions</h2>
+    <h2><?= $this->translate('Actions') ?></h2>
 
     <ul class="actions">
         <li class="last">
-            <?= $this->link('@admin_pages_add', $this->image($this->assetUrl('/images/icon/document--plus.png', false)) . ' Add page', array('escape' => false)); ?>
+            <?= $this->link('@admin_pages_add', $this->image($this->assetUrl('/images/icon/document--plus.png', false)) . ' '.$this->translate('Add page'), array('escape' => false)); ?>
         </li>
     </ul>
 
     <hr />
     
     <div class="block">
-        <h2>About pages</h2>
+        <h2><?= $this->translate('About pages') ?></h2>
         <p>
             Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus laoreet fringilla eros in laoreet. Sed rhoncus aliquam accumsan. Nullam nec massa sed elit faucibus ultricies. Vivamus pharetra volutpat posuere. Aliquam a metus neque, et euismod odio. Suspendisse potenti. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Aenean eget metus lacus, quis rhoncus mauris. In sit amet aliquet felis. Aenean luctus ornare posuere. Fusce egestas, nisi nec mattis pretium, lorem lorem venenatis lectus, id ornare lacus justo in neque. Ut commodo risus eu justo vulputate a fringilla quam rhoncus. Curabitur fermentum neque in tellus adipiscing scelerisque.
         </p>

@@ -65,12 +65,12 @@
             <div id="footer-panel">
                 <div id="copyright-panel">
                     Fizzy <?= Fizzy_Version::VERSION ?>
-                    running on
+                    <?= $this->translate('running on') ?>
                     Zend Framework <?= Zend_Version::VERSION ?>
-                    and
+                    <?= $this->translate('and') ?>
                     Doctrine <?= Doctrine::VERSION ?>
                     &nbsp;&nbsp;|&nbsp;&nbsp;
-                    (c) 2009-<?= date('Y'); ?> Voidwalkers - <a href="http://www.voidwalkers.nl/license/new-bsd">license</a><br />
+                    (c) 2009-<?= date('Y'); ?> Voidwalkers - <a href="http://www.voidwalkers.nl/license/new-bsd"><?= $this->translate('license') ?></a><br />
                 </div>
 
                 <div class="clear"></div>

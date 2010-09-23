@@ -36,7 +36,7 @@
         <div id="container">
             <div id="login-panel">
 
-                <h1>Fizzy login</h1>
+                <h1><?= $this->translate('Fizzy login') ?></h1>
 
                 <div id="message-panel">
                     <?= $this->fizzyMessages(); ?>
@@ -49,7 +49,7 @@
             </div>
 
             <div style="position: absolute; width: 500px; top: 280px; left: 50%; margin-left: -250px; padding: 10px; text-align: right;">
-                (c) 2009-<?= date('Y'); ?> Voidwalkers - <a href="http://www.voidwalkers.nl/license/new-bsd">license</a>
+                (c) 2009-<?= date('Y'); ?> Voidwalkers - <a href="http://www.voidwalkers.nl/license/new-bsd"><?= $this->translate('license') ?></a>
             </div>
         </div>
 

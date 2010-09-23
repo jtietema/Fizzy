@@ -3,7 +3,7 @@
         <?php $label = $page->getLabel();
         if (!empty($label)): ?>
             <li<?= ($page->isActive(true)) ? ' class="active"' : ''; ?>>
-                <a href="<?= $page->getHref(); ?>"><?= $page->getLabel(); ?></a>
+                <a href="<?= $page->getHref(); ?>"><?= $this->navigation()->getTranslator()->translate($page->getLabel()) ?></a>
             </li>
         <?php endif; ?>
     <?php endforeach; ?>

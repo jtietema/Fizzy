@@ -1,6 +1,6 @@
 <div id="content-panel">
 
-    <h2>Media</h2>
+    <h2><?= $this->translate('Media') ?></h2>
 
     <div id="media-panel">
         <div id="media-tabs-panel">
@@ -9,11 +9,11 @@
             ?>
             <ul>
                 <li>
-                    Show as:
+                    <?= $this->translate('Show as') ?>:
                 </li>
-                <li><a class="<?= 'thumbnail' != strtolower($_GET['type']) ? 'active' : ''; ?>" href="<?= $this->baseUrl('/admin/media') ?>">List</a></li>
+                <li><a class="<?= 'thumbnail' != strtolower($_GET['type']) ? 'active' : ''; ?>" href="<?= $this->baseUrl('/admin/media') ?>"><?= $this->translate('List') ?></a></li>
                 <li>&nbsp;|&nbsp;</li>
-                <li><a class="<?= 'thumbnail' == strtolower($_GET['type']) ? 'active' : ''; ?>" href="<?= $this->baseUrl('/admin/media?type=thumbnail') ?>">Thumbnail</a></li>
+                <li><a class="<?= 'thumbnail' == strtolower($_GET['type']) ? 'active' : ''; ?>" href="<?= $this->baseUrl('/admin/media?type=thumbnail') ?>"><?= $this->translate('Thumbnail') ?></a></li>
             </ul>
             <div class="clear"></div>
         </div>
@@ -24,11 +24,12 @@
 
 <div id="sidebar-panel">
     <div id="upload-form" class="form-container">
-        <h2 class="header">Upload</h2>
+        <h2 class="header"><?= $this->translate('Upload') ?></h2>
 
         <p>
-            Upload a new file by selecting it on your machine. Check the box if
-            you want to overwrite a file that already exists with the same name.
+            <?= $this->translate('Upload a new file by selecting it on your ' .
+            'machine. Check the box if you want to overwrite a file that ' .
+            'already exists with the same name.') ?>
             <br />
 
         </p>
@@ -37,9 +38,9 @@
         <?php else : ?>
         <div class="message notice">
             <p>
-                The upload directory found in the Fizzy configuration is not
-                writable. Upload functionality will be disabled until it is made
-                writable.
+                <?= $this->translate('The upload directory found in the Fizzy ' .
+                'configuration is not writable. Upload functionality will be ' .
+                'disabled until it is made writable.') ?>
             </p>
         </div>
         <?php endif; ?>

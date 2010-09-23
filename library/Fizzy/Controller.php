@@ -33,6 +33,16 @@ class Fizzy_Controller extends Zend_Controller_Action
      */
     protected $_flashMessenger = null;
 
+    protected $_translate = null;
+
+    protected function translate($messageId, $locale = null)
+    {
+        if (null === $this->translate) {
+            $this->_translate = Zend_Registry::get('Zend_Translate');
+        }
+        return $this->_translate->_($messageId, $locale = null);
+    }
+
     /**
      * Disables the view renderer and layout
      */

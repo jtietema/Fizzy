@@ -176,7 +176,7 @@ class Admin_CommentsController extends Fizzy_SecuredController
             'label' => 'Author name'
         )));
         $form->addElement(new Zend_Form_Element_Text('email', array(
-            'label' => 'Author E-mail'
+            'label' => 'Author e-mail'
         )));
         $form->addElement(new Zend_Form_Element_Text('website', array(
             'label' => 'Author website'

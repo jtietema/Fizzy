@@ -1,23 +1,23 @@
 <div id="content-panel">
     <h2>
         <?= $this->image('/fizzy_assets/images/icon/gear.png', array('alt' => 'Settings Icon')); ?>
-        Settings
+        <?= $this->translate('Settings') ?>
     </h2>
 
     <table class="settings" id="settings-table">
         <tbody>
             <?php foreach($this->settings as $component => $settings) : ?>
                 <tr>
-                    <th colspan="2"><?= ucfirst($component); ?></th>
+                    <th colspan="2"><?= $this->translate(ucfirst($component)) ?></th>
                 </tr>
                 <?php foreach($settings as $setting) : ?>
                 <tr>
                     <td class="label">
-                        <?= $setting->label; ?>
+                        <?= $this->translate($setting->label) ?>
                     </td>
                     <td class="setting editable">
                         <div id="<?= $setting->component; ?>:<?= $setting->setting_key; ?>" class="value text"><?= $setting->value; ?></div>
-                        <small><?= $setting->description; ?></small>
+                        <small><?= $this->translate($setting->description) ?></small>
                     </td>
                 </tr>
                 <?php endforeach; ?>
@@ -197,5 +197,5 @@
 </div>
 
 <div id="sidebar-panel">
-    <h2>Actions</h2>
+    <h2><?= $this->translate('Actions') ?></h2>
 </div>

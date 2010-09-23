@@ -3,7 +3,7 @@
     <div id="content-panel">
         <h2>
             <?= $this->image($this->assetUrl('/images/icon/document.png', false)); ?>
-            <?= ($this->post->isNew()) ? 'Add post' : 'Edit post'; ?>
+            <?= $this->translate($this->post->isNew() ? 'Add post' : 'Edit post') ?>
         </h2>
 
         <div class="form-panel">
@@ -13,7 +13,7 @@
 
         <h2>
             <?= $this->image($this->assetUrl('/images/icon/balloons.png', false)); ?>
-            Comments on this post
+            <?= $this->translate('Comments on this post') ?>
         </h2>
 
         <div class="comments">
@@ -26,11 +26,11 @@
     </div>
 
     <div id="sidebar-panel">
-        <h2>Actions</h2>
+        <h2><?= $this->translate('Actions') ?></h2>
 
         <ul class="actions">
             <li class="last">
-                <input type="submit" value="Save" />
+                <input type="submit" value="<?= $this->translate('Save') ?>" />
             </li>
         </ul>
 
@@ -41,10 +41,10 @@
             <li class="no-bg right">
                 <?= $this->link(
                         '@admin_blog_post_delete?post_id=' . $this->post->id,
-                        $this->image($this->assetUrl('/images/icon/document--minus.png', false)) . ' delete page',
+                        $this->image($this->assetUrl('/images/icon/document--minus.png', false)) . ' '.$this->translate('delete post'),
                         array(
                             'class' => 'delete',
-                            'confirm' => 'Are you sure you want to delete this page?',
+                            'confirm' => $this->translate('Are you sure you want to delete this post?'),
                             'escape' => false
                        )
                 ); ?>
@@ -53,13 +53,13 @@
             <li class="no-bg right last">
                 <?= $this->link(
                     '@admin_blog?id=' . $this->post->Blog->id,
-                    $this->image($this->assetUrl('/images/icon/edit-list.png', false)) . ' back to ' . $this->post->Blog->name,
+                    $this->image($this->assetUrl('/images/icon/edit-list.png', false)) . ' '.$this->translate('back to').' ' . $this->post->Blog->name,
                     array('escape' => false)
                 ); ?>
             </li>
         </ul>
 
-        <h2>Options</h2>
+        <h2><?= $this->translate('Options') ?></h2>
 
         <div class="form-options-panel">
             <?= $this->form->status; ?>

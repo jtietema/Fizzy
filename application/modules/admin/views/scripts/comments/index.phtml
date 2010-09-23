@@ -1,6 +1,6 @@
 <div id="content-panel">
 
-    <h2>Latest comments</h2>
+    <h2><?= $this->translate('Latest comments') ?></h2>
 
     <?= $this->partial('comments/_comments.phtml', array(
         'comments' => $this->paginator->getCurrentItems(),
@@ -12,16 +12,16 @@
 </div>
 
 <div id="sidebar-panel">
-    <h2>Comments overview</h2>
+    <h2><?= $this->translate('Comments overview') ?></h2>
 
     <table class="data">
         <tbody>
             <tr>
-                <td><?= $this->link('@admin_comments_list', 'Total comments') ?></td>
+                <td><?= $this->link('@admin_comments_list', $this->translate('Total comments')) ?></td>
                 <td><?= $this->totalComments ?></td>
             </tr>
             <tr>
-                <td><?= $this->link('@admin_comments_spambox', 'Spam') ?></td>
+                <td><?= $this->link('@admin_comments_spambox', $this->translate('Spam')) ?></td>
                 <td><?= $this->spamComments ?></td>
             </tr>
         </tbody>

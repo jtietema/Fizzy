@@ -130,7 +130,7 @@ class Admin_MediaController extends Fizzy_SecuredController
                     'type' => 'file',
                     'options' => array (
                         'label' => 'File',
-                        'description' => 'Choose a file to upload. The maximun file size is ' . str_replace(array('K', 'M', 'G'), array(' KB', ' MB', ' GB'), ini_get('upload_max_filesize')) . '.',
+                        'description' => $this->translate('Choose a file to upload. The maximun file size is') . ' ' . str_replace(array('K', 'M', 'G'), array(' KB', ' MB', ' GB'), ini_get('upload_max_filesize')) . '.',
                         'required' => true,
                         'destination' => $uploadFolder,
                     )

@@ -1,11 +1,11 @@
 <div id="content-panel">
-    <h2>Users</h2>
+    <h2><?= $this->translate('Users') ?></h2>
     
     <table class="data">
         <thead>
             <tr>
                 <td>&nbsp;</td>
-                <td>Username</td>
+                <td><?= $this->translate('Username') ?></td>
             </tr>
         </thead>
         <tbody>
@@ -29,11 +29,11 @@
 
 <div id="sidebar-panel">
 
-    <h2>Actions</h2>
+    <h2><?= $this->translate('Actions') ?></h2>
 
     <ul class="actions">
         <li class="last">
-            <?= $this->link('@admin_users_add', $this->image($this->assetUrl('/images/icon/user--plus.png', false)) . ' Add user', array('escape' => false)); ?>
+            <?= $this->link('@admin_users_add', $this->image($this->assetUrl('/images/icon/user--plus.png', false)) . ' '.$this->translate('Add user'), array('escape' => false)); ?>
         </li>
     </ul>
 

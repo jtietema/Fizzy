@@ -2,6 +2,6 @@
     <form action="<?= $this->form->getAction(); ?>" id="Loginform" name="LoginForm" method="post">
         <?= $this->form->username; ?>
         <?= $this->form->password; ?>
-        <input type="submit" value="Login" />
+        <input type="submit" value="<?= $this->translate('Login') ?>" />
     </form>
 </div>

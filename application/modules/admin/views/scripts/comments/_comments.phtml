@@ -8,8 +8,8 @@ $thread = $comment->getThreadModel();
     </div>
     <div class="content">
         <div class="author-info">
-            <span class="gray1">From</span> <?= $comment->name ?>
-            <?= (!empty($thread)) ? '<span class="gray1">on</span> '.
+            <span class="gray1"><?= $this->translate('From') ?></span> <?= $comment->name ?>
+            <?= (!empty($thread)) ? '<span class="gray1">' . $this->translate('on') . '</span> '.
             $this->link('@admin_comments_topic?id=' . $comment->post_id,$thread->label()) : '' ?>
         </div>
         <div class="comment-body">
@@ -18,27 +18,27 @@ $thread = $comment->getThreadModel();
         <div class="actions">
             <ul>
                 <li>
-                    <?= $this->link('@admin_comments_edit?id=' . $comment->id . '&back=' . $this->back, 'Edit', array(
+                    <?= $this->link('@admin_comments_edit?id=' . $comment->id . '&back=' . $this->back, $this->translate('Edit'), array(
                         'class' => 'c3button'
                     )) ?>
                 </li>
                 <li>
                     <?php if ($comment->isSpam()) : ?>
-                        <?= $this->link('@admin_comments_ham?id=' . $comment->id . '&back=' . $this->back, 'Not spam', array(
+                        <?= $this->link('@admin_comments_ham?id=' . $comment->id . '&back=' . $this->back, $this->translate('Not spam'), array(
                             'class' => 'c3button'
                         )) ?>
                     <?php else: ?>
-                        <?= $this->link('@admin_comments_spam?id=' . $comment->id . '&back=' . $this->back, 'Spam', array(
+                        <?= $this->link('@admin_comments_spam?id=' . $comment->id . '&back=' . $this->back, $this->translate('Spam'), array(
                             'class' => 'c3button'
                         )) ?>
                     <?php endif; ?>
                 </li>
                 <li><?= $this->link(
                                 '@admin_comments_delete?id=' . $comment->id . '&back=' . $this->back,
-                                'Delete',
+                                $this->translate('Delete'),
                                 array(
                                 'class' => 'delete c3button',
-                                'confirm' => 'Are you sure you want to delete this comment?',
+                                'confirm' => $this->translate('Are you sure you want to delete this comment?'),
                                 )
                         ); ?>
                 </li>
