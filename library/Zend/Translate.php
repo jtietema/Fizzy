@@ -16,13 +16,18 @@
  * @package    Zend_Translate
  * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: Translate.php 21662 2010-03-27 20:23:42Z thomas $
+ * @version    $Id: Translate.php 22592 2010-07-16 20:58:42Z thomas $
  */
 
 /**
  * @see Zend_Loader
  */
 require_once 'Zend/Loader.php';
+
+/**
+ * @see Zend_Translate_Adapter
+ */
+require_once 'Zend/Translate/Adapter.php';
 
 
 /**
@@ -54,7 +59,6 @@ class Zend_Translate {
      * @var Zend_Translate_Adapter
      */
     private $_adapter;
-    private static $_cache = null;
 
     /**
      * Generates the standard translation object
@@ -127,8 +131,8 @@ class Zend_Translate {
             Zend_Loader::loadClass($options['adapter']);
         }
 
-        if (self::$_cache !== null) {
-            call_user_func(array($options['adapter'], 'setCache'), self::$_cache);
+        if (array_key_exists('cache', $options)) {
+            Zend_Translate_Adapter::setCache($options['cache']);
         }
 
         $adapter = $options['adapter'];
@@ -157,7 +161,7 @@ class Zend_Translate {
      */
     public static function getCache()
     {
-        return self::$_cache;
+        return Zend_Translate_Adapter::getCache();
     }
 
     /**
@@ -168,7 +172,7 @@ class Zend_Translate {
      */
     public static function setCache(Zend_Cache_Core $cache)
     {
-        self::$_cache = $cache;
+        Zend_Translate_Adapter::setCache($cache);
     }
 
     /**
@@ -178,11 +182,7 @@ class Zend_Translate {
      */
     public static function hasCache()
     {
-        if (self::$_cache !== null) {
-            return true;
-        }
-
-        return false;
+        return Zend_Translate_Adapter::hasCache();
     }
 
     /**
@@ -192,17 +192,18 @@ class Zend_Translate {
      */
     public static function removeCache()
     {
-        self::$_cache = null;
+        Zend_Translate_Adapter::removeCache();
     }
 
     /**
      * Clears all set cache data
      *
+     * @param string $tag Tag to clear when the default tag name is not used
      * @return void
      */
-    public static function clearCache()
+    public static function clearCache($tag = null)
     {
-        self::$_cache->clean();
+        Zend_Translate_Adapter::clearCache($tag);
     }
 
     /**
