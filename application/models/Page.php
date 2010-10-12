@@ -40,7 +40,6 @@ class Page extends BasePage
     {
         $this->title = $array['title'];
         $this->slug = $array['slug'];
-        $this->body = $array['body'];
         $this->homepage = (boolean) $array['homepage'];
         
         if ('default' !== $array['template'])

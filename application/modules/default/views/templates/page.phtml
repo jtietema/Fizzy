@@ -5,5 +5,7 @@
 
 <h1><?= $this->page->title ?></h1>
 <div>
-<?= $this->page->body ?>
+    <?php foreach($this->page->Blocks as $block): ?>
+        <?= $block->getModel()->getValue() ?>
+    <?php endforeach; ?>
 </div>

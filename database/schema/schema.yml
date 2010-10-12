@@ -11,10 +11,26 @@ Page:
     id: { type: integer(4), primary: true, autoincrement: true }
     title: string(255)
     slug: string(255)
-    body: string
     homepage: boolean
     layout: string(150)
     template: string(150)
+
+Block:
+  columns:
+    id: {type: integer(4), primary: true, autoincrement: true }
+    page_id: integer(4)
+    type: string(50)
+    content_id: integer(4)
+  relations:
+    Page:
+      local: page_id
+      foreign: id
+      foreignAlias: Blocks
+
+Richtext:
+  columns:
+    id: {type: integer(4), primary: true, autoincrement: true }
+    body: string
 
 Blog:
   columns:

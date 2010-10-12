@@ -54,6 +54,17 @@ class Admin_PagesController extends Fizzy_SecuredController
         $this->renderScript('pages/form.phtml');
     }
 
+    public function addblockAction()
+    {
+        $id = $this->_getParam('id', null);
+        $type = $this->_getParam('type', null);
+        if (null === $id || null === $type) {
+            $this->_redirect('@admin_pages');
+        }
+        Block::createBlock($id, $type);
+        $this->_redirect($this->view->url('@admin_pages_edit?id='.$id, array('prependBase' => false)));
+    }
+
     public function editAction()
     {
         $id = $this->_getParam('id', null);
@@ -74,6 +85,13 @@ class Admin_PagesController extends Fizzy_SecuredController
                 $page->populate($form->getValues());
                 $page->save();
 
+                // save all the blocks
+                foreach ($form->blocks->getElements() as $element) {
+                    list($block, $type, $id) = explode('_', $element->getName());
+                    $model = Block::loadModel($type, $id);
+                    $model->setValue($element->getValue());
+                    $model->save();
+                }
                 $this->addSuccessMessage("Page \"<strong>{$page->title}</strong>\" was successfully saved.");
                 $this->_redirect('@admin_pages');
             }
@@ -110,6 +128,12 @@ class Admin_PagesController extends Fizzy_SecuredController
      */
     protected function _getForm($action, $page)
     {
+        // create blocks subform
+        $blocksForm = new Zend_Form_SubForm();
+        foreach ($page->Blocks as $block){
+            $blocksForm->addElement($block->getFormElement());
+        }
+
         $config = Zend_Registry::get('config');
 
         $formConfig = array (
@@ -144,13 +168,17 @@ class Admin_PagesController extends Fizzy_SecuredController
                         )
                     )
                 ),
-                'body' => array (
-                    'type' => 'wysiwyg',
-                    'options' => array (
-                        'label' => 'Body',
-                        'required' => true,
-                        'value' => $page->body,
-                        'attribs' => array('style' => 'width: 100%;'),
+                'newblock' => array(
+                    'type' => 'select',
+                    'options' => array(
+                        'label' => 'Add a block',
+                        'required' => false,
+                        'ignore' => true,
+                        'multiOptions' => array(
+                            '0' => '-- select block type --',
+                            'richtext' => 'Richtext'
+                        ),
+                        'onchange' => "window.location='{$this->view->url('@admin_pages_addblock?id='.$page->id.'&type=')}' + '/' + this.value;"
                     )
                 ),
                 'template' => array (
@@ -195,6 +223,7 @@ class Admin_PagesController extends Fizzy_SecuredController
 
         $form = new Fizzy_Form();
         $form->setOptions($formConfig);
+        $form->addSubForm($blocksForm, 'blocks');
 
         $form->template->addDecorator('Description');
         $form->layout->addDecorator('Description');

@@ -8,10 +8,10 @@
  * @property integer $id
  * @property string $title
  * @property string $slug
- * @property string $body
  * @property boolean $homepage
  * @property string $layout
  * @property string $template
+ * @property Doctrine_Collection $Blocks
  * 
  * @package    ##PACKAGE##
  * @subpackage ##SUBPACKAGE##
@@ -37,9 +37,6 @@ abstract class BasePage extends Doctrine_Record
              'type' => 'string',
              'length' => '255',
              ));
-        $this->hasColumn('body', 'string', null, array(
-             'type' => 'string',
-             ));
         $this->hasColumn('homepage', 'boolean', null, array(
              'type' => 'boolean',
              ));
@@ -56,6 +53,8 @@ abstract class BasePage extends Doctrine_Record
     public function setUp()
     {
         parent::setUp();
-        
+        $this->hasMany('Block as Blocks', array(
+             'local' => 'id',
+             'foreign' => 'page_id'));
     }
 }
