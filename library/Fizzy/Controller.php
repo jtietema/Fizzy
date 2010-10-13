@@ -37,7 +37,7 @@ class Fizzy_Controller extends Zend_Controller_Action
 
     protected function translate($messageId, $locale = null)
     {
-        if (null === $this->translate) {
+        if (null === $this->_translate) {
             $this->_translate = Zend_Registry::get('Zend_Translate');
         }
         return $this->_translate->_($messageId, $locale = null);
