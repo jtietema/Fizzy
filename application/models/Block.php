@@ -53,6 +53,21 @@ class Block extends BaseBlock
         return $block;
     }
 
+    public static function removeBlock($id)
+    {
+	    $query = Doctrine_Query::create()->from('Block')->where('id = ?', $id);
+	    $block = $query->fetchOne();
+	    if ($block) {
+            $class = self::_getModelClass($block->type);
+            $query = Doctrine_Query::create()->from($class)->where('id = ?', $block->content_id);
+            $content = $query->fetchOne();
+            if ($content) {
+                $content->delete();
+            }
+            $block->delete();
+	    }
+    }
+
     public static function loadModel($type, $id)
     {
         $query = Doctrine_Query::create()->from(self::_getModelClass($type))

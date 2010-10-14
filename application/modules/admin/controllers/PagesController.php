@@ -65,6 +65,17 @@ class Admin_PagesController extends Fizzy_SecuredController
         $this->_redirect($this->view->url('@admin_pages_edit?id='.$id, array('prependBase' => false)));
     }
 
+    public function deleteblockAction()
+    {
+    	$pageId = $this->_getParam('id', null);
+	    $blockId = $this->_getParam('blockId', null);
+	    if ($pageId === null || $blockId === null) {
+		    $this->_redirect('@admin_pages');
+	    }
+        Block::removeBlock($blockId);
+        $this->_redirect($this->view->url('@admin_pages_edit?id='.$pageId, array('prependBase' => false)));
+    }
+
     public function editAction()
     {
         $id = $this->_getParam('id', null);
@@ -131,7 +142,15 @@ class Admin_PagesController extends Fizzy_SecuredController
         // create blocks subform
         $blocksForm = new Zend_Form_SubForm();
         foreach ($page->Blocks as $block){
-            $blocksForm->addElement($block->getFormElement());
+            $element = $block->getFormElement();
+	    $element->addDecorator(new Fizzy_Decorator_BlockOperations(
+		    array(
+			'baseUrl' => $this->view->baseUrl(),
+			'blockId' => $block->id,
+            'pageId' => $page->id
+            )
+        ));
+	    $blocksForm->addElement($element);
         }
 
         $config = Zend_Registry::get('config');
