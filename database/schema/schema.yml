@@ -27,11 +27,6 @@ Block:
       foreign: id
       foreignAlias: Blocks
 
-Richtext:
-  columns:
-    id: {type: integer(4), primary: true, autoincrement: true }
-    body: string
-
 Blog:
   columns:
     id: { type: integer(4), primary: true, autoincrement: true }

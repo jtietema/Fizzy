@@ -1,0 +1,20 @@
+Textarea:
+  columns:
+    id: {type: integer(4), primary: true, autoincrement: true }
+    body: string
+
+Richtext:
+  columns:
+    id: {type: integer(4), primary: true, autoincrement: true }
+    body: string
+
+Image:
+  columns:
+    id: {type: integer(4), primary: true, autoincrement: true }
+    filename: string(255)
+
+Map:
+  columns:
+    id: {type: integer(4), primary: true, autoincrement: true }
+    data: string
+    

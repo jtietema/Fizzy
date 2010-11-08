@@ -12,6 +12,7 @@ spl_autoload_register(array('Doctrine_Core', 'modelsAutoload'));
 
 require_once 'Zend/Loader/Autoloader.php';
 $autoloader = Zend_Loader_Autoloader::getInstance();
+$autoloader->registerNamespace('Fizzy_');
 
 $config = new Zend_Config_Ini('configs/application.ini', 'development');
 

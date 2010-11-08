@@ -1,9 +1,12 @@
 var Fizzy = function(){
     var _editors = [];
-    var _language = 'en';
+    var _imageFields = [];
+    var _maps = [];
     
+    var _language = 'en';
+
     return {
-        "wysiwyg" : {
+        wysiwyg : {
             count : function(){
                 return _editors.length;
             },
@@ -34,9 +37,42 @@ var Fizzy = function(){
                     relative_urls : false
                 });
             }
+        },
+        image: {
+            register: function(id) {
+                _imageFields.push(id);
+            },
+            count: function() {
+                return _imageFields.length;
+            },
+            init: function(){
+
+            }
+        },
+        maps: {
+            register: function(id) {
+                _maps.push(id);
+            },
+            init: function() {
+                for (var key in _maps){
+                    var latlng = new google.maps.LatLng(-34.397, 150.644);
+                    var myOptions = {
+                      zoom: 8,
+                      center: latlng,
+                      mapTypeId: google.maps.MapTypeId.ROADMAP
+                    };
+                    var id = _maps[key];
+                    var map = new google.maps.Map(document.getElementById(id), myOptions);
+                }
+                
+            }
         }
     }
 }
 var fizzy = Fizzy();
 
-window.onload = fizzy.wysiwyg.init;
+window.onload = function(){
+    fizzy.wysiwyg.init();
+    fizzy.maps.init();
+    fizzy.image.init();
+};

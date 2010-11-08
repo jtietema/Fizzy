@@ -195,7 +195,10 @@ class Admin_PagesController extends Fizzy_SecuredController
                         'ignore' => true,
                         'multiOptions' => array(
                             '0' => '-- select block type --',
-                            'richtext' => 'Richtext'
+                            'map' => 'Google Map',
+                            'image' => 'Image',
+                            'richtext' => 'Richtext',
+                            'textarea' => 'Textarea',
                         ),
                         'onchange' => "window.location='{$this->view->url('@admin_pages_addblock?id='.$page->id.'&type=')}' + '/' + this.value;"
                     )
